@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 这里填写对应的Mapper文件所在的路径 -->
+<mapper namespace="com.ljsh.test.mbg.mapper.PersonMapper"    >
+
+    <!-- 定义一个变量，值是需要数据库里实例Person对应的表的表名,它具有唯一id并通过这个id引用 -->
+    <sql id="table">person1</sql>
+
+    <!-- id属性填写Mapper文件里的函数名称-->
+    <!-- 查询所有   -->
+    <select id="getAll" resultType="com.ljsh.test.mbg.model.Person">
+        SELECT
+        *
+        FROM
+        <include refid="table" />
+    </select>
+
+
+    <!-- 根据id查询 -->
+    <select id="getPersonById" parameterType="long" resultType="com.ljsh.test.mbg.model.Person">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE
+        id = #{id}
+    </select>
+
+    <!-- 增 -->
+    <insert id="newp" parameterType="com.ljsh.test.mbg.model.Person">
+        INSERT INTO
+        <include refid="table"/>
+        (username,password,phone,email,created,updated,sex,address,state,balance)
+        VALUES
+        (#{username},#{password},#{phone},#{email},NOW(),NOW(),#{sex},#{address},#{state},#{balance})
+    </insert>
+
+    <!-- 改 -->
+    <update id="update" parameterType="com.ljsh.test.mbg.model.Person">
+        UPDATE
+        <include refid="table"/>
+        SET
+        <if test="username != null">username = #{username},</if>
+        <if test="password != null">password = #{password},</if>
+        <if test="phone != null">phone = #{phone},</if>
+        <if test="email != null">email = #{email},</if>
+        <if test="updated != null">updated = NOW(),</if>
+        <if test="sex != null">sex = #{sex},</if>
+        <if test="address != null">address = #{address},</if>
+        <if test="state != null">state = #{state},</if>
+        <if test="balance != null">balance = #{balance}</if>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 删 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{id}
+    </delete>
+
+    <select id="getPasswordbyUsername" parameterType="java.lang.String" resultType="String">
+        SELECT
+        password
+        FROM
+        <include refid="table"/>
+        WHERE
+        username = #{username}
+    </select>
+
+</mapper>

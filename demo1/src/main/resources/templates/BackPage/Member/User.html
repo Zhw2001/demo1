@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/backpage.css" th:href=@{/css/backpage.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/backpage.js}></script>
+    <title>User</title>
+</head>
+<body>
+<div class="container">
+    <div class="container-body">
+        <div th:replace="BackPage/后台::container-body-left"></div>
+        <div th:replace="BackPage/后台::container-header"></div>
+        <div class="container-body-right">
+            <p>
+                <label>HELLO </label><span>[[${session.loginUser}]]</span>
+            </p>
+            <br>
+            <table class="gridtable">
+                <tr>
+                    <th>头像</th>
+                    <th>用户ID</th>
+                    <th>用户名</th>
+                    <th>密码</th>
+                    <th>电话</th>
+                    <th>邮箱</th>
+                    <th>性别</th>
+                    <th>地址</th>
+                    <th>账号状态</th>
+                    <th>自我介绍</th>
+                </tr>
+                <tr th:each="item:${userlist}">
+                    <td><img th:src=@{${item.file}} width="40px"></td>
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.username}"></td>
+                    <td th:text="${item.password}"></td>
+                    <td th:text="${item.phone}"></td>
+                    <td th:text="${item.email}"></td>
+                    <td th:text="${item.sex}"></td>
+                    <td th:text="${item.address}"></td>
+                    <td th:text="${item.state}"></td>
+                    <td th:text="${item.description}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

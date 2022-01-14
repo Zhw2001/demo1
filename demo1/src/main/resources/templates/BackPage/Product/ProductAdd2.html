@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/backpage.css" th:href=@{/css/backpage.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/backpage.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/formTips.js}></script>
+</head>
+<body>
+<div class="container">
+    <div class="container-body">
+        <div th:replace="BackPage/后台::container-body-left"></div>
+        <div th:replace="BackPage/后台::container-header"></div>
+        <div class="container-body-right">
+            <form name="form1" class="bootstrap-frm" th:action="@{/product/add}" method="post" onsubmit="return checkForm()">
+                <h1>商品属性填写</h1>
+                <label>
+                    <span  style="padding-top: 0px;">属性类型：</span>
+                </label>
+                <select id="PACSelect" name="product_category_Attribute_id" onchange="selectSKU()">
+                    <option value="">请选择属性的类型</option>
+                    <option th:each="item:${ACMap}"
+                            th:value="${item.key}"
+                            th:text="${item.value}">
+                    </option>
+                </select>
+                <span id="PAC_hint"></span>
+                <label>
+                    <span style="margin-bottom:10px;">商品规格：</span>
+                </label>
+                <div class="sku_show" id="SHOW" style="background-color: #feffe9;width: 320px;margin-left: 89px;">
+                    <input type="hidden" name="sku_selected_value"/>
+                </div>
+                <div id="table_refresh" th:fragment="table_refresh">
+                <table id="SKU_LIST" style="margin-top: 20px;margin-bottom:20px;" class="gridtable">
+                    <tr>
+                        <th>属性1</th>
+                        <th>属性2</th>
+                        <th>销售价格</th>
+                        <th>商品库存</th>
+                        <th>库存预警值</th>
+                        <th>SKU编号</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr th:each="item: ${SKU_list}">
+                        <td><input type="text" readonly="readonly" th:value="${item.sp1}"></td>
+                        <td><input type="text" readonly="readonly" th:value="${item.sp2}"></td>
+                        <td><input type="text"></td>
+                        <td><input  type="text" ></td>
+                        <td><input  type="text"></td>
+                        <td><input  type="text"></td>
+                        <td><button th:id="${item.id}" class="gridtable_button" type="button" value="删除" onclick="deleteproduct(this.id)" >删除</button></td>
+                    </tr>
+                </table>
+                </div>
+                <button style="margin-left:35%;" type="button" class="button1" onclick="localRefresh()">Refresh</button>
+                <input th:value="${product_id}" hidden="hidden" type="text" id="product_id">
+                <button style="margin-top:5%;" type="button" class="button1" onclick="add_SKU()">Finish</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+function add_SKU(){
+var str="";
+    $('#SKU_LIST tr').each(function(){
+        $(this).children('td').each(function(){
+            $(this).children('input').each(function(){
+                str=str+$(this).val()+'&';
+           });
+        });
+    });
+    var strs=str.split("&");
+    var value_num=strs.length-1;
+    var num=value_num/6;
+    var sp1="";
+    var sp2="";
+    var price="";
+    var stock="";
+    var low_stock="";
+    var sku_code="";
+    var sale=0;
+    var product_id=$("#product_id").val();
+    for(var i=0;i<num;i++){
+        sp1=sp1+strs[0+i*6]+",";
+        sp2=sp2+strs[1+i*6]+",";
+        price=price+strs[2+i*6]+",";
+        stock=stock+strs[3+i*6]+",";
+        low_stock=low_stock+strs[4+i*6]+",";
+        sku_code=sku_code+strs[5+i*6]+",";
+    }
+    var url="/SKU/addsku?sp1="+sp1+"&sp2="+sp2+"&price="+price+"&stock="+stock+"&low_stock="+low_stock+"&sku_code="+sku_code+"&sale="+sale+"&product_id="+product_id;
+    var json="{sp1:"+sp1+"}"+","+"{sp2:"+sp2+"}"+","+"{price:"+price+"}"+","+"{stock:"+stock+"}"+","+"{low_stock:"+low_stock+"}"+","+"{sku_code:"+sku_code+"}"+","+"{sale:"+sale+"}"+","+"{product_id:"+product_id+"}";
+    $.ajax({
+      type:"POST",
+      url:url,
+      success:function () {
+       window.location.href ="/product/list";
+      }
+    });
+}
+
+function localRefresh(){
+    var sp1list="";
+    var sp2list="";
+    $('input[name="sku_selected_value_0"]:checked').each(function(){sp1list=sp1list+","+($(this).val())});
+    $('input[name="sku_selected_value_1"]:checked').each(function(){sp2list=sp2list+","+($(this).val())});
+    $('#table_refresh').load("/SKU/skuRefresh",{"sp1":sp1list,"sp2":sp2list});
+}
+
+
+function selectSKU() {
+   var ACID=$("#PACSelect").val();
+   $.ajax({
+      type:"GET",
+      url:"/productAttribute/attributeParam?attributes_category_id=" +ACID,
+      success:function (data) {
+      $("#SHOW").empty();
+        var str = data;
+        strs = str.split("&");
+        var n=str.split("&");
+        var num=n[0];
+        var vnum=0;
+        var vnumArray = new Array();
+        vnumArray[0]=0;
+        var value = new Array();
+        var name = new Array();
+        for(var i=0;i<num;i++){
+            vnumArray[i+1]=parseInt(n[i+1]);
+            vnum=vnum+parseInt(n[i+1]);
+        }
+        for(var j=0;j<vnum;j++){
+                value[j]=n[2*num+1+j];
+        }
+        for(var u=0;u<num;u++){
+            name[u]=n[u+1+parseInt(num)];
+        }
+        for(var k=0;k<num;k++){
+        var $trName = $("<tr id=\'tr_name_"+k+"\'</tr>");// 创建tr，将td放置到tr中
+        var $th = $('<label>'+name[k]+'</label>');
+        $trName.append($th);
+        var $trValue = $("<tr id=\'tr_value_"+k+"\'</tr>");// 创建tr，将td放置到tr中
+            for(var count=0;count<vnumArray[k+1];count++){
+            var $td= $ ('<td><input type="checkbox" value="'+value[count+vnumArray[k]]+'" name="sku_selected_value_'+k+'"></td>');
+            $td.append('<label>'+value[count+vnumArray[k]]+'</label>');
+            $trValue.append($td);
+            }
+            $("#SHOW").append($trName);
+            $("#SHOW").append($trValue);
+        }
+      }
+   })
+}
+
+</script>
+</body>
+</html>

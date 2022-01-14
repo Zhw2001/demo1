@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"  th:href=@{/css/backpage.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/backpage.js}></script>
+    <title></title>
+</head>
+<body>
+<div class="container">
+    <div class="container-body">
+        <div th:replace="BackPage/后台::container-body-left"></div>
+        <div th:replace="BackPage/后台::container-header"></div>
+        <div class="container-body-right">
+            <form name="form1" class="bootstrap-frm" th:action="@{/product/update}" method="post">
+                <h1>修改商品</h1>
+                <input th:value="${P_Edit_Param.id}" type="hidden" name="id">
+                <label>
+                    <span style="padding-top: 0px;">商品名称：</span>
+                </label>
+                <input th:value="${P_Edit_Param.title}" type="text" name="title">
+                <label>
+                    <span>卖点：</span>
+                </label>
+                <input th:value="${P_Edit_Param.sellpoint}" type="text" name="sellpoint">
+                <label>
+                    <span>价格：</span>
+                </label>
+                <input th:value="${P_Edit_Param.price}" type="text" name="price">
+                <label>
+                    <span>数量：</span>
+                </label>
+                <input th:value="${P_Edit_Param.num}" type="text" name="num">
+                <label>
+                    <span>图片URL：</span>
+                </label>
+                <input th:value="${P_Edit_Param.image}" type="text" name="image">
+                <label>
+                    <span>分类编号：</span>
+                </label>
+                <input th:value="${P_Edit_Param.cid}" type="text" name="cid">
+                <label>
+                    <span>商品状态：</span>
+                </label>
+                <input th:value="${P_Edit_Param.status}" type="text" name="status">
+                <label>
+                    <span>属性类型：</span>
+                </label>
+                <select name="product_attribute_category_id">
+                    <option value="">请选择商品的类型</option>
+                    <option th:each="item:${P_Edit_Param.attribute_category_map}"
+                            th:value="${item.key}"
+                            th:text="${item.value}">
+                    </option>
+                </select>
+                <button type="submit" class="button1" >edit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+/*
+var url = location.search; //获取url中"?"符后的字串，其值为?id=20&title=%E3%80%8A%E3%83%A1%E3%82%A4%E3%83%89%E3%82%A4%E3%83%B3%E3%82%A2%E3%83%93%E3%82%B9%E3%80%8B&sellpoint=%E7%A7%98%E5%A2%83%E6%8E%A2%E9%99%A9%E3%80%81%E9%BB%91%E6%9A%97%E5%A5%87%E5%B9%BB&price=36.8&num=50&cid7&status1
+    if (url.indexOf("?") != -1) {
+    var str = url.substr(1);//把'？'过滤
+    strs = str.split("&");//先用&分割
+    id=decodeURIComponent(strs[0].split("=")[1].replace("id=",""));
+    title = decodeURIComponent(strs[1].split("=")[1].replace("title=",""));//title是第二项所以strs[1]，用'='分割属性名和属性值，再把属性名过滤
+    sellpoint=decodeURIComponent(strs[2].split("=")[1].replace("sellpoint=",""));
+    price=decodeURIComponent(strs[3].split("=")[1].replace("price=",""));
+    num=decodeURIComponent(strs[4].split("=")[1].replace("num=",""));
+    image=decodeURIComponent(strs[5].split("=")[1].replace("image=",""));
+    cid=decodeURIComponent(strs[6].split("=")[1].replace("cid=",""));
+    status=decodeURIComponent(strs[7].split("=")[1].replace("status=",""));
+    product_attribute_category_id=decodeURIComponent(strs[8].split("=")[1].replace("product_attribute_category_id=",""));
+    $(document).ready(function(){
+        $("#id").attr("value",id);
+        $("#title").attr("value",title);
+        $("#sellpoint").attr("value",sellpoint);
+        $("#price").attr("value",price);
+        $("#num").attr("value",num);
+        $("#image").attr("value",image);
+        $("#cid").attr("value",cid);
+        $("#status").attr("value",status);
+    });
+}
+*/
+
+
+
+</script>
+</body>
+</html>

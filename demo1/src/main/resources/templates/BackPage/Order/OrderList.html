@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/backpage.css" th:href=@{/css/backpage.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/backpage.js}></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="container-body">
+        <div th:replace="BackPage/后台::container-body-left"></div>
+        <div th:replace="BackPage/后台::container-header"></div>
+        <div class="container-body-right">
+            <form id="form1">
+                <table class="gridtable">
+                    <tr>
+                        <th><input type="checkbox" name="fav"></th>
+                        <th width="80px">订单编号</th>
+                        <th>实付金额</th>
+                        <th >支付方式</th>
+                        <th >邮费</th>
+                        <th >订单状态</th>
+                        <th>下单时间</th>
+                        <th>发货时间</th>
+                        <th>交易完成时间</th>
+                        <th>交易关闭时间</th>
+                        <th>物流名称</th>
+                        <th>邮政编码</th>
+                        <th>用户id</th>
+                        <th>买家留言</th>
+                        <th>买家昵称</th>
+                        <th>买家是否评论</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr  th:each="item: ${list}">
+                        <td><input type="checkbox" name="fav"></td>
+                        <td id="orderid" th:text="${item.order_id}"></td>
+                        <td th:text="${item.payment}"></td>
+                        <td th:text="${item.payment_type}"></td>
+                        <td th:text="${item.post_cost}"></td>
+                        <td th:text="${item.status}"></td>
+                        <td th:text="${item.submit_time}"></td>
+                        <td th:text="${item.consign_time}"></td>
+                        <td th:text="${item.end_time}"></td>
+                        <td th:text="${item.close_time}"></td>
+                        <td th:text="${item.shipping_name}"></td>
+                        <td th:text="${item.shipping_code}"></td>
+                        <td th:text="${item.user_id}"></td>
+                        <td th:text="${item.buyer_message}"></td>
+                        <td th:text="${item.buyer_nick}"></td>
+                        <td th:text="${item.buyer_comment}"></td>
+                        <td style="width:98px"><span><button th:id="${item.order_id}" type="button" class="gridtable_button"  value="查看" onclick="checkorder(this.id)" >查看</button>
+                                   <button th:id="${item.order_id}" class="gridtable_button" type="button" value="删除" onclick="deleteorder(this.id)" >删除</button>
+                                </span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+function checkorder(id){
+alert(id);
+var order_id=id;
+window.location.href ="/order/orderstatus?order_id="+order_id;
+}
+
+
+
+    function deleteorder(id){
+    var order_id=id;
+    var str={"order_id":order_id};
+        $.ajax({
+            type: "POST",
+            url: "/order/delete",
+            dataType:"text",
+            data:JSON.stringify(str),
+            contentType:"application/json;charset=utf-8",
+            success: function () {
+            alert("删除成功");
+             window.location.href ="/order/list";
+            },
+            error:function () {
+                console.log('错误')
+            }
+        })
+    }
+
+
+</script>
+
+</body>
+</html>

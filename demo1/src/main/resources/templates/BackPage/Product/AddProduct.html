@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"  th:href=@{/css/backpage.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/backpage.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/formTips.js}></script>
+    <title></title>
+</head>
+<body>
+<div class="container">
+    <div class="container-body">
+        <div th:replace="BackPage/后台::container-body-left"></div>
+        <div th:replace="BackPage/后台::container-header"></div>
+        <div class="container-body-right">
+            <form name="form1" class="bootstrap-frm" style="margin-top: 10px;" th:action="@{/product/add_next}" method="post" onsubmit="return checkForm()">
+
+                <h1>添加商品</h1>
+                <input name="id" th:value="${product.id}" hidden="hidden">
+                <label>
+                    <span  style="padding-top: 0px;">商品分类：</span>
+                </label>
+                <select id="PCSelect" name="product_category">
+                    <option value="">请选择商品的类型</option>
+                    <option th:each="item:${category_map}"
+                            th:value="${item.key}"
+                            th:text="${item.value}">
+                    </option>
+                </select>
+                <span id="PC_hint"></span>
+                <label>
+                    <span>商品名称：</span>
+                </label>
+                <input th:value="${product.name}" id="p_name" type="text" name="name">
+                <span id="name_hint"></span>
+                <label>
+                    <span>副标题：</span>
+                </label>
+                <input th:value="${product.sub_title}" type="text" name="sub_title">
+                <label>
+                    <span>商品介绍：</span>
+                </label>
+                <input th:value="${product.description}" type="text" name="description">
+                <label>
+                    <span>商品货号：</span>
+                </label>
+                <input th:value="${product.product_sn}" type="text" name="product_sn">
+                <label>
+                    <span>商品售价：</span>
+                </label>
+                <input th:value="${product.price}" type="text" name="price">
+                <label>
+                    <span>市场价：</span>
+                </label>
+                <input th:value="${product.original_price}" type="text" name="original_price">
+                <label>
+                    <span>商品库存：</span>
+                </label>
+                <input th:value="${product.stock}" type="text" name="stock">
+                <label>
+                    <span>排序：</span>
+                </label>
+                <input th:value="${product.sort}" type="text" name="sort">
+                <label>
+                    <span>图片：</span>
+                </label>
+                <input th:value="${product.pic}" type="text" name="pic">
+                <button type="submit" class="button1">next</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

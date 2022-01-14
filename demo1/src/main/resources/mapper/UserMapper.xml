@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+
+<mapper namespace="com.ljsh.test.mbg.mapper.UserMapper">
+    <sql id="table">user</sql>
+    <insert id="newu" parameterType="com.ljsh.test.mbg.model.TheUser">
+        INSERT INTO
+        <include refid="table"/>
+        (username,password,phone,email,sex,address,state,description,role_id,file,created,updated)
+        VALUES
+        (#{username},#{password},#{phone},#{email},#{sex},#{address},#{state},#{description},#{role_id},#{file},NOW(),NOW())
+    </insert>
+
+    <select id="getUserById" parameterType="long" resultType="com.ljsh.test.mbg.model.TheUser">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="getUserByUsername" parameterType="String" resultType="com.ljsh.test.mbg.model.TheUser">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE
+        username = #{username}
+    </select>
+
+    <select id="getPasswordbyUsername" parameterType="java.lang.String" resultType="String">
+        SELECT
+        password
+        FROM
+        <include refid="table"/>
+        WHERE
+        username = #{username}
+    </select>
+
+    <select id="getAll" resultType="com.ljsh.test.mbg.model.TheUser">
+        SELECT * FROM
+        <include refid="table"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/backpage.css" th:href=@{/css/backpage.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/backpage.js}></script>
+</head>
+<body>
+<div class="container">
+    <div class="container-body">
+        <div th:replace="BackPage/后台::container-body-left"></div>
+        <div th:replace="BackPage/后台::container-header"></div>
+        <div class="container-body-right">
+            <table class="gridtable">
+                <tr>
+                    <th>
+                        <input type="button" style="float:right;color:#fff;background-color: #000;outline-style: none;border:0px;border-radius:3px;width: 30px;height: 15px;" name="add" value="Add" >
+                    </th>
+                </tr>
+            </table>
+            <form id="form1">
+                <table class="gridtable">
+                    <tr>
+                        <th><input type="checkbox" name="fav"></th>
+                        <th width="70px">编号</th>
+                        <th>分类名称</th>
+                        <th width="70px">等级</th>
+                        <th>是否启用</th>
+                        <th>排序</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr  th:each="item: ${list}">
+                        <td><input type="checkbox" name="fav"></td>
+                        <td th:text="${item.id}"></td>
+                        <td th:text="${item.name}"></td>
+                        <td th:text="${item.level}"></td>
+                        <td th:text="${item.status}"></td>
+                        <td th:text="${item.sort}"></td>
+                        <td style="width:67px">
+                            <button class="gridtable_button" type="button" value="删除" onclick="deleteproduct()" >删除</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

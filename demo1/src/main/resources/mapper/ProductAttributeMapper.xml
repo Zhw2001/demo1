@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljsh.test.mbg.mapper.ProductAttributeMapper">
+
+    <sql id="table">product_attribute</sql>
+
+    <resultMap id="productA" type="com.ljsh.test.mbg.model.ProductAttribute">
+        <result property="id" column="id"/>
+        <result property="product_attribute_category_id" column="product_attribute_category_id" />
+        <result property="name" column="name" />
+        <result property="select_type" column="select_type" />
+        <result property="input_type" column="input_type" />
+        <result property="input_list" column="input_list"/>
+        <result property="sort" column="sort" />
+        <result property="filter_type" column="filter_type" />
+        <result property="search_type" column="search_type" />
+        <result property="related_status" column="related_status" />
+        <result property="hand_add_status" column="hand_add_status" />
+        <result property="type" column="type" />
+    </resultMap>
+
+    <select id="getAll" resultMap="productA">
+        SELECT
+        *
+        FROM
+        <include refid="table" />
+    </select>
+
+
+
+    <select id="getByPAC_IDandType" resultMap="productA">
+        SELECT
+        *
+        FROM
+        <include refid="table" />
+        WHERE product_attribute_category_id=#{productACid,jdbcType=BIGINT} and type=#{type,jdbcType=INTEGER}
+    </select>
+
+    <select id="getAllByACID" resultMap="productA">
+        SELECT
+        *
+        FROM
+        <include refid="table" />
+        where  product_attribute_category_id=#{productACid,jdbcType=BIGINT} and type=#{type,jdbcType=INTEGER}
+    </select>
+
+    <select id="countAttributes"  resultType="int">
+        SELECT
+        COUNT(id)
+        FROM
+        <include refid="table" />
+        where  product_attribute_category_id=#{productACid,jdbcType=BIGINT} and type=#{type,jdbcType=INTEGER}
+    </select>
+
+
+</mapper>

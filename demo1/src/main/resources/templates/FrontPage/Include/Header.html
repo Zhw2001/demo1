@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <link rel="stylesheet" href="css/head.css" th:href=@{/css/head.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+</head>
+<body>
+<div class="header">
+    <table><td>欢迎光临，ANA-KI购物网站</td></table>
+</div>
+
+<div class="topnav"  >
+    <a href="#" style="float:left">标志</a>
+    <a href="/后台" >后台</a>
+    <a href="/shopping/list">购物车</a>
+    <a href="/product/front/list">全部商品</a>
+    <a id="login">用户</a>
+    <input type="text"  name="searchchars" rows="1" cols="4" style="position:relative;top:10px;margin-right:10px;resize:none;float:right"></input>
+
+</div>
+<script>
+$(document).ready(function(){
+  $("#login").click(function(){
+    var loginedUser = '[[${session.loginUser}]]';
+    if(loginedUser!="")window.location.href ="/admin/user/list";
+    else window.location.href ="/login";
+  });
+});
+</script>
+</body>
+</html>

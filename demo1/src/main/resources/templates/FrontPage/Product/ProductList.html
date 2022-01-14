@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/backpage.css" th:href=@{/css/backpage.css} type="text/css">
+    <link rel="stylesheet" href="css/foot.css" th:href=@{/css/foot.css} type="text/css">
+    <link rel="stylesheet" href="css/head.css" th:href=@{/css/head.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/backpage.js}></script>
+</head>
+<body>
+
+<header th:replace="FrontPage/Include/Header.html"></header>
+<br>
+<form id="form1">
+    <table class="gridtable">
+        <tr>
+            <th><input type="checkbox" name="fav"></th>
+            <th width="80px">编号</th>
+            <th>商品图片</th>
+            <th>商品名称</th>
+            <th >价格/货号</th>
+
+            <th>库存</th>
+            <th>销量</th>
+            <th>操作</th>
+        </tr>
+        <tr  th:each="item: ${p_list}">
+            <td><input type="checkbox" name="fav"></td>
+            <td th:text="${item.id}"></td>
+            <td><img th:src=@{${item.pic}} width="40px"></td>
+            <td th:text="${item.name}"></td>
+            <td>
+                <span th:text="${item.price}"></span>
+                <span style="display:block" th:text="${item.sub_title}"></span>
+            </td>
+            <td th:text="${item.stock}"></td>
+            <td th:text="${item.sale}"></td>
+            <td>
+                <button th:id="${item.id}" class="gridtable_button" type="button"  onclick="add_p_to_cart(this.id)" >加入购物车</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<br>
+<footer th:replace="FrontPage/Include/Footer.html"></footer>
+<script>
+function add_p_to_cart(id){
+    window.location.href ="/shopping/add_item?product_id="+id;
+}
+</script>
+</body>
+</html>

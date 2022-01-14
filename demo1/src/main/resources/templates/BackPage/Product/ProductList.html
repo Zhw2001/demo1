@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/backpage.css" th:href=@{/css/backpage.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/backpage.js}></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="container-body">
+            <div th:replace="BackPage/后台::container-body-left"></div>
+            <div th:replace="BackPage/后台::container-header"></div>
+            <div class="container-body-right">
+                <table class="gridtable">
+                    <tr>
+                        <th>
+                            <input type="button" style="float:right;color:#fff;background-color: #000;outline-style: none;border:0px;border-radius:3px;width: 30px;height: 15px;" name="add" value="Add" onclick="window.location.href='/addproduct'">
+                        </th>
+                    </tr>
+                </table>
+                <form id="form1">
+                    <table class="gridtable">
+                        <tr>
+                            <th><input type="checkbox" name="fav"></th>
+                            <th width="80px">编号</th>
+                            <th>商品图片</th>
+                            <th>商品名称</th>
+                            <th >价格/货号</th>
+                            <th>标签</th>
+                            <th >排序</th>
+                            <th>SKU库存</th>
+                            <th>销量</th>
+                            <th>审核状态</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr  th:each="item: ${p_list}">
+                            <td><input type="checkbox" name="fav"></td>
+                            <td th:text="${item.id}"></td>
+                            <td><img th:src=@{${item.pic}} width="40px"></td>
+                            <td th:text="${item.name}"></td>
+                            <td>
+                                <span th:text="${item.price}"></span>
+                                <span style="display:block" th:text="${item.sub_title}"></span>
+                            </td>
+                            <td></td>
+                            <td th:text="${item.sort}"></td>
+                            <td></td>
+                            <td th:text="${item.sale}"></td>
+                            <td th:text="${item.verify_status}"></td>
+                            <td style="width:98px"><span><button type="button" class="gridtable_button"  value="查看" >查看</button>
+                                <button th:id="${item.name}" class="gridtable_button" type="button" value="编辑" onclick="editproduct(this.id)">编辑</button></span>
+                                <span style="display:block"><button class="gridtable_button" type="button" value="日志">日志</button>
+                                   <button th:id="${item.id}" class="gridtable_button" type="button" value="删除" onclick="deleteproduct(this.id)" >删除</button>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+<script>
+
+
+    function editproduct(id){
+    alert(id);
+    var name=id;
+    window.location.href="/product/edit?name="+name;
+    /*
+    var str={"name":name};
+        $.ajax({
+            type: "POST",
+            url: "/product/edit",
+            dataType:"text",
+            data:JSON.stringify(str),
+            contentType:"application/json;charset=utf-8",
+            success: function (data) {
+            var data1=eval("("+data+")");
+            alert(data1.id);
+             window.location.href ="/EditProduct?id="+data1.id+"&title="+data1.title+"&sellpoint="+data1.sellpoint+"&price="+data1.price+"&num="+data1.num+"&image="+data1.image+"&cid="+data1.cid+"&status="+data1.status+"&product_attribute_category_id="+data1.product_attribute_category_id;
+            },
+            error:function () {
+                console.log('错误')
+            }
+        })
+    */
+    }
+
+
+    function deleteproduct(id){
+    var id=id;
+    var str={"id":id};
+        $.ajax({
+            type: "POST",
+            url: "/product/delete",
+            dataType:"text",
+            data:JSON.stringify(str),
+            contentType:"application/json;charset=utf-8",
+            success: function () {
+            alert("已删除");
+             window.location.href ="/product/list";
+            },
+            error:function () {
+                console.log('错误')
+            }
+        })
+    }
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+server:
+  port: 8081
+  servlet:
+    session:
+      timeout: 3600s
+
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  datasource:
+    name:
+    url: jdbc:mysql://127.0.0.1:3306/try?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+    username: root
+    password: root
+
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

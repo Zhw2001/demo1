@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/backpage.css" th:href=@{/css/backpage.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/backpage.js}></script>
+    <title>后台</title>
+</head>
+<body>
+<!-- 最外层容器-->
+    <div class="container">
+        <!-- 头部-->
+        <div class="container-body">
+            <div id="left_body" class="container-body-left" th:fragment="container-body-left">
+                <div class="container-body-left-nav" style="width:197px">
+                    <div id="back" class="box-item">
+                        <p class="title" style="border-top: 1px solid #fff"><a style="text-decoration: none;color:#fff;letter-spacing:4px;" href="/后台" >首页</a></p>
+                    </div>
+                    <div id="productFunction"  class="box-item">
+                        <p class="title"><span style="letter-spacing:4px;">商品</span></p>
+                        <ul class="box-item-content">
+                            <li><a href="/product/list" >商品列表</a></li>
+                            <li><a href="/addproduct" >添加商品</a></li>
+                            <li><a href="/productcart/list">商品分类</a></li>
+                            <li><a href="/productAttributeCategory/list">商品类型</a></li>
+                        </ul>
+                    </div>
+                    <div id="orderFunction" class="box-item">
+                        <p class="title"><span style="letter-spacing:4px;">订单</span></p>
+                        <ul class="box-item-content">
+                            <li><a href="/order/list">订单列表</a></li>
+                        </ul>
+                    </div>
+                    <div id="memberFunction" class="box-item">
+                        <p class="title"><span style="letter-spacing:4px;">用户</span></p>
+                        <ul class="box-item-content">
+                            <li><a href="/admin/user/list">用户列表</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container-header" th:fragment="container-header">
+                <img id="left_body_button" class="left_body_button" th:src=@{/pic/ddz.jpg} >
+                <img id="left_body_button2" hidden="hidden" class="left_body_button2" th:src=@{/pic/ddz.jpg} >
+            </div>
+            <div class="container-body-right" th:fragment="container-body-right">
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

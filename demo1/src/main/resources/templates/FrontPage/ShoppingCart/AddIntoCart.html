@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <link rel="stylesheet" href="css/foot.css" th:href=@{/css/foot.css} type="text/css">
+    <link rel="stylesheet" href="css/head.css" th:href=@{/css/head.css} type="text/css">
+    <link rel="stylesheet" href="css/backpage.css" th:href=@{/css/backpage.css} type="text/css">
+    <style>
+        .cart_sku{
+        }
+    </style>
+</head>
+<body>
+<header th:replace="FrontPage/Include/Header.html"></header>
+<div  style="height:90%; overflow:scroll;overflow-x: hidden;">
+<form name="form1" class="bootstrap-frm" style="margin-top: 10px;margin-left: 33%;">
+
+    <h1>添加到购物车</h1>
+    <input hidden="hidden" type="text" th:value="${user_name}">
+    <label>
+        <span  style="padding-top: 0px;">商品编号：</span>
+    </label>
+    <input readonly="readonly" th:value="${pid}" type="text" id="p_id">
+    <label>
+        <span>数量</span>
+    </label>
+    <input type="text" id="quantity">
+
+    <label>
+        <span>商品规格：</span>
+    </label>
+    <table class="cart_sku">
+        <tr th:each="item:${cplist}">
+            <td><input readonly="readonly" type="checkbox" value="test"></td>
+            <td><input readonly="readonly" type="text" th:value="${item.sp1}"></td>
+            <td><input readonly="readonly" type="text" th:value="${item.sp2}"></td>
+            <td><input readonly="readonly" type="text" th:value="${item.price}"></td>
+            <td hidden="hidden"><input type="text" th:value="${item.sku_stock_id}"></td>
+        </tr>
+    </table>
+    <button type="button" class="button1" onclick="addclick()">确认</button>
+
+</form>
+</div>
+
+<footer th:replace="FrontPage/Include/Footer.html"></footer>
+
+<script>
+    function addclick(){
+        $(document).ready(function(){
+            var cart_sku_item= "";
+            $(".cart_sku tr").each(function(){
+                var $thistd=$(this).children("td").eq(0);
+                    if($thistd.children().eq(0).is(":checked")){ //如果被选中
+                        var $td = $thistd.parents('tr').children('td');
+                        for(var i=1;i<$td.length;i++){
+                            cart_sku_item += $td.eq(i).children("input[type=text]").eq(0).val() + ","; //获取被选中的值
+                        }
+                    }
+            });
+            if(cart_sku_item.length > 0) //如果获取到
+            cart_sku_item = cart_sku_item.substring(0, cart_sku_item.length - 1); //把最后一个逗号去掉
+            alert("被选中checkbox的值：" + cart_sku_item);
+            var strs=cart_sku_item.split(",");
+            var str={"product_id":$("#p_id").val(),"product_sku_id":strs[3],"quantity":$("#quantity").val(),"sp1":strs[0],"sp2":strs[1],"price":strs[2]};
+            $.ajax({
+                type: "POST",
+                url: "/shopping/addintocart",
+                data:JSON.stringify(str),
+                contentType:"application/json;charset=utf-8",
+                success: function () {
+                 window.location.href ="/shopping/list";
+                },
+                error:function () {
+                    console.log('错误')
+                }
+            })
+        });
+    }
+</script>
+
+</body>
+</html>

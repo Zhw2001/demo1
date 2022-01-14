@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="css/foot.css" th:href=@{/css/foot.css} type="text/css">
+  <link rel="stylesheet" href="css/head.css" th:href=@{/css/head.css} type="text/css">
+  <title>document</title>
+  <style>
+      * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 16px;
+        font-family: 'arial';
+        font-weight: normal;
+      }
+
+      table.cart_table{
+        width: 1020px;
+        margin: 0 auto;
+        border: 1px solid gray;
+        margin-top: 30px;
+        border-collapse: collapse;
+        text-align: center;
+      }
+      table.cart_table tr {
+        height: 100px;
+        line-height: 100px;
+      }
+      table.cart_table th:nth-child(1) {
+        width: 72px;
+      }
+      table.cart_table th:nth-child(2) {
+        width: 357px;
+      }
+      table.cart_table th:nth-child(3) {
+        width: 133px;
+      }
+      table.cart_table th:nth-child(4) {
+        width: 153px;
+      }
+      table.cart_table th:nth-child(5),
+      table.cart_table th:nth-child(6) {
+        width: 152px;
+      }
+
+      thead.cart_table {
+        background: black;
+        color: white;
+      }
+      thead.cart_table tr,
+      tfoot.cart_table tr {
+        height: 40px;
+        line-height: 40px;
+      }
+
+      tbody.cart_table tr {
+        border-bottom: 1px solid black;
+      }
+
+      table.cart_table img {
+        float: left;
+        width: 65px;
+        height: 65px;
+        margin-top: 18px;
+      }
+      table.cart_table input[type='checkbox'] {
+        width: 32px;
+        height: 32px;
+        -webkit-appearance: none;
+        background: url(/pic/checkbox.png) no-repeat center center;
+        background-size:contain;
+        vertical-align: middle;
+      }
+      .cart_table input[type='checkbox']:checked {
+        background: url(/pic/check.png) no-repeat center center;
+        background-size:contain;
+      }
+
+      table.cart_table .add,
+      table.cart_table .dec,
+      table.cart_table .del {
+        display: inline-block;
+        width: 14px;
+        height: 21px;
+        cursor: pointer;
+      }
+      table.cart_table .add {
+        background: url(/pic/add.png) no-repeat center center;
+        background-size:contain;
+      }
+      table.cart_table .dec {
+        background: url(/pic/dec.png) no-repeat center center;
+        background-size:contain;
+      }
+      table.cart_table .del {
+        width: 18px;
+        background: url(/pic/del.png) no-repeat;
+        background-size:contain;
+      }
+      table.cart_table .num {
+        display: inline-block;
+        width: 57px;
+        margin: 0 18px;
+        height: 39px;
+        line-height: 39px;
+        border: 1px solid #b0b0b0;
+        background: #d4d4d4;
+      }
+      table.cart_table .money,
+      table.cart_table .total {
+        color: red;
+      }
+      table.cart_table .choosen {
+        color: #3083ff;
+      }
+      table.cart_table .sure {
+        width: 100%;
+        height: 100%;
+        background: #3083ff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+
+      .this_check{
+      }
+      .pid{
+      }
+
+    </style>
+</head>
+<body onselectstart="return false;" style="-moz-user-select: none">
+<header th:replace="FrontPage/Include/Header.html"></header>
+<br>
+<table class="cart_table">
+  <thead class="cart_table">
+  <tr>
+    <th><input type="checkbox" id="check0" class="this_check"/></th>
+    <th>商品信息</th>
+    <th>数量</th>
+    <th>单价<span>（元）</span></th>
+    <th>金额<span>（元）</span></th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody class="cart_table">
+  <tr th:each="item: ${cart_list}">
+    <td><input type="checkbox" class="this_check"/></td>
+    <td>
+      <img name="pic" th:src=@{${item.product_pic}} />
+      <span th:text="${item.product_id}" class="pid"></span>
+    </td>
+    <td>
+      <span class="add"></span>
+      <span th:text="${item.quantity}" class="num"></span>
+      <span class="dec"></span>
+    </td>
+    <td class="per">￥<span th:text="${item.price}"></span></td>
+    <td class="money">￥<span>0</span></td>
+    <td><a th:id="${item.id}" href="#" class="del"></a></td>
+  </tr>
+  </tbody>
+  <tfoot class="cart_table">
+  <tr>
+    <td></td>
+    <td>
+      已选：<span class="choosen">0</span>件&nbsp;&nbsp;共
+      <span class="total">0</span>元
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><button type="button" class="sure" onclick="mergeorder()">提交订单</button></td>
+  </tr>
+  </tfoot>
+</table>
+
+<script>
+  window.onload = function () {
+    var oListNumber = document.getElementsByClassName('add').length
+    var oAdds = document.getElementsByClassName('add')
+    var oDecs = document.getElementsByClassName('dec')
+    var oDels = document.getElementsByClassName('del')
+    var oInputs = document.getElementsByClassName('this_check')
+    var oAllChecked = false //全选
+    var othercheckbox = 0 //除了全选以外的其他checkbox
+
+    changeMoney()
+
+    // checkbox点击事件
+    for (var i = 0; i < oInputs.length; i++) {
+      oInputs[i].onclick = function () {
+        // 判断除了全选以外的checkbox
+        if (this.id != "check0") {
+          if (this.checked == true) {
+            othercheckbox++
+          } else {
+            othercheckbox--
+          }
+        }
+        // 判断是否点了全选checkbox
+        if (this.id == "check0") {
+          oAllChecked = !oAllChecked
+          for (var j = 0; j < oInputs.length; j++) {
+            oInputs[j].checked = oAllChecked
+          }
+          if (oAllChecked) {
+            othercheckbox = oListNumber
+          } else {
+            othercheckbox = 0
+          }
+        }
+        // 判断是否全选
+        if (othercheckbox == oListNumber) {
+          oInputs[0].checked = true
+        }
+        changeTotal()
+      }
+    }
+
+    // add事件
+    for (var i = 0; i < oAdds.length; i++) {
+      oAdds[i].onclick = function () {
+        this.nextElementSibling.innerText =
+          parseInt(this.nextElementSibling.innerText) + 1
+        changeMoney()
+        changeTotal()
+      }
+    }
+
+    // dec事件
+    for (var i = 0; i < oDecs.length; i++) {
+      oDecs[i].onclick = function () {
+        if (this.previousElementSibling.innerText != '0') {
+          this.previousElementSibling.innerText =
+            parseInt(this.previousElementSibling.innerText) - 1
+        }
+        changeMoney()
+        changeTotal()
+      }
+    }
+
+    // add事件和dec事件伴随的金额改变事件
+    function changeMoney() {
+      var oListNumber = document.getElementsByClassName('add').length
+      var oNums = document.getElementsByClassName('num')
+      var oMoneys = document.getElementsByClassName('money')
+      var oPers = document.getElementsByClassName('per')
+      var oPerSpan = [] //单价
+      var oMoneySpan = [] //金额
+      for (var i = 0; i < oListNumber; i++) {
+        oPerSpan[i] = oPers[i].getElementsByTagName('span')[0].innerText
+        oMoneySpan[i] = oMoneys[i].getElementsByTagName('span')[0]
+        oMoneySpan[i].innerText =parseInt(oNums[i].innerText) * parseInt(oPerSpan[i])
+      }
+    }
+
+    // del事件
+    for (var i = 0; i < oDels.length; i++) {
+      oDels[i].onclick = function () {
+        var thisdom = this.parentNode.parentNode
+        var tbody = thisdom.parentNode
+        tbody.removeChild(thisdom)
+        changeTotal()
+        var id=this.id
+        var str={"id":id}
+          $.ajax({
+              type: "POST",
+              url: "/shopping/delete_cart_item",
+              data:JSON.stringify(str),
+              contentType:"application/json;charset=utf-8",
+              success: function () {
+              alert("删除成功");
+              },
+              error:function () {
+                  console.log('错误')
+              }
+        })
+      }
+    }
+
+    // 总数量 总金额
+    function changeTotal() {
+      var oNums = document.getElementsByClassName('num')
+      var oInputs = document.getElementsByClassName('this_check')
+      var oMoneys = document.getElementsByClassName('money')
+      var oChoosen = document.getElementsByClassName('choosen')[0]
+      var oTotal = document.getElementsByClassName('total')[0]
+      var sumNUM = 0
+      var sumTOTAL = 0
+
+      for (var i = 1; i < oInputs.length; i++) {
+        if (oInputs[i].checked) {
+          sumNUM = parseInt(oNums[i - 1].innerText) + parseInt(sumNUM)
+          sumTOTAL =
+            parseInt(
+              oMoneys[i - 1].getElementsByTagName('span')[0].innerText
+            ) + parseInt(sumTOTAL)
+        }
+      }
+
+      oChoosen.innerText = sumNUM
+      oTotal.innerText = sumTOTAL
+    }
+  }
+
+  function mergeorder(){
+    var id="";
+    var oInputs = document.getElementsByClassName('this_check')
+    var oDels = document.getElementsByClassName('del')
+    for (var i = 1; i < oInputs.length; i++) {
+      if (oInputs[i].checked) {
+        id+=oDels[i-1].id+","
+      }
+    }
+    id = id.substring(0, id.length - 1)
+    window.location.href ="/order/add?id="+id
+  }
+
+
+</script>
+<br>
+<footer th:replace="/FrontPage/Include/Footer.html"></footer>
+
+</body>
+</html>

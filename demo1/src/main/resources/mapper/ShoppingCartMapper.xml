@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ljsh.test.mbg.mapper.ShoppingCartMapper">
+
+    <sql id="table">cart_item</sql>
+
+
+    <resultMap id="cart" type="com.ljsh.test.mbg.model.ShoppingCart">
+        <result property="id" column="id" />
+        <result property="product_id" column="product_id" />
+        <result property="product_sku_id" column="product_sku_id" />
+        <result property="username" column="username" />
+        <result property="quantity" column="quantity"/>
+        <result property="price" column="price" />
+        <result property="sp1" column="sp1" />
+        <result property="sp2" column="sp2" />
+        <result property="product_pic" column="product_pic" />
+        <result property="product_name" column="product_name" />
+        <result property="product_sub_title" column="product_sub_title" />
+        <result property="product_sku_code" column="product_sku_code" />
+        <result property="delete_status" column="delete_status" />
+        <result property="product_category_id" column="product_category_id" />
+        <result property="product_sn" column="product_sn" />
+    </resultMap>
+
+    <insert id="add" parameterType="com.ljsh.test.mbg.model.ShoppingCart">
+        INSERT INTO
+        <include refid="table"/>
+        (product_id,product_sku_id,username,quantity,price,sp1,sp2,product_pic,product_name,product_sub_title,product_sku_code,create_date,update_date,delete_status,product_category_id,product_sn)
+        VALUES
+        (#{product_id},#{product_sku_id},#{username},#{quantity},#{price},#{sp1},#{sp2},#{product_pic},#{product_name},#{product_sub_title},#{product_sku_code},NOW(),NOW(),#{delete_status},#{product_category_id},#{product_sn})
+    </insert>
+
+    <select id="getAllByUsername" parameterType="String" resultMap="cart">
+        SELECT * FROM
+        <include refid="table"/>
+        WHERE username=#{username}
+    </select>
+
+    <select id="getOneById" parameterType="Long" resultMap="cart">
+        SELECT * FROM
+        <include refid="table"/>
+        WHERE id=#{id}
+    </select>
+
+    <delete id="delete" parameterType="Long">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{id}
+    </delete>
+
+</mapper>

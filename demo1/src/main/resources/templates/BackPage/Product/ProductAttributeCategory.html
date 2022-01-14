@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/backpage.css" th:href=@{/css/backpage.css} type="text/css">
+    <script type="text/javascript"  src="/js/jquery-3.6.0.js" th:src=@{/js/jquery-3.6.0.js}></script>
+    <script type="text/javascript"  src="/js/backpage.js" th:src=@{/js/backpage.js}></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="container-body">
+        <div th:replace="BackPage/后台::container-body-left"></div>
+        <div th:replace="BackPage/后台::container-header"></div>
+        <div class="container-body-right">
+            <table class="gridtable">
+                <tr>
+                    <th>
+                        <input type="button" style="float:right;color:#fff;background-color: #000;outline-style: none;border:0px;border-radius:3px;width: 30px;height: 15px;" name="add" value="Add" onClick="window.location.href='/addproduct'">
+                    </th>
+                </tr>
+            </table>
+            <form id="form1">
+                <table class="gridtable">
+                    <tr>
+                        <th width="80px">编号</th>
+                        <th width="400px">类型名称</th>
+                        <th >属性数量</th>
+                        <th >参数数量</th>
+                        <th width="200px">设置</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr  th:each="item: ${ProductACs_list}">
+                        <td th:text="${item.id}"></td>
+                        <td th:text="${item.name}"></td>
+                        <td th:text="${item.attribute_count}"></td>
+                        <td th:text="${item.param_count}"></td>
+                        <td>
+                            <button th:id="${item.id}" type="button" class="gridtable_button"  style="margin-right: 10%;" value="属性列表"  onclick="checkAttributeZero(this.id)">属性列表</button>
+                            <button th:id="${item.id}" class="gridtable_button" type="button" value="参数列表" onclick="checkAttributeOne(this.id)">参数列表</button>
+                        </td>
+                        <td style="width:98px">
+                            <button th:id="${item.id}" type="button" class="gridtable_button"  value="编辑"  onclick="editAttribute(this.id)">编辑</button>
+                            <button th:id="${item.id}" class="gridtable_button" type="button" value="删除" onclick="deleteAttribute(this.id)">删除</button>
+                        </td>
+
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function checkAttributeZero(id){
+alert(id);
+var PAC_id=id;
+window.location.href ="/productAttribute/list?PAC_id="+PAC_id+"&type=0";
+}
+
+function checkAttributeOne(id){
+alert(id);
+var PAC_id=id;
+window.location.href ="/productAttribute/list?PAC_id="+PAC_id+"&type=1";
+}
+
+</script>
+
+</body>
+</html>

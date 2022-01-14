@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="process-wrapper" th:fragment="process-wrapper">
+    <div id="progress-bar-container">
+        <ul>
+            <li class="step step01 active"><div class="step-inner">提交订单</div></li>
+            <li class="step step02"><div class="step-inner">支付订单</div></li>
+            <li class="step step03"><div class="step-inner">平台发货</div></li>
+            <li class="step step04"><div class="step-inner">确认收货</div></li>
+            <li class="step step05"><div class="step-inner">完成评价</div></li>
+        </ul>
+
+        <div id="line">
+            <div id="line-progress"></div>
+        </div>
+    </div>
+    <div id="progress-content-section">
+        <div class="section-content">
+            <h2>订单明细</h2>
+            <br>
+                <label>基本信息</label>
+            <br>
+                <table class="gridtable" style="width: 900px;">
+                    <tr>
+                        <th>订单编号：</th>
+                        <th>订单状态：</th>
+                        <th>物流名称：</th>
+                        <th>用户名：</th>
+                    </tr>
+                    <tr>
+                        <td th:text="${order.order_id}"></td>
+                        <td th:text="${status}"></td>
+                        <td th:text="${order.shipping_name}"></td>
+                        <td th:text="${username}"></td>
+                    </tr>
+                </table>
+            <br>
+            <label>商品信息</label>
+            <br>
+                <table class="gridtable" style="width: 900px;">
+                    <tr>
+                        <th width="80px">商品编号</th>
+                        <th>商品购买数量</th>
+                        <th>商品标题</th>
+                        <th>商品单价</th>
+                        <th>商品总金额</th>
+                        <th>商品图片</th>
+                    </tr>
+                    <tr  th:each="item: ${order_item}">
+                        <td th:text="${item.item_id}"></td>
+                        <td th:text="${item.num}"></td>
+                        <td th:text="${item.title}"></td>
+                        <td th:text="${item.price}"></td>
+                        <td th:text="${item.total_cost}"></td>
+                        <td><img th:src=@{${item.pic}} width="30px;"></td>
+                    </tr>
+                </table>
+            <br>
+            <label>总价格：</label>
+            <input readonly="readonly" type="text" th:value="${total}"></input>
+        </div>
+    </div>
+</div>
+</body>
+</html>

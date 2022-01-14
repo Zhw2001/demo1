@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Regist</title>
+    <link rel="stylesheet" href="css/loginstyle.css" th:href=@{/css/loginstyle.css}>
+</head>
+
+<body>
+<img src="pic/nn7.jpg" th:src=@{/pic/nn7.jpg} class="bgpic" >
+<form name="form1" style="position:fixed;"  th:action="@{/admin/regist}" method="post">
+    <div id="login-box" class="mya">
+        <h1>Regist</h1>
+        <p style="color:white" th:text="${msg}"  th:if="${not #strings.isEmpty(msg)}"></p>
+        <div class="input-box">
+            <input type="text" name="username" th:placeholder="Username">
+        </div>
+        <div class="input-box">
+            <input type="password" name="password" placeholder="Password">
+        </div>
+        <button type="submit">regist</button>
+        <a href="/login">login</a>
+    </div>
+</form>
+
+
+
+</body>
+</html>
