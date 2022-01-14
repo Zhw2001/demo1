@@ -1,0 +1,195 @@
+<template>
+    <div class="home-container">
+        <div style="margin: 10px 0">
+            <el-input v-model="search" placeholder="请输入关键字" style="width: 20%"></el-input>
+            <el-button type='primary'><i class="el-icon-search"></i></el-button>
+            <el-button type='primary' @click="dialogVisible = true">+</el-button>
+            <el-button type='primary'>+</el-button>
+            <el-button type='primary'>+</el-button>
+        </div>
+          <el-table
+            :data="tableData"
+            border
+            style="width: 100%">
+            :default-sort = "{prop: 'id', order: 'descending'}"
+            <el-table-column
+            prop="id"
+            label="ID"
+            sortable>
+            </el-table-column>
+            <el-table-column
+            prop="name"
+            label="NAME">
+            </el-table-column>
+            <el-table-column
+            prop="sex"
+            label="SEX">
+            </el-table-column>
+            <el-table-column
+            prop="age"
+            label="AGE">  
+            </el-table-column>          
+            <el-table-column
+            prop="address"
+            label="地址">
+            </el-table-column>
+            <el-table-column width="180" align="center" label="操作">
+                <template slot-scope="scope">
+                    <el-button
+                    size="mini"
+                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div class="block" style="margin: 10px 0">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[5, 10, 15, 20]"
+            :page-size="10"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="10">
+          </el-pagination>
+        </div>
+        <el-dialog
+          title="提示"
+          :visible.sync="dialogVisible"
+          width="30%"
+          :before-close="handleClose">
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="用户名" prop="username">
+              <el-input v-model="ruleForm.username"></el-input>
+            </el-form-item>
+            <el-form-item label="性别" prop="sex">
+                  <el-radio-group v-model="ruleForm.sex">
+                    <el-radio label="1">女</el-radio>
+                    <el-radio label="0" >男</el-radio>
+                  </el-radio-group>
+            </el-form-item>
+            <el-form-item label="电话" prop="phone">
+              <el-input v-model="ruleForm.phone"></el-input>
+            </el-form-item>
+            <el-form-item label="地址" prop="address">
+              <el-input type="textarea" v-model="ruleForm.address"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+              <el-button @click="resetForm('ruleForm')">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-dialog>
+    </div>
+</template>
+
+<script>
+import  request from "@/utils/request";
+export default {
+    name: 'home',
+    data() {
+      return {
+        ruleForm: {
+          username: '',
+          sex: '',
+          phone: '',
+          address: ''
+        },
+        rules: {
+          username: [
+            { required: true, message: '请输入姓名', trigger: 'blur' },
+            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          ],
+          sex: [
+            { required: true, message: '请选择性别', trigger: 'change' }
+          ],
+          phone: [
+            {required: true, message: '请输入年龄',  trigger: 'blur' }
+          ],
+          address: [
+            {required: true, message: '请填写地址', trigger: 'blur' }
+          ]
+        },
+        dialogVisible: false,//点击按钮弹出对话框，默认隐藏
+        currentPage: 1,//当前页面默认1
+        search:'',//search输入框中的值
+        tableData: [{
+          id: '2016-05-02',
+          name: '王小虎',
+          sex:'1',
+          age:'2',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          id: '2016-05-04',
+          name: '王小虎',
+          sex:'1',
+          age:'2',
+          address: '上海市普陀区金沙江路 1517 弄'
+        }, {
+          id: '2016-05-01',
+          name: '王小虎',
+          sex:'1',
+          age:'2',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          id: '2016-05-03',
+          name: '王小虎',
+          sex:'1',
+          age:'2',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }]
+      }
+    },
+    methods:{
+        save(){
+          request.post("/admin/regist",this.ruleForm).then(res =>{
+            console.log(res);
+          })
+        },
+        handleEdit(index, row) {
+            console.log(index, row);
+        },
+        handleDelete(index, row) {
+            console.log(index, row);
+        },
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
+        },
+        handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
+        },
+        handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      },
+
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+            this.save();
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      }
+    }
+}
+</script>
+
+<style scoped>
+.home-container {
+    padding: 10px;
+    padding-top: 5px;
+}
+</style>
