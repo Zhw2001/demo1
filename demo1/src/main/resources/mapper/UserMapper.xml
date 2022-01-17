@@ -47,4 +47,18 @@
         <include refid="table"/>
     </select>
 
+    <select id="selectPage" resultType="com.ljsh.test.mbg.model.TheUser">
+        SELECT * FROM
+        <include refid="table"/>
+        where username like '%${search}%'
+        limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
+
+    <delete id="del_user" parameterType="int">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        id = #{id}
+    </delete>
+
 </mapper>

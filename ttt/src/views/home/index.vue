@@ -2,9 +2,9 @@
     <div class="home-container">
         <div style="margin: 10px 0">
             <el-input v-model="search" placeholder="请输入关键字" style="width: 20%"></el-input>
-            <el-button type='primary'><i class="el-icon-search"></i></el-button>
+            <el-button type='primary' @click="load()"><i class="el-icon-search"></i></el-button>
             <el-button type='primary' @click="dialogVisible = true">+</el-button>
-            <el-button type='primary'>+</el-button>
+            <el-button type='primary'@click="testadd(tableData)">添加TEST</el-button>
             <el-button type='primary'>+</el-button>
         </div>
           <el-table
@@ -18,7 +18,7 @@
             sortable>
             </el-table-column>
             <el-table-column
-            prop="name"
+            prop="username"
             label="NAME">
             </el-table-column>
             <el-table-column
@@ -37,11 +37,11 @@
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
-                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    @click="handleEdit(scope.row)">编辑</el-button>
                     <el-button
                     size="mini"
                     type="danger"
-                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    @click="handleDelete(scope.$index,scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -50,10 +50,11 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
+            :pager-count="5"
             :page-sizes="[5, 10, 15, 20]"
-            :page-size="10"
+            :page-size="pageSize"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="10">
+            :total="total">
           </el-pagination>
         </div>
         <el-dialog
@@ -64,6 +65,9 @@
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="用户名" prop="username">
               <el-input v-model="ruleForm.username"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input  v-model="ruleForm.password"></el-input>
             </el-form-item>
             <el-form-item label="性别" prop="sex">
                   <el-radio-group v-model="ruleForm.sex">
@@ -103,6 +107,10 @@ export default {
             { required: true, message: '请输入姓名', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
+          password:[
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, message: '长度大于 6 个字符', trigger: 'blur'}
+          ],
           sex: [
             { required: true, message: '请选择性别', trigger: 'change' }
           ],
@@ -116,57 +124,69 @@ export default {
         dialogVisible: false,//点击按钮弹出对话框，默认隐藏
         currentPage: 1,//当前页面默认1
         search:'',//search输入框中的值
-        tableData: [{
-          id: '2016-05-02',
-          name: '王小虎',
-          sex:'1',
-          age:'2',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          id: '2016-05-04',
-          name: '王小虎',
-          sex:'1',
-          age:'2',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          id: '2016-05-01',
-          name: '王小虎',
-          sex:'1',
-          age:'2',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          id: '2016-05-03',
-          name: '王小虎',
-          sex:'1',
-          age:'2',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }]
+        pageSize:10,
+        total:0,
+        tableData: []
       }
     },
+    created(){
+      this.load();
+      this.cal_total();
+    },
     methods:{
-        save(){
-          request.post("/admin/regist",this.ruleForm).then(res =>{
-            console.log(res);
-          })
-        },
-        handleEdit(index, row) {
-            console.log(index, row);
-        },
-        handleDelete(index, row) {
-            console.log(index, row);
-        },
-        handleSizeChange(val) {
-            console.log(`每页 ${val} 条`);
-        },
-        handleCurrentChange(val) {
-            console.log(`当前页: ${val}`);
-        },
-        handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
+      testadd(tableData){
+        let rep=0;
+        for(let item of tableData){
+          if(item.id == this.search){
+            rep=1;
+            break;
+          }
+        }
+        if(rep == 0){
+          tableData.push({id:this.search});
+        }
+      },
+      delete(index,id){
+        this.tableData.splice(index,1);
+        request.post("/admin/delete",{id: id}).then(res =>{
+        });
+      },
+      cal_total(){
+        request.get("/admin/cal_list").then(res=>{
+          this.total = res.data.length;
+        });
+      },
+      load(){
+        request.get("/admin/list?pageNum="+this.currentPage+"&pageSize="+this.pageSize+"&search="+this.search).then(res=>{//等价于.then(function(res){console.log(res.data)})
+        this.tableData = res.data;
+        });
+      },
+      save(){
+        request.post("/admin/regist",this.ruleForm).then(res =>{
+          console.log(res);
+        });
+      },
+      handleEdit(row) {
+        this.dialogVisible = true;
+        this.ruleForm = row;
+      },
+      handleDelete(index,row) {
+        this.delete(index,row.id);
+      },
+      handleSizeChange(val) {
+        this.pageSize=val;
+          this.load();
+      },
+      handleCurrentChange(val) {
+          this.currentPage = val;
+          this.load();
+      },
+      handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
       },
 
       submitForm(formName) {

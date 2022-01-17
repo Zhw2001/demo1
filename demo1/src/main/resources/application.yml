@@ -12,7 +12,7 @@ spring:
 
   datasource:
     name:
-    url: jdbc:mysql://127.0.0.1:3306/try?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/webtry?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
     username: root
     password: root
 

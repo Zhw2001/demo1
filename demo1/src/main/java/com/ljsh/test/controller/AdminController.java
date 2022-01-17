@@ -1,13 +1,12 @@
 package com.ljsh.test.controller;
 
+import cn.hutool.core.util.StrUtil;
+import com.ljsh.test.config.Result;
 import com.ljsh.test.mbg.model.TheUser;
 import com.ljsh.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.util.StringUtils;
 
@@ -16,12 +15,13 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
     private UserService userService;
 
+/*
 
     @RequestMapping("/user/list")
     public ModelAndView getUsers(){
@@ -48,40 +48,41 @@ public class AdminController {
     }
 
 
+*/
 
 
     @PostMapping("/regist")
-    public String regist(HttpServletRequest request){
-        TheUser user = new TheUser();
-        String role_id=request.getParameter("role_id");
-       user.setUsername(request.getParameter("username"));
-       user.setPassword(request.getParameter("password"));
-        user.setPhone(request.getParameter("phone"));
-        user.setEmail(request.getParameter("email"));
-        user.setSex(request.getParameter("sex"));
-        user.setAddress(request.getParameter("address"));
-        if(request.getParameter("state")=="1"){
-            user.setState(1);
+    public Result<?> regist(@RequestBody TheUser user){
+        if(user != null){
+            if(userService.regist(user)) return Result.success();
+            else{
+                return Result.error("2","数据库操作出错");
+            }
         }
-        else{
-            user.setState(0);
-        }
-        user.setDescription(request.getParameter("description"));
-        if(role_id=="2"){
-            user.setRole_id(2);
-        }
-        else if(role_id=="1"){
-            user.setRole_id(1);
-        }
-        else{
-            user.setRole_id(0);
-        }
-        user.setFile(request.getParameter("file"));
-        if(userService.regist(user)){
-            return "FrontPage/login/login";
-        }
-        else{
-            return "FrontPage/login/regist";
-        }
+        return Result.error("1","输入出错");
     }
+
+    @PostMapping("/delete")
+    public Result<?> del(@RequestBody TheUser user){
+        if(user !=null){
+            if(userService.del_user(Integer.parseInt(user.getId().toString())))return Result.success();
+            else{
+                return Result.error("2","数据库操作出错");
+            }
+        }
+        return Result.error("1","输入错误");
+    }
+
+    @GetMapping("/list")
+    public Result<?> findPage(@RequestParam(defaultValue = "1") Integer pageNum,
+                              @RequestParam(defaultValue = "10") Integer pageSize,
+                              @RequestParam(defaultValue = "") String search){
+        return Result.success(userService.selectPage(pageNum, pageSize,search));
+    }
+
+    @GetMapping("/cal_list")
+    public Result<?> cal_total(){
+        return Result.success(userService.getusers());
+    }
+
 }
