@@ -1,19 +1,10 @@
 package com.ljsh.test.controller;
 
-import cn.hutool.core.util.StrUtil;
-import com.ljsh.test.config.Result;
+import com.ljsh.test.dto.Result;
 import com.ljsh.test.mbg.model.TheUser;
 import com.ljsh.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.util.StringUtils;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")

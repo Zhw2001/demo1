@@ -4,9 +4,14 @@ export default[
       component: () => import('@/views/Main'), // main
       children: [    
         {
-        path:'/home',
-        name:'home',
-        component: () => import('@/views/home')
+        path:'/table',
+        name:'table',
+        component: () => import('@/views/table')
+        },
+        {
+        path:'/generate',
+        name:'generate',
+        component: () => import('@/views/generate')
         },
       ]
     },

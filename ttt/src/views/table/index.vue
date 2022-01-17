@@ -4,7 +4,7 @@
             <el-input v-model="search" placeholder="请输入关键字" style="width: 20%"></el-input>
             <el-button type='primary' @click="load()"><i class="el-icon-search"></i></el-button>
             <el-button type='primary' @click="dialogVisible = true">+</el-button>
-            <el-button type='primary'@click="testadd(tableData)">添加TEST</el-button>
+            <el-button type='primary' @click="testadd(tableData)">添加TEST</el-button>
             <el-button type='primary'>+</el-button>
         </div>
           <el-table
