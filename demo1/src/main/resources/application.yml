@@ -14,9 +14,12 @@ spring:
     name:
     url: jdbc:mysql://127.0.0.1:3306/webtry?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
     username: root
-    password: root
-
-
+    password: 123456
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+
+shiro:
+  secret: f4e2e52034348f86b67cde581c09eb5
+  expire: 604800
+  header: Authorization

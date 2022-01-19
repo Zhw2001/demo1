@@ -13,25 +13,33 @@
             style="width: 100%">
             :default-sort = "{prop: 'id', order: 'descending'}"
             <el-table-column
-            prop="id"
+            type="index"
             label="ID"
             sortable>
             </el-table-column>
             <el-table-column
-            prop="username"
-            label="NAME">
+            prop="account"
+            label="账户">
             </el-table-column>
             <el-table-column
-            prop="sex"
-            label="SEX">
+            prop="nickname"
+            label="昵称">
             </el-table-column>
             <el-table-column
-            prop="age"
-            label="AGE">  
+            prop="admin_role_ids"
+            label="角色组">  
             </el-table-column>          
             <el-table-column
-            prop="address"
-            label="地址">
+            prop="email"
+            label="邮箱">
+            </el-table-column>
+            <el-table-column
+            prop="phone"
+            label="手机">
+            </el-table-column>
+            <el-table-column
+            prop="enable"
+            label="是否启用">
             </el-table-column>
             <el-table-column width="180" align="center" label="操作">
                 <template slot-scope="scope">
@@ -63,24 +71,22 @@
           width="30%"
           :before-close="handleClose">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="用户名" prop="username">
-              <el-input v-model="ruleForm.username"></el-input>
+            <el-form-item label="账户" prop="account">
+              <el-input v-model="ruleForm.account"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
               <el-input  v-model="ruleForm.password"></el-input>
             </el-form-item>
-            <el-form-item label="性别" prop="sex">
-                  <el-radio-group v-model="ruleForm.sex">
-                    <el-radio label="1">女</el-radio>
-                    <el-radio label="0" >男</el-radio>
-                  </el-radio-group>
+            <el-form-item label="电子邮件" prop="email">
+              <el-input  v-model="ruleForm.email"></el-input>
             </el-form-item>
-            <el-form-item label="电话" prop="phone">
-              <el-input v-model="ruleForm.phone"></el-input>
+            <el-form-item label="手机号码" prop="phone">
+              <el-input  v-model="ruleForm.phone"></el-input>
             </el-form-item>
-            <el-form-item label="地址" prop="address">
-              <el-input type="textarea" v-model="ruleForm.address"></el-input>
+            <el-form-item label="是否有效" prop="enable">
+              <el-switch v-model="ruleForm.enable"></el-switch>
             </el-form-item>
+
             <el-form-item>
               <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
               <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -95,31 +101,30 @@ import  request from "@/utils/request";
 export default {
     name: 'home',
     data() {
+
       return {
         ruleForm: {
-          username: '',
-          sex: '',
+          account: '',
+          password: '',
+          email: '',
           phone: '',
-          address: ''
+          enable: false
         },
         rules: {
-          username: [
-            { required: true, message: '请输入姓名', trigger: 'blur' },
+          account: [
+            { required: true, message: '请输入用户名', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ],
           password:[
             { required: true, message: '请输入密码', trigger: 'blur' },
             { min: 6, message: '长度大于 6 个字符', trigger: 'blur'}
           ],
-          sex: [
-            { required: true, message: '请选择性别', trigger: 'change' }
+          email:[
+            { required: true, trigger: 'blur' },
           ],
-          phone: [
-            {required: true, message: '请输入年龄',  trigger: 'blur' }
+          phone:[
+            { required: true,  trigger: 'blur' },
           ],
-          address: [
-            {required: true, message: '请填写地址', trigger: 'blur' }
-          ]
         },
         dialogVisible: false,//点击按钮弹出对话框，默认隐藏
         currentPage: 1,//当前页面默认1
@@ -146,9 +151,9 @@ export default {
           tableData.push({id:this.search});
         }
       },
-      delete(index,id){
+      delete(index,account){
         this.tableData.splice(index,1);
-        request.post("/admin/delete",{id: id}).then(res =>{
+        request.post("/admin/delete",{account: account}).then(res =>{
         });
       },
       cal_total(){
@@ -159,9 +164,15 @@ export default {
       load(){
         request.get("/admin/list?pageNum="+this.currentPage+"&pageSize="+this.pageSize+"&search="+this.search).then(res=>{//等价于.then(function(res){console.log(res.data)})
         this.tableData = res.data;
+        console.log(this.tableData.length);
         });
       },
       save(){
+        if(this.ruleForm.enable===true){
+          this.ruleForm.enable=1;
+        }else{
+          this.ruleForm.enable=0;
+        }
         request.post("/admin/regist",this.ruleForm).then(res =>{
           console.log(res);
         });
@@ -171,7 +182,7 @@ export default {
         this.ruleForm = row;
       },
       handleDelete(index,row) {
-        this.delete(index,row.id);
+        this.delete(index,row.account);
       },
       handleSizeChange(val) {
         this.pageSize=val;

@@ -1,19 +1,29 @@
 export default[
-    {
-      path: '/',
-      component: () => import('@/views/Main'), // main
-      children: [    
-        {
-        path:'/table',
-        name:'table',
-        component: () => import('@/views/table')
-        },
-        {
-        path:'/generate',
-        name:'generate',
-        component: () => import('@/views/generate')
-        },
-      ]
-    },
-    
+  {
+    path: '/',
+    name:'main',
+    component: () => import('@/views/Main'), // main
+    children: [    
+      {
+      path:'/table',
+      name:'table',
+      component: () => import('@/views/table')
+      },
+      {
+      path:'/generate',
+      name:'generate',
+      component: () => import('@/views/generate')
+      },
+    ]
+  },
+  {
+    path:'/login',
+    name:'login',
+    component: () => import('@/views/login')
+  },
+  {
+    path:'/regist',
+    name:'regist',
+    component: () => import('@/views/regist')
+  },
 ]

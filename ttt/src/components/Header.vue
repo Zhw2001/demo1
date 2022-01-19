@@ -5,10 +5,10 @@
         <div class='right'>
           <el-dropdown>
             <span class="el-dropdown-link">
-                您好<i class="el-icon-arrow-down el-icon--right"></i>
+                {{this.$route.params.nickname}}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>个人信息</el-dropdown-item>
+                <el-dropdown-item >个人信息</el-dropdown-item>
                 <el-dropdown-item>退出登录</el-dropdown-item>
             </el-dropdown-menu>
             </el-dropdown>
@@ -21,8 +21,9 @@ export default {
     name:"Header",
     methods: {
         handleClick() {
-        alert('button click');
-        }
+            alert('button click');
+        },
+
     }
 }
 </script>

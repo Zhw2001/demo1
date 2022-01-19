@@ -1,35 +1,15 @@
 package com.ljsh.test.dto;
 
 
+import com.ljsh.test.utils.UUIDGenerator;
+import lombok.Data;
 
+@Data
 public class Result <U>{
     private String code;
     private String msg;
     private U data;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public U getData() {
-        return data;
-    }
-
-    public void setData(U data) {
-        this.data = data;
-    }
+    private String token;
 
     public Result(U data){this.data=data;}
 
@@ -39,6 +19,7 @@ public class Result <U>{
         Result result = new Result();
         result.setCode("0");
         result.setMsg("成功");
+        result.setToken("undefined");
         return result;
     }
 
@@ -46,6 +27,16 @@ public class Result <U>{
         Result<U> result = new Result<U>(data);
         result.setCode("0");
         result.setMsg("成功");
+        result.setToken("undefined");
+        return result;
+    }
+
+    public static <U> Result<U> success_token(U data){
+        Result<U> result = new Result<U>(data);
+        result.setCode("0");
+        result.setMsg("成功");
+        UUIDGenerator uuidGenerator = new UUIDGenerator();
+        result.setToken(uuidGenerator.getPart(4));
         return result;
     }
 
@@ -53,6 +44,7 @@ public class Result <U>{
         Result result = new Result();
         result.setCode(code);
         result.setMsg(msg);
+        result.setToken("undefined");
         return result;
     }
 

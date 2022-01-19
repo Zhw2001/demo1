@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+
+
+<mapper namespace="com.ljsh.test.mbg.mapper.AdminUserMapper">
+    <sql id="table">admin_user</sql>
+
+    <resultMap type="com.ljsh.test.mbg.model.AdminUser" id="userMap">
+        <id  property="uid" column="uid" javaType="String" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" javaType="String" jdbcType="VARCHAR"/>
+        <result property="account" column="account" javaType="String" jdbcType="CHAR"/>
+        <result property="nickname" column="nickname" javaType="String" jdbcType="VARCHAR"/>
+        <result property="password" column="password" javaType="String" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" javaType="Long" jdbcType="BIGINT"/>
+        <result property="email" column="email" javaType="String" jdbcType="VARCHAR"/>
+        <result property="last_sign_time" column="last_sign_time" javaType="Long" jdbcType="BIGINT"/>
+        <result property="reg_ip" column="reg_ip" javaType="String" jdbcType="VARCHAR"/>
+        <result property="enable" column="enable" javaType="Integer" jdbcType="TINYINT"/>
+        <result property="description" column="description" javaType="String" jdbcType="VARCHAR"/>
+        <result property="admin_role_ids" column="admin_role_ids" javaType="String" jdbcType="LONGVARCHAR"/>
+        <result property="create_date" column="create_date" javaType="String" jdbcType="TIMESTAMP"/>
+        <result property="create_timestamp" column="create_timestamp" javaType="Long" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <insert id="newu" parameterType="com.ljsh.test.mbg.model.AdminUser">
+        INSERT INTO
+        <include refid="table"/>
+        (uid,avatar,account,nickname,password,phone,email,enable,description,admin_role_ids,create_date,create_timestamp)
+        VALUES
+        (#{uid},#{avatar},#{account},#{nickname},#{password},#{phone},#{email},#{enable},#{description},#{admin_role_ids},NOW(),NOW())
+    </insert>
+
+    <select id="getUserByAccount" parameterType="String" resultMap="userMap">
+        SELECT
+        *
+        FROM
+        <include refid="table"/>
+        WHERE
+        account = #{account}
+    </select>
+
+
+    <select id="getPasswordByAccount" parameterType="java.lang.String" resultType="String">
+        SELECT
+        password
+        FROM
+        <include refid="table"/>
+        WHERE
+        account = #{account}
+    </select>
+
+    <select id="getAll" resultMap="userMap">
+        SELECT * FROM
+        <include refid="table"/>
+    </select>
+
+    <select id="selectPage" resultMap="userMap">
+        SELECT * FROM
+        <include refid="table"/>
+        where account like '%${search}%'
+        limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
+
+    <delete id="del_user" parameterType="String">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE
+        account = #{account}
+    </delete>
+
+</mapper>
