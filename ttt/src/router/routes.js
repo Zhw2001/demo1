@@ -5,12 +5,12 @@ export default[
     component: () => import('@/views/Main'), // main
     children: [    
       {
-      path:'/table',
+      path:'table',
       name:'table',
       component: () => import('@/views/table')
       },
       {
-      path:'/generate',
+      path:'generate',
       name:'generate',
       component: () => import('@/views/generate')
       },

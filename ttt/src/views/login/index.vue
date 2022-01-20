@@ -46,6 +46,7 @@ export default{
                             type:"success",
                             message: "login success"
                         })
+                        localStorage.setItem('Authorization',res.token);
                         this.$router.push({name:"main",params:res.data});
                    }
                    else{

@@ -7,11 +7,10 @@ const request = axios.create({
 
 // request 拦截器
 // 可以自请求发送前对请求做一些处理
-// 比如统一加token，对请求参数统一加密
+// 比如请求头中统一加token，对请求参数统一加密等等等
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
-  
- // config.headers['token'] = user.token;  // 设置请求头
+    config.headers['token'] = localStorage.getItem('Authorization');  // 设置请求头
     return config
 }, error => {
     return Promise.reject(error)

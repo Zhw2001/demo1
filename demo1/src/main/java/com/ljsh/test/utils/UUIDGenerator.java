@@ -19,8 +19,11 @@ public class UUIDGenerator {
         return myuuid;
     }
 
-    public String getPart(int i){
-        return myuuid.substring(0,i);
+
+    public static UUIDGenerator getPart(int i){
+        UUIDGenerator uuidGenerator = new UUIDGenerator();
+        uuidGenerator.myuuid.substring(0,i);
+        return uuidGenerator;
     }
 
 }

@@ -16,9 +16,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     public Boolean regist(AdminUser u){
         AdminUser existuser =  adminUserMapper.getUserByAccount(u.getAccount());
-        UUIDGenerator uuidGenerator = new UUIDGenerator();
         if(existuser == null){
-            u.setUid(uuidGenerator.getPart(8));
+            u.setUid(UUIDGenerator.getPart(8).getMyuuid());
             adminUserMapper.newu(u);
             return true;
         }

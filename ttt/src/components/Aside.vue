@@ -25,9 +25,9 @@
             <i class="el-icon-user"></i>
             <span>UserManager</span>
         </template>
-            <el-menu-item index="/table">User</el-menu-item>
+            <el-menu-item index="3-1">User</el-menu-item>
             <el-menu-item>UserRole</el-menu-item>
-            <el-menu-item index="2-3">UserRoleMenu</el-menu-item>
+            <el-menu-item index="3-3">UserRoleMenu</el-menu-item>
 
         </el-submenu>
         <el-submenu index="4">
@@ -35,9 +35,9 @@
             <i class="el-icon-setting"></i>
             <span>SystemSetting</span>
         </template>
-            <el-menu-item index="/table">AdminUser</el-menu-item>
+            <el-menu-item index="4-1">AdminUser</el-menu-item>
             <el-menu-item>AdminRole</el-menu-item>
-            <el-menu-item index="2-3">AdminAuthority</el-menu-item>
+            <el-menu-item index="4-3">AdminAuthority</el-menu-item>
         </el-submenu>
         </el-menu>
     </div>

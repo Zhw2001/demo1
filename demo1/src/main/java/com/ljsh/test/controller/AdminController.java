@@ -3,6 +3,7 @@ package com.ljsh.test.controller;
 import com.ljsh.test.dto.Result;
 import com.ljsh.test.mbg.model.AdminUser;
 import com.ljsh.test.service.AdminUserService;
+import com.ljsh.test.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +20,14 @@ public class AdminController {
     public Result<?> login(@RequestBody AdminUser adminUser){
         AdminUser find = adminUserService.login(adminUser.getAccount(),adminUser.getPassword());
         if(find!=null){
-            return Result.success(find);
-        }else{
-            return Result.error("1","登录失败");
+            String token = JwtUtil.sign(find.getAccount());
+            if(token != null){
+                return Result.success_token(find,token);
+            }
+            return Result.error("1","认证失败");
         }
+
+        return Result.error("1","登录失败");
     }
 
 
