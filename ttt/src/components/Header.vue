@@ -9,7 +9,7 @@
             </span>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item >个人信息</el-dropdown-item>
-                <el-dropdown-item>退出登录</el-dropdown-item>
+                <el-dropdown-item><el-button @click="out()">退出登录</el-button></el-dropdown-item>
             </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -23,7 +23,10 @@ export default {
         handleClick() {
             alert('button click');
         },
-
+        out(){
+            localStorage.removeItem('Authorization');
+            this.$router.push('/login');
+        }
     }
 }
 </script>
