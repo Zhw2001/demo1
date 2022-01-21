@@ -10,7 +10,7 @@
     <sql id="table">admin_user</sql>
 
     <resultMap type="com.ljsh.test.mbg.model.AdminUser" id="userMap">
-        <id  property="uid" column="uid" javaType="String" jdbcType="VARCHAR"/>
+        <id  property="uid" column="uid" javaType="int" jdbcType="BIGINT"/>
         <result property="avatar" column="avatar" javaType="String" jdbcType="VARCHAR"/>
         <result property="account" column="account" javaType="String" jdbcType="CHAR"/>
         <result property="nickname" column="nickname" javaType="String" jdbcType="VARCHAR"/>
@@ -29,9 +29,9 @@
     <insert id="newu" parameterType="com.ljsh.test.mbg.model.AdminUser">
         INSERT INTO
         <include refid="table"/>
-        (uid,avatar,account,nickname,password,phone,email,enable,description,admin_role_ids,create_date,create_timestamp)
+        (avatar,account,nickname,password,phone,email,enable,description,admin_role_ids,create_date,create_timestamp)
         VALUES
-        (#{uid},#{avatar},#{account},#{nickname},#{password},#{phone},#{email},#{enable},#{description},#{admin_role_ids},NOW(),NOW())
+        (#{avatar},#{account},#{nickname},#{password},#{phone},#{email},#{enable},#{description},#{admin_role_ids},NOW(),NOW())
     </insert>
 
     <select id="getUserByAccount" parameterType="String" resultMap="userMap">
@@ -71,5 +71,12 @@
         WHERE
         account = #{account}
     </delete>
+
+    <select id="get_Auth_info" resultMap="">
+        SELECT * FROM
+        <include refid="table"/>
+        where account like '%${search}%'
+        limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
 
 </mapper>

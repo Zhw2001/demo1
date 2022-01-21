@@ -13,8 +13,7 @@
             <span>查看数据</span>
         </template>
             <el-menu-item index="/table">UserData</el-menu-item>
-            <el-menu-item >选项2</el-menu-item>
-            <el-menu-item index="2-3">选项3</el-menu-item>
+            <el-menu-item index="/input">CourseData</el-menu-item>
         </el-submenu>
         <el-menu-item index="/generate">
             <i class="el-icon-download"></i>
@@ -46,13 +45,14 @@
 <script>
 export default {
     methods: {
-    handleOpen(key, keyPath) {
-    console.log(key, keyPath);
+        handleOpen(key, keyPath) {
+        console.log(key, keyPath);
+        },
+        handleClose(key, keyPath) {
+        console.log(key, keyPath);
+        }
     },
-    handleClose(key, keyPath) {
-    console.log(key, keyPath);
-    }
-    }
+
 }
 </script>
 

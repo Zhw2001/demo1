@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import request from "@/utils/request";
+import request from "@/request";
 
 export default{
     name:"login",
@@ -47,7 +47,9 @@ export default{
                             message: "login success"
                         })
                         localStorage.setItem('Authorization',res.token);
-                        this.$router.push({name:"main",params:res.data});
+                        localStorage.setItem('AuthorityName',res.data.nickname);
+                        this.$store.dispatch('authority/GET_USER', res.data);
+                        this.$router.push('/');
                    }
                    else{
                        this.$message({

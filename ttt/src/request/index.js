@@ -5,6 +5,21 @@ const request = axios.create({
     timeout: 5000
 })
 
+
+export function fetch ({ url, method, parameter, moreConfig = {} }) {
+    logRequests && console.log(`fetching ${url}...`)
+    return new Promise((resolve, reject) => {
+      service[method](url, parameter, moreConfig)
+        .then(res => {
+          const val = res.data
+          logRequests && console.log(`fetched ${url}.`)
+          resolve(val)
+        }, reject)
+        .catch(reject)
+    })
+  }
+
+
 // request 拦截器
 // 可以自请求发送前对请求做一些处理
 // 比如请求头中统一加token，对请求参数统一加密等等等
@@ -21,11 +36,17 @@ request.interceptors.request.use(config => {
 request.interceptors.response.use(
     response => {
         let res = response.data;
+        console.log(response.data);
+        if(res === 401){
+            localStorage.removeItem('Authorization');
+            localStorage.removeItem('AuthorityName');
+            this.$router.push('/login');
+        }
         // 如果是返回的文件
         if (response.config.responseType === 'blob') {
             return res
         }
-        // 兼容服务端返回的字符串数据
+        // 兼容服务端返回的字符串数据,是字符串就改为对象，是对象就直接返回
         if (typeof res === 'string') {
             res = res ? JSON.parse(res) : res
         }

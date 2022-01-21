@@ -1,6 +1,6 @@
 package com.ljsh.test.controller;
 
-import com.ljsh.test.dto.Result;
+import com.ljsh.test.utils.Result;
 import com.ljsh.test.mbg.model.AdminUser;
 import com.ljsh.test.service.AdminUserService;
 import com.ljsh.test.utils.JwtUtil;
@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     @Autowired
     private AdminUserService adminUserService;
-
-
-
 
     @RequestMapping(value="/login",method= RequestMethod.POST)
     public Result<?> login(@RequestBody AdminUser adminUser){
@@ -30,6 +27,17 @@ public class AdminController {
         return Result.error("1","登录失败");
     }
 
+
+    @PostMapping("/getAdminAuth")
+    public Result<?> getadminAuth(@RequestBody AdminUser user) {
+        if(user != null){
+            if(adminUserService) return Result.success();
+            else{
+                return Result.error("2","数据库操作出错");
+            }
+        }
+        return Result.error("1","输入出错");
+    }
 
     @PostMapping("/regist")
     public Result<?> regist(@RequestBody AdminUser user){

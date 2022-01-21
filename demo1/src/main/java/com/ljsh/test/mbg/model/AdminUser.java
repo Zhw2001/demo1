@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AdminUser {
-    private String uid;
+    private int uid;
     private String avatar;
     private String account;
     private String nickname;

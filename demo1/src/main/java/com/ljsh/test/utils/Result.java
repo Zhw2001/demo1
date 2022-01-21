@@ -1,4 +1,4 @@
-package com.ljsh.test.dto;
+package com.ljsh.test.utils;
 
 
 import lombok.Data;

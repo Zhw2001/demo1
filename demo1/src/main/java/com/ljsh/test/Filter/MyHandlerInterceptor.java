@@ -1,9 +1,10 @@
 package com.ljsh.test.Filter;
 
+import com.ljsh.test.utils.MyResponse;
+import com.ljsh.test.utils.Result;
 import com.ljsh.test.utils.JwtUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,10 +26,12 @@ public class MyHandlerInterceptor implements HandlerInterceptor {
                 return true;
             }
             else{
+                MyResponse.writeResult(response, Result.error("401","权限认证失败"));
                 System.out.println("认证失败");
                 return false;
             }
         }
+        MyResponse.writeResult(response,Result.error("401","没有权限"));
         System.out.println("拦截");
         return false;
     }

@@ -17,6 +17,9 @@ export default {
   components:{
     Header,
     Aside
+  },
+  created(){
+    console.log(this.$store.state.authority.RoleName);
   }
 }
 </script>
