@@ -3,13 +3,12 @@
         <div class='left'>后台管理</div>
         <div style='flex: 1'></div>
         <div class='right'>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-                {{this.$route.params.nickname}}<i class="el-icon-arrow-down el-icon--right"></i>
+          <el-dropdown @command="handleCommand">
+            <span class="el-dropdown-link"><label>{{authority}}</label><i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item >个人信息</el-dropdown-item>
-                <el-dropdown-item><el-button @click="out()">退出登录</el-button></el-dropdown-item>
+                <el-dropdown-item command="out">退出登录</el-dropdown-item>
             </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -19,13 +18,27 @@
 <script>
 export default {
     name:"Header",
+    data(){
+        return{
+            authority:'',
+        }
+    },
     methods: {
-        handleClick() {
-            alert('button click');
+        handleCommand(command){
+            if(command === 'out'){
+                console.log(command);
+                this.out();
+            }
         },
         out(){
             localStorage.removeItem('Authorization');
             this.$router.push('/login');
+        }
+    },
+    created(){
+        if(localStorage.getItem('AuthorityName') !== undefined){
+        console.log(localStorage.getItem('AuthorityName'));
+        this.authority=localStorage.getItem('AuthorityName');
         }
     }
 }

@@ -10,8 +10,9 @@
           <el-table
             :data="tableData"
             border
-            style="width: 100%">
+            style="width: 100%"
             :default-sort = "{prop: 'id', order: 'descending'}"
+          >
             <el-table-column
             type="index"
             label="ID"
@@ -52,7 +53,7 @@
                     @click="handleDelete(scope.$index,scope.row)">删除</el-button>
                 </template>
             </el-table-column>
-        </el-table>
+          </el-table>
         <div class="block" style="margin: 10px 0">
           <el-pagination
             @size-change="handleSizeChange"
@@ -97,7 +98,7 @@
 </template>
 
 <script>
-import  request from "@/utils/request";
+import request from "@/request";
 export default {
     name: 'home',
     data() {

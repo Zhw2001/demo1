@@ -14,6 +14,11 @@ export default[
       name:'generate',
       component: () => import('@/views/generate')
       },
+      {
+        path:'input',
+        name:'input',
+        component: () => import('@/views/input')
+        },
     ]
   },
   {

@@ -1,5 +1,6 @@
 package com.ljsh.test.mbg.mapper;
 
+import com.ljsh.test.dto.UserAuth;
 import com.ljsh.test.mbg.model.AdminUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,4 +15,5 @@ public interface AdminUserMapper {
     List<AdminUser> getAll();
     List<AdminUser> selectPage(@Param("pageNum")int pageNum, @Param("pageSize")int pageSize, @Param("search")String search);
     void del_user(String account);
+    UserAuth get_Auth_info(String account);
 }

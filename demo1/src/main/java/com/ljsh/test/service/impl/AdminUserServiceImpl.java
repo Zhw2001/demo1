@@ -1,9 +1,11 @@
 package com.ljsh.test.service.impl;
 
+import com.ljsh.test.dto.UserAuth;
+import com.ljsh.test.mbg.mapper.AdminAuthorityMapper;
+import com.ljsh.test.mbg.mapper.AdminRoleMapper;
 import com.ljsh.test.mbg.mapper.AdminUserMapper;
 import com.ljsh.test.mbg.model.AdminUser;
 import com.ljsh.test.service.AdminUserService;
-import com.ljsh.test.utils.UUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,10 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Autowired
     private AdminUserMapper adminUserMapper;
 
+
     public Boolean regist(AdminUser u){
         AdminUser existuser =  adminUserMapper.getUserByAccount(u.getAccount());
         if(existuser == null){
-            u.setUid(UUIDGenerator.getPart(8).getMyuuid());
             adminUserMapper.newu(u);
             return true;
         }
@@ -48,5 +50,9 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUserMapper.del_user(account);
         return true;
     }
+
+    public UserAuth getAuth(String account){
+
+    };
 
 }

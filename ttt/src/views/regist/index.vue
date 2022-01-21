@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import request from "@/utils/request";
+import request from "@/request";
 
 export default{
-    name:"login",
+    name:"regist",
    data(){
        return {
            form:{
