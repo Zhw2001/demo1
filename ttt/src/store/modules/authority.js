@@ -29,7 +29,7 @@ export default {
     actions:{
       GET_USER ({ commit, dispatch, state }, parameter) {
         // 获取用户信息
-        return request.post("/admin/getAdminAuth",parameter).then(res =>
+        return request.post("/api_S/admin/getAdminAuth",parameter).then(res =>
           {
           commit('SET_ROLE_NAME', result.data.role_name);
           commit('SET_AUTHORITY_ID', result.data.authority_name) ;

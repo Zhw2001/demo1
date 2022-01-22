@@ -72,7 +72,7 @@
         account = #{account}
     </delete>
 
-    <select id="get_Auth_info" resultMap="">
+    <select id="get_Auth_info">
         SELECT * FROM
         <include refid="table"/>
         where account like '%${search}%'

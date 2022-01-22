@@ -52,7 +52,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     public UserAuth getAuth(String account){
-
+        return adminUserMapper.get_Auth_info(account);
     };
 
 }

@@ -11,6 +11,7 @@
 <script>
 import Header from '@/components/Header'
 import Aside from '@/components/Aside'
+import request from '@/request'
 
 export default {
   name: 'Main',
@@ -20,7 +21,7 @@ export default {
   },
   created(){
     console.log(this.$store.state.authority.RoleName);
-  }
+  },
 }
 </script>
 

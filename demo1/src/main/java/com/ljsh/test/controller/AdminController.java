@@ -31,13 +31,13 @@ public class AdminController {
     @PostMapping("/getAdminAuth")
     public Result<?> getadminAuth(@RequestBody AdminUser user) {
         if(user != null){
-            if(adminUserService) return Result.success();
-            else{
-                return Result.error("2","数据库操作出错");
-            }
+            return Result.success(adminUserService.getAuth(user.getAccount()));
         }
-        return Result.error("1","输入出错");
+        else{
+            return Result.error("2","数据库操作出错");
+        }
     }
+
 
     @PostMapping("/regist")
     public Result<?> regist(@RequestBody AdminUser user){

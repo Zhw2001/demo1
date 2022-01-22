@@ -39,7 +39,7 @@ export default{
 
    methods:{
         login(){
-            request.post("/admin/login",this.form).then(res =>{
+            request.post("/api_S/admin/login",this.form).then(res =>{
                 if(res.code == '0'){
                     if(res.data.enable=='1'){
                         this.$message({

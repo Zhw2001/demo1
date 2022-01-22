@@ -154,16 +154,16 @@ export default {
       },
       delete(index,account){
         this.tableData.splice(index,1);
-        request.post("/admin/delete",{account: account}).then(res =>{
+        request.post("/api_S/admin/delete",{account: account}).then(res =>{
         });
       },
       cal_total(){
-        request.get("/admin/cal_list").then(res=>{
+        request.get("/api_S/admin/cal_list").then(res=>{
           this.total = res.data.length;
         });
       },
       load(){
-        request.get("/admin/list?pageNum="+this.currentPage+"&pageSize="+this.pageSize+"&search="+this.search).then(res=>{//等价于.then(function(res){console.log(res.data)})
+        request.get("/api_S/admin/list?pageNum="+this.currentPage+"&pageSize="+this.pageSize+"&search="+this.search).then(res=>{//等价于.then(function(res){console.log(res.data)})
         this.tableData = res.data;
         console.log(this.tableData.length);
         });
@@ -174,7 +174,7 @@ export default {
         }else{
           this.ruleForm.enable=0;
         }
-        request.post("/admin/regist",this.ruleForm).then(res =>{
+        request.post("/api_S/admin/regist",this.ruleForm).then(res =>{
           console.log(res);
         });
       },

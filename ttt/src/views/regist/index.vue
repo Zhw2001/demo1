@@ -36,7 +36,7 @@ export default{
 
    methods:{
        regist(){
-           request.post("/user/regist",this.form).then(res =>{
+           request.post("/api_S/user/regist",this.form).then(res =>{
                if(res.code === '0'){
                    this.$message({
                        type:"success",

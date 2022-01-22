@@ -7,37 +7,35 @@
         @close="handleClose"
         router
         >
-        <el-submenu index="1">
-            <template slot="title">
-            <i class="el-icon-s-data"></i>
-            <span>查看数据</span>
-        </template>
-            <el-menu-item index="/table">UserData</el-menu-item>
-            <el-menu-item index="/input">CourseData</el-menu-item>
-        </el-submenu>
-        <el-menu-item index="/generate">
-            <i class="el-icon-download"></i>
-            <span slot="title">生成报表</span>
-        </el-menu-item>
-        <el-submenu index="3">
-            <template slot="title">
-            <i class="el-icon-user"></i>
-            <span>UserManager</span>
-        </template>
-            <el-menu-item index="3-1">User</el-menu-item>
-            <el-menu-item>UserRole</el-menu-item>
-            <el-menu-item index="3-3">UserRoleMenu</el-menu-item>
+            <el-submenu index="1">
+                <template slot="title">
+                    <i class="el-icon-s-data"></i>
+                    <span>查看数据</span>
+                </template>
+                <el-menu-item index="/table">UserData</el-menu-item>
+                <el-menu-item index="/input">CourseData</el-menu-item>
+            </el-submenu>
 
-        </el-submenu>
-        <el-submenu index="4">
-            <template slot="title">
-            <i class="el-icon-setting"></i>
-            <span>SystemSetting</span>
-        </template>
-            <el-menu-item index="4-1">AdminUser</el-menu-item>
-            <el-menu-item>AdminRole</el-menu-item>
-            <el-menu-item index="4-3">AdminAuthority</el-menu-item>
-        </el-submenu>
+            <el-submenu index="3">
+                <template slot="title">
+                    <i class="el-icon-user"></i>
+                    <span>UserManager</span>
+                </template>
+                <el-menu-item index="3-1">User</el-menu-item>
+                <el-menu-item>UserRole</el-menu-item>
+                <el-menu-item index="3-3">UserRoleMenu</el-menu-item>
+            </el-submenu>
+
+            <el-submenu index="4">
+                <template slot="title">
+                    <i class="el-icon-setting"></i>
+                    <span>SystemSetting</span>
+                </template>
+                <el-menu-item index="4-1">AdminUser</el-menu-item>
+                <el-menu-item>AdminRole</el-menu-item>
+                <el-menu-item index="4-3">AdminAuthority</el-menu-item>
+            </el-submenu>
+
         </el-menu>
     </div>
 </template>
