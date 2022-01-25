@@ -1,7 +1,7 @@
 package com.ljsh.test.Filter;
 
 import com.ljsh.test.utils.MyResponse;
-import com.ljsh.test.utils.Result;
+import com.ljsh.test.dto.Result;
 import com.ljsh.test.utils.JwtUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

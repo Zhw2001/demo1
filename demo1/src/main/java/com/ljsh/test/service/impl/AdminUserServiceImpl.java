@@ -1,8 +1,5 @@
 package com.ljsh.test.service.impl;
 
-import com.ljsh.test.dto.UserAuth;
-import com.ljsh.test.mbg.mapper.AdminAuthorityMapper;
-import com.ljsh.test.mbg.mapper.AdminRoleMapper;
 import com.ljsh.test.mbg.mapper.AdminUserMapper;
 import com.ljsh.test.mbg.model.AdminUser;
 import com.ljsh.test.service.AdminUserService;
@@ -20,7 +17,13 @@ public class AdminUserServiceImpl implements AdminUserService {
     public Boolean regist(AdminUser u){
         AdminUser existuser =  adminUserMapper.getUserByAccount(u.getAccount());
         if(existuser == null){
+            try{
             adminUserMapper.newu(u);
+            Integer uid = adminUserMapper.getUidByAccount(u.getAccount());
+            adminUserMapper.set_user_auth(uid);
+            }catch (Exception e){
+                return false;
+            }
             return true;
         }
         return false;
@@ -47,12 +50,19 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     public Boolean del_user(String account){
-        adminUserMapper.del_user(account);
+        try {
+            Integer uid = adminUserMapper.getUidByAccount(account);
+            adminUserMapper.del_user_auth(uid);
+            adminUserMapper.del_user(account);
+        }catch(Exception e){
+            return false;
+        }
         return true;
     }
 
-    public UserAuth getAuth(String account){
-
-    };
+    public AdminUser getAuth(String account){
+        AdminUser adminUser = adminUserMapper.get_Auth_info(account);
+        return adminUser;
+    }
 
 }

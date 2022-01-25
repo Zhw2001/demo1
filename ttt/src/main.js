@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import store from './store'
 import { createRouter } from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -10,10 +9,11 @@ import '@/assets/css/global.css'
 
 const router = createRouter()
 Vue.use(ElementUI);
-Vue.config.productionTip = false
-
+Vue.config.productionTip = false;
 new Vue({
-  store,
   router,
   render: h => h(App)
-}).$mount('#app')
+/*   render: function (createElement) {
+      return createElement(App);
+  } */
+}).$mount('#app')//手动挂载到index id="app"

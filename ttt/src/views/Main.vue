@@ -12,15 +12,15 @@
 import Header from '@/components/Header'
 import Aside from '@/components/Aside'
 
+
 export default {
   name: 'Main',
   components:{
     Header,
-    Aside
+    Aside,
   },
-  created(){
-    console.log(this.$store.state.authority.RoleName);
-  }
+  methods:{
+  },
 }
 </script>
 

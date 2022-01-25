@@ -39,7 +39,7 @@ export default{
 
    methods:{
         login(){
-            request.post("/admin/login",this.form).then(res =>{
+            request.post("/api_S/admin/login",this.form).then(res =>{
                 if(res.code == '0'){
                     if(res.data.enable=='1'){
                         this.$message({
@@ -48,8 +48,31 @@ export default{
                         })
                         localStorage.setItem('Authorization',res.token);
                         localStorage.setItem('AuthorityName',res.data.nickname);
-                        this.$store.dispatch('authority/GET_USER', res.data);
-                        this.$router.push('/');
+                        request.get('/api_S/admin/get_Auth'+'?account='+res.data.account).then(res =>{
+                            res = res.data;
+                            var authUrl = res.authority_url.split(",");
+                            var authName = res.authority_name.split(",");
+                            var authType = res.authority_type.split(",");
+                            var MenuName = new Array();
+                            var AuthName = new Array();var AuthList = new Array();
+                            for(var i = 0; i<authUrl.length; i++)
+                            {
+                                if(authType[i] == 1){
+                                   MenuName.push(authName[i]);
+                                }
+                                else if(authType[i] == 2){
+                                    AuthName.push(authName[i]);
+                                    AuthList.push(authUrl[i]);
+                                }
+                            }
+                            console.log(MenuName);
+                            console.log(AuthName);
+                            console.log(AuthList);
+                            sessionStorage.setItem('MenuName',MenuName);
+                            sessionStorage.setItem('AuthName',AuthName);
+                            sessionStorage.setItem('AuthList',AuthList);
+                        })
+                        window.location.replace('/');
                    }
                    else{
                        this.$message({
