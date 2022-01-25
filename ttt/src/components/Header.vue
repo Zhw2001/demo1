@@ -26,7 +26,6 @@ export default {
     methods: {
         handleCommand(command){
             if(command === 'out'){
-                console.log(command);
                 this.out();
             }
         },
@@ -37,7 +36,6 @@ export default {
     },
     created(){
         if(localStorage.getItem('AuthorityName') !== undefined){
-        console.log(localStorage.getItem('AuthorityName'));
         this.authority=localStorage.getItem('AuthorityName');
         }
     }

@@ -36,11 +36,14 @@ request.interceptors.response.use(
     response => {
         let res = response.data;
         console.log(response.data);
+        //异常处理
         if(res === 401){
             localStorage.removeItem('Authorization');
             localStorage.removeItem('AuthorityName');
             this.$router.push('/login');
         }
+
+
         // 如果是返回的文件
         if (response.config.responseType === 'blob') {
             return res

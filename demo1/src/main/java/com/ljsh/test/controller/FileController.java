@@ -2,8 +2,8 @@ package com.ljsh.test.controller;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import com.ljsh.test.utils.Result;
-import com.ljsh.test.utils.UUIDGenerator;
+import com.ljsh.test.utils.MyResponse;
+import com.ljsh.test.dto.Result;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
-import java.util.List;
 
 
 @RestController
@@ -58,6 +57,7 @@ public class FileController {
             }
         }catch(Exception e){
             System.out.println("下载失败");
+            MyResponse.writeResult(response, Result.error("404","下载失败"));
         }
 
     }

@@ -7,10 +7,15 @@
 
 
 <mapper namespace="com.ljsh.test.mbg.mapper.AdminUserMapper">
-    <sql id="table">admin_user</sql>
+    <sql id="admin_user">admin_user</sql>
+    <sql id="admin_role">admin_role</sql>
+    <sql id="admin_authority">admin_authority</sql>
+    <sql id="admin_with_role">admin_with_role</sql>
+    <sql id="role_with_authority">role_with_authority</sql>
+
 
     <resultMap type="com.ljsh.test.mbg.model.AdminUser" id="userMap">
-        <id  property="uid" column="uid" javaType="int" jdbcType="BIGINT"/>
+        <id  property="uid" column="uid" javaType="Integer" jdbcType="BIGINT"/>
         <result property="avatar" column="avatar" javaType="String" jdbcType="VARCHAR"/>
         <result property="account" column="account" javaType="String" jdbcType="CHAR"/>
         <result property="nickname" column="nickname" javaType="String" jdbcType="VARCHAR"/>
@@ -21,24 +26,50 @@
         <result property="reg_ip" column="reg_ip" javaType="String" jdbcType="VARCHAR"/>
         <result property="enable" column="enable" javaType="Integer" jdbcType="TINYINT"/>
         <result property="description" column="description" javaType="String" jdbcType="VARCHAR"/>
-        <result property="admin_role_ids" column="admin_role_ids" javaType="String" jdbcType="LONGVARCHAR"/>
-        <result property="create_date" column="create_date" javaType="String" jdbcType="TIMESTAMP"/>
-        <result property="create_timestamp" column="create_timestamp" javaType="Long" jdbcType="BIGINT"/>
+        <result property="admin_create_date" column="create_date" javaType="String" jdbcType="TIMESTAMP"/>
+        <result property="authority_id" column="id" javaType="Integer" jdbcType="BIGINT"/>
+        <result property="authority_name" column="authority_name" javaType="String" jdbcType="CHAR"/>
+        <result property="authority_type" column="authority_type" javaType="String" jdbcType="CHAR"/>
+        <result property="authority_parent_id" column="authority_parent_id" javaType="String" jdbcType="VARCHAR"/>
+        <result property="authority_parent_name" column="authority_parent_name" javaType="String" jdbcType="CHAR"/>
+        <result property="authority_url" column="authority_url" javaType="String" jdbcType="CHAR"/>
+        <result property="authority_sort" column="authority_sort" javaType="int" jdbcType="INTEGER"/>
+        <result property="authority_description" column="authority_description" javaType="String" jdbcType="VARCHAR"/>
+        <result property="authority_enable" column="enable1" javaType="int" jdbcType="TINYINT"/>
+        <result  property="role_id" column="role_id" javaType="Integer" jdbcType="BIGINT"/>
+        <result property="role_name" column="role_name" javaType="String" jdbcType="VARCHAR"/>
+        <result property="role_description" column="role_description" javaType="String" jdbcType="VARCHAR"/>
     </resultMap>
+
 
     <insert id="newu" parameterType="com.ljsh.test.mbg.model.AdminUser">
         INSERT INTO
-        <include refid="table"/>
-        (avatar,account,nickname,password,phone,email,enable,description,admin_role_ids,create_date,create_timestamp)
+        <include refid="admin_user"/>
+        (avatar,account,nickname,password,phone,email,enable,description,create_date)
         VALUES
-        (#{avatar},#{account},#{nickname},#{password},#{phone},#{email},#{enable},#{description},#{admin_role_ids},NOW(),NOW())
+        (#{avatar},#{account},#{nickname},#{password},#{phone},#{email},#{enable},#{description},NOW())
     </insert>
+
+    <insert id="set_user_auth" parameterType="int">
+        INSERT INTO
+        admin_with_role
+        (admin_uid)
+        VALUES
+        (#{admin_uid})
+    </insert>
+
+    <delete id="del_user_auth" parameterType="int">
+        DELETE FROM
+        admin_with_role
+        WHERE
+        admin_uid = #{admin_uid}
+    </delete>
 
     <select id="getUserByAccount" parameterType="String" resultMap="userMap">
         SELECT
         *
         FROM
-        <include refid="table"/>
+        <include refid="admin_user"/>
         WHERE
         account = #{account}
     </select>
@@ -48,35 +79,46 @@
         SELECT
         password
         FROM
-        <include refid="table"/>
+        <include refid="admin_user"/>
+        WHERE
+        account = #{account}
+    </select>
+
+    <select id="getUidByAccount" parameterType="java.lang.String" resultType="Integer">
+        SELECT
+        uid
+        FROM
+        <include refid="admin_user"/>
         WHERE
         account = #{account}
     </select>
 
     <select id="getAll" resultMap="userMap">
         SELECT * FROM
-        <include refid="table"/>
+        <include refid="admin_user"/>
     </select>
 
     <select id="selectPage" resultMap="userMap">
         SELECT * FROM
-        <include refid="table"/>
+        <include refid="admin_user"/>
         where account like '%${search}%'
         limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
     </select>
 
     <delete id="del_user" parameterType="String">
         DELETE FROM
-        <include refid="table"/>
+        <include refid="admin_user"/>
         WHERE
         account = #{account}
     </delete>
 
-    <select id="get_Auth_info">
-        SELECT * FROM
-        <include refid="table"/>
-        where account like '%${search}%'
-        limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    <select id="get_Auth_info" parameterType="String" resultMap="userMap">
+        SELECT admin_user.uid, avatar, account, nickname, `password`, phone, email, last_sign_time, reg_ip, admin_user.`enable`, description, admin_user.create_date
+        ,GROUP_CONCAT(admin_authority.authority_name SEPARATOR ',') authority_name, GROUP_CONCAT(admin_authority.authority_type SEPARATOR ',') authority_type, GROUP_CONCAT(admin_authority.authority_url SEPARATOR ',') authority_url
+        FROM ((admin_with_role LEFT JOIN admin_user ON admin_with_role.admin_uid = admin_user.uid) left join role_with_authority on admin_with_role.admin_role_id = role_with_authority.admin_role_id) left join admin_authority on role_with_authority.admin_authority_id = admin_authority.id
+        WHERE
+        account = #{account} and admin_authority.enable = 1
+        GROUP BY admin_user.uid
     </select>
 
 </mapper>

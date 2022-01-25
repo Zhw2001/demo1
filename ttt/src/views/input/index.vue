@@ -16,7 +16,7 @@
                 <el-button type="primary" @click="show_template"><i class="el-icon-search"></i></el-button>
             </el-form-item>
             <el-form-item >
-                <el-button type="primary" @click="download_template_xlsx"><i class="el-icon-download"></i><span>模板</span></el-button>
+                <el-button type="primary" @click="download_template_xlsx"><i class="el-icon-download"></i></el-button>
             </el-form-item>
             <el-form-item >
                 <el-button type="primary" @click="download_template_xlsx"><i class="el-icon-thumb"></i><span>表格生成</span></el-button>

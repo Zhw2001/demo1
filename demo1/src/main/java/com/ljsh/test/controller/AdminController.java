@@ -1,6 +1,6 @@
 package com.ljsh.test.controller;
 
-import com.ljsh.test.utils.Result;
+import com.ljsh.test.dto.Result;
 import com.ljsh.test.mbg.model.AdminUser;
 import com.ljsh.test.service.AdminUserService;
 import com.ljsh.test.utils.JwtUtil;
@@ -21,20 +21,24 @@ public class AdminController {
             if(token != null){
                 return Result.success_token(find,token);
             }
-            return Result.error("1","认证失败");
+            return Result.error("401","认证失败");
         }
 
-        return Result.error("1","登录失败");
+        return Result.error("401","登录失败");
     }
 
 
-    @PostMapping("/getAdminAuth")
-    public Result<?> getadminAuth(@RequestBody AdminUser user) {
-        if(user != null){
-            return Result.success(adminUserService.getAuth(user.getAccount()));
+    @GetMapping ("/get_Auth")
+    public Result<?> getadminAuth(@RequestParam String account) {
+        if(account != null){
+            AdminUser adminUser = adminUserService.getAuth(account);
+            if(adminUser != null) return Result.success(adminUser);
+            else{
+                return Result.error("404","找不到用户数据");
+            }
         }
         else{
-            return Result.error("2","数据库操作出错");
+            return Result.error("1","输入为空");
         }
     }
 
@@ -44,10 +48,10 @@ public class AdminController {
         if(user != null){
             if(adminUserService.regist(user)) return Result.success();
             else{
-                return Result.error("2","数据库操作出错");
+                return Result.error("2","sql_error");
             }
         }
-        return Result.error("1","输入出错");
+        return Result.error("1","输入为空");
     }
 
     @PostMapping("/delete")
@@ -55,10 +59,10 @@ public class AdminController {
         if(user !=null){
             if(adminUserService.del_user(user.getAccount()))return Result.success();
             else{
-                return Result.error("2","数据库操作出错");
+                return Result.error("2","sql_error");
             }
         }
-        return Result.error("1","输入错误");
+        return Result.error("1","输入为空");
     }
 
     @GetMapping("/list")

@@ -11,16 +11,15 @@
 <script>
 import Header from '@/components/Header'
 import Aside from '@/components/Aside'
-import request from '@/request'
+
 
 export default {
   name: 'Main',
   components:{
     Header,
-    Aside
+    Aside,
   },
-  created(){
-    console.log(this.$store.state.authority.RoleName);
+  methods:{
   },
 }
 </script>
