@@ -1,8 +1,8 @@
 <template>
-    <div class="aside-menu">
+    <div class="aside">
         <el-menu
         style="width:200px;height:calc(100vh);"
-        class="el-menu"
+        class="aside-menu"
         @open="handleOpen"
         @close="handleClose"
         router
@@ -80,25 +80,45 @@ export default {
 }
 </script>
 
-<style>
-.aside-menu .el-menu .el-icon-arrow-down:before {
-    content: "\E6DF";
+<style lang="less" scoped>
+
+
+/deep/ .el-menu{
+    background-color: transparent;
+}
+
+/deep/ .el-menu-item{
+    color:#bdc1dd;
+}
+
+/deep/ .el-menu-item:focus, .el-menu-item:hover {
+    background: transparent;
     color: azure;
 }
-.aside-menu .el-menu .logo-div{
+
+
+.aside .aside-menu {
+    /deep/ .el-icon-arrow-down:before {
+        content: "\E6DF";
+        color: azure;
+    }
+}
+.aside .aside-menu .logo-div{
     height:70px;
     padding-left:30px;
     line-height:70px;
     display:flex;
 }
-.aside-menu .el-menu .logo-div .logo-text {
+.aside .aside-menu .logo-div .logo-text {
     font-size: 18px;
     font-weight: 500;
     display: inline-block;
     vertical-align: middle;
     color: #ffffff;
 }
-.aside-menu .el-menu {
+
+
+.aside .aside-menu {
     border-right: solid 1px #e6e6e6;
     list-style: none;
     position: relative;
@@ -106,20 +126,16 @@ export default {
     padding-left: 0;
     background:transparent;
 }
-.aside-menu .el-menu .el-submenu span{
-   background: transparent;
-   color:#bdc1dd;
-}
-.aside-menu .el-menu .el-submenu :hover{
-   background: transparent;
-   color:azure;
-}
-.aside-menu .el-menu .el-submenu .el-menu--inline li{
-   background: transparent;
-   color:#bdc1dd;
-}
-.aside-menu .el-menu .el-submenu .el-menu--inline :hover{
-   background: transparent;
-   color:azure;
+
+
+.aside .aside-menu .el-submenu{
+    /deep/ .el-submenu__title{
+        background: transparent;
+        color:#bdc1dd;
+    }
+    /deep/ .el-submenu__title:hover{
+        background: transparent;
+        color:#ffffff;
+    }
 }
 </style>

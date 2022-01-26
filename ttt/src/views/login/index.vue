@@ -71,8 +71,8 @@ export default{
                             localStorage.setItem('MenuName',MenuName);
                             localStorage.setItem('AuthName',AuthName);
                             localStorage.setItem('AuthList',AuthList);
+                            this.$router.push('/');
                         })
-                        window.location='/';
                    }
                    else{
                        this.$message({
