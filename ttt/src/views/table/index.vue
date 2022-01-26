@@ -221,7 +221,7 @@ export default {
 
 <style scoped>
 .home-container {
-    padding: 10px;
+    padding: 20px;
     padding-top: 5px;
 }
 </style>

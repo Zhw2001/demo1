@@ -68,11 +68,11 @@ export default{
                             console.log(MenuName);
                             console.log(AuthName);
                             console.log(AuthList);
-                            sessionStorage.setItem('MenuName',MenuName);
-                            sessionStorage.setItem('AuthName',AuthName);
-                            sessionStorage.setItem('AuthList',AuthList);
+                            localStorage.setItem('MenuName',MenuName);
+                            localStorage.setItem('AuthName',AuthName);
+                            localStorage.setItem('AuthList',AuthList);
                         })
-                        window.location.replace('/');
+                        window.location='/';
                    }
                    else{
                        this.$message({

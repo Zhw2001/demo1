@@ -1,6 +1,6 @@
 <template>
     <div class="head">
-        <div class='left'>后台管理</div>
+        <div class='left'></div>
         <div style='flex: 1'></div>
         <div class='right'>
           <el-dropdown @command="handleCommand">
@@ -32,6 +32,10 @@ export default {
         out(){
             localStorage.removeItem('Authorization');
             this.$router.push('/login');
+            localStorage.removeItem('MenuName');
+            localStorage.removeItem('AuthName');
+            localStorage.removeItem('AuthList');
+            
         }
     },
     created(){
@@ -66,8 +70,12 @@ export default {
 .head .right .el-dropdown-link {
     cursor: pointer;
     color: #001931;
-  }
+}
 .head .right .el-icon-arrow-down {
     font-size: 12px;
-  }
+}
+.el-icon-arrow-down:before {
+    content: "\E6DF";
+    color: rgb(0, 0, 0);
+}
 </style>

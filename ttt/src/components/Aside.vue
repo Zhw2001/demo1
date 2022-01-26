@@ -1,47 +1,41 @@
 <template>
-    <div>
+    <div class="aside-menu">
         <el-menu
-        style="width:200px; min-height: calc(100vh - 50px);"
-        class="el-menu-vertical-demo"
+        style="width:200px;height:calc(100vh);"
+        class="el-menu"
         @open="handleOpen"
         @close="handleClose"
         router
         >
-            <el-submenu index="1" v-if="menu1">
+            <div class="logo-div">
+                <span class="logo-text">website</span>
+            </div>
+            <el-submenu index="1" v-if="menu1" >
                 <template slot="title">
-                    <i class="el-icon-data-analysis"></i>
-                    <span>查看数据</span>
+                    <i class="el-icon-data-analysis" ></i>
+                    <span >查看数据</span>
                 </template>
-                <el-menu-item index="/table">UserData</el-menu-item>
+                <el-menu-item index="1-1">Course</el-menu-item>
             </el-submenu>
 
             <el-submenu index="2" v-if="menu2">
                 <template slot="title">
-                    <i class="el-icon-edit"></i>
-                    <span>生成表格</span>
+                    <i class="el-icon-edit" ></i>
+                    <span >生成表格</span>
                 </template>
                 <el-menu-item index="/input">Generate</el-menu-item>
             </el-submenu>
 
             <el-submenu index="3" v-if="menu3">
                 <template slot="title">
-                    <i class="el-icon-user"></i>
+                    <i class="el-icon-user" ></i>
                     <span>用户管理</span>
                 </template>
-                <el-menu-item index="3-1">User</el-menu-item>
+                <el-menu-item index="/table">User</el-menu-item>
                 <el-menu-item>UserRole</el-menu-item>
                 <el-menu-item index="3-3">UserRoleMenu</el-menu-item>
             </el-submenu>
 
-            <el-submenu index="4" v-if="menu4">
-                <template slot="title">
-                    <i class="el-icon-setting"></i>
-                    <span>系统管理</span>
-                </template>
-                <el-menu-item index="4-1">AdminUser</el-menu-item>
-                <el-menu-item>AdminRole</el-menu-item>
-                <el-menu-item index="4-3">AdminAuthority</el-menu-item>
-            </el-submenu>
 
         </el-menu>
     </div>
@@ -54,7 +48,6 @@ export default {
             menu1:'',
             menu2:'',
             menu3:'',
-            menu4:'',
         }
     },
     methods: {
@@ -66,7 +59,8 @@ export default {
         }
     },
     created(){
-        var NameList = sessionStorage.getItem('MenuName').split(',');
+        console.log(localStorage.getItem('MenuName'));
+        var NameList = localStorage.getItem('MenuName').split(',');
         for (var i=0; i<NameList.length; i++){
             switch(NameList[i])
                 {
@@ -79,9 +73,6 @@ export default {
                     case '用户管理':
                         this.menu3 = true;
                     break;
-                    case '系统管理':
-                        this.menu4 = true;
-                    break;
                 }
         }
     },
@@ -89,6 +80,46 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.aside-menu .el-menu .el-icon-arrow-down:before {
+    content: "\E6DF";
+    color: azure;
+}
+.aside-menu .el-menu .logo-div{
+    height:70px;
+    padding-left:30px;
+    line-height:70px;
+    display:flex;
+}
+.aside-menu .el-menu .logo-div .logo-text {
+    font-size: 18px;
+    font-weight: 500;
+    display: inline-block;
+    vertical-align: middle;
+    color: #ffffff;
+}
+.aside-menu .el-menu {
+    border-right: solid 1px #e6e6e6;
+    list-style: none;
+    position: relative;
+    margin: 0;
+    padding-left: 0;
+    background:transparent;
+}
+.aside-menu .el-menu .el-submenu span{
+   background: transparent;
+   color:#bdc1dd;
+}
+.aside-menu .el-menu .el-submenu :hover{
+   background: transparent;
+   color:azure;
+}
+.aside-menu .el-menu .el-submenu .el-menu--inline li{
+   background: transparent;
+   color:#bdc1dd;
+}
+.aside-menu .el-menu .el-submenu .el-menu--inline :hover{
+   background: transparent;
+   color:azure;
+}
 </style>
