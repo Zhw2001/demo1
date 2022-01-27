@@ -1,21 +1,34 @@
 <template>
     <div class="home-container">
-        <div style="margin: 10px 0">
-            <el-input v-model="search" placeholder="请输入关键字" style="width: 20%"></el-input>
-            <el-button type='primary' @click="load()"><i class="el-icon-search"></i></el-button>
-            <el-button type='primary' @click="dialogVisible = true">+</el-button>
-            <el-button type='primary' @click="testadd(tableData)">添加TEST</el-button>
-            <el-button type='primary'>+</el-button>
-        </div>
+      <div class="card">
+        <div class="card-body">
+          <el-form :inline="true" class="demo-form-inline">
+            <el-form-item  label="查找:">
+              <el-input v-model="search" placeholder="请输入关键字"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type='primary' @click="load()"><i class="el-icon-search"></i></el-button>
+            </el-form-item>
+            <el-form-item >
+              <el-button type='primary' @click="dialogVisible = true">+</el-button>
+            </el-form-item>
+            <el-form-item >
+              <el-button type='primary' @click="testadd(tableData)">添加TEST</el-button>
+            </el-form-item>
+            <el-form-item >
+              <el-button type='primary'>+</el-button>
+            </el-form-item>
+          </el-form>
           <el-table
+            :fit="true"
+            :header-cell-style="mytable"
             :data="tableData"
-            border
-            style="width: 100%"
-            :default-sort = "{prop: 'id', order: 'descending'}"
+            :default-sort = "{prop: 'uid', order: 'ascending'}"
           >
             <el-table-column
-            type="index"
             label="ID"
+            width="90"
+            prop="uid"
             sortable>
             </el-table-column>
             <el-table-column
@@ -54,46 +67,48 @@
                 </template>
             </el-table-column>
           </el-table>
-        <div class="block" style="margin: 10px 0">
-          <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currentPage"
-            :pager-count="5"
-            :page-sizes="[5, 10, 15, 20]"
-            :page-size="pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="total">
-          </el-pagination>
-        </div>
-        <el-dialog
-          title="提示"
-          :visible.sync="dialogVisible"
-          width="30%"
-          :before-close="handleClose">
-          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="账户" prop="account">
-              <el-input v-model="ruleForm.account"></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-              <el-input  v-model="ruleForm.password"></el-input>
-            </el-form-item>
-            <el-form-item label="电子邮件" prop="email">
-              <el-input  v-model="ruleForm.email"></el-input>
-            </el-form-item>
-            <el-form-item label="手机号码" prop="phone">
-              <el-input  v-model="ruleForm.phone"></el-input>
-            </el-form-item>
-            <el-form-item label="是否有效" prop="enable">
-              <el-switch v-model="ruleForm.enable"></el-switch>
-            </el-form-item>
+          <div class="block" style="margin: 10px 0">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              :pager-count="5"
+              :page-sizes="[5, 10, 15, 20]"
+              :page-size="pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="total">
+            </el-pagination>
+          </div>
+          <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+            :before-close="handleClose">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+              <el-form-item label="账户" prop="account">
+                <el-input v-model="ruleForm.account"></el-input>
+              </el-form-item>
+              <el-form-item label="密码" prop="password">
+                <el-input  v-model="ruleForm.password"></el-input>
+              </el-form-item>
+              <el-form-item label="电子邮件" prop="email">
+                <el-input  v-model="ruleForm.email"></el-input>
+              </el-form-item>
+              <el-form-item label="手机号码" prop="phone">
+                <el-input  v-model="ruleForm.phone"></el-input>
+              </el-form-item>
+              <el-form-item label="是否有效" prop="enable">
+                <el-switch v-model="ruleForm.enable"></el-switch>
+              </el-form-item>
 
-            <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-              <el-button @click="resetForm('ruleForm')">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </el-dialog>
+              <el-form-item>
+                <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+                <el-button @click="resetForm('ruleForm')">重置</el-button>
+              </el-form-item>
+            </el-form>
+          </el-dialog>
+        </div>
+      </div>
     </div>
 </template>
 
@@ -214,14 +229,24 @@ export default {
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
-      }
+      },
+      mytable(){
+        return 'background-color:#f1f3fa; color:rgba(0, 0, 0, 0.85);font-weight: 500'
+      },
     }
 }
 </script>
 
 <style scoped>
-.home-container {
-    padding: 20px;
-    padding-top: 5px;
+.mylabel{
+  text-align: right;
+  vertical-align: middle;
+  float: left;
+  font-size: 14px;
+  color: #606266;
+  line-height: 40px;
+  padding: 0 12px 0 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 </style>

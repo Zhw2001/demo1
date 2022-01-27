@@ -1,82 +1,81 @@
 <template>
     <div class="home-container">
-        <div style="margin: 10px 0">
-          <el-form :inline="true" class="demo-form-inline">
-            <el-form-item label="课程类型:">
-                <el-select v-model="value" placeholder="TYPE">
-                  <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                  </el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="show_template"><i class="el-icon-search"></i></el-button>
-            </el-form-item>
-            <el-form-item >
-                <el-button type="primary" @click="download_template_xlsx"><i class="el-icon-download"></i></el-button>
-            </el-form-item>
-            <el-form-item >
-                <el-button type="primary" @click="download_template_xlsx"><i class="el-icon-thumb"></i><span>表格生成</span></el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-        <el-table       
-            :data="tableData"
-            border
-            style="width: 100%"
-            :default-sort = "{prop: 'id', order: 'descending'}"
-        >
-            <el-table-column
-            type="index"
-            label="ID"
-            sortable>
-            </el-table-column>
-            <el-table-column
-            prop="account"
-            label="账户">
-            </el-table-column>
-            <el-table-column
-            prop="nickname"
-            label="昵称">
-            </el-table-column>
-            <el-table-column
-            prop="admin_role_ids"
-            label="角色组">  
-            </el-table-column>          
-            <el-table-column
-            prop="email"
-            label="邮箱">
-            </el-table-column>
-            <el-table-column
-            prop="phone"
-            label="手机">
-            </el-table-column>
-            <el-table-column
-            prop="enable"
-            label="是否启用">
-            </el-table-column>
-        </el-table>
-        <div style="margin: 10px 0">
+        <div class="card">
+          <div class="card-body">
             <el-form :inline="true" class="demo-form-inline">
+              <el-form-item  label="课程类型:">
+                  <el-select v-model="value" placeholder="TYPE">
+                    <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                    </el-option>
+                  </el-select>
+              </el-form-item>
               <el-form-item>
-                <el-upload
-                  class="upload-demo"
-                  ref="upload"
-                  action="/api_S/files/upload"
-                  :on-preview="handlePreview"
-                  :on-change="fileChange"
-                  :before-remove="beforeRemove"
-                  :file-list="fileList"
-                  :auto-upload="false">
-                  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-                  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-                  <div slot="tip" class="el-upload__tip">只能上传xlsx/doc文件，且不超过500kb</div>
-                </el-upload>
+                  <el-button type="primary" @click="show_template"><i class="el-icon-search"></i></el-button>
+              </el-form-item>
+              <el-form-item >
+                  <el-button type="primary" @click="download_template_xlsx"><i class="el-icon-download"></i></el-button>
+              </el-form-item>
+              <el-form-item >
+                  <el-button type="primary" @click="download_template_xlsx"><i class="el-icon-thumb"></i><span>表格生成</span></el-button>
               </el-form-item>
             </el-form>
+            <el-table       
+                fit
+                header-cell-style="background-color:#f1f3fa;color:rgba(0, 0, 0, 0.85);font-weight: 500;"
+                :data="tableData"
+            >
+                <el-table-column
+                prop="account"
+                label="账户">
+                </el-table-column>
+                <el-table-column
+                prop="nickname"
+                label="昵称">
+                </el-table-column>
+                <el-table-column
+                prop="admin_role_ids"
+                label="角色组">  
+                </el-table-column>          
+                <el-table-column
+                prop="email"
+                label="邮箱">
+                </el-table-column>
+                <el-table-column
+                prop="phone"
+                label="手机">
+                </el-table-column>
+                <el-table-column
+                prop="enable"
+                label="是否启用">
+                </el-table-column>
+            </el-table>
+          </div>
+        </div>
+        <div class="card"></div>
+        <div class="card">
+          <div class="card-body">
+              <el-form :inline="true" class="demo-form-inline">
+                <el-form-item>
+                  <el-upload
+                    class="upload-demo"
+                    ref="upload"
+                    action="/api_S/files/upload"
+                    :on-preview="handlePreview"
+                    :on-change="fileChange"
+                    :before-remove="beforeRemove"
+                    :file-list="fileList"
+                    :auto-upload="false">
+                    <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传xlsx/doc文件，且不超过500kb</div>
+                  </el-upload>
+                </el-form-item>
+              </el-form>
+          </div>
         </div>
     </div>
 </template>
@@ -160,8 +159,5 @@ import global from '@/components/Global';
 </script>
 
 <style scoped>
-.home-container {
-    padding: 10px;
-    padding-top: 5px;
-}
+
 </style>

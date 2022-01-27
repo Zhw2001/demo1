@@ -31,9 +31,9 @@
                     <i class="el-icon-user" ></i>
                     <span>用户管理</span>
                 </template>
-                <el-menu-item index="/table">User</el-menu-item>
+                <el-menu-item index="/userList">User</el-menu-item>
                 <el-menu-item>UserRole</el-menu-item>
-                <el-menu-item index="3-3">UserRoleMenu</el-menu-item>
+                <el-menu-item index="/userRoleMenu">UserRoleMenu</el-menu-item>
             </el-submenu>
 
 
@@ -91,14 +91,14 @@ export default {
     color:#bdc1dd;
 }
 
-/deep/ .el-menu-item:focus, .el-menu-item:hover {
+/deep/ .el-menu-item:focus, .el-menu-item:hover {//二级标题穿透
     background: transparent;
     color: azure;
 }
 
 
 .aside .aside-menu {
-    /deep/ .el-icon-arrow-down:before {
+    /deep/ .el-icon-arrow-down:before {//展开图标穿透
         content: "\E6DF";
         color: azure;
     }
@@ -118,7 +118,7 @@ export default {
 }
 
 
-.aside .aside-menu {
+.aside .aside-menu {//自定义导航栏样式覆盖
     border-right: solid 1px #e6e6e6;
     list-style: none;
     position: relative;
@@ -128,12 +128,16 @@ export default {
 }
 
 
-.aside .aside-menu .el-submenu{
+.aside .aside-menu .el-submenu{//一级标题穿透
     /deep/ .el-submenu__title{
         background: transparent;
         color:#bdc1dd;
     }
-    /deep/ .el-submenu__title:hover{
+    /deep/ .el-submenu__title:hover i{
+        background: transparent;
+        color:#ffffff;
+    }
+    /deep/ .el-submenu__title:hover span{
         background: transparent;
         color:#ffffff;
     }
