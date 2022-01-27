@@ -55,7 +55,7 @@ export default{
                             var authType = res.authority_type.split(",");
                             var MenuName = new Array();
                             var AuthName = new Array();var AuthList = new Array();
-                            for(var i = 0; i<authUrl.length; i++)
+                            for(let i = 0; i<authUrl.length; i++)
                             {
                                 if(authType[i] == 1){
                                    MenuName.push(authName[i]);
@@ -68,11 +68,11 @@ export default{
                             console.log(MenuName);
                             console.log(AuthName);
                             console.log(AuthList);
-                            sessionStorage.setItem('MenuName',MenuName);
-                            sessionStorage.setItem('AuthName',AuthName);
-                            sessionStorage.setItem('AuthList',AuthList);
+                            localStorage.setItem('MenuName',MenuName);
+                            localStorage.setItem('AuthName',AuthName);
+                            localStorage.setItem('AuthList',AuthList);
+                            this.$router.push('/');
                         })
-                        window.location.replace('/');
                    }
                    else{
                        this.$message({
