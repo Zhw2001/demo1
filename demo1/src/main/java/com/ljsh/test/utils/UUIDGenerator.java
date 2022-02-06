@@ -22,7 +22,7 @@ public class UUIDGenerator {
 
     public static UUIDGenerator getPart(int i){
         UUIDGenerator uuidGenerator = new UUIDGenerator();
-        uuidGenerator.myuuid.substring(0,i);
+        uuidGenerator.myuuid= uuidGenerator.myuuid.substring(0,i);
         return uuidGenerator;
     }
 

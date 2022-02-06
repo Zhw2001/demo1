@@ -1,10 +1,10 @@
 <template>
     <div class="head">
-        <div class='left'>后台管理</div>
+        <div class='left'></div>
         <div style='flex: 1'></div>
         <div class='right'>
           <el-dropdown @command="handleCommand">
-            <span class="el-dropdown-link"><label>{{authority}}</label><i class="el-icon-arrow-down el-icon--right"></i>
+            <span class="el-dropdown-link"><label>{{fullName}}</label><i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item >个人信息</el-dropdown-item>
@@ -20,25 +20,33 @@ export default {
     name:"Header",
     data(){
         return{
-            authority:'',
+            role:'',
+            name:'',
         }
     },
     methods: {
         handleCommand(command){
             if(command === 'out'){
-                console.log(command);
                 this.out();
             }
         },
         out(){
-            localStorage.removeItem('Authorization');
+            localStorage.clear();
             this.$router.push('/login');
+            
         }
     },
     created(){
-        if(localStorage.getItem('AuthorityName') !== undefined){
-        console.log(localStorage.getItem('AuthorityName'));
-        this.authority=localStorage.getItem('AuthorityName');
+        if(localStorage.getItem('AuthorityName') !== undefined && localStorage.getItem('RoleName') !== undefined  ){
+            var role = new Array();
+            role = localStorage.getItem('Role').split(',');
+            this.name = localStorage.getItem('AuthorityName');
+            this.role = role[0];
+        }
+    },
+    computed: {
+        fullName(){
+            return this.role + ':' + this.name;
         }
     }
 }
@@ -63,13 +71,17 @@ export default {
 }
 .head .right
 {
-    width: 100px;
+    margin-right: 20px;
 }
 .head .right .el-dropdown-link {
     cursor: pointer;
     color: #001931;
-  }
+}
 .head .right .el-icon-arrow-down {
     font-size: 12px;
-  }
+}
+.el-icon-arrow-down:before {
+    content: "\E6DF";
+    color: rgb(0, 0, 0);
+}
 </style>

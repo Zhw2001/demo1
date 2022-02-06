@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ljsh.test.mbg.mapper.CourseInfoMapper">
+
+    <sql id="info">courseinfo</sql>
+
+    <resultMap type="com.ljsh.test.mbg.model.CourseInfo" id="course_infoMap">
+        <id  property="cNum" column="info_cNum" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="department" column="department" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cTarget" column="cTarget" javaType="String" jdbcType="VARCHAR"/>
+        <result property="A" column="A" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="B" column="B" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="C" column="C" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="D" column="D" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="F" column="F" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="userid" column="user_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="CourseList"  ofType="com.ljsh.test.mbg.model.Course">
+            <id  property="id" column="course_id" javaType="Long" jdbcType="BIGINT"/>
+            <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
+            <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
+            <result property="cNum" column="cNum" javaType="Integer" jdbcType="INTEGER"/>
+            <result property="sId" column="sId" javaType="String" jdbcType="VARCHAR"/>
+            <result property="sName" column="sName" javaType="String" jdbcType="VARCHAR"/>
+            <result property="sClass" column="sClass" javaType="String" jdbcType="VARCHAR"/>
+            <result property="sState" column="sState" javaType="String" jdbcType="VARCHAR"/>
+            <result property="regular" column="regular" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="written" column="written" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="overall" column="overall" javaType="Double" jdbcType="DOUBLE"/>
+        </collection>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.mbg.model.CourseInfo" id="cdesign_infoMap">
+        <id  property="cNum" column="info_cNum" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="department" column="department" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cTarget" column="cTarget" javaType="String" jdbcType="VARCHAR"/>
+        <result property="A" column="A" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="B" column="B" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="C" column="C" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="D" column="D" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="F" column="F" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="userid" column="user_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="CdesignList" ofType="com.ljsh.test.mbg.model.Cdesign">
+            <id  property="id" column="cdesign_id" javaType="Long" jdbcType="BIGINT"/>
+            <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
+            <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
+            <result property="cNum" column="cNum" javaType="Integer" jdbcType="INTEGER"/>
+            <result property="sId" column="sId" javaType="String" jdbcType="VARCHAR"/>
+            <result property="sName" column="sName" javaType="String" jdbcType="VARCHAR"/>
+            <result property="sClass" column="sClass" javaType="String" jdbcType="VARCHAR"/>
+            <result property="sState" column="sState" javaType="String" jdbcType="VARCHAR"/>
+            <result property="select" column="select" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="begin" column="begin" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="medium" column="medium" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="program" column="program" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="answer" column="answer" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="report" column="report" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="overall" column="overall" javaType="Double" jdbcType="DOUBLE"/>
+        </collection>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.mbg.model.CourseInfo" id="gdesign_infoMap">
+        <id  property="cNum" column="info_cNum" javaType="Integer" jdbcType="BIGINT"/>
+        <result property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="department" column="department" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cTarget" column="cTarget" javaType="String" jdbcType="VARCHAR"/>
+        <result property="A" column="A" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="B" column="B" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="C" column="C" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="D" column="D" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="F" column="F" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="userid" column="user_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="GdesignList" ofType="com.ljsh.test.mbg.model.Gdesign">
+            <id  property="id" column="gdesign_id" javaType="Long" jdbcType="BIGINT"/>
+            <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
+            <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
+            <result property="cNum" column="cNum" javaType="Integer" jdbcType="INTEGER"/>
+            <result property="sId" column="sId" javaType="String" jdbcType="VARCHAR"/>
+            <result property="sName" column="sName" javaType="String" jdbcType="VARCHAR"/>
+
+            <result property="a_1" column="grade1_1" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="a_2" column="grade1_2" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="a_3" column="grade1_3" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="a_4" column="grade1_4" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="a_5" column="grade1_5" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="a_6" column="grade1_6" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="b_1" column="grade2_1" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="b_2" column="grade2_2" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="b_3" column="grade2_3" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="b_4" column="grade2_4" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="c_1" column="grade3_1" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="c_2" column="grade3_2" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="c_3" column="grade3_3" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="overall" column="overall" javaType="Double" jdbcType="DOUBLE"/>
+        </collection>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.mbg.model.CourseInfo" id="exp_infoMap">
+        <id  property="cNum" column="info_cNum" javaType="Integer" jdbcType="BIGINT"/>
+        <result property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="department" column="department" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cTarget" column="cTarget" javaType="String" jdbcType="VARCHAR"/>
+        <result property="A" column="A" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="B" column="B" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="C" column="C" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="D" column="D" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="F" column="F" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="userid" column="user_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="ExperimentList" ofType="com.ljsh.test.mbg.model.Experiment">
+            <id  property="id" column="exper_id" javaType="Long" jdbcType="BIGINT"/>
+            <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
+            <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
+            <result property="cNum" column="cNum" javaType="Integer" jdbcType="INTEGER"/>
+            <result property="sId" column="sId" javaType="String" jdbcType="VARCHAR"/>
+            <result property="sName" column="sName" javaType="String" jdbcType="VARCHAR"/>
+            <result property="sClass" column="sId" javaType="String" jdbcType="VARCHAR"/>
+            <result property="sState" column="sState" javaType="String" jdbcType="VARCHAR"/>
+
+            <result property="p1" column="p1" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="r1" column="r1" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="p2" column="p2" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="r2" column="r2" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="p3" column="p3" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="r3" column="r3" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="p4" column="p4" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="r4" column="r4" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="p5" column="p5" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="r5" column="r5" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="p6" column="p6" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="r6" column="r6" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="p7" column="p7" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="r7" column="r7" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="p8" column="p8" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="r8" column="t8" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="regular" column="regular" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="written" column="written" javaType="Double" jdbcType="DOUBLE"/>
+            <result property="overall" column="overall" javaType="Double" jdbcType="DOUBLE"/>
+
+        </collection>
+    </resultMap>
+
+    <select id="get_Course_By_cid_Dep"  resultMap="course_infoMap">
+        SELECT *
+        FROM courseinfo left join course on course.cId = courseinfo.info_cId
+        WHERE
+        course.cId = #{cid,jdbcType=VARCHAR}
+        AND
+        courseinfo.department = #{dep,jdbcType=VARCHAR}
+    </select>
+
+    <select id="get_Cdesign_By_cid_Dep"  resultMap="cdesign_infoMap">
+        SELECT *
+        FROM courseinfo left join cdesign on cdesign.cId = courseinfo.info_cId
+        WHERE
+        cdesign.cId = #{cid,jdbcType=VARCHAR}
+        AND
+        courseinfo.department = #{dep,jdbcType=VARCHAR}
+    </select>
+
+    <select id="get_Gdesign_By_cid_Dep"  resultMap="gdesign_infoMap">
+        SELECT *
+        FROM courseinfo left join gdesign on gdesign.cId = courseinfo.info_cId
+        WHERE
+        gdesign.cId = #{cid,jdbcType=VARCHAR}
+        AND
+        courseinfo.department = #{dep,jdbcType=VARCHAR}
+    </select>
+
+    <select id="get_Exp_By_cid_Dep"  resultMap="exp_infoMap">
+        SELECT *
+        FROM courseinfo left join experiment on experiment.cId = courseinfo.info_cId
+        WHERE
+        experiment.cId = #{cid,jdbcType=VARCHAR}
+        AND
+        courseinfo.department = #{dep,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="get_Type_By_Cid" parameterType="String" resultType="int">
+        SELECT course_type
+        FROM courseinfo
+        WHERE info_cId=#{cid}
+    </select>
+
+
+
+</mapper>

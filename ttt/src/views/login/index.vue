@@ -39,17 +39,20 @@ export default{
 
    methods:{
         login(){
-            request.post("/admin/login",this.form).then(res =>{
+            request.post("/api_S/admin/login",this.form).then(res =>{
                 if(res.code == '0'){
-                    if(res.data.enable=='1'){
+                    if(true/*res.data.enable=='1'*/){
+                        this.setCidList(res.data);
                         this.$message({
                             type:"success",
                             message: "login success"
                         })
                         localStorage.setItem('Authorization',res.token);
                         localStorage.setItem('AuthorityName',res.data.nickname);
-                        this.$store.dispatch('authority/GET_USER', res.data);
-                        this.$router.push('/');
+                        request.get('/api_S/admin/get_Role'+'?account='+res.data.account).then(res =>{
+                            this.setRole(res.data);
+                            this.$router.push('/');
+                        })
                    }
                    else{
                        this.$message({
@@ -64,7 +67,20 @@ export default{
                     })
                 }
             })
-        }
+        },
+        setRole(userList){//res.data
+            userList = userList.adminRoleList;
+            var roleList = new Array();
+            for(let i of userList){
+                roleList.push(i.role_name);
+            }
+            localStorage.setItem('Role',roleList);
+        },
+        setCidList(user){//res.data
+            var cidArray = new Array();
+            cidArray = user.userCid.split(',');
+            localStorage.setItem('cidList',cidArray);
+        },
     }
 
 }

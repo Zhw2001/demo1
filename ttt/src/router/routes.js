@@ -5,20 +5,25 @@ export default[
     component: () => import('@/views/Main'), // main
     children: [    
       {
-      path:'table',
-      name:'table',
-      component: () => import('@/views/table')
-      },
-      {
-      path:'generate',
-      name:'generate',
-      component: () => import('@/views/generate')
+      path:'userList',
+      name:'userList',
+      component: () => import('@/views/userList')
       },
       {
         path:'input',
         name:'input',
         component: () => import('@/views/input')
-        },
+      },
+      {
+        path:'userRoleMenu',
+        name:'userRoleMenu',
+        component: () => import('@/views/userRoleMenu')
+      },
+      {
+        path:'course',
+        name:'course',
+        component: () => import('@/views/course')
+      },
     ]
   },
   {

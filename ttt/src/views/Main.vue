@@ -1,29 +1,30 @@
 <template>
-  <div>
-    <Header></Header>
-    <div style='display:flex'>
+  <div style="display:flex; flex-direction:row;">
       <Aside></Aside>
-      <router-view style="flex:1"></router-view><!-- 路由跳转基于此处 -->
+    <div style="min-width:1336px;">
+      <Header></Header>
+      <router-view style="min-height:800px;background:rgb(238 238 238);"></router-view><!-- 路由跳转基于此处 -->
     </div>
   </div>
 </template>
+
 
 <script>
 import Header from '@/components/Header'
 import Aside from '@/components/Aside'
 
+
 export default {
   name: 'Main',
   components:{
     Header,
-    Aside
+    Aside,
   },
-  created(){
-    console.log(this.$store.state.authority.RoleName);
-  }
+  methods:{
+  },
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

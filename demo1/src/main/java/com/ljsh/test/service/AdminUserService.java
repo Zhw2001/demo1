@@ -1,6 +1,5 @@
 package com.ljsh.test.service;
 
-import com.ljsh.test.dto.UserAuth;
 import com.ljsh.test.mbg.model.AdminUser;
 
 import java.util.List;
@@ -11,5 +10,5 @@ public interface AdminUserService {
     List<AdminUser> getusers();
     List<AdminUser> selectPage(int pageNum, int pageSize, String search);
     Boolean del_user(String account);
-    UserAuth getAuth(String account);
+    AdminUser getRole(String account);
 }

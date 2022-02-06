@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ljsh.test.mbg.mapper.CourseMapper">
+
+    <sql id="c">course</sql>
+
+    <resultMap type="com.ljsh.test.mbg.model.Course" id="cMap">
+        <id  property="id" column="course_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cNum" column="cNum" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="sId" column="sId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="sName" column="sName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="sClass" column="sClass" javaType="String" jdbcType="VARCHAR"/>
+        <result property="sState" column="sState" javaType="String" jdbcType="VARCHAR"/>
+        <result property="regular" column="regular" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="written" column="written" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="overall" column="overall" javaType="Double" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <select id="get_All_C" resultMap="cMap">
+        SELECT *
+        FROM <include refid="c"/>
+    </select>
+
+    <delete id="delCourse" parameterType="Long">
+        DELETE FROM
+        <include refid="c"/>
+        WHERE
+        course_id = #{id}
+    </delete>
+
+    <insert id="addCourse" parameterType="com.ljsh.test.mbg.model.Course">
+        INSERT INTO
+        <include refid="c"/>
+        (sTime,cId,cNum,sId,sName,sClass,sState,regular,written,overall)
+        VALUES
+        (#{sTime},#{cId},#{cNum},#{sId},#{sName},#{sClass},#{sState},#{regular},#{written},#{overall})
+    </insert>
+
+    <update id="updateCourse" parameterType="com.ljsh.test.mbg.model.Course">
+        update course set
+        sTime = #{sTime},
+        cId = #{cId},
+        cNum = #{cNum},
+        sId = #{sId},
+        sName = #{sName},
+        sClass = #{sClass},
+        sState = #{sState},
+        regular = #{regular},
+        written = #{written},
+        overall = #{overall}
+        where course_id = #{id}
+    </update>
+
+</mapper>

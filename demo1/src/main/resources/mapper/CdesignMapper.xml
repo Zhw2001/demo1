@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ljsh.test.mbg.mapper.CdesignMapper">
+
+    <sql id="cd">cdesign</sql>
+
+    <resultMap type="com.ljsh.test.mbg.model.Cdesign" id="cdMap">
+        <id  property="id" column="cdesign_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cNum" column="cNum" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="sId" column="sId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="sName" column="sName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="sClass" column="sClass" javaType="String" jdbcType="VARCHAR"/>
+        <result property="sState" column="sState" javaType="String" jdbcType="VARCHAR"/>
+        <result property="select" column="select" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="begin" column="begin" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="medium" column="medium" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="program" column="program" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="answer" column="answer" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="report" column="report" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="overall" column="overall" javaType="Double" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <select id="get_All_Cd" resultMap="cdMap">
+        SELECT *
+        FROM <include refid="cd"/>
+    </select>
+
+    <delete id="delCdesign" parameterType="Long">
+        DELETE FROM
+        <include refid="cd"/>
+        WHERE
+        cdesign_id = #{id}
+    </delete>
+
+    <insert id="addCdesign" parameterType="com.ljsh.test.mbg.model.Cdesign">
+        INSERT INTO
+        <include refid="cd"/>
+        (sTime,cId,cNum,sId,sName,sClass,sState,`select`,`begin`,`medium`,program,answer,report,overall)
+        VALUES
+        (#{sTime},#{cId},#{cNum},#{sId},#{sName},#{sClass},#{sState},#{select},#{begin},#{medium},#{program},#{answer},#{report},#{overall})
+    </insert>
+
+    <update id="updateCdesign" parameterType="com.ljsh.test.mbg.model.Cdesign">
+        update <include refid="cd"/> set
+        sTime = #{sTime},
+        cId = #{cId},
+        cNum = #{cNum},
+        sId = #{sId},
+        sName = #{sName},
+        sClass = #{sClass},
+        sState = #{sState},
+        `select` = #{select},
+        `begin` = #{begin},
+        `medium` = #{medium},
+        program = #{program},
+        answer = #{answer},
+        report = #{report},
+        overall = #{overall}
+        where cdesign_id = #{id}
+    </update>
+
+</mapper>
