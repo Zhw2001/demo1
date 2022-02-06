@@ -3,12 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.ljsh.test.mbg.mapper.UserAuthMapper">
+<mapper namespace="com.ljsh.test.mbg.mapper.AdminAuthMapper">
 
-    <sql id="user_auth">user_authority</sql>
+    <sql id="admin_auth">admin_authority</sql>
 
-    <resultMap type="com.ljsh.test.mbg.model.UserAuth" id="authMap">
-        <id  property="authority_id" column="authority_id" javaType="Integer" jdbcType="BIGINT"/>
+    <resultMap type="com.ljsh.test.mbg.model.AdminAuth" id="authMap">
+        <id  property="authority_id" column="authority_id" javaType="Long" jdbcType="BIGINT"/>
         <result property="authority_name" column="authority_name" javaType="String" jdbcType="CHAR"/>
         <result property="authority_type" column="authority_type" javaType="String" jdbcType="CHAR"/>
         <result property="authority_parent_id" column="authority_parent_id" javaType="String" jdbcType="VARCHAR"/>
@@ -16,12 +16,12 @@
         <result property="authority_url" column="authority_url" javaType="String" jdbcType="CHAR"/>
         <result property="authority_sort" column="authority_sort" javaType="int" jdbcType="INTEGER"/>
         <result property="authority_description" column="authority_description" javaType="String" jdbcType="VARCHAR"/>
-        <result property="authority_enable" column="enable" javaType="int" jdbcType="TINYINT"/>
+        <result property="authority_enable" column="auth_enable" javaType="int" jdbcType="TINYINT"/>
     </resultMap>
 
     <select id="getAuthList" resultMap="authMap">
         SELECT *
-        FROM <include refid="user_auth"/>
+        FROM <include refid="admin_auth"/>
     </select>
 
 </mapper>

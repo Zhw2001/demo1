@@ -28,10 +28,10 @@ public class AdminController {
     }
 
 
-    @GetMapping ("/get_Auth")
-    public Result<?> getadminAuth(@RequestParam String account) {
+    @GetMapping ("/get_Role")
+    public Result<?> getadminRole(@RequestParam String account) {
         if(account != null){
-            AdminUser adminUser = adminUserService.getAuth(account);
+            AdminUser adminUser = adminUserService.getRole(account);
             if(adminUser != null) return Result.success(adminUser);
             else{
                 return Result.error("404","找不到用户数据");
@@ -48,7 +48,7 @@ public class AdminController {
         if(user != null){
             if(adminUserService.regist(user)) return Result.success();
             else{
-                return Result.error("2","sql_error");
+                return Result.error("111","sql_error");
             }
         }
         return Result.error("1","输入为空");
@@ -59,7 +59,7 @@ public class AdminController {
         if(user !=null){
             if(adminUserService.del_user(user.getAccount()))return Result.success();
             else{
-                return Result.error("2","sql_error");
+                return Result.error("111","sql_error");
             }
         }
         return Result.error("1","输入为空");

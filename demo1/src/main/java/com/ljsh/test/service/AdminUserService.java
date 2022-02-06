@@ -10,5 +10,5 @@ public interface AdminUserService {
     List<AdminUser> getusers();
     List<AdminUser> selectPage(int pageNum, int pageSize, String search);
     Boolean del_user(String account);
-    AdminUser getAuth(String account);
+    AdminUser getRole(String account);
 }

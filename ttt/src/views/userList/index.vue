@@ -2,75 +2,76 @@
     <div class="home-container">
       <div class="card">
         <div class="card-body">
-          <el-form :inline="true" class="demo-form-inline">
-            <el-form-item  label="查找:">
-              <el-input v-model="search" placeholder="请输入关键字"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type='primary' @click="load()"><i class="el-icon-search"></i></el-button>
-            </el-form-item>
-            <el-form-item >
-              <el-button type='primary' @click="dialogVisible = true">+</el-button>
-            </el-form-item>
-            <el-form-item >
-              <el-button type='primary' @click="testadd(tableData)">添加TEST</el-button>
-            </el-form-item>
-            <el-form-item >
-              <el-button type='primary'>+</el-button>
-            </el-form-item>
-          </el-form>
+          <div style="display:flex;">
+            <el-form :inline="true" class="demo-form-inline">
+              <el-form-item  label="查找:">
+                <el-input v-model="search" placeholder="请输入关键字"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type='primary' @click="load"><i class="el-icon-search"></i></el-button>
+              </el-form-item>
+              <el-form-item style="margin-left: 747px;">
+                <el-button type='primary' @click="show"><i class="el-icon-plus"></i></el-button>
+              </el-form-item>
+              <el-form-item>
+                <el-button type='primary' ><i class="el-icon-edit"></i></el-button>
+              </el-form-item>
+            </el-form>
+          </div>
           <el-table
-            :fit="true"
-            :header-cell-style="mytable"
+            :fit = "true"
+            :header-cell-style = "mytable"
+            :cell-style = "mytableCell"
             :data="tableData"
             :default-sort = "{prop: 'uid', order: 'ascending'}"
-          >
+            @select="Select"
+            @select-all = "SelectAll">
+
+            <el-table-column
+              type="selection"
+            >
+            </el-table-column>
+
             <el-table-column
             label="ID"
-            width="90"
             prop="uid"
             sortable>
             </el-table-column>
+
             <el-table-column
             prop="account"
             label="账户">
             </el-table-column>
+
             <el-table-column
             prop="nickname"
             label="昵称">
             </el-table-column>
+
             <el-table-column
-            prop="admin_role_ids"
-            label="角色组">  
-            </el-table-column>          
+            label="角色">  
+              <template slot-scope="scope">
+                <el-tag v-if="scope.row.adminRoleList[0]" >{{scope.row.adminRoleList[0]}}</el-tag>
+                <el-tag v-if="scope.row.adminRoleList[1]">{{scope.row.adminRoleList[1]}}</el-tag>
+                <el-tag v-if="scope.row.adminRoleList[2]">{{scope.row.adminRoleList[2]}}</el-tag>
+            </template>
+            </el-table-column>      
+
             <el-table-column
             prop="email"
             label="邮箱">
             </el-table-column>
+
             <el-table-column
             prop="phone"
             label="手机">
             </el-table-column>
-            <el-table-column
-            prop="enable"
-            label="是否启用">
-            </el-table-column>
-            <el-table-column width="180" align="center" label="操作">
-                <template slot-scope="scope">
-                    <el-button
-                    size="mini"
-                    @click="handleEdit(scope.row)">编辑</el-button>
-                    <el-button
-                    size="mini"
-                    type="danger"
-                    @click="handleDelete(scope.$index,scope.row)">删除</el-button>
-                </template>
-            </el-table-column>
+
           </el-table>
-          <div class="block" style="margin: 10px 0">
+          <div  style="margin: 10px 0">
             <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
+              @size-change="SizeChange"
+              @current-change="CurrentChange"
               :current-page="currentPage"
               :pager-count="5"
               :page-sizes="[5, 10, 15, 20]"
@@ -79,75 +80,27 @@
               :total="total">
             </el-pagination>
           </div>
-          <el-dialog
-            title="提示"
-            :visible.sync="dialogVisible"
-            width="30%"
-            :before-close="handleClose">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-              <el-form-item label="账户" prop="account">
-                <el-input v-model="ruleForm.account"></el-input>
-              </el-form-item>
-              <el-form-item label="密码" prop="password">
-                <el-input  v-model="ruleForm.password"></el-input>
-              </el-form-item>
-              <el-form-item label="电子邮件" prop="email">
-                <el-input  v-model="ruleForm.email"></el-input>
-              </el-form-item>
-              <el-form-item label="手机号码" prop="phone">
-                <el-input  v-model="ruleForm.phone"></el-input>
-              </el-form-item>
-              <el-form-item label="是否有效" prop="enable">
-                <el-switch v-model="ruleForm.enable"></el-switch>
-              </el-form-item>
-
-              <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-                <el-button @click="resetForm('ruleForm')">重置</el-button>
-              </el-form-item>
-            </el-form>
-          </el-dialog>
         </div>
       </div>
+
+      <create-table :visible = 'CreateVisible'  @close = "outclose($event)"></create-table>
     </div>
 </template>
 
 <script>
 import request from "@/request";
+import creatTable from "./component/createTable"
 export default {
     name: 'home',
     data() {
 
       return {
-        ruleForm: {
-          account: '',
-          password: '',
-          email: '',
-          phone: '',
-          enable: false
-        },
-        rules: {
-          account: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
-          password:[
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, message: '长度大于 6 个字符', trigger: 'blur'}
-          ],
-          email:[
-            { required: true, trigger: 'blur' },
-          ],
-          phone:[
-            { required: true,  trigger: 'blur' },
-          ],
-        },
-        dialogVisible: false,//点击按钮弹出对话框，默认隐藏
+        CreateVisible: false,
         currentPage: 1,//当前页面默认1
         search:'',//search输入框中的值
         pageSize:10,
         total:0,
-        tableData: []
+        tableData: [],
       }
     },
     created(){
@@ -155,22 +108,19 @@ export default {
       this.cal_total();
     },
     methods:{
-      testadd(tableData){
-        let rep=0;
-        for(let item of tableData){
-          if(item.id == this.search){
-            rep=1;
-            break;
-          }
-        }
-        if(rep == 0){
-          tableData.push({id:this.search});
-        }
+      //创建用户按钮
+      show(){
+        this.CreateVisible = true;
       },
+      outclose(visible){
+        this.CreateVisible = visible;
+      },
+
+
+      //增删改查
       delete(index,account){
         this.tableData.splice(index,1);
-        request.post("/api_S/admin/delete",{account: account}).then(res =>{
-        });
+        request.post("/api_S/admin/delete",{account: account}).then(res =>{this.$message("删除成功");});
       },
       cal_total(){
         request.get("/api_S/admin/cal_list").then(res=>{
@@ -178,75 +128,64 @@ export default {
         });
       },
       load(){
+        var roleList = new Array();
         request.get("/api_S/admin/list?pageNum="+this.currentPage+"&pageSize="+this.pageSize+"&search="+this.search).then(res=>{//等价于.then(function(res){console.log(res.data)})
-        this.tableData = res.data;
-        console.log(this.tableData.length);
+          this.tableData=[];
+          for(let i of res.data){
+            roleList = [];
+            for(let j of i.adminRoleList){
+              roleList.push(j.role_name);
+            }
+            i.adminRoleList = roleList;
+            this.tableData.push(i);
+          }
+          console.log(this.tableData);
         });
       },
       save(){
-        if(this.ruleForm.enable===true){
-          this.ruleForm.enable=1;
-        }else{
-          this.ruleForm.enable=0;
-        }
         request.post("/api_S/admin/regist",this.ruleForm).then(res =>{
           console.log(res);
         });
       },
-      handleEdit(row) {
-        this.dialogVisible = true;
-        this.ruleForm = row;
+
+
+
+
+      //数据行选择方法
+      Select(value) {
+        console.log(value);
       },
-      handleDelete(index,row) {
-        this.delete(index,row.account);
-      },
-      handleSizeChange(val) {
-        this.pageSize=val;
-          this.load();
-      },
-      handleCurrentChange(val) {
-          this.currentPage = val;
-          this.load();
-      },
-      handleClose(done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
+      //全选方法
+      SelectAll(value){
+        console.log(value);
       },
 
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-            this.save();
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+
+
+      //分页所用方法
+      SizeChange(val) {
+        this.pageSize=val;
+        this.load();
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      CurrentChange(val) {
+        this.currentPage = val;
+        this.load();
       },
+
+      //表格样式设置
       mytable(){
-        return 'background-color:#f1f3fa; color:rgba(0, 0, 0, 0.85);font-weight: 500'
+        return 'background-color:#f1f3fa; color:rgba(0, 0, 0, 0.85);font-weight: 500;text-align:center;'
       },
-    }
+      mytableCell(){
+        return 'text-align:center;'
+      },
+    },
+    components: {
+      'create-table':creatTable,
+    },
 }
 </script>
 
 <style scoped>
-.mylabel{
-  text-align: right;
-  vertical-align: middle;
-  float: left;
-  font-size: 14px;
-  color: #606266;
-  line-height: 40px;
-  padding: 0 12px 0 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
+
 </style>

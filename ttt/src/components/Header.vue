@@ -4,7 +4,7 @@
         <div style='flex: 1'></div>
         <div class='right'>
           <el-dropdown @command="handleCommand">
-            <span class="el-dropdown-link"><label>{{authority}}</label><i class="el-icon-arrow-down el-icon--right"></i>
+            <span class="el-dropdown-link"><label>{{fullName}}</label><i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item >个人信息</el-dropdown-item>
@@ -20,7 +20,8 @@ export default {
     name:"Header",
     data(){
         return{
-            authority:'',
+            role:'',
+            name:'',
         }
     },
     methods: {
@@ -30,17 +31,22 @@ export default {
             }
         },
         out(){
-            localStorage.removeItem('Authorization');
+            localStorage.clear();
             this.$router.push('/login');
-            localStorage.removeItem('MenuName');
-            localStorage.removeItem('AuthName');
-            localStorage.removeItem('AuthList');
             
         }
     },
     created(){
-        if(localStorage.getItem('AuthorityName') !== undefined){
-        this.authority=localStorage.getItem('AuthorityName');
+        if(localStorage.getItem('AuthorityName') !== undefined && localStorage.getItem('RoleName') !== undefined  ){
+            var role = new Array();
+            role = localStorage.getItem('Role').split(',');
+            this.name = localStorage.getItem('AuthorityName');
+            this.role = role[0];
+        }
+    },
+    computed: {
+        fullName(){
+            return this.role + ':' + this.name;
         }
     }
 }
@@ -65,7 +71,7 @@ export default {
 }
 .head .right
 {
-    width: 100px;
+    margin-right: 20px;
 }
 .head .right .el-dropdown-link {
     cursor: pointer;

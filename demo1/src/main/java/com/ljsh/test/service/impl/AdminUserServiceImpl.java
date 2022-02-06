@@ -20,7 +20,6 @@ public class AdminUserServiceImpl implements AdminUserService {
             try{
             adminUserMapper.newu(u);
             Integer uid = adminUserMapper.getUidByAccount(u.getAccount());
-            adminUserMapper.set_user_auth(uid);
             }catch (Exception e){
                 return false;
             }
@@ -52,7 +51,6 @@ public class AdminUserServiceImpl implements AdminUserService {
     public Boolean del_user(String account){
         try {
             Integer uid = adminUserMapper.getUidByAccount(account);
-            adminUserMapper.del_user_auth(uid);
             adminUserMapper.del_user(account);
         }catch(Exception e){
             return false;
@@ -60,8 +58,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         return true;
     }
 
-    public AdminUser getAuth(String account){
-        AdminUser adminUser = adminUserMapper.get_Auth_info(account);
+    public AdminUser getRole(String account){
+        AdminUser adminUser = adminUserMapper.get_Roleinfo_By_Account(account);
         return adminUser;
     }
 

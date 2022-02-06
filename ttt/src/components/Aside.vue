@@ -3,8 +3,6 @@
         <el-menu
         style="width:200px;height:calc(100vh);"
         class="aside-menu"
-        @open="handleOpen"
-        @close="handleClose"
         router
         >
             <div class="logo-div">
@@ -15,7 +13,7 @@
                     <i class="el-icon-data-analysis" ></i>
                     <span >查看数据</span>
                 </template>
-                <el-menu-item index="1-1">Course</el-menu-item>
+                <el-menu-item index="/course">check_or_edit</el-menu-item>
             </el-submenu>
 
             <el-submenu index="2" v-if="menu2">
@@ -23,7 +21,7 @@
                     <i class="el-icon-edit" ></i>
                     <span >生成表格</span>
                 </template>
-                <el-menu-item index="/input">Generate</el-menu-item>
+                <el-menu-item index="/input">generate</el-menu-item>
             </el-submenu>
 
             <el-submenu index="3" v-if="menu3">
@@ -31,9 +29,9 @@
                     <i class="el-icon-user" ></i>
                     <span>用户管理</span>
                 </template>
-                <el-menu-item index="/userList">User</el-menu-item>
-                <el-menu-item>UserRole</el-menu-item>
-                <el-menu-item index="/userRoleMenu">UserRoleMenu</el-menu-item>
+                <el-menu-item index="/userList">user</el-menu-item>
+                <el-menu-item>userRole</el-menu-item>
+                <el-menu-item index="/userRoleMenu">userRoleMenu</el-menu-item>
             </el-submenu>
 
 
@@ -51,28 +49,31 @@ export default {
         }
     },
     methods: {
-        handleOpen(key, keyPath) {
-         console.log(key, keyPath);
-        },
-        handleClose(key, keyPath) {
-         console.log(key, keyPath);
-        }
     },
     created(){
-        console.log(localStorage.getItem('MenuName'));
-        var NameList = localStorage.getItem('MenuName').split(',');
-        for (var i=0; i<NameList.length; i++){
-            switch(NameList[i])
+        var RoleList = localStorage.getItem('Role').split(',');
+        for (let i=0; i<RoleList.length; i++){
+            switch(RoleList[i])
                 {
-                    case '查看数据':
+                    case '教学秘书':
                         this.menu1 = true;
                         break;
-                    case '生成表格':
+                    case '任课老师':
+                        this.menu1 = true;
                         this.menu2 = true;
                         break;
-                    case '用户管理':
+                    case '课程负责人':
+                        this.menu1 = true;
+                        this.menu2 = true;
+                    case 'super admin':
+                        this.menu1 = true;
+                        this.menu2 = true;
                         this.menu3 = true;
-                    break;
+                        break;
+                    default:
+                        this.menu1 = false;
+                        this.menu2 = false;
+                        this.menu3 = false;
                 }
         }
     },
@@ -96,6 +97,10 @@ export default {
     color: azure;
 }
 
+.aside{
+    background: linear-gradient(135deg, #8f75da 0, #727cf5 60%);
+    min-height: cal(100vh - 100px);
+}
 
 .aside .aside-menu {
     /deep/ .el-icon-arrow-down:before {//展开图标穿透

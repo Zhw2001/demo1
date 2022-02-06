@@ -19,6 +19,11 @@ export default[
         name:'userRoleMenu',
         component: () => import('@/views/userRoleMenu')
       },
+      {
+        path:'course',
+        name:'course',
+        component: () => import('@/views/course')
+      },
     ]
   },
   {

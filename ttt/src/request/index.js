@@ -35,7 +35,6 @@ request.interceptors.request.use(config => {
 request.interceptors.response.use(
     response => {
         let res = response.data;
-        console.log(response.data);
         //异常处理
         if(res === 401){
             localStorage.removeItem('Authorization');

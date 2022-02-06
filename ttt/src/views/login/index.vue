@@ -41,36 +41,16 @@ export default{
         login(){
             request.post("/api_S/admin/login",this.form).then(res =>{
                 if(res.code == '0'){
-                    if(res.data.enable=='1'){
+                    if(true/*res.data.enable=='1'*/){
+                        this.setCidList(res.data);
                         this.$message({
                             type:"success",
                             message: "login success"
                         })
                         localStorage.setItem('Authorization',res.token);
                         localStorage.setItem('AuthorityName',res.data.nickname);
-                        request.get('/api_S/admin/get_Auth'+'?account='+res.data.account).then(res =>{
-                            res = res.data;
-                            var authUrl = res.authority_url.split(",");
-                            var authName = res.authority_name.split(",");
-                            var authType = res.authority_type.split(",");
-                            var MenuName = new Array();
-                            var AuthName = new Array();var AuthList = new Array();
-                            for(let i = 0; i<authUrl.length; i++)
-                            {
-                                if(authType[i] == 1){
-                                   MenuName.push(authName[i]);
-                                }
-                                else if(authType[i] == 2){
-                                    AuthName.push(authName[i]);
-                                    AuthList.push(authUrl[i]);
-                                }
-                            }
-                            console.log(MenuName);
-                            console.log(AuthName);
-                            console.log(AuthList);
-                            localStorage.setItem('MenuName',MenuName);
-                            localStorage.setItem('AuthName',AuthName);
-                            localStorage.setItem('AuthList',AuthList);
+                        request.get('/api_S/admin/get_Role'+'?account='+res.data.account).then(res =>{
+                            this.setRole(res.data);
                             this.$router.push('/');
                         })
                    }
@@ -87,7 +67,20 @@ export default{
                     })
                 }
             })
-        }
+        },
+        setRole(userList){//res.data
+            userList = userList.adminRoleList;
+            var roleList = new Array();
+            for(let i of userList){
+                roleList.push(i.role_name);
+            }
+            localStorage.setItem('Role',roleList);
+        },
+        setCidList(user){//res.data
+            var cidArray = new Array();
+            cidArray = user.userCid.split(',');
+            localStorage.setItem('cidList',cidArray);
+        },
     }
 
 }

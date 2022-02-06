@@ -5,7 +5,7 @@
                 <el-tree :data="mydata" :props="defaultProps" :expand-on-click-node="false">
                     <span class="custom-tree-node" slot-scope="{ node, data }">
                         <span>{{ node.label }}</span>
-                        <span>
+                        <span v-if='false'>
                         <el-button
                             type="text"
                             @click="() => append(data)">
@@ -65,7 +65,7 @@ import request from "@/request";
         })
       },
       hasParent(data){
-        if(data.authority_parent_id === ''){
+        if(data.authority_parent_id == '' || data.authority_parent_id == null){
             return false;
         }
         return true;
