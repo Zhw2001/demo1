@@ -5,9 +5,9 @@ export default[
     component: () => import('@/views/Main'), // main
     children: [    
       {
-      path:'userList',
-      name:'userList',
-      component: () => import('@/views/userList')
+      path:'user',
+      name:'user',
+      component: () => import('@/views/user')
       },
       {
         path:'input',

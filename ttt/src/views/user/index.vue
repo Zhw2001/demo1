@@ -2,22 +2,21 @@
     <div class="home-container">
       <div class="card">
         <div class="card-body">
-          <div style="display:flex;">
-            <el-form :inline="true" class="demo-form-inline">
-              <el-form-item  label="查找:">
-                <el-input v-model="search" placeholder="请输入关键字"></el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-button type='primary' @click="load"><i class="el-icon-search"></i></el-button>
-              </el-form-item>
-              <el-form-item style="margin-left: 747px;">
-                <el-button type='primary' @click="show"><i class="el-icon-plus"></i></el-button>
-              </el-form-item>
-              <el-form-item>
-                <el-button type='primary' ><i class="el-icon-edit"></i></el-button>
-              </el-form-item>
-            </el-form>
-          </div>
+          <el-form :inline="true" class="demo-form-inline">
+            <el-form-item  label="查找:">
+              <el-input v-model="search" placeholder="请输入关键字"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type='primary' @click="load"><i class="el-icon-search"></i></el-button>
+            </el-form-item>
+            <el-form-item>
+              <el-button type='primary' @click="show"><i class="el-icon-plus"></i></el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
           <el-table
             :fit = "true"
             :header-cell-style = "mytable"
@@ -68,18 +67,17 @@
             </el-table-column>
 
           </el-table>
-          <div  style="margin: 10px 0">
-            <el-pagination
-              @size-change="SizeChange"
-              @current-change="CurrentChange"
-              :current-page="currentPage"
-              :pager-count="5"
-              :page-sizes="[5, 10, 15, 20]"
-              :page-size="pageSize"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="total">
-            </el-pagination>
-          </div>
+          <el-pagination
+            class="pagination"
+            @size-change="SizeChange"
+            @current-change="CurrentChange"
+            :current-page="currentPage"
+            :pager-count="5"
+            :page-sizes="[5, 10, 15, 20]"
+            :page-size="pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+          </el-pagination>
         </div>
       </div>
 

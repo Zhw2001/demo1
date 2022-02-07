@@ -167,13 +167,14 @@
     </el-table>
     <div style="margin: 10px 0">
         <el-pagination
-            @size-change="SizeChange"
-            @current-change="CurrentPageChang"
-            :current-page="currentPage"
-            :page-sizes="[5, 10, 15, 20]"
-            :page-size="10"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="this.gdesignData.length">
+        class="pagination"
+        @size-change="SizeChange"
+        @current-change="CurrentPageChang"
+        :current-page="currentPage"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="10"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="this.gdesignData.length">
         </el-pagination>
     </div>
 </div>

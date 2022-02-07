@@ -3,9 +3,23 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.app {
+    background: #161b1d;
+    width: 100% !important;
+    height: 100vh !important;
+  }
+
+
 .home-container {
     padding:25px 42px 25px 26px;
 }
+
+.wall-paper{
+    background-color: #fafbfe;
+    min-width: calc(100% - 256px);
+}
+
 .card {
     position: relative;
     display: flex;
@@ -20,6 +34,10 @@
 .card .card-body {
     flex: 1 1 auto;
     padding: 1.5rem;
+}
+
+.pagination{
+    margin-top: 20px;
 }
 
 /*

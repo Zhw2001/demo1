@@ -24,6 +24,13 @@
                 </el-select>
               </el-form-item>
             </el-form>
+          </div>
+        </div>
+
+        <div class="card"></div>
+
+        <div class="card">
+          <div class="card-body" style='width:100%;'>
             <course  :courseData='CourseData' :visible = 'CourseVisible'></course>
             <experiment  :experData='ExperData'  :visible = 'ExperVisble'></experiment>
             <cdesign  :cdesignData='CdesigData'  :visible = 'CdesignVisble'></cdesign>

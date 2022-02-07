@@ -1,6 +1,6 @@
 <template>
     <div class="head">
-        <div class='left'></div>
+        <div class='left'><el-button type="text" @click="fold()"><i :class="classObject"></i></el-button></div>
         <div style='flex: 1'></div>
         <div class='right'>
           <el-dropdown @command="handleCommand">
@@ -20,6 +20,7 @@ export default {
     name:"Header",
     data(){
         return{
+            clicked:false,
             role:'',
             name:'',
         }
@@ -34,7 +35,11 @@ export default {
             localStorage.clear();
             this.$router.push('/login');
             
-        }
+        },
+        fold() {
+            this.clicked = ! this.clicked;
+            this.$emit("fold",this.clicked);
+        },
     },
     created(){
         if(localStorage.getItem('AuthorityName') !== undefined && localStorage.getItem('RoleName') !== undefined  ){
@@ -47,16 +52,23 @@ export default {
     computed: {
         fullName(){
             return this.role + ':' + this.name;
+        },
+        classObject: function () {
+            return {
+            'el-icon-s-unfold': !this.clicked,
+            'el-icon-s-fold': this.clicked,
+            }
         }
     }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .head
 {
-    height: 50px;
-    line-height: 50px;
+    width:100%;
+    height: 70px;
+    line-height: 70px;
     border-bottom: 1px solid #ccc;
     display: flex;
 }
@@ -84,4 +96,14 @@ export default {
     content: "\E6DF";
     color: rgb(0, 0, 0);
 }
+
+/deep/ .el-icon-s-fold{
+    font-size: 25px;
+}
+
+/deep/.el-icon-s-unfold{
+    font-size: 25px;
+    color: black;
+}
+
 </style>
