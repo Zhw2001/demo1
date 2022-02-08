@@ -235,6 +235,7 @@ export default{
     props:{
         visible : Boolean,
         experData : Array,
+        w_lock : Boolean,
     },
 
     data(){
@@ -320,8 +321,11 @@ export default{
             this.wlock = false;
         },
         cancel(row){
+            var type = 1;
+            console.log(type);
             this.wlock = true;
-            this.SetRow(row);
+            if(this.rowCache != null){this.SetRow(row);}
+            this.$emit("delEmptyRow",type);
         },
         RowDel(index,row){
             if(!this.wlock){
@@ -382,6 +386,11 @@ export default{
         experData :function(){
             this.load();
         },
+        w_lock : function(){
+            this.wlock = this.w_lock;
+            this.CurrentPageChange(this.totalPage);
+            this.rowCache = null;
+        }
     },
 
 

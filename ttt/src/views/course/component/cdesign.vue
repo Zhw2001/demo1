@@ -132,7 +132,7 @@
         <el-pagination
         class="pagination"
         @size-change="SizeChange"
-        @current-change="CurrentPageChang"
+        @current-change="CurrentPageChange"
         :current-page="currentPage"
         :page-sizes="[5, 10, 15, 20]"
         :page-size="10"
@@ -151,6 +151,7 @@ export default{
     props:{
         visible : Boolean,
         cdesignData : Array,
+        w_lock : Boolean,
     },
 
     data(){
@@ -215,8 +216,11 @@ export default{
             this.wlock = false;
         },
         cancel(row){
+            var type = 2;
+            console.log(type);
             this.wlock = true;
-            this.SetRow(row);
+            if(this.rowCache != null){this.SetRow(row);}
+            this.$emit("delEmptyRow",type);
         },
         RowDel(index,row){
             if(!this.wlock){
@@ -249,7 +253,7 @@ export default{
             this.pageSize = v;
             this.setCurrentPageData();
         },
-        CurrentPageChang(v){
+        CurrentPageChange(v){
             this.currentPage = v;
             this.setCurrentPageData();
         },
@@ -282,6 +286,11 @@ export default{
         cdesignData :function(){
             this.load();
         },
+        w_lock : function(){
+            this.wlock = this.w_lock;
+            this.CurrentPageChange(this.totalPage);
+            this.rowCache = null;
+        }
     },
 
 }

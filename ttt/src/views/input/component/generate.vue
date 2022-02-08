@@ -1,5 +1,5 @@
 <template>
-    <div class="home-container">
+    <div v-if='setvis' class="home-container">
         <div class="card">
           <div class="card-body">
 
@@ -319,8 +319,6 @@
                 </el-form-item>
             </el-dialog>
 
-
-
             <el-dialog>
               <el-form :inline="true" class="demo-form-inline">
                 <el-form-item>
@@ -341,6 +339,9 @@
               </el-form>
             </el-dialog>
 
+
+            <el-button @click = 'back()'>上一页</el-button>
+            <el-button @click = 'next()'>返回</el-button>
           </div>
         </div>
         
@@ -352,6 +353,11 @@ import request from "@/request";
 import global from '@/components/Global';
 
   export default {
+    name:'generate',
+
+    props:{
+      vis : Boolean,
+    },
 
     data() {
       return {
@@ -395,6 +401,9 @@ import global from '@/components/Global';
         dialogVisible2: false,
       }
     },
+
+
+
     methods: {
 
       //展示模板
@@ -464,7 +473,21 @@ import global from '@/components/Global';
         return 'text-align:center;'
       },
 
-    }
+      back() {
+        this.$emit("back",'cd','g');
+      },
+      next(){
+        this.$emit("next",'home','g');
+      }
+
+    },
+
+    computed: {
+      setvis: function () {
+          return this.vis;
+      },
+    },
+    
   }
 </script>
 
