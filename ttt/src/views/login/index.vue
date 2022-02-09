@@ -78,7 +78,10 @@ export default{
         },
         setCidList(user){//res.data
             var cidArray = new Array();
-            cidArray = user.userCid.split(',');
+            console.log(user);
+            if(user.userCid != null){
+                cidArray = user.userCid.split(',');
+            }
             localStorage.setItem('cidList',cidArray);
         },
     }
