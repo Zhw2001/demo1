@@ -1,8 +1,18 @@
 <template>
     <div class="home-container">
         <div class="card">
-          <div class="card-body">
-            <el-button v-if = 'homeVis' type="primary" @click="nextPage(['ea','home'])"><i class="el-icon-thumb"></i><span>考试/考查审查表生成</span></el-button>
+          <div class="card-body" style="display:flex;justify-content: center;">
+            <div>
+            <el-select  v-if = 'homeVis' v-model="course" placeholder="COURSE">
+              <el-option
+              v-for = "item in CourseList"
+              :key = "item.value"
+              :label = "item.label"
+              :value = "item.value">
+              </el-option>
+            </el-select>
+            <el-button v-if = 'homeVis' type="primary" @click="nextPage(['ea','home'])"><i class="el-icon-thumb"></i><span>开始</span></el-button>
+            </div>
             <exam-audit :vis = 'eaVis' @next='nextPage(arguments)' @back = 'nextPage(arguments)' ></exam-audit>
             <course-degree :vis = 'cdVis'  @next='nextPage(arguments)' @back = 'nextPage(arguments)' ></course-degree>
             <generate :vis = 'gVis'  @next='nextPage(arguments)' @back = 'nextPage(arguments)'></generate>
@@ -28,6 +38,8 @@ export default {
       cdVis:false,
       eaVis:false,
       gVis:false,
+      CourseList: [],
+      course: '计算机系',
     }
   },
   methods: {
