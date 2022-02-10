@@ -12,9 +12,9 @@
                     <i class="el-icon-edit" ></i>
                     <span>工程认证</span>
                 </template>
-                <el-menu-item index="/input"><span>填写课程数据</span></el-menu-item>
-                <el-menu-item index="/input"><span>考试考核内容合理性审核</span></el-menu-item>
-                <el-menu-item index="/input"><span>课程教学目标达成度评价</span></el-menu-item>
+                <el-menu-item index="/add"><span>填写课程数据</span></el-menu-item>
+                <el-menu-item index="/ea"><span>考试考核内容合理性审核</span></el-menu-item>
+                <el-menu-item index="/cd"><span>课程教学目标达成度评价</span></el-menu-item>
             </el-submenu>
 
             <el-submenu index="2" v-if="menu2">
@@ -47,39 +47,14 @@ export default {
     },
     data(){
         return{
-            menu1:'',
-            menu2:'',
-            menu3:'',
+            menu1:true,
+            menu2:true,
+            menu3:true,
         }
     },
     methods: {
     },
     created(){
-        var RoleList = localStorage.getItem('Role').split(',');
-        for (let i=0; i<RoleList.length; i++){
-            switch(RoleList[i])
-                {
-                    case '教学秘书':
-                        this.menu1 = true;
-                        break;
-                    case '任课老师':
-                        this.menu1 = true;
-                        this.menu2 = true;
-                        break;
-                    case '课程负责人':
-                        this.menu1 = true;
-                        this.menu2 = true;
-                    case 'super admin':
-                        this.menu1 = true;
-                        this.menu2 = true;
-                        this.menu3 = true;
-                        break;
-                    default:
-                        this.menu1 = false;
-                        this.menu2 = false;
-                        this.menu3 = false;
-                }
-        }
     },
     computed: {
         classObject: function () {

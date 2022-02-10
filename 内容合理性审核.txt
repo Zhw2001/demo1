@@ -1,0 +1,126 @@
+{
+    "semeseter": "xxxx-xxxx-x",
+    "date": "xxxx年xx月",
+    "name": "课程名",
+    "number": "XX000000",
+    "classes": "信管xxx,xxx",
+    "exam_type": "考试",
+    "course_goals": [
+        {
+            "description": "课程目标1描述",
+            "support_graduation_require": "支撑毕业要求1,1",
+            "evaluation_usual": [
+                "考勤",
+                "课堂表现",
+                "作业"
+            ],
+            "evaluation_end": [
+                "卷面考试"
+            ],
+            "evaluation_proportion": {
+                "考勤": 7,
+                "课堂表现": 0,
+                "作业": 0,
+                "卷面考试": 28
+            },
+            "standard": [
+                "课程目标1优秀评分标准描述",
+                "课程目标1良好评分标准描述",
+                "课程目标1合格评分标准描述",
+                "课程目标1不合格评分标准描述"
+            ],
+            "exam_question": "对应题目",
+            "exam_proportion": 35
+        },
+        {
+            "description": "课程目标2描述",
+            "support_graduation_require": "支撑毕业要求2,2",
+            "evaluation_usual": [
+                "考勤",
+                "课堂表现",
+                "作业"
+            ],
+            "evaluation_end": [
+                "卷面考试"
+            ],
+            "evaluation_proportion": {
+                "考勤": 0,
+                "课堂表现": 8,
+                "作业": 12,
+                "卷面考试": 0
+            },
+            "standard": [
+                "课程目标2优秀评分标准描述",
+                "课程目标2良好评分标准描述",
+                "课程目标2合格评分标准描述",
+                "课程目标2不合格评分标准描述"
+            ],
+            "exam_question": "对应题目",
+            "exam_proportion": 20
+        },
+        {
+            "description": "课程目标3描述",
+            "support_graduation_require": "支撑毕业要求3,3",
+            "evaluation_usual": [
+                "考勤",
+                "课堂表现",
+                "作业"
+            ],
+            "evaluation_end": [
+                "卷面考试"
+            ],
+            "evaluation_proportion": {
+                "考勤": 0,
+                "课堂表现": 0,
+                "作业": 0,
+                "卷面考试": 21
+            },
+            "standard": [
+                "课程目标3优秀评分标准描述",
+                "课程目标3良好评分标准描述",
+                "课程目标3合格评分标准描述",
+                "课程目标3不合格评分标准描述"
+            ],
+            "exam_question": "对应题目",
+            "exam_proportion": 22.4
+        },
+        {
+            "description": "课程目标4描述",
+            "support_graduation_require": "支撑毕业要求4,4",
+            "evaluation_usual": [
+                "考勤",
+                "课堂表现",
+                "作业"
+            ],
+            "evaluation_end": [
+                "卷面考试"
+            ],
+            "evaluation_proportion": {
+                "考勤": 0,
+                "课堂表现": 0,
+                "作业": 3,
+                "卷面考试": 21
+            },
+            "standard": [
+                "课程目标4优秀评分标准描述",
+                "课程目标4良好评分标准描述",
+                "课程目标4合格评分标准描述",
+                "课程目标4不合格评分标准描述"
+            ],
+            "exam_question": "对应题目",
+            "exam_proportion": 22.6
+        }
+    ],
+    "question_specification": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        90
+    ],
+    "question_setter": "命题人",
+    "question_reviewer": "审题人"
+}

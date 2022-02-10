@@ -10,14 +10,24 @@ export default[
       component: () => import('@/views/user/view/user')
       },
       {
-        path:'input',
-        name:'input',
-        component: () => import('@/views/input')
-      },
-      {
         path:'userRoleMenu',
         name:'userRoleMenu',
         component: () => import('@/views/user/view/userRoleMenu')
+      },
+      {
+        path:'add',
+        name:'AddData',
+        component: () => import('@/views/input/view/AddData')
+      },
+      {
+        path:'cd',
+        name:'CourseDegree',
+        component: () => import('@/views/input/view/CourseDegree')
+      },
+      {
+        path:'ea',
+        name:'ExamAudit',
+        component: () => import('@/views/input/view/ExamAudit')
       },
       {
         path:'course',

@@ -1,5 +1,5 @@
 <template>
-    <div v-if = 'setvis'>
+    <div class="home-container">
       <div class="card">
         <div class="card-body">
           <div class='mydoc'>
@@ -1372,8 +1372,8 @@
                 </td>
                 <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
                   <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                    <span style="font-family:Calibri; color:#1f497d">
-                      √
+                    <span>
+                      <input id='1' name="checkbox" type="checkbox"  @click="setSpecify"  checked=true />
                     </span>
                   </p>
                 </td>
@@ -1389,7 +1389,7 @@
                 <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
                   <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
                     <span style="font-family:Calibri; color:#1f497d">
-                      √
+                      <input id='2' name="checkbox" type="checkbox"  @click="setSpecify"  checked=true />
                     </span>
                   </p>
                 </td>
@@ -1405,7 +1405,7 @@
                 <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
                   <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
                     <span style="font-family:Calibri; color:#1f497d">
-                      √
+                      <input id='3' name="checkbox" type="checkbox" @click="setSpecify"  checked=true />
                     </span>
                   </p>
                 </td>
@@ -1421,7 +1421,7 @@
                 <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
                   <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
                     <span style="font-family:Calibri; color:#1f497d">
-                      √
+                      <input id='4' name="checkbox" type="checkbox" @click="setSpecify"  checked=true />
                     </span>
                   </p>
                 </td>
@@ -1437,7 +1437,7 @@
                 <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
                   <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
                     <span style="font-family:Calibri; color:#1f497d">
-                      √
+                      <input id='5' name="checkbox" type="checkbox" @click="setSpecify"  checked=true />
                     </span>
                   </p>
                 </td>
@@ -1456,7 +1456,7 @@
                 <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
                   <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
                     <span style="font-family:Calibri; color:#1f497d">
-                      √
+                      <input id='6' name="checkbox" type="checkbox" @click="setSpecify"  checked=true />
                     </span>
                   </p>
                 </td>
@@ -1475,7 +1475,7 @@
                 <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
                   <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
                     <span style="font-family:Calibri; color:#1f497d">
-                      √
+                      <input id='7' name="checkbox" type="checkbox" @click="setSpecify"  checked=true />
                     </span>
                   </p>
                 </td>
@@ -1491,7 +1491,7 @@
                 <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
                   <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
                     <span style="font-family:'Times New Roman'; color:#1f497d">
-                      90%
+                      {{this.passRatio}}%
                     </span>
                   </p>
                 </td>
@@ -1581,8 +1581,8 @@
             </p>
           </div>
           <div style="text-align:center;">
-            <el-button @click = 'back()'>返回</el-button>
-            <el-button @click = 'next()'>下一页</el-button>
+
+            <el-button @click = 'send()'>发送</el-button>
           </div>
         </div>
       </div>
@@ -1595,10 +1595,6 @@ import global from '@/components/Global';
 
 export default {
   name:'examAudit',
-
-  props:{
-        vis : Boolean,
-  },
 
   data() {
     return {
@@ -1659,13 +1655,19 @@ export default {
           '',
         ],
       },
-      testSpecification:{
-        CheckList:[],
-        PassRatio:0,
-      }
+      testSpecification:[1,1,1,1,1,1,1],
+      passRatio:0,
     }
   },
   methods: {
+    setSpecify(event){
+      if(event.target.checked == true){
+        this.testSpecification[parseInt(event.target.id)-1] = 1;
+      }
+      else{
+        this.testSpecification[parseInt(event.target.id)-1] = 0;
+      }
+    },
     calArray(array){
       var ans = 0;
       for (let i of array){
@@ -1673,31 +1675,69 @@ export default {
       }
       return ans;
     },
-    back() {
-      this.$emit("back",'home','ea');
+    GenerateCTarget(){
+      var ct = new Array;
+      var data = new Object;
+      data.semeseter = this.basicInfo.AuditSemester;
+      data.date = this.basicInfo.AuditTime;
+      data.name = this.basicInfo.cname;
+      data.number = this.basicInfo.info_cid;
+      data.classes = this.basicInfo.class;
+      data.exam_type = this.basicInfo.testtype;
+      data.course_goals = new Array;
+      for(let i = 0; i<this.testContent.ctarget.length;i++){
+        var tmpObj = new Object;
+        tmpObj.description = this.testContent.ctarget[i];
+        tmpObj.support_graduation_require="支撑毕业要求1,1";
+        tmpObj.evaluation_usual =[
+          "考勤",
+          "课堂表现",
+          "作业"
+        ];
+        tmpObj.evaluation_end=[
+          "卷面考试"
+        ];
+        tmpObj.evaluation_proportion={
+          "考勤": this.testContent.ContentDis.Attendance[i],
+          "课堂表现": this.testContent.ContentDis.CPerformance[i],
+          "作业": this.testContent.ContentDis.HomeWork[i],
+          "卷面考试": this.testContent.ContentDis.Score[i]
+        };
+        tmpObj.standard = [
+          this.markStandard.a[i],
+          this.markStandard.b[i],
+          this.markStandard.d[i],
+          this.markStandard.f[i]
+        ],
+        tmpObj.exam_question = '对应题目';
+        tmpObj.exam_proportion = this.testContent.ContentDis.Ratio[i];
+        data.course_goals.push(tmpObj);
+      };
+      var tmpArray = this.testSpecification;
+      tmpArray.push(this.passRatio);
+      data.question_specification = tmpArray;
+      data.question_setter = '命题人';
+      data.question_reviewer = '审题人';
+      console.log(data);
+      return data;
     },
-    next(){
-      this.$emit("next",'cd','ea');
-    },
+    send(){
+      request.post('/api_P/ea/data',this.GenerateCTarget());
+    }
   },
 
   computed: {
-      setvis: function () {
-          return this.vis;
-      },
       setScore: function(){
         for(let i = 0; i < this.testContent.ContentDis.Score.length;i++){
           this.testContent.ContentDis.Score[i] = this.testContent.ContentDis.Score[i] * 0.7;
           this.testContent.ContentDis.Score[i] =Math.round(this.testContent.ContentDis.Score[i]);
         }
-        console.log(this.testContent.ContentDis.Score);
         return this.testContent.ContentDis.Score;
       },
       setRatio: function(){
         for(let i = 0;i < this.testContent.ContentDis.Score.length;i++){
           this.testContent.ContentDis.Ratio.push(this.testContent.ContentDis.Attendance[i]+this.testContent.ContentDis.CPerformance[i]+this.testContent.ContentDis.HomeWork[i]+this.testContent.ContentDis.Score[i]);
         }
-        console.log(this.testContent.ContentDis.Ratio);
         return this.testContent.ContentDis.Ratio;
       },
       setTotal:function(){
@@ -1706,7 +1746,6 @@ export default {
         this.testContent.ContentDis.Total.push(this.calArray(this.testContent.ContentDis.HomeWork));
         this.testContent.ContentDis.Total.push(this.calArray(this.testContent.ContentDis.Score));
         this.testContent.ContentDis.Total.push(this.calArray(this.testContent.ContentDis.Ratio));
-        console.log(this.testContent.ContentDis.Total);
         return this.testContent.ContentDis.Total;
       }
   },

@@ -1,6 +1,7 @@
 <template>
-    <div v-if = 'setvis' class="home-container">
-
+    <div  class="home-container">
+      <div class="card">
+        <div class="card-body">
           <div class="mydoc">
             <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:24pt">
               <span style="font-family:&#39;宋体&#39;; font-weight:bold; letter-spacing:2pt">
@@ -1542,7 +1543,8 @@
             <el-button @click = 'next()'>下一页</el-button>
           </div>
         </div>
-
+      </div>
+    </div>
 </template>
 
 <script>
@@ -1552,19 +1554,14 @@ import global from '@/components/Global';
 export default {
   name:'courseDegree',
   
-  props:{
-    vis : Boolean,
-  },
   data() {
     return {
     }
   },
   methods: {
     back() {
-      this.$emit("back",'ea','cd');
     },
     next(){
-      this.$emit("next",'g','cd');
     },
 
     mytable(){
@@ -1576,11 +1573,6 @@ export default {
 
   },
 
-  computed: {
-      setvis: function () {
-          return this.vis;
-      },
-  },
 
 }
 </script>
