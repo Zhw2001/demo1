@@ -9,18 +9,20 @@
             </div>
             <el-submenu index="1" v-if="menu1" >
                 <template slot="title">
-                    <i class="el-icon-data-analysis" ></i>
-                    <span>查看数据</span>
+                    <i class="el-icon-edit" ></i>
+                    <span>工程认证</span>
                 </template>
-                <el-menu-item  index="/course"><span>check_or_edit</span></el-menu-item>
+                <el-menu-item index="/input"><span>填写课程数据</span></el-menu-item>
+                <el-menu-item index="/input"><span>考试考核内容合理性审核</span></el-menu-item>
+                <el-menu-item index="/input"><span>课程教学目标达成度评价</span></el-menu-item>
             </el-submenu>
 
             <el-submenu index="2" v-if="menu2">
                 <template slot="title">
-                    <i class="el-icon-edit" ></i>
-                    <span >生成表格</span>
+                    <i class="el-icon-data-analysis" ></i>
+                    <span >课程数据</span>
                 </template>
-                <el-menu-item index="/input"><span>generate</span></el-menu-item>
+                <el-menu-item  index="/course"><span>查看与修改</span></el-menu-item>
             </el-submenu>
 
             <el-submenu index="3" v-if="menu3">
@@ -28,9 +30,9 @@
                     <i class="el-icon-user" ></i>
                     <span>用户管理</span>
                 </template>
-                <el-menu-item index="/user"><span>user</span></el-menu-item>
-                <el-menu-item><span>userRole</span></el-menu-item>
-                <el-menu-item index="/userRoleMenu"><span>userRoleMenu</span></el-menu-item>
+                <el-menu-item index="/user"><span>用户信息</span></el-menu-item>
+                <el-menu-item><span>用户角色</span></el-menu-item>
+                <el-menu-item index="/userRoleMenu"><span>用户权限</span></el-menu-item>
             </el-submenu>
 
 

@@ -7,7 +7,7 @@ export default[
       {
       path:'user',
       name:'user',
-      component: () => import('@/views/user')
+      component: () => import('@/views/user/view/user')
       },
       {
         path:'input',
@@ -17,7 +17,7 @@ export default[
       {
         path:'userRoleMenu',
         name:'userRoleMenu',
-        component: () => import('@/views/userRoleMenu')
+        component: () => import('@/views/user/view/userRoleMenu')
       },
       {
         path:'course',

@@ -1,5 +1,5 @@
 <template>
-<div v-if = "setvis">
+<div>
     <el-table       
     :fit = "true"
     size='mini'
@@ -149,7 +149,6 @@ export default{
     name:"course",
 
     props:{
-        visible : Boolean,
         cdesignData : Array,
         w_lock : Boolean,
     },
@@ -271,12 +270,6 @@ export default{
 
     created(){
         this.load();
-    },
-
-    computed: {
-        setvis: function () {
-            return  this.visible;
-        }
     },
 
     watch:{

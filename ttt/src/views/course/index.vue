@@ -34,10 +34,10 @@
 
         <div class="card">
           <div class="card-body" style='width:100%;'>
-            <course @delEmptyRow ="delERow($event)"  :w_lock='wlock' :courseData='CourseData' :visible = 'CourseVisible'></course>
-            <experiment @delEmptyRow ="delERow($event)" :w_lock='wlock' :experData='ExperData'  :visible = 'ExperVisble'></experiment>
-            <cdesign @delEmptyRow ="delERow($event)" :w_lock='wlock' :cdesignData='CdesigData'  :visible = 'CdesignVisble'></cdesign>
-            <gdesign @delEmptyRow ="delERow($event)" :w_lock='wlock' :gdesignData='GdesignData'  :visible = 'GdesignVisble'></gdesign>
+            <course @delEmptyRow ="delERow($event)"  :w_lock='wlock' :courseData='CourseData' v-if='CourseVisible'></course>
+            <experiment @delEmptyRow ="delERow($event)" :w_lock='wlock' :experData='ExperData' v-if='ExperVisble'></experiment>
+            <cdesign @delEmptyRow ="delERow($event)" :w_lock='wlock' :cdesignData='CdesigData'  v-if='CdesignVisble'></cdesign>
+            <gdesign @delEmptyRow ="delERow($event)" :w_lock='wlock' :gdesignData='GdesignData'  v-if='GdesignVisble'></gdesign>
           </div>
         </div>
     </div>

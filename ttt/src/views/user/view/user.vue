@@ -87,7 +87,7 @@
 
 <script>
 import request from "@/request";
-import creatTable from "./component/createTable"
+import creatTable from "../component/createTable"
 export default {
     name: 'home',
     data() {

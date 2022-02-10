@@ -1,5 +1,5 @@
 <template>
-<div v-if = "setvis">
+<div>
     <el-table       
     :fit = "true"
     size='mini'
@@ -233,7 +233,6 @@ export default{
     name:"experiment",
 
     props:{
-        visible : Boolean,
         experData : Array,
         w_lock : Boolean,
     },
@@ -371,12 +370,6 @@ export default{
 
     created(){
         this.load();
-    },
-
-    computed: {
-        setvis: function () {
-            return  this.visible;
-        }
     },
 
     watch:{

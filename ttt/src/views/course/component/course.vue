@@ -1,7 +1,6 @@
 <template>
-<div v-if = "setvis" >
-    <el-table       
-        :fit = "true"
+<div >
+    <el-table    
         size='mini'
         :header-cell-style = "mytable"
         :cell-style = "mytableCell"
@@ -99,7 +98,7 @@
             <span class="my_button" v-if="!scope.row.selected" @click="RowDel(scope.row)">
                 删除
             </span>
-            <span class="my_button" v-else  @click="cancel(scope.$index,scope.row)">
+            <span class="my_button" v-else  @click="cancel(scope.row)">
                 取消
             </span>
         </template>
@@ -126,7 +125,6 @@ export default{
     name:"course",
 
     props:{
-        visible : Boolean,
         courseData : Array,
         w_lock : Boolean,
     },
@@ -189,6 +187,7 @@ export default{
         },
         edit(row){
             this.rowCache = JSON.parse(JSON.stringify(row));
+            console.log(123,this.rowCache);
             if(!this.wlock){
                 this.$message.warning("请先保存当前编辑项");
                 return;
@@ -248,12 +247,6 @@ export default{
 
     created(){
         this.load();
-    },
-
-    computed: {
-        setvis: function () {
-            return this.visible;
-        },
     },
 
     watch:{
