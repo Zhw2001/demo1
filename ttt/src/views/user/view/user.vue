@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import request from "@/request";
+import request from "@/utils/request";
 import creatTable from "../component/createTable"
 export default {
     name: 'home',

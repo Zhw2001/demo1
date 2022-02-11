@@ -321,7 +321,7 @@
 </template>
 
 <script>
-import request from "@/request";
+import request from "@/utils/request";
 import global from '@/components/Global';
 
   export default {

@@ -120,29 +120,30 @@
 </template>
 
 <script>
-import request from "@/request";
+import request from "@/utils/request";
 export default{
     name:"course",
 
     props:{
-        courseData : Array,
+        dataList : Object,
         w_lock : Boolean,
     },
 
     data(){
         return{
-            wlock:true,
-            rowCache:{},
+            wlock: true,
+            rowCache: {},
             totalPage: 1, // 统共页数，默认为1
             currentPage: 1, //当前页数 ，默认为1
             pageSize: 10, // 每页显示数量
-            currentPageData:[], //当前页显示内容
+            currentPageData: [], //当前页显示内容
+            courseData: []
         }
     },
     methods:{
 
         mytable(){
-            return 'background-color:#f1f3fa; color:rgba(0, 0, 0, 0.85);font-weight: 500;text-align:center;'
+            return 'background-color:#f1f3fa;color:rgba(0, 0, 0, 0.85);font-weight: 500text-align:center;'
         },
         mytableCell(){
             return 'text-align:center;font-size: 5px;'
@@ -237,10 +238,11 @@ export default{
 
         //初始化表格数据
         load(){
+            this.courseData = this.dataList.CourseData
             // 计算一共有几页
-            this.totalPage = Math.ceil(this.courseData.length / this.pageSize);
-            this.totalPage = this.totalPage == 0 ? 1 : this.totalPage;
-            this.setCurrentPageData();//加载数据
+            this.totalPage = Math.ceil(this.courseData.length / this.pageSize)
+            this.totalPage = this.totalPage == 0 ? 1 : this.totalPage
+            this.setCurrentPageData()//加载数据
         },
 
     },
@@ -253,7 +255,7 @@ export default{
         visible : function(newV,oldV){
             this.load();
         },
-        courseData :function(){
+        dataList :function(){
             this.load();
         },
         w_lock : function(){

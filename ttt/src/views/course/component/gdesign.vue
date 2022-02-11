@@ -181,148 +181,150 @@
 </template>
 
 <script>
-import request from "@/request";
+import request from "@/utils/request"
 export default{
     name:"course",
 
     props:{
-        gdesignData : Array,
+        dataList : Object,
         w_lock : Boolean,
     },
 
     data(){
         return{
-            wlock:true,
-            rowCache:{},
+            wlock: true,
+            rowCache: {},
             totalPage: 1, // 统共页数，默认为1
             currentPage: 1, //当前页数 ，默认为1
             pageSize: 10, // 每页显示数量
-            currentPageData:[], //当前页显示内容
+            currentPageData: [], //当前页显示内容
+            gdesignData: []
         }
     },
     methods:{
         mytable(){
-            return 'background-color:#f1f3fa; color:rgba(0, 0, 0, 0.85);font-weight: 500;text-align:center;'
+            return 'background-color:#f1f3fa;color:rgba(0, 0, 0, 0.85);font-weight: 500text-align:center;'
         },
         mytableCell(){
             return 'text-align:center;font-size: 5px;'
         },
 
         Select(value) {
-            console.log(value);
+            console.log(value)
         },
         SelectAll(value){
-            console.log(value);
+            console.log(value)
         },
 
         SetRow(row){
-            row.a_1 = this.rowCache.a_1;
-            row.a_2 = this.rowCache.a_2;
-            row.a_3 = this.rowCache.a_3;
-            row.a_4 = this.rowCache.a_4;
-            row.a_5 = this.rowCache.a_5;
-            row.a_6 = this.rowCache.a_6;
-            row.b_1 = this.rowCache.b_1;
-            row.b_2 = this.rowCache.b_2;
-            row.b_3 = this.rowCache.b_3;
-            row.b_4 = this.rowCache.b_4;
-            row.c_1 = this.rowCache.c_1;
-            row.c_2 = this.rowCache.c_2;
-            row.c_3 = this.rowCache.c_3;
-            row.cid = this.rowCache.cid;
-            row.cnum = this.rowCache.cnum;
-            row.id = this.rowCache.id;
-            row.overall = this.rowCache.overall;
-            row.selected = this.rowCache.selected;
-            row.sid = this.rowCache.sid;
-            row.sname = this.rowCache.sname;
-            row.stime = this.rowCache.stime;
+            row.a_1 = this.rowCache.a_1
+            row.a_2 = this.rowCache.a_2
+            row.a_3 = this.rowCache.a_3
+            row.a_4 = this.rowCache.a_4
+            row.a_5 = this.rowCache.a_5
+            row.a_6 = this.rowCache.a_6
+            row.b_1 = this.rowCache.b_1
+            row.b_2 = this.rowCache.b_2
+            row.b_3 = this.rowCache.b_3
+            row.b_4 = this.rowCache.b_4
+            row.c_1 = this.rowCache.c_1
+            row.c_2 = this.rowCache.c_2
+            row.c_3 = this.rowCache.c_3
+            row.cid = this.rowCache.cid
+            row.cnum = this.rowCache.cnum
+            row.id = this.rowCache.id
+            row.overall = this.rowCache.overall
+            row.selected = this.rowCache.selected
+            row.sid = this.rowCache.sid
+            row.sname = this.rowCache.sname
+            row.stime = this.rowCache.stime
         },
 
         RowSave(row){
-            this.wlock = true;
+            this.wlock = true
             request.post("/api_S/gdesign/update",row).then(res =>{
                 if(res.code != '111'){
-                    this.$message("保存成功");
+                    this.$message("保存成功")
                 }
                 else{
                     this.$message("Failed")
                 }
-            });
-            row.selected = false;
+            })
+            row.selected = false
         },
         edit(row){
-            this.rowCache = JSON.parse(JSON.stringify(row));
+            this.rowCache = JSON.parse(JSON.stringify(row))
             if(!this.wlock){
-                this.$message.warning("请先保存当前编辑项");
-                return;
+                this.$message.warning("请先保存当前编辑项")
+                return
             }
-            row.selected = true;
-            this.wlock = false;
+            row.selected = true
+            this.wlock = false
         },
         cancel(row){
-            var type = 3;
-            console.log(type);
-            this.wlock = true;
-            if(this.rowCache != null){this.SetRow(row);}
-            this.$emit("delEmptyRow",type);
+            var type = 3
+            console.log(type)
+            this.wlock = true
+            if(this.rowCache != null){this.SetRow(row)}
+            this.$emit("delEmptyRow",type)
         },
         RowDel(index,row){
             if(!this.wlock){
-                this.$message.warning("请先保存当前编辑项");
-                return;
+                this.$message.warning("请先保存当前编辑项")
+                return
             }
             request.post("/api_S/gdesign/delete",row).then(res =>{
                 if(res.code != '111'){
-                    this.$message("删除成功");
-                    this.gdesignData.splice(index,1);
-                    this.load();
+                    this.$message("删除成功")
+                    this.gdesignData.splice(index,1)
+                    this.load()
                 }
                 else{
                     this.$message("Failed")
                 }
-            });
+            })
         },
 
 
         //前端分页
         setCurrentPageData() {
-            let begin = (this.currentPage - 1) * this.pageSize;
-            let end = this.currentPage * this.pageSize;
-            this.currentPageData = this.gdesignData.slice(begin,end);
+            let begin = (this.currentPage - 1) * this.pageSize
+            let end = this.currentPage * this.pageSize
+            this.currentPageData = this.gdesignData.slice(begin,end)
         },
         SizeChange(v){
-            this.pageSize = v;
-            this.setCurrentPageData();
+            this.pageSize = v
+            this.setCurrentPageData()
         },
         CurrentPageChange(v){
-            this.currentPage = v;
-            this.setCurrentPageData();
+            this.currentPage = v
+            this.setCurrentPageData()
         },
         load(){
+            this.gdesignData = this.dataList.GdesignData
             // 计算一共有几页
-            this.totalPage = Math.ceil(this.gdesignData.length / this.pageSize);
-            this.totalPage = this.totalPage == 0 ? 1 : this.totalPage;
-            this.setCurrentPageData();
+            this.totalPage = Math.ceil(this.gdesignData.length / this.pageSize)
+            this.totalPage = this.totalPage == 0 ? 1 : this.totalPage
+            this.setCurrentPageData()
         }
 
     },
 
     created(){
-        this.load();
+        this.load()
     },
 
     watch:{
         visible : function(newV,oldV){
-            this.load();
+            this.load()
         },
-        gdesignData :function(){
-            this.load();
+        dataList :function(){
+            this.load()
         },
         w_lock : function(){
-            this.wlock = this.w_lock;
-            this.CurrentPageChange(this.totalPage);
-            this.rowCache = null;
+            this.wlock = this.w_lock
+            this.CurrentPageChange(this.totalPage)
+            this.rowCache = null
         }
     },
 }

@@ -14,7 +14,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item  label="课程类型:">
-                <el-select v-model="type" placeholder="TYPE" @change = "show_courses">
+                <el-select :value="type" placeholder="TYPE" @change = "handleTypeChange">
                   <el-option
                   v-for = "item in courseType"
                   :key = "item.value"
@@ -34,17 +34,14 @@
 
         <div class="card">
           <div class="card-body" style='width:100%;'>
-            <course @delEmptyRow ="delERow($event)"  :w_lock='wlock' :courseData='CourseData' v-if='CourseVisible'></course>
-            <experiment @delEmptyRow ="delERow($event)" :w_lock='wlock' :experData='ExperData' v-if='ExperVisble'></experiment>
-            <cdesign @delEmptyRow ="delERow($event)" :w_lock='wlock' :cdesignData='CdesigData'  v-if='CdesignVisble'></cdesign>
-            <gdesign @delEmptyRow ="delERow($event)" :w_lock='wlock' :gdesignData='GdesignData'  v-if='GdesignVisble'></gdesign>
+            <component :w_lock="wlock" @delEmptyRow ="delERow($event)" :dataList = "dataList" :is = "setView"></component>
           </div>
         </div>
     </div>
 </template>
 
 <script>
-import request from "@/request";
+import request from "@/utils/request";
 import course from "./component/course";
 import experiment from "./component/experiment";
 import cdesign from "./component/cdesign";
@@ -55,34 +52,32 @@ export default {
     data() {
       return {
         wlock:true,
-        CourseData:[],
-        ExperData:[],
-        CdesigData:[],
-        GdesignData:[],
-        CourseVisible:false,
-        ExperVisble:false,
-        CdesignVisble:false,
-        GdesignVisble:false,
+        dataList: {
+          CourseData: [],
+          ExperData: [],
+          CdesignData: [],
+          GdesignData: []
+        },
         cidList:'',
         courseType: [
           {
-          value: '课程模板表.xlsx',
+          value: '0',
           label: '普通课程'
           }, 
           {
-            value: '实验模板表.xlsx',
+            value: '1',
             label: '实验课程'
           }, 
           {
-            value: '课程设计模板表.xlsx',
+            value: '2',
             label: '课程设计'
           }, 
           {
-            value: '毕业设计模板表.xlsx',
+            value: '3',
             label: '毕业设计'
           }, 
         ],
-        type: '课程模板表.xlsx',
+        type: '0',
         Majors: [
           {
             value: '体育部',
@@ -127,115 +122,82 @@ export default {
     created(){
       this.get_cidList();
       this.load('');
-      this.show_courses();
+    },
+    computed:{
+      setView: function () {
+        switch (this.type) {
+          case '0':
+            return 'course'
+          case '1':
+            return 'experiment'
+          case '2':
+            return 'cdesign'
+          case '3':
+            return 'gdesign'
+        }
+      }
     },
     methods:{
-      show_courses(){
-        switch (this.type) {
-          case '课程模板表.xlsx':
-            this.CourseVisible = true;
-            this.ExperVisble = false;
-            this.CdesignVisble = false;
-            this.GdesignVisble = false;
-            
-            break;
-          case '实验模板表.xlsx':
-            this.CourseVisible = false;
-            this.ExperVisble = true;
-            this.CdesignVisble = false;
-            this.GdesignVisble = false;
-            break;
-          case '课程设计模板表.xlsx':
-            this.CourseVisible = false;
-            this.ExperVisble = false;
-            this.CdesignVisble = true;
-            this.GdesignVisble = false;
-            break;
-          case '毕业设计模板表.xlsx':
-            this.CourseVisible = false;
-            this.ExperVisble = false;
-            this.CdesignVisble = false;
-            this.GdesignVisble = true;
-            break;
-            default:
-            this.CourseVisible = false;
-            this.ExperVisble = false;
-            this.CdesignVisble = false;
-            this.GdesignVisble = false;
-        }
-      },
-      trans_type(){
-        switch (this.type) {
-          case '课程模板表.xlsx':
-            return 0;
-          case '实验模板表.xlsx':
-            return 1;
-          case '课程设计模板表.xlsx':
-            return 2;
-          case '毕业设计模板表.xlsx':
-            return 3;
-          default:
-            return 0;
-        }
+      handleTypeChange(v){
+        console.log(v)
+        this.type = v;
       },
       get_cidList(){
         var cidList = localStorage.getItem('cidList');
         this.cidList = cidList;
       },
       load(dep){
-        var thistype=this.trans_type();
         request.get("/api_S/cinfo/list_CD?&cid="+this.cidList+"&dep="+dep).then(
           res=>{
-            this.CourseData = [];
-            this.ExperData = [];
-            this.CdesigData = [];
-            this.GdesignData = [];
+            this.dataList.CourseData = [];
+            this.dataList.ExperData = [];
+            this.dataList.CdesignData = [];
+            this.dataList.GdesignData = [];
             for(let i of res.data){
               if(i != null && i.courseList!=null){
                 for(let j of i.courseList){
                   j.selected = false;
-                  this.CourseData.push(j);
+                  this.dataList.CourseData.push(j);
                 }
               }
 
               if(i != null && i.experimentList != null){
                 for(let j of i.experimentList){
                   j.selected = false;
-                  this.ExperData.push(j);
+                  this.dataList.ExperData.push(j);
                 } 
               }
 
               if(i != null && i.cdesignList != null){
                 for(let j of i.cdesignList){
                   j.selected = false;
-                  this.CdesigData.push(j);
+                  this.dataList.CdesignData.push(j);
                 } 
               }
 
               if(i != null && i.gdesignList != null){
                 for(let j of i.gdesignList){
                     j.selected = false;
-                    this.GdesignData.push(j);
+                    this.dataList.GdesignData.push(j);
                 }
               } 
             }
-            console.log(this.GdesignData);
           }
         );
       },
       add(){
         switch(this.trans_type(this.type)){
           case 0:
-            this.addCourse(this.CourseData);
+            this.addCourse(this.dataList.CourseData);
             break;
           case 1:
-            this.addExperData(this.ExperData);
+            this.addExperData(this.dataList.ExperData);
             break;
           case 2:
-            this.addCDData(this.CdesigData);
+            this.addCDData(this.dataList.CdesignData);
             break;
           case 3:
-            this.addGDData(this.GdesignData);
+            this.addGDData(this.dataList.GdesignData);
             break;
           default:
             return;
@@ -293,7 +255,7 @@ export default {
       },
       addCDData(Data){
         if(this.wlock == false){this.$message('请先完成添加');return;}
-        var newCd = new Object;
+        var newCd = {}
         newCd.cid = '';
         newCd.cnum = '';
         newCd.id = '';
@@ -337,30 +299,28 @@ export default {
       delERow(type){
         switch(type){
           case 0:
-            this.CourseData.pop();
+            this.dataList.CourseData.pop();
             break;
           case 1:
-            this.ExperData.pop();
+            this.dataList.ExperData.pop();
             break;
           case 2:
-            this.CdesigData.pop();
+            this.dataList.CdesignData.pop();
             break;
           case 3:
-            this.GdesignData.pop();
+            this.dataList.GdesignData.pop();
             break;
           default:
             return;
         }
         this.wlock = true;
       },
-
-
     },
     components: {
       'course': course,
       'experiment':experiment,
       'cdesign': cdesign,
-      'gdesign': gdesign,
+      'gdesign': gdesign
     },
     watch:{
         major: function(newMajor,oldMajor){
