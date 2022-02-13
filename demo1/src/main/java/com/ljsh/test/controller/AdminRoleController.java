@@ -3,7 +3,6 @@ package com.ljsh.test.controller;
 import com.ljsh.test.dto.Result;
 import com.ljsh.test.mbg.model.AdminRole;
 import com.ljsh.test.service.AdminRoleService;
-import com.ljsh.test.service.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

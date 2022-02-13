@@ -2,59 +2,51 @@
     <div :class="classObject">
         <el-menu
         class="aside-menu"
+        :unique-opened = 'true'
         router
         >
             <div class="logo-div">
                 <span class="logo-text">website</span>
             </div>
-            <el-submenu index="1" v-if="menu1" >
-                <template slot="title">
-                    <i class="el-icon-edit" ></i>
-                    <span>工程认证</span>
-                </template>
-                <el-menu-item index="/add"><span>填写课程数据</span></el-menu-item>
-                <el-menu-item index="/ea"><span>考试考核内容合理性审核</span></el-menu-item>
-                <el-menu-item index="/cd"><span>课程教学目标达成度评价</span></el-menu-item>
-            </el-submenu>
+            
 
-            <el-submenu index="2" v-if="menu2">
+            <component  v-for = "(value) in aside_list" :key = "value.id" :index = "value.id"
+            :is="( value.children && value.children.length>0 ) ? 'el-submenu':'el-menu-item'" >
                 <template slot="title">
-                    <i class="el-icon-data-analysis" ></i>
-                    <span >课程数据</span>
+                <i :class="[value.icon]"></i>
+                <span>{{value.title}}</span>
                 </template>
-                <el-menu-item  index="/course"><span>查看与修改</span></el-menu-item>
-            </el-submenu>
-
-            <el-submenu index="3" v-if="menu3">
-                <template slot="title">
-                    <i class="el-icon-user" ></i>
-                    <span>用户管理</span>
+                <template v-if="value.children && value.children.length>0">
+                    <el-menu-item v-for="(v,i) in value.children" :key="v.id" :index="v.path">
+                        <span slot="title">{{v.title}}</span>
+                    </el-menu-item>
                 </template>
-                <el-menu-item index="/user"><span>用户信息</span></el-menu-item>
-                <el-menu-item><span>用户角色</span></el-menu-item>
-                <el-menu-item index="/userRoleMenu"><span>用户权限</span></el-menu-item>
-            </el-submenu>
-
+            </component>
 
         </el-menu>
     </div>
 </template>
 
 <script>
+
 export default {
+    //name:'nav-menu',
     props:{
         clicked:Boolean,
     },
     data(){
         return{
-            menu1:true,
-            menu2:true,
-            menu3:true,
+            aside_list: [],
         }
     },
     methods: {
+        change(list){
+            const data = JSON.parse(list)
+            return data
+        }
     },
     created(){
+        this.aside_list = this.change( localStorage.getItem( 'aside' ) )
     },
     computed: {
         classObject: function () {
@@ -77,7 +69,7 @@ export default {
     background: linear-gradient(135deg, #8f75da 0, #727cf5 60%);
 }
 
-.aside .aside-menu {
+.aside .el-menu {
     /deep/ .el-icon-arrow-down {//展开图标穿透
         content: "\E6DF";
         color: azure;
@@ -87,13 +79,13 @@ export default {
         color:#f5a5a5;
     }
 }
-.aside .aside-menu .logo-div{
+.aside .el-menu .logo-div{
     height:70px;
     padding-left:30px;
     line-height:70px;
     display:flex;
 }
-.aside .aside-menu .logo-div .logo-text {
+.aside .el-menu .logo-div .logo-text {
     font-size: 24px;
     font-weight: 500;
     display: inline-block;
@@ -102,7 +94,7 @@ export default {
 }
 
 
-.aside .aside-menu {//自定义导航栏样式覆盖
+.aside .el-menu {//自定义导航栏样式覆盖
     border-right: solid 1px #e6e6e6;
     list-style: none;
     position: relative;
@@ -112,7 +104,7 @@ export default {
 }
 
 
-.aside .aside-menu .el-submenu{//一级标题穿透
+.aside .el-menu .el-submenu{//一级标题穿透
     /deep/ .el-submenu__title{
         background: transparent;
     }
@@ -130,7 +122,7 @@ export default {
     }
 }
 
-.aside .aside-menu .el-submenu{//二级标题穿透
+.aside .el-menu .el-submenu{//二级标题穿透
     /deep/ .el-menu{//ul
         background: transparent;
     }
@@ -160,18 +152,18 @@ export default {
     background: linear-gradient(135deg, #8f75da 0, #727cf5 60%);
 }
 
-.aside_click .aside-menu {
+.aside_click .el-menu {
     /deep/ .el-icon-arrow-down {//展开图标穿透
         display: none;
     }
 }
-.aside_click .aside-menu .logo-div{
+.aside_click .el-menu .logo-div{
     height:70px;
     padding-left:30px;
     line-height:70px;
     display:flex;
 }
-.aside_click .aside-menu .logo-div .logo-text {
+.aside_click .el-menu .logo-div .logo-text {
     font-size: 12px;
     font-weight: 500;
     display: inline-block;
@@ -180,7 +172,7 @@ export default {
 }
 
 
-.aside_click .aside-menu {//自定义导航栏样式覆盖
+.aside_click .el-menu {//自定义导航栏样式覆盖
     border-right: solid 1px #e6e6e6;
     list-style: none;
     position: relative;
@@ -189,7 +181,7 @@ export default {
     background:transparent;
 }
 
-.aside_click .aside-menu .el-submenu{//一级标题穿透
+.aside_click .el-menu .el-submenu{//一级标题穿透
     /deep/ .el-submenu__title{
         background: transparent;
         text-align: center;
@@ -206,7 +198,7 @@ export default {
     }
 }
 
-.aside_click .aside-menu .el-submenu{//二级标题穿透
+.aside_click .el-menu .el-submenu{//二级标题穿透
     /deep/ .el-menu{
         display: none;
     }

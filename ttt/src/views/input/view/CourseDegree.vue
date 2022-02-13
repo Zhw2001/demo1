@@ -1548,7 +1548,6 @@
 </template>
 
 <script>
-import request from "@/utils/request";
 import global from '@/components/Global';
 
 export default {

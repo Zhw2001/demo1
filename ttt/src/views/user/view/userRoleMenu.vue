@@ -26,7 +26,6 @@
 
 <script>
 
-import request from "@/utils/request";
  let id = 1000;
   export default {
     data() {
@@ -55,7 +54,7 @@ import request from "@/utils/request";
         children.splice(index, 1);
       },
       load(){
-        request.get("/api_S/auth/list").then(res=>{
+        this.$request.get("/api_S/auth/list").then(res=>{
             var data = res.data;
             console.log(data);
             for(let i of data){

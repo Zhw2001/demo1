@@ -86,8 +86,8 @@
 </template>
 
 <script>
-import request from "@/utils/request";
 import creatTable from "../component/createTable"
+
 export default {
     name: 'home',
     data() {
@@ -118,16 +118,16 @@ export default {
       //增删改查
       delete(index,account){
         this.tableData.splice(index,1);
-        request.post("/api_S/admin/delete",{account: account}).then(res =>{this.$message("删除成功");});
+        this.$request.post("/api_S/admin/delete",{account: account}).then(res =>{this.$message("删除成功");});
       },
       cal_total(){
-        request.get("/api_S/admin/cal_list").then(res=>{
+        this.$request.get("/api_S/admin/cal_list").then(res=>{
           this.total = res.data.length;
         });
       },
       load(){
         var roleList = new Array();
-        request.get("/api_S/admin/list?pageNum="+this.currentPage+"&pageSize="+this.pageSize+"&search="+this.search).then(res=>{//等价于.then(function(res){console.log(res.data)})
+        this.$request.get("/api_S/admin/list?pageNum="+this.currentPage+"&pageSize="+this.pageSize+"&search="+this.search).then(res=>{//等价于.then(function(res){console.log(res.data)})
           this.tableData=[];
           for(let i of res.data){
             roleList = [];
@@ -141,7 +141,7 @@ export default {
         });
       },
       save(){
-        request.post("/api_S/admin/regist",this.ruleForm).then(res =>{
+        this.$request.post("/api_S/admin/regist",this.ruleForm).then(res =>{
           console.log(res);
         });
       },

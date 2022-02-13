@@ -1593,7 +1593,6 @@
 </template>
 
 <script>
-import request from "@/utils/request";
 import global from '@/components/Global';
 
 export default {
@@ -1725,7 +1724,7 @@ export default {
       return data;
     },
     send(){
-      request.post('/api_P/ea/data',this.GenerateCTarget());
+      this.$request.post('/api_P/ea/data',this.GenerateCTarget());
     }
   },
 

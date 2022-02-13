@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import request from "@/utils/request";
 import course from "./component/course";
 import experiment from "./component/experiment";
 import cdesign from "./component/cdesign";
@@ -147,7 +146,7 @@ export default {
         this.cidList = cidList;
       },
       load(dep){
-        request.get("/api_S/cinfo/list_CD?&cid="+this.cidList+"&dep="+dep).then(
+        this.$request.get("/api_S/cinfo/list_CD?&cid="+this.cidList+"&dep="+dep).then(
           res=>{
             this.dataList.CourseData = [];
             this.dataList.ExperData = [];

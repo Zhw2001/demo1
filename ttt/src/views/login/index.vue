@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import request from "@/utils/request";
+import { composeTree, addRoute } from '@/router/action.js'
+import getInfo from '@/utils/login.js'
 
 export default{
     name:"login",
@@ -39,28 +40,25 @@ export default{
 
    methods:{
         login(){
-            request.post("/api_S/admin/login",this.form).then(res =>{
+            this.$request.post("/api_S/admin/login",this.form).then(res =>{
                 if(res.code == '0'){
                     if(true/*res.data.enable=='1'*/){
-                        this.setCidList(res.data);
                         this.$message({
                             type:"success",
                             message: "login success"
                         })
-                        localStorage.setItem('Authorization',res.token);
-                        localStorage.setItem('AuthorityName',res.data.nickname);
-                        request.get('/api_S/admin/get_Role'+'?account='+res.data.account).then(res =>{
-                            this.setRole(res.data);
-                            this.$router.push('/');
+                        getInfo( res.token, res.data.nickname, res.data.account )
+                        this.setRoutes()
+                        this.$router.push('/');
+                    }
+                    else{
+                        this.$message({
+                            type:"error",
+                            message:"该用户不可用"
                         })
-                   }
-                   else{
-                       this.$message({
-                       type:"error",
-                       message:"该用户不可用"
-                    })
-                   }
-                }else{
+                    }
+                }
+                else{
                     this.$message({
                        type:"error",
                        message: res.msg
@@ -68,22 +66,15 @@ export default{
                 }
             })
         },
-        setRole(userList){//res.data
-            userList = userList.adminRoleList;
-            var roleList = new Array();
-            for(let i of userList){
-                roleList.push(i.role_name);
-            }
-            localStorage.setItem('Role',roleList);
-        },
-        setCidList(user){//res.data
-            var cidArray = new Array();
-            console.log(user);
-            if(user.userCid != null){
-                cidArray = user.userCid.split(',');
-            }
-            localStorage.setItem('cidList',cidArray);
-        },
+        setRoutes(){
+            this.$request.get("/api_S/auth/list").then(res => {
+                let data = res.data
+                let aside = composeTree(data)
+                let routes = addRoute(aside)
+                this.$router.addRoute(routes)
+                localStorage.setItem('aside',JSON.stringify(aside))
+            })
+        }
     }
 
 }

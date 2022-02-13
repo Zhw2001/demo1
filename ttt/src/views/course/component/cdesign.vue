@@ -144,7 +144,7 @@
 </template>
 
 <script>
-import request from "@/utils/request"
+
 export default{
     name:"course",
 
@@ -196,7 +196,7 @@ export default{
 
         RowSave(row){
             this.wlock = true
-            request.post("/api_S/cdesign/update",row).then(res =>{
+            this.$request.post("/api_S/cdesign/update",row).then(res =>{
                 if(res.code != '111'){
                     this.$message("保存成功")
                 }
@@ -227,7 +227,7 @@ export default{
                 this.$message.warning("请先保存当前编辑项")
                 return
             }
-            request.post("/api_S/cdesign/delete",row).then(res =>{
+            this.$request.post("/api_S/cdesign/delete",row).then(res =>{
                 if(res.code != '111'){
                     this.$message("删除成功")
                     this.cdesignData.splice(index,1)

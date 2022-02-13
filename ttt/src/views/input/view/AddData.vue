@@ -321,7 +321,6 @@
 </template>
 
 <script>
-import request from "@/utils/request";
 import global from '@/components/Global';
 
   export default {
@@ -415,7 +414,7 @@ import global from '@/components/Global';
 
       //下载模板
       download_template_xlsx(){
-        request.get("/api_S/files/get_port").then(res=>{
+        this.$request.get("/api_S/files/get_port").then(res=>{
           let port = res.data;
           let url = global.ip+port+"/files/"+this.value;
           this.$alert(url, '下载链接');
