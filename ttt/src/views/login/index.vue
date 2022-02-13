@@ -21,8 +21,7 @@
 </template>
 
 <script>
-import { composeTree, addRoute } from '@/router/action.js'
-import getInfo from '@/utils/login.js'
+import { getInfo } from '@/utils/login.js'
 
 export default{
     name:"login",
@@ -48,7 +47,6 @@ export default{
                             message: "login success"
                         })
                         getInfo( res.token, res.data.nickname, res.data.account )
-                        this.setRoutes()
                         this.$router.push('/');
                     }
                     else{
@@ -66,15 +64,6 @@ export default{
                 }
             })
         },
-        setRoutes(){
-            this.$request.get("/api_S/auth/list").then(res => {
-                let data = res.data
-                let aside = composeTree(data)
-                let routes = addRoute(aside)
-                this.$router.addRoute(routes)
-                localStorage.setItem('aside',JSON.stringify(aside))
-            })
-        }
     }
 
 }

@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { composeTree, addRoute } from '@/router/action.js'
 
 function getInfo( token, nickname, account ){
     setToken( token )
@@ -25,4 +26,14 @@ function getRole(userList){
     localStorage.setItem('Role',roleList);
 }
 
-export default getInfo
+function setRoutes(router){
+    request.get("/api_S/auth/list").then(res => {
+        let data = res.data
+        let aside = composeTree(data)
+        let routes = addRoute(aside)
+        router.addRoute(routes)
+        localStorage.setItem('aside',JSON.stringify(aside))
+    })
+}
+
+export { getInfo, setRoutes }

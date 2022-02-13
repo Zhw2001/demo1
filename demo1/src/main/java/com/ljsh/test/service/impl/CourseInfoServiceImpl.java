@@ -18,11 +18,25 @@ public class CourseInfoServiceImpl implements CourseInfoService {
 
 
     public List<CourseInfo> getCInfoByCidDep(String cids,String dep){
-        String[] cidList = cids.split(",");
         List<CourseInfo> courseInfoList = new ArrayList<CourseInfo>();
+        String[] cidList = cids.split(",");
+        if (cidList.length == 1){
+           int type = courseInfoMapper.get_Type_By_Cid(cidList[0]);
+            switch(type){
+                case 0://0-理论课，1-实验课，2-课程设计，3-毕业设计
+                    courseInfoList.add(courseInfoMapper.get_Course_By_cid_Dep(cidList[0],dep));
+                case 1:
+                    courseInfoList.add( courseInfoMapper.get_Exp_By_cid_Dep(cidList[0],dep));
+                case 2:
+                    courseInfoList.add( courseInfoMapper.get_Cdesign_By_cid_Dep(cidList[0],dep));
+                case 3:
+                    courseInfoList.add( courseInfoMapper.get_Gdesign_By_cid_Dep(cidList[0],dep));
+            }
+            return courseInfoList;
+        }
         int[] typeList = new int[cidList.length];
         for(int i=0;i<typeList.length;i++){
-            typeList[i]=courseInfoMapper.get_Type_By_Cid(cidList[i]);
+            typeList[i] = courseInfoMapper.get_Type_By_Cid(cidList[i]);
         }
         for(int i=0;i<cidList.length;i++){
             switch(typeList[i]){

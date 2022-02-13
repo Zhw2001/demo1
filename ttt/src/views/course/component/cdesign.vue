@@ -2,6 +2,7 @@
 <div>
     <el-table       
     :fit = "true"
+    stripe
     size='mini'
     :header-cell-style = "mytable"
     :cell-style = "mytableCell"

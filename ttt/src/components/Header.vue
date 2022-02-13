@@ -42,16 +42,16 @@ export default {
         },
     },
     created(){
-        if(localStorage.getItem('AuthorityName') !== undefined && localStorage.getItem('RoleName') !== undefined  ){
-            var role = new Array();
-            role = localStorage.getItem('Role').split(',');
-            this.name = localStorage.getItem('AuthorityName');
-            this.role = role[0];
+        var role = []
+        if( localStorage.getItem('AuthorityName') && localStorage.getItem('Role') ){
+            this.name = localStorage.getItem('AuthorityName')
+            role = localStorage.getItem('Role')
+            this.role = role.length > 1 ? role.split(',')[0] : role
         }
     },
     computed: {
         fullName(){
-            return this.role + ':' + this.name;
+            return this.role + '：' + this.name;
         },
         classObject: function () {
             return {

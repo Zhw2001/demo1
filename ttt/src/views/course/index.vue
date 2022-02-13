@@ -50,7 +50,9 @@ export default {
     name: 'home',
     data() {
       return {
-        wlock:true,
+        wlock: true,
+        stimeList: [],
+        sTime: '',
         dataList: {
           CourseData: [],
           ExperData: [],
@@ -121,6 +123,7 @@ export default {
     created(){
       this.get_cidList();
       this.load('');
+      console.log(this.dataList)
     },
     computed:{
       setView: function () {
@@ -134,6 +137,18 @@ export default {
           case '3':
             return 'gdesign'
         }
+      },
+      setStime: function(){
+        switch (this.type) {
+          case '0':
+            return this.dataList.CourseData[0].stime
+          case '1':
+            return this.ExperData[0].stime
+          case '2':
+            return this.CdesignData[0].stime
+          case '3':
+            return this.GdesignData[0].stime
+        }
       }
     },
     methods:{
@@ -142,47 +157,64 @@ export default {
         this.type = v;
       },
       get_cidList(){
-        var cidList = localStorage.getItem('cidList');
-        this.cidList = cidList;
+        var cidList = localStorage.getItem('cidList')
+        this.cidList = cidList ? cidList : ''
+      },
+      get_Stime(){
+        this.$request.get( "/api_S/cinfo/stimeList?&cid="+this.cidList ).then( res => {
+          //[{type : xxx, stime: xxx}]
+          switch(this.trans_type(this.type)){
+            case 0:
+              this.addCourse(this.dataList.CourseData);
+              break;
+            case 1:
+              this.addExperData(this.dataList.ExperData);
+              break;
+            case 2:
+              this.addCDData(this.dataList.CdesignData);
+              break;
+            case 3:
+              this.addGDData(this.dataList.GdesignData);
+              break;
+          }
+        })
       },
       load(dep){
-        this.$request.get("/api_S/cinfo/list_CD?&cid="+this.cidList+"&dep="+dep).then(
-          res=>{
-            this.dataList.CourseData = [];
-            this.dataList.ExperData = [];
-            this.dataList.CdesignData = [];
-            this.dataList.GdesignData = [];
-            for(let i of res.data){
-              if(i != null && i.courseList!=null){
-                for(let j of i.courseList){
-                  j.selected = false;
-                  this.dataList.CourseData.push(j);
-                }
+        this.$request.get("/api_S/cinfo/list_CD?&cid="+this.cidList+"&dep="+dep).then( res=> {
+          this.dataList.CourseData = [];
+          this.dataList.ExperData = [];
+          this.dataList.CdesignData = [];
+          this.dataList.GdesignData = [];
+          for(let i of res.data){
+            if(i != null && i.courseList!=null){
+              for(let j of i.courseList){
+                j.selected = false;
+                this.dataList.CourseData.push(j);
               }
+            }
 
-              if(i != null && i.experimentList != null){
-                for(let j of i.experimentList){
-                  j.selected = false;
-                  this.dataList.ExperData.push(j);
-                } 
-              }
-
-              if(i != null && i.cdesignList != null){
-                for(let j of i.cdesignList){
-                  j.selected = false;
-                  this.dataList.CdesignData.push(j);
-                } 
-              }
-
-              if(i != null && i.gdesignList != null){
-                for(let j of i.gdesignList){
-                    j.selected = false;
-                    this.dataList.GdesignData.push(j);
-                }
+            if(i != null && i.experimentList != null){
+              for(let j of i.experimentList){
+                j.selected = false;
+                this.dataList.ExperData.push(j);
               } 
             }
+
+            if(i != null && i.cdesignList != null){
+              for(let j of i.cdesignList){
+                j.selected = false;
+                this.dataList.CdesignData.push(j);
+              } 
+            }
+
+            if(i != null && i.gdesignList != null){
+              for(let j of i.gdesignList){
+                  j.selected = false;
+                  this.dataList.GdesignData.push(j);
+              }
+            } 
           }
-        );
+        })
       },
       add(){
         switch(this.trans_type(this.type)){

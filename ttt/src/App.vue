@@ -5,11 +5,15 @@
 </template>
 
 <script>
-
+import { setRoutes } from '@/utils/login.js'
 
 export default {
   name: 'App',
+  created () {
+    setRoutes( this.$router )
+  },
 }
+
 </script>
 
 <style>
