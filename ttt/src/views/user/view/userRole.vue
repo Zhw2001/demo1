@@ -45,6 +45,28 @@
           </el-table>
         </div>
       </div>
+      <el-dialog
+      title="分配权限"
+      :visible.sync="vis"
+      width="50%">
+        <el-tree :data="mydata" :props="defaultProps" :expand-on-click-node="false" show-checkbox @check-change="handleCheckChange" check-strictly >
+          <span class="custom-tree-node" slot-scope="{ node, data }">
+              <span>{{ node.label }}</span>
+              <span v-if='false'>
+              <el-button
+                  type="text"
+                  @click="() => append(data)">
+                  <i class="el-icon-circle-plus-outline"></i>
+              </el-button>
+              <el-button
+                  type="text"
+                  @click="() => remove(node, data)">
+                  <i class="el-icon-remove-outline"></i>
+              </el-button>
+              </span>
+          </span>
+        </el-tree>
+      </el-dialog>
   </div>
 </template>
 
@@ -52,11 +74,20 @@
 export default {
   data () {
     return{
-      roleList: []
+      vis: true,
+      roleList: [],
+      mydata: [],
+      defaultProps: {
+          id:'id',
+          children: 'children',
+          label: 'label'
+      },
+      selectedAuth: []
     }
   },
   created(){
     this.load()
+    this.loadTree()
   },
   methods: {
     load(){
@@ -65,16 +96,69 @@ export default {
       this.roleList = data
       })
     },
+    handleCheckChange(data, checked) {
+      if (!checked) { 
+        this.remove(data)
+        return
+        }
+      this.selectedAuth = this.selectedAuth.concat(data)
+      console.log(this.selectedAuth)
+    },
+    remove(v){
+      for(let i = 0; i < this.selectedAuth.length; i++ ){
+        if (v.id == this.selectedAuth[i].id) {
+          this.selectedAuth.splice( i, 1 )
+          return
+        }
+      }
+    },
+
     mytable(){
       return this.$setCss.tableHeadCell
     },
     mytableCell(){
       return this.$setCss.tableCell
     },
+
+
+    loadTree(){
+      this.$request.get("/api_S/auth/list").then(res=>{
+          var data = res.data;
+          console.log(data);
+          for(let i of data){
+              this.cook(i);
+          }
+          console.log(this.mydata);
+      })
+    },
+    hasParent(data){
+      if(data.authority_parent_id == '' || data.authority_parent_id == null){
+          return false;
+      }
+      return true;
+    },
+    cook(data){
+      if(this.hasParent(data)){
+          let parent = this.mydata.find(function(x){return x.label == data.authority_parent_name});
+          console.log(parent);
+          parent.children.push({
+            id: data.authority_id, 
+            label: data.authority_name,
+            url: data.authority_url,
+            children:[]
+            });
+      }
+      else{
+          this.mydata.push({id:data.authority_id,label:data.authority_name,children:[]});
+      }
+    }
+
   }
 }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+/deep/ .el-tree > .el-tree-node > .el-tree-node__content .el-checkbox {
+  display: none;
+}
 </style>

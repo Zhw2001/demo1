@@ -76,10 +76,9 @@
       </div>
     </div>
     <el-dialog
-      title="提示"
+      title="新建用户"
       :visible.sync="createVis"
-      width="30%"
-      :before-close="close">
+      width="30%" >
 
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <el-form-item label="账户" prop="account">
@@ -162,10 +161,6 @@ export default {
     },
     resetCreate(formName) {
       this.$refs[formName].resetFields();
-    },
-    close () {
-      this.createVis = false
-      this.editVis = false
     },
     createShow () {
       this.createVis = true
