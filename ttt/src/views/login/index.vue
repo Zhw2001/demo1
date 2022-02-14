@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getInfo } from '@/utils/login.js'
+import { getInfo, setRoutes } from '@/utils/login.js'
 
 export default{
     name:"login",
@@ -47,7 +47,7 @@ export default{
                             message: "login success"
                         })
                         getInfo( res.token, res.data.nickname, res.data.account )
-                        this.$router.push('/');
+                        setRoutes(this.$router)                  
                     }
                     else{
                         this.$message({
@@ -64,6 +64,7 @@ export default{
                 }
             })
         },
+
     }
 
 }

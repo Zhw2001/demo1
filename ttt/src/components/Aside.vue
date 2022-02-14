@@ -1,15 +1,15 @@
 <template>
     <div :class="classObject">
         <el-menu
-        class="aside-menu"
+        class="el-menu-vertical-demo"
         :unique-opened = 'true'
+        :collapse="clicked"
         router
         >
             <div class="logo-div">
                 <span class="logo-text">website</span>
             </div>
             
-
             <component  v-for = "(value) in aside_list" :key = "value.id" :index = "value.id"
             :is="( value.children && value.children.length>0 ) ? 'el-submenu':'el-menu-item'" >
                 <template slot="title">
@@ -17,7 +17,7 @@
                 <span>{{value.title}}</span>
                 </template>
                 <template v-if="value.children && value.children.length>0">
-                    <el-menu-item v-for="(v,i) in value.children" :key="v.id" :index="v.path">
+                    <el-menu-item v-for="(v) in value.children" :key="v.id" :index="v.path">
                         <span slot="title">{{v.title}}</span>
                     </el-menu-item>
                 </template>
@@ -30,23 +30,19 @@
 <script>
 
 export default {
-    //name:'nav-menu',
     props:{
         clicked:Boolean,
     },
     data(){
         return{
-            aside_list: [],
+            aside_list: []
         }
     },
     methods: {
-        change(list){
-            const data = JSON.parse(list)
-            return data
-        }
     },
     created(){
-        this.aside_list = this.change( localStorage.getItem( 'aside' ) )
+        this.aside_list = JSON.parse( localStorage.getItem( 'aside' ) )
+        console.log('111',this.aside_list)
     },
     computed: {
         classObject: function () {
@@ -55,18 +51,33 @@ export default {
                 'aside_click': this.clicked,
             }
         },
-    }
+    },
 }
 
 </script>
 
 <style lang="less" scoped>
 
-
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 256px;
+}
 
 .aside{
     flex: 0 0 256px;
     background: linear-gradient(135deg, #8f75da 0, #727cf5 60%);
+    transition: all 1s;
+    -webkit-transition: all 1s;
+}
+
+.aside {
+    /deep/ .el-menu {
+        border-right: none;
+        list-style: none;
+        position: relative;
+        margin: 0;
+        padding-left: 0;
+        background:transparent;
+    }
 }
 
 .aside .el-menu {
@@ -91,16 +102,6 @@ export default {
     display: inline-block;
     vertical-align: middle;
     color: #ffffff;
-}
-
-
-.aside .el-menu {//自定义导航栏样式覆盖
-    border-right: solid 1px #e6e6e6;
-    list-style: none;
-    position: relative;
-    margin: 0;
-    padding-left: 0;
-    background:transparent;
 }
 
 
@@ -150,13 +151,21 @@ export default {
 .aside_click{
     flex: 0 0 80px;
     background: linear-gradient(135deg, #8f75da 0, #727cf5 60%);
+    transition: all 1s;
+    -webkit-transition: all 1s;
 }
 
-.aside_click .el-menu {
-    /deep/ .el-icon-arrow-down {//展开图标穿透
-        display: none;
+.aside_click{
+    /deep/ .el-menu {
+        border-right: none;
+        list-style: none;
+        position: relative;
+        margin: 0;
+        padding-left: 0;
+        background:transparent;
     }
 }
+
 .aside_click .el-menu .logo-div{
     height:70px;
     padding-left:30px;
@@ -171,20 +180,9 @@ export default {
     color: #ffffff;
 }
 
-
-.aside_click .el-menu {//自定义导航栏样式覆盖
-    border-right: solid 1px #e6e6e6;
-    list-style: none;
-    position: relative;
-    margin: 0;
-    padding-left: 0;
-    background:transparent;
-}
-
 .aside_click .el-menu .el-submenu{//一级标题穿透
     /deep/ .el-submenu__title{
         background: transparent;
-        text-align: center;
     }
     /deep/ .el-submenu__title i{
         background: transparent;

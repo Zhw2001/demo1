@@ -437,10 +437,10 @@ import global from '@/components/Global';
       },
 
       mytable(){
-        return 'background-color:#f1f3fa; color:rgba(0, 0, 0, 0.85);font-weight: 500;text-align:center;'
+        return this.$setCss.tableHeadCell
       },
       mytableCell(){
-        return 'text-align:center;'
+        return this.$setCss.tableCell
       },
 
     },

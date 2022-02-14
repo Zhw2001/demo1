@@ -42,6 +42,7 @@ function StrInList(str, authList){
       component: () => import('@/views/Main'), // main
       children: []
     }
+    let obj = {}
     data.forEach( item => {
       if(item.children) {
         item.children.forEach( i => { 
@@ -49,6 +50,7 @@ function StrInList(str, authList){
           temp.name = i.name
           temp.path = i.path
           temp.component =  () => import( '@/views' + i.component )
+          
           result.children.push(temp) 
         } )
       }
@@ -56,5 +58,8 @@ function StrInList(str, authList){
     return result
   }
   
+
+
+
 
   export { addRoute, composeTree }

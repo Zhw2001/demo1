@@ -1,42 +1,33 @@
 <template>
     <div class="home-container">
-        <div class="card">
-          <div class="card-body" style='width:100%;'>
-            <el-form :inline="true" class="demo-form-inline">
-              <el-form-item  label="专业:">
-                <el-select v-model="major" placeholder="MAJOR">
-                  <el-option
-                  v-for = "item in Majors"
-                  :key = "item.value"
-                  :label = "item.label"
-                  :value = "item.value">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item  label="课程类型:">
-                <el-select :value="type" placeholder="TYPE" @change = "handleTypeChange">
-                  <el-option
-                  v-for = "item in courseType"
-                  :key = "item.value"
-                  :label = "item.label"
-                  :value = "item.value">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item>
-                <el-button @click="add()" circle icon="el-icon-plus"></el-button>
-              </el-form-item>
-            </el-form>
-          </div>
+      <div class = "btnRow" ><el-button type='primary' @click="add($event)">新增记录</el-button></div>
+      <div class="card">
+        <div class="card-body" style='width:100%;'>
+          <el-form :inline="true" class="demo-form-inline">
+            <el-form-item  label="专业:">
+              <el-select v-model="major" placeholder="MAJOR">
+                <el-option
+                v-for = "item in Majors"
+                :key = "item.value"
+                :label = "item.label"
+                :value = "item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item  label="课程类型:">
+              <el-select :value="type" placeholder="TYPE" @change = "handleTypeChange">
+                <el-option
+                v-for = "item in courseType"
+                :key = "item.value"
+                :label = "item.label"
+                :value = "item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+          <component :w_lock="wlock" @delEmptyRow ="delERow($event)" :dataList = "dataList" :is = "setView"></component>
         </div>
-
-        <div class="card"></div>
-
-        <div class="card">
-          <div class="card-body" style='width:100%;'>
-            <component :w_lock="wlock" @delEmptyRow ="delERow($event)" :dataList = "dataList" :is = "setView"></component>
-          </div>
-        </div>
+      </div>
     </div>
 </template>
 
@@ -163,17 +154,17 @@ export default {
       get_Stime(){
         this.$request.get( "/api_S/cinfo/stimeList?&cid="+this.cidList ).then( res => {
           //[{type : xxx, stime: xxx}]
-          switch(this.trans_type(this.type)){
-            case 0:
+          switch(this.type){
+            case '0':
               this.addCourse(this.dataList.CourseData);
               break;
-            case 1:
+            case '1':
               this.addExperData(this.dataList.ExperData);
               break;
-            case 2:
+            case '2':
               this.addCDData(this.dataList.CdesignData);
               break;
-            case 3:
+            case '3':
               this.addGDData(this.dataList.GdesignData);
               break;
           }
@@ -216,8 +207,9 @@ export default {
           }
         })
       },
-      add(){
-        switch(this.trans_type(this.type)){
+      add(evt){
+        this.$setCss.clickHandler(evt)
+        switch(parseInt(this.type)){
           case 0:
             this.addCourse(this.dataList.CourseData);
             break;
@@ -362,25 +354,5 @@ export default {
 </script>
 
 <style scoped>
-  .el-button:focus {
-    display: inline-block;
-    line-height: 1;
-    white-space: nowrap;
-    cursor: pointer;
-    background: #FFF;
-    border: 1px solid #DCDFE6;
-    color: #606266;
-    -webkit-appearance: none;
-    text-align: center;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    outline: 0;
-    margin: 0;
-    -webkit-transition: .1s;
-    transition: .1s;
-    font-weight: 500;
-    font-size: 14px;
-    border-radius: 50%;
-    padding: 12px;
-  }
+
 </style>

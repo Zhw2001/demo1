@@ -32,8 +32,9 @@ export default {
             }
         },
         out(){
-            localStorage.clear();
-            this.$router.push('/login');
+            localStorage.clear()
+            location.reload()
+            this.$router.push('/login')
             
         },
         fold() {
@@ -42,11 +43,11 @@ export default {
         },
     },
     created(){
-        var role = []
-        if( localStorage.getItem('AuthorityName') && localStorage.getItem('Role') ){
-            this.name = localStorage.getItem('AuthorityName')
-            role = localStorage.getItem('Role')
-            this.role = role.length > 1 ? role.split(',')[0] : role
+        if( localStorage.getItem('userInfo') ){
+            const user = JSON.parse(localStorage.getItem('userInfo'))
+            console.log(user)
+            this.name = user.nickname
+            this.role = user.roles[0].roleName
         }
     },
     computed: {

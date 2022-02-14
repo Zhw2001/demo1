@@ -12,7 +12,6 @@ const constRoutes = [
   },
 ]
 
-
 const allDynamicRoutes = [
   { id: '1', name: 'generate', title: '工程认证', icon: 'el-icon-edit' },
   { id: '2', name: 'courseData', title: '课程数据', icon: 'el-icon-data-analysis' },

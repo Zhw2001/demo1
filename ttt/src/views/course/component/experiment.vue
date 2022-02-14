@@ -250,10 +250,10 @@ export default{
     },
     methods:{
         mytable(){
-            return 'background-color:#f1f3fa;color:rgba(0, 0, 0, 0.85);font-weight: 500text-align:center;'
+            return this.$setCss.tableHeadCell
         },
         mytableCell(){
-            return 'text-align:center;font-size: 5px;'
+            return this.$setCss.tableCell
         },
 
         //

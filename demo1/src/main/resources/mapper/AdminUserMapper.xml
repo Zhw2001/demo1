@@ -18,11 +18,11 @@
         <result property="phone" column="phone" javaType="Long" jdbcType="BIGINT"/>
         <result property="email" column="email" javaType="String" jdbcType="VARCHAR"/>
         <result property="description" column="description" javaType="String" jdbcType="VARCHAR"/>
-        <result property="userCid" column="user_cid" javaType="String" jdbcType="VARCHAR"/>
         <collection property="adminRoleList"  ofType="com.ljsh.test.mbg.model.AdminRole">
             <id  property="role_id" column="role_id" javaType="Long" jdbcType="BIGINT"/>
             <result property="role_name" column="role_name" javaType="String" jdbcType="VARCHAR"/>
             <result property="role_description" column="role_description" javaType="String" jdbcType="VARCHAR"/>
+            <result property="cidList" column="user_cid" javaType="String" jdbcType="VARCHAR" />
         </collection>
     </resultMap>
 
@@ -30,9 +30,9 @@
     <insert id="newu" parameterType="com.ljsh.test.mbg.model.AdminUser">
         INSERT INTO
         <include refid="admin_user"/>
-        (account,nickname,password,phone,email,description,use_cid,create_date)
+        (account,nickname,password,phone,email,description,create_date)
         VALUES
-        (#{account},#{nickname},#{password},#{phone},#{email},#{description},#{userCid},NOW())
+        (#{account},#{nickname},#{password},#{phone},#{email},#{description},NOW())
     </insert>
 
 
@@ -84,7 +84,7 @@
     </delete>
 
 
-    <select id="get_Roleinfo_By_Account"  parameterType="String" resultMap="userMap">
+    <select id="get_info_By_Account"  parameterType="String" resultMap="userMap">
         SELECT *
         FROM
         ((admin_user LEFT JOIN admin_with_role ON admin_with_role.admin_uid = admin_user.uid) left join admin_role on admin_with_role.admin_role_id = admin_role.role_id)

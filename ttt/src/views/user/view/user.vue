@@ -1,5 +1,6 @@
 <template>
     <div class="home-container">
+      <div class = "btnRow" ><el-button type='primary' @click="show">添加用户</el-button></div>
       <div class="card">
         <div class="card-body">
           <el-form :inline="true" class="demo-form-inline">
@@ -9,16 +10,10 @@
             <el-form-item>
               <el-button type='primary' @click="load"><i class="el-icon-search"></i></el-button>
             </el-form-item>
-            <el-form-item>
-              <el-button type='primary' @click="show"><i class="el-icon-plus"></i></el-button>
-            </el-form-item>
           </el-form>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
           <el-table
             :fit = "true"
+            stripe
             :header-cell-style = "mytable"
             :cell-style = "mytableCell"
             :data="tableData"
@@ -104,6 +99,7 @@ export default {
     created(){
       this.load();
       this.cal_total();
+      console.log(this.$setCss)
     },
     methods:{
       //创建用户按钮
@@ -172,10 +168,10 @@ export default {
 
       //表格样式设置
       mytable(){
-        return 'background-color:#f1f3fa; color:rgba(0, 0, 0, 0.85);font-weight: 500;text-align:center;'
+        return this.$setCss.tableHeadCell
       },
       mytableCell(){
-        return 'text-align:center;'
+        return this.$setCss.tableCell
       },
     },
     components: {

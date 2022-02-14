@@ -1564,10 +1564,10 @@ export default {
     },
 
     mytable(){
-      return 'background-color:#f1f3fa; color:rgba(0, 0, 0, 0.85);font-weight: 500; '
+      return this.$setCss.tableHeadCell
     },
     mytableCell(){
-      return ' '
+      return this.$setCss.tableCell
     },
 
   },

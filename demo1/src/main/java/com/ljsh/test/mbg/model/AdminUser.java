@@ -13,8 +13,6 @@ public class AdminUser {
     private Long phone;
     private String email;
     private String description;
-    private String userCid;
     private List<AdminRole> adminRoleList;
-
 
 }

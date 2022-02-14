@@ -59,7 +59,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     public AdminUser getRole(String account){
-        AdminUser adminUser = adminUserMapper.get_Roleinfo_By_Account(account);
+        AdminUser adminUser = adminUserMapper.get_info_By_Account(account);
         return adminUser;
     }
 

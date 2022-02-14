@@ -7,11 +7,13 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/css/global.css'
 import request from '@/utils/request.js'
+import setCss from '@/utils/setCss.js'
 
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$request = request
+Vue.prototype.$setCss = setCss
 new Vue({
   el: '#app',
   router,
