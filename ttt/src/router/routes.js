@@ -21,7 +21,8 @@ const allDynamicRoutes = [
   { id: '6', parent_id: '1', name: 'CourseDegree', title: '课程教学目标达成度评价', path: 'courseDegree', component: '/input/view/CourseDegree' },
   { id: '7', parent_id: '2', name: 'course', title: '查看与修改', path: 'course', component: '/course' },
   { id: '8', parent_id: '3', name: 'user', title: '用户信息', path: 'user', component: '/user/view/user' },
-  { id: '9', parent_id: '3', name: 'userRoleMenu', title: '用户权限', path: 'userRoleMenu', component: '/user/view/userRoleMenu' }
+  { id: '9', parent_id: '3', name: 'userRole', title: '用户角色', path: 'userRole', component: '/user/view/userRole' },
+  { id: '10', parent_id: '3', name: 'userRoleMenu', title: '用户权限', path: 'userRoleMenu', component: '/user/view/userRoleMenu' }
 ]
 
 export { allDynamicRoutes, constRoutes }

@@ -7,7 +7,12 @@
 
 
 <mapper namespace="com.ljsh.test.mbg.mapper.AdminRoleMapper">
-    <sql id="role">admin_role</sql>
+
+    <resultMap type="com.ljsh.test.mbg.model.AdminRole" id="roleListMap">
+    <id  property="role_id" column="role_id" javaType="Long" jdbcType="BIGINT"/>
+    <result property="role_name" column="role_name" javaType="String" jdbcType="VARCHAR"/>
+    <result property="role_description" column="role_description" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
 
     <resultMap type="com.ljsh.test.mbg.model.AdminRole" id="roleMap">
         <id  property="role_id" column="role_id" javaType="Long" jdbcType="BIGINT"/>
@@ -34,5 +39,9 @@
         role_name = #{role_name}
     </select>
 
+    <select id="getRoleList" resultMap="roleListMap" >
+        SELECT * FROM
+        admin_role
+    </select>
 
 </mapper>
