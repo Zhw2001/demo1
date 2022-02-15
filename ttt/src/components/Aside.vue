@@ -10,7 +10,8 @@
                 <span class="logo-text">website</span>
             </div>
             
-            <component  v-for = "(value) in aside_list" :key = "value.id" :index = ' null + value.id '
+            <component v-if ='hasChildren(value) != ""' 
+             v-for = "(value) in aside_list" :key = "value.id" :index = ' null + value.id '
             :is="( value.children && value.children.length>0 ) ? 'el-submenu':'el-menu-item'" >
                 <template :slot = "hasChildren(value)">
                 <i :class="[value.icon]"></i>
