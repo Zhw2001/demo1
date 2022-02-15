@@ -14,13 +14,16 @@ function StrInList(str, authList){
         return result // 不是数组返回空
     }
     const map = {}
-    allDynamicRoutes.forEach(item => {
+    const temp = JSON.parse(JSON.stringify(allDynamicRoutes))
+    console.log(allDynamicRoutes, temp);
+    temp.forEach(item => {
         map[item.id] = item
     })
-    allDynamicRoutes.forEach(item => {
+    temp.forEach(item => {
       const parent = map[item.parent_id]
         if (parent) {
-            if ( StrInList( item.name, authList ) ) { 
+          console.log('parent',parent)
+            if ( StrInList( item.component, authList ) ) { 
               (parent.children || (parent.children = [])).push(item) 
             }
         } else {

@@ -4,6 +4,7 @@ import com.ljsh.test.mbg.mapper.AdminUserMapper;
 import com.ljsh.test.mbg.model.AdminUser;
 import com.ljsh.test.service.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,6 +61,11 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     public AdminUser getRole(String account){
         AdminUser adminUser = adminUserMapper.get_info_By_Account(account);
+        return adminUser;
+    }
+
+    public AdminUser get_Info_By_Account(String account){
+        AdminUser adminUser = adminUserMapper.get_Info_By_Account(account);
         return adminUser;
     }
 

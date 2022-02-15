@@ -375,10 +375,7 @@ export default{
     },
 
     watch:{
-        visible : function(newV,oldV){
-            this.load()
-        },
-        dataList :function(){
+        'dataList.ExperData' :function(){
             this.load()
         },
         w_lock : function(){

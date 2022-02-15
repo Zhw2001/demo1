@@ -243,6 +243,7 @@ export default{
             this.totalPage = Math.ceil(this.courseData.length / this.pageSize)
             this.totalPage = this.totalPage == 0 ? 1 : this.totalPage
             this.setCurrentPageData()//加载数据
+            console.log('coursecomponentLOADFINISH',this.currentPageData)
         },
 
     },
@@ -252,17 +253,15 @@ export default{
     },
 
     watch:{
-        visible : function(newV,oldV){
-            this.load();
-        },
-        dataList :function(){
+        'dataList.CourseData' : function(){
+            console.log('courseComponent')
             this.load();
         },
         w_lock : function(){
             this.wlock = this.w_lock;
             this.CurrentPageChange(this.totalPage);
             this.rowCache = null;
-        }
+        },
     }
 }
 </script>

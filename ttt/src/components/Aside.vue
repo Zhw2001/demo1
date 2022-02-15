@@ -10,15 +10,15 @@
                 <span class="logo-text">website</span>
             </div>
             
-            <component  v-for = "(value) in aside_list" :key = "value.id" :index = "value.id"
+            <component  v-for = "(value) in aside_list" :key = "value.id" :index = ' null + value.id '
             :is="( value.children && value.children.length>0 ) ? 'el-submenu':'el-menu-item'" >
-                <template slot="title">
+                <template :slot = "hasChildren(value)">
                 <i :class="[value.icon]"></i>
                 <span>{{value.title}}</span>
                 </template>
-                <template v-if="value.children && value.children.length>0">
+                <template v-if="value.children && value.children.length > 0">
                     <el-menu-item v-for="(v) in value.children" :key="v.id" :index="v.path">
-                        <span slot="title">{{v.title}}</span>
+                        <span>{{v.title}}</span>
                     </el-menu-item>
                 </template>
             </component>
@@ -41,8 +41,8 @@ export default {
     methods: {
     },
     created(){
+        console.log('createAside')
         this.aside_list = JSON.parse( localStorage.getItem( 'aside' ) )
-        console.log('111',this.aside_list)
     },
     computed: {
         classObject: function () {
@@ -51,6 +51,14 @@ export default {
                 'aside_click': this.clicked,
             }
         },
+        hasChildren() {
+            return function (value) {
+                if (value.children && value.children.length > 0){
+                    return "title"
+                }
+                return ""
+            }
+        }
     },
 }
 
@@ -64,7 +72,7 @@ export default {
 
 .aside{
     flex: 0 0 256px;
-    background: linear-gradient(135deg, #8f75da 0, #727cf5 60%);
+    background: linear-gradient(135deg, #e9d3ff 0, #b4bfff 60%);
     transition: all 1s;
     -webkit-transition: all 1s;
 }
@@ -80,16 +88,7 @@ export default {
     }
 }
 
-.aside .el-menu {
-    /deep/ .el-icon-arrow-down {//展开图标穿透
-        content: "\E6DF";
-        color: azure;
-    }
-    /deep/ .el-icon-arrow-down:hover {//展开图标穿透
-        background: transparent;
-        color:#f5a5a5;
-    }
-}
+
 .aside .el-menu .logo-div{
     height:70px;
     padding-left:30px;
@@ -101,25 +100,26 @@ export default {
     font-weight: 500;
     display: inline-block;
     vertical-align: middle;
-    color: #ffffff;
+    color: #000000;
 }
+
 
 
 .aside .el-menu .el-submenu{//一级标题穿透
     /deep/ .el-submenu__title{
         background: transparent;
     }
-    /deep/ .el-submenu__title span{
-        color:#ffffff;
-    }
     /deep/ .el-submenu__title i{
-        color:#ffffff;
+        color:#000000;
     }
     /deep/ .el-submenu__title:hover i{
-        color:#f5a5a5;
+        color:#d15637;
+    }
+    /deep/ .el-submenu__title span{
+        color:#000000;
     }
     /deep/ .el-submenu__title:hover span{
-        color:#f5a5a5;
+        color:#fb5a1a;
     }
 }
 
@@ -139,10 +139,10 @@ export default {
     }
 
     /deep/ .el-menu .el-menu-item span{
-        color:#bdc1dd;
+        color:#6c6c70;
     }
     /deep/ .el-menu .el-menu-item:hover span{
-        color:#ffffff;
+        color:#000000;
     }
 }
 
@@ -150,7 +150,7 @@ export default {
 
 .aside_click{
     flex: 0 0 80px;
-    background: linear-gradient(135deg, #8f75da 0, #727cf5 60%);
+    background: linear-gradient(135deg, #e9d3ff 0, #b4bfff 60%);
     transition: all 1s;
     -webkit-transition: all 1s;
 }
@@ -177,22 +177,25 @@ export default {
     font-weight: 500;
     display: inline-block;
     vertical-align: middle;
-    color: #ffffff;
+    color: #000000;
 }
+
 
 .aside_click .el-menu .el-submenu{//一级标题穿透
     /deep/ .el-submenu__title{
         background: transparent;
     }
     /deep/ .el-submenu__title i{
-        background: transparent;
-        color:#ffffff;
+        color:#000000;
     }
     /deep/ .el-submenu__title:hover i{
-        color:#f5a5a5;
+        color:#d15637;
     }
     /deep/ .el-submenu__title span{
-        display: none;
+        color:#000000;
+    }
+    /deep/ .el-submenu__title:hover span{
+        color:#fb5a1a;
     }
 }
 

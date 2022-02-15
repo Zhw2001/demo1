@@ -144,7 +144,7 @@ export default {
     },
     methods:{
       handleTypeChange(v){
-        console.log(v)
+        console.log('type',v)
         this.type = v;
       },
       get_cidList(){
@@ -206,6 +206,7 @@ export default {
             } 
           }
         })
+         console.log('load finish',this.dataList)
       },
       add(evt){
         this.$setCss.clickHandler(evt)
@@ -347,6 +348,7 @@ export default {
     },
     watch:{
         major: function(newMajor,oldMajor){
+          console.log('change_major',newMajor)
           this.load(newMajor);
         }
     },

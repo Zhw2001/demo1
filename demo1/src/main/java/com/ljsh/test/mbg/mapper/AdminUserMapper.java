@@ -16,4 +16,5 @@ public interface AdminUserMapper {
     List<AdminUser> selectPage(@Param("pageNum")int pageNum, @Param("pageSize")int pageSize, @Param("search")String search);
     void del_user(String account);
     AdminUser get_info_By_Account(String account);
+    AdminUser get_Info_By_Account(String account);
 }

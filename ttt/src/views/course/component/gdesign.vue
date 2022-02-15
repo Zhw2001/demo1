@@ -315,10 +315,7 @@ export default{
     },
 
     watch:{
-        visible : function(newV,oldV){
-            this.load()
-        },
-        dataList :function(){
+        'dataList.GdesignData' :function(){
             this.load()
         },
         w_lock : function(){

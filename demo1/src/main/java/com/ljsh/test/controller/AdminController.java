@@ -77,4 +77,9 @@ public class AdminController {
         return Result.success(adminUserService.getusers());
     }
 
+    @GetMapping("/info")
+    public Result<?> get_Info_By_ID(@RequestParam String account){
+        return Result.success(adminUserService.get_Info_By_Account(account));
+    }
+
 }

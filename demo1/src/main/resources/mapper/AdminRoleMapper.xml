@@ -34,7 +34,7 @@
     <select id="get_AuthInfo_By_roleName" parameterType="String" resultMap="roleMap">
         SELECT *
         FROM
-        ((admin_role LEFT JOIN role_with_authority ON admin_role.role_id = role_with_authority.admin_role_id) left join admin_authority on role_with_authority.admin_authority_id = admin_authority.authority_id)
+        ((admin_role LEFT JOIN role_with_authority ON admin_role.role_id = role_with_authority.RA_role_id) left join admin_authority on role_with_authority.RA_authority_id = admin_authority.authority_id)
         WHERE
         role_name = #{role_name}
     </select>
@@ -42,6 +42,14 @@
     <select id="getRoleList" resultMap="roleListMap" >
         SELECT * FROM
         admin_role
+    </select>
+
+    <select id="getRoleInfo" parameterType="Long" resultMap="roleMap" >
+        SELECT *
+        FROM
+        ((admin_role LEFT JOIN role_with_authority ON admin_role.role_id = role_with_authority.RA_role_id) left join admin_authority on admin_authority.authority_id = role_with_authority.RA_authority_id)
+        WHERE
+        role_id = #{role_id}
     </select>
 
 </mapper>

@@ -46,8 +46,7 @@ export default{
                             type:"success",
                             message: "login success"
                         })
-                        getInfo( res.token, res.data.nickname, res.data.account )
-                        setRoutes(this.$router)                  
+                        getInfo( res.token, res.data.account, this.$router)                  
                     }
                     else{
                         this.$message({

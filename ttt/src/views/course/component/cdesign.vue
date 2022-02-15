@@ -276,10 +276,7 @@ export default{
     },
 
     watch:{
-        visible : function(newV,oldV){
-            this.load()
-        },
-        dataList :function(){
+        'dataList.CdesignData' :function(){
             this.load()
         },
         w_lock : function(){

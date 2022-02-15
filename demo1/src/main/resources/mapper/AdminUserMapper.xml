@@ -26,6 +26,33 @@
         </collection>
     </resultMap>
 
+    <resultMap type="com.ljsh.test.mbg.model.AdminUser" id="userInfoMap">
+        <id  property="uid" column="uid" javaType="Long" jdbcType="BIGINT"/>
+        <result property="account" column="account" javaType="String" jdbcType="CHAR"/>
+        <result property="nickname" column="nickname" javaType="String" jdbcType="VARCHAR"/>
+        <result property="password" column="password" javaType="String" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" javaType="Long" jdbcType="BIGINT"/>
+        <result property="email" column="email" javaType="String" jdbcType="VARCHAR"/>
+        <result property="description" column="description" javaType="String" jdbcType="VARCHAR"/>
+        <collection property="adminRoleList"  ofType="com.ljsh.test.mbg.model.AdminRole">
+            <id  property="role_id" column="role_id" javaType="Long" jdbcType="BIGINT"/>
+            <result property="role_name" column="role_name" javaType="String" jdbcType="VARCHAR"/>
+            <result property="role_description" column="role_description" javaType="String" jdbcType="VARCHAR"/>
+            <result property="cidList" column="user_cid" javaType="String" jdbcType="VARCHAR" />
+            <collection property="adminAuthList" ofType="com.ljsh.test.mbg.model.AdminAuth">
+                <id  property="authority_id" column="authority_id" javaType="Long" jdbcType="BIGINT"/>
+                <result property="authority_name" column="authority_name" javaType="String" jdbcType="CHAR"/>
+                <result property="authority_type" column="authority_type" javaType="String" jdbcType="CHAR"/>
+                <result property="authority_parent_id" column="authority_parent_id" javaType="String" jdbcType="VARCHAR"/>
+                <result property="authority_parent_name" column="authority_parent_name" javaType="String" jdbcType="CHAR"/>
+                <result property="authority_url" column="authority_url" javaType="String" jdbcType="CHAR"/>
+                <result property="authority_sort" column="authority_sort" javaType="int" jdbcType="INTEGER"/>
+                <result property="authority_description" column="authority_description" javaType="String" jdbcType="VARCHAR"/>
+                <result property="authority_enable" column="auth_enable" javaType="int" jdbcType="TINYINT"/>
+            </collection>
+        </collection>
+    </resultMap>
+
 
     <insert id="newu" parameterType="com.ljsh.test.mbg.model.AdminUser">
         INSERT INTO
@@ -72,7 +99,7 @@
 
     <select id="selectPage" resultMap="userMap">
         SELECT * FROM
-        (((SELECT* FROM admin_user ORDER BY uid limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER})tmp	LEFT JOIN admin_with_role ON admin_with_role.admin_uid = tmp.uid) left join admin_role on admin_with_role.admin_role_id = admin_role.role_id)
+        (((SELECT* FROM admin_user ORDER BY uid limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER})tmp	LEFT JOIN user_with_role ON user_with_role.UR_uid = tmp.uid) left join admin_role on user_with_role.UR_role_id = admin_role.role_id)
         where account like '%${search}%'
     </select>
 
@@ -87,12 +114,18 @@
     <select id="get_info_By_Account"  parameterType="String" resultMap="userMap">
         SELECT *
         FROM
-        ((admin_user LEFT JOIN admin_with_role ON admin_with_role.admin_uid = admin_user.uid) left join admin_role on admin_with_role.admin_role_id = admin_role.role_id)
+        ((admin_user LEFT JOIN user_with_role ON user_with_role.UR_uid = admin_user.uid) left join admin_role on user_with_role.UR_role_id = admin_role.role_id)
         WHERE
         account = #{account}
     </select>
 
-
+    <select id="get_Info_By_Account" parameterType="String" resultMap="userInfoMap">
+        SELECT *
+        FROM
+        (((admin_user LEFT JOIN user_with_role ON uid = UR_uid) LEFT JOIN admin_role on UR_role_id = role_id) LEFT JOIN role_with_authority on role_id = RA_role_id ) LEFT JOIN admin_authority on authority_id = RA_authority_id
+        WHERE
+        account = #{account}
+    </select>
 
 
 </mapper>

@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-      <div class = "btnRow" ><el-button type="danger" @click="show">批量删除角色</el-button></div>
+      <div class = "btnRow" ><el-button type="danger">批量删除角色</el-button></div>
       <div class="card">
         <div class="card-body">
             <el-table
@@ -37,8 +37,12 @@
             <el-table-column
             label="操作">
             <div>
-              <el-button size='mini' type='primary' icon="el-icon-edit"></el-button>
-              <el-button size='mini' type='danger' icon="el-icon-delete"></el-button>
+              <span>
+                <el-button size='mini' type='primary' icon="el-icon-edit" @click = "show" ></el-button>
+              </span>
+              <span>
+                <el-button size='mini' type='danger' icon="el-icon-delete"></el-button>
+              </span>
             </div>
             </el-table-column>
 
@@ -48,24 +52,16 @@
       <el-dialog
       title="分配权限"
       :visible.sync="vis"
-      width="50%">
+      width="30%">
         <el-tree :data="mydata" :props="defaultProps" :expand-on-click-node="false" show-checkbox @check-change="handleCheckChange" check-strictly >
-          <span class="custom-tree-node" slot-scope="{ node, data }">
+          <span class="custom-tree-node" slot-scope="{ node }">
               <span>{{ node.label }}</span>
-              <span v-if='false'>
-              <el-button
-                  type="text"
-                  @click="() => append(data)">
-                  <i class="el-icon-circle-plus-outline"></i>
-              </el-button>
-              <el-button
-                  type="text"
-                  @click="() => remove(node, data)">
-                  <i class="el-icon-remove-outline"></i>
-              </el-button>
-              </span>
           </span>
         </el-tree>
+        <div style="margin-top:20px; text-align:center;">
+          <el-button size="mini" type="primary">确定</el-button>
+          <el-button size="mini" type="message" @click="close">取消</el-button>
+        </div>
       </el-dialog>
   </div>
 </template>
@@ -74,7 +70,7 @@
 export default {
   data () {
     return{
-      vis: true,
+      vis: false,
       roleList: [],
       mydata: [],
       defaultProps: {
@@ -90,6 +86,12 @@ export default {
     this.loadTree()
   },
   methods: {
+    show(){
+      this.vis = true
+    },
+    close(){
+      this.vis = false
+    },
     load(){
       this.$request.get('/api_S/role/list').then( res => {
       let data = res.data
