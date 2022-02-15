@@ -52,4 +52,24 @@
         role_id = #{role_id}
     </select>
 
+    <insert id="set_Role_Auth" >
+        INSERT INTO
+        role_with_authority
+        (RA_role_id, RA_authority_id)
+        VALUES
+        (#{role_id,jdbcType=BIGINT},#{authority_id,jdbcType=BIGINT})
+    </insert>
+
+    <delete id="del_Role_Auth" >
+        DELETE FROM
+        role_with_authority
+        WHERE
+        RA_role_id = #{role_id,jdbcType=BIGINT} and RA_authority_id = #{authority_id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="update_RA_ID">
+        alter table role_with_authority  drop column id;
+        alter table role_with_authority  add column id int auto_increment primary key;
+    </update>
+
 </mapper>

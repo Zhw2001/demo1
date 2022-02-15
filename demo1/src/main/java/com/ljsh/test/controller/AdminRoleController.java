@@ -28,4 +28,7 @@ public class AdminRoleController {
         AdminRole adminRole = adminRoleService.getAuthListByRName(roleName);
         return Result.success(adminRole);
     }
+
+
+
 }
