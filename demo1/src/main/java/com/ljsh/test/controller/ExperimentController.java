@@ -27,26 +27,38 @@ public class ExperimentController {
 
     @PostMapping("/update")
     public Result<?> updateExperiment(@RequestBody Experiment experiment){
-        if(experService.updateExperiment(experiment)){
-            return Result.success();
+        if(experiment != null){
+            String msg = experService.updateExperiment(experiment);
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/delete")
     public Result<?> delExperiment(@RequestBody Experiment experiment){
-        if(experService.delExperiment(experiment.getId())){
-            return Result.success();
+        if(experiment != null){
+            String msg = experService.delExperiment(experiment.getId());
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/insert")
     public Result<?> addExperiment(@RequestBody Experiment experiment){
-        if(experService.addExperiment(experiment)){
-            return Result.success();
+        if(experiment != null){
+            String msg = experService.addExperiment(experiment);
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
 }

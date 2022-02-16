@@ -17,31 +17,31 @@ public class CourseServiceImpl implements CourseService {
         return courseMapper.get_All_C();
     }
 
-    public Boolean addCourse(Course course){
+    public String addCourse(Course course){
         try {
             courseMapper.addCourse(course);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean delCourse(Long id){
+    public String delCourse(Long id){
         try {
             courseMapper.delCourse(id);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean upCourse(Course course){
+    public String upCourse(Course course){
         try {
             courseMapper.updateCourse(course);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
 }

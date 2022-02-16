@@ -65,9 +65,7 @@ export default {
                 if(i.role_id == this.role_id){
                     localStorage.removeItem('role')
                     localStorage.setItem('role', JSON.stringify(i) )
-                    console.log('aaaaadmmlll', i.adminAuthList)
                     let aside = composeTree(i.adminAuthList)
-                    console.log(aside)
                     localStorage.removeItem('aside')
                     localStorage.setItem('aside', JSON.stringify(aside))
                     location.reload()
@@ -106,7 +104,7 @@ export default {
         detail(){
             this.$message({
             type: 'info',
-            message: this.RoleInfo.role_description
+            message: this.role.role_description
             });
         },
         getRoles(adminRoleList){

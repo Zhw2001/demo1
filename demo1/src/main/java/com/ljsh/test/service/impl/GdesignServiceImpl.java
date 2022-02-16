@@ -17,31 +17,31 @@ public class GdesignServiceImpl implements GdesignService {
         return gdesignMapper.get_All_Gd();
     }
 
-    public Boolean addGdesign(Gdesign gdesign){
+    public String addGdesign(Gdesign gdesign){
         try {
             gdesignMapper.addGdesign(gdesign);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean delGdesign(Long id){
+    public String delGdesign(Long id){
         try {
             gdesignMapper.delGdesign(id);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean updateGdesign(Gdesign gdesign){
+    public String updateGdesign(Gdesign gdesign){
         try {
             gdesignMapper.updateGdesign(gdesign);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
 }

@@ -15,18 +15,18 @@ public class AdminUserServiceImpl implements AdminUserService {
     private AdminUserMapper adminUserMapper;
 
 
-    public Boolean regist(AdminUser u){
+    public String regist(AdminUser u){
         AdminUser existuser =  adminUserMapper.getUserByAccount(u.getAccount());
         if(existuser == null){
             try{
             adminUserMapper.newu(u);
             Integer uid = adminUserMapper.getUidByAccount(u.getAccount());
             }catch (Exception e){
-                return false;
+                return e.toString();
             }
-            return true;
+            return "";
         }
-        return false;
+        return "用户已存在";
     }
     public AdminUser login(String account,String password){
         String user_realPassword= adminUserMapper.getPasswordByAccount(account);
@@ -49,14 +49,14 @@ public class AdminUserServiceImpl implements AdminUserService {
         return users;
     }
 
-    public Boolean del_user(String account){
+    public String del_user(String account){
         try {
             Integer uid = adminUserMapper.getUidByAccount(account);
             adminUserMapper.del_user(account);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
     public AdminUser getRole(String account){

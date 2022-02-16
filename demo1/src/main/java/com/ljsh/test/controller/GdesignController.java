@@ -24,26 +24,38 @@ public class GdesignController {
 
     @PostMapping("/update")
     public Result<?> updateGdesign(@RequestBody Gdesign gdesign){
-        if(gdesignService.updateGdesign(gdesign)){
-            return Result.success();
+        if(gdesign != null){
+            String msg = gdesignService.updateGdesign(gdesign);
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/delete")
     public Result<?> delGdesign(@RequestBody Gdesign gdesign){
-        if(gdesignService.delGdesign(gdesign.getId())){
-            return Result.success();
+        if(gdesign != null){
+            String msg = gdesignService.delGdesign(gdesign.getId());
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/insert")
     public Result<?> addGdesign(@RequestBody Gdesign gdesign){
-        if(gdesignService.addGdesign(gdesign)){
-            return Result.success();
+        if(gdesign != null){
+            String msg = gdesignService.addGdesign(gdesign);
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
 }

@@ -33,8 +33,7 @@
             <el-dialog
             title="选择填写的课程"
             :visible.sync = 'ModelVis'
-            width="80%"
-            :before-close="handleClose">
+            width="80%">
               <el-form :inline="true">
                 <el-form-item  label="课程类型:">
                     <el-select v-model="value" placeholder="TYPE" @change = "show_template">

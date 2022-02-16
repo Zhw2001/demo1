@@ -34,7 +34,7 @@
     <select id="get_AuthInfo_By_roleName" parameterType="String" resultMap="roleMap">
         SELECT *
         FROM
-        ((admin_role LEFT JOIN role_with_authority ON admin_role.role_id = role_with_authority.RA_role_id) left join admin_authority on role_with_authority.RA_authority_id = admin_authority.authority_id)
+        ((admin_role LEFT JOIN admin_role_auth ON admin_role.role_id = admin_role_auth.RA_role_id) left join admin_authority on admin_role_auth.RA_authority_id = admin_authority.authority_id)
         WHERE
         role_name = #{role_name}
     </select>
@@ -47,14 +47,14 @@
     <select id="getRoleInfo" parameterType="Long" resultMap="roleMap" >
         SELECT *
         FROM
-        ((admin_role LEFT JOIN role_with_authority ON admin_role.role_id = role_with_authority.RA_role_id) left join admin_authority on admin_authority.authority_id = role_with_authority.RA_authority_id)
+        ((admin_role LEFT JOIN admin_role_auth ON admin_role.role_id = admin_role_auth.RA_role_id) left join admin_authority on admin_authority.authority_id = admin_role_auth.RA_authority_id)
         WHERE
         role_id = #{role_id}
     </select>
 
     <insert id="set_Role_Auth" >
         INSERT INTO
-        role_with_authority
+        admin_role_auth
         (RA_role_id, RA_authority_id)
         VALUES
         (#{role_id,jdbcType=BIGINT},#{authority_id,jdbcType=BIGINT})
@@ -62,14 +62,9 @@
 
     <delete id="del_Role_Auth" >
         DELETE FROM
-        role_with_authority
+        admin_role_auth
         WHERE
         RA_role_id = #{role_id,jdbcType=BIGINT} and RA_authority_id = #{authority_id,jdbcType=BIGINT}
     </delete>
-
-    <update id="update_RA_ID">
-        alter table role_with_authority  drop column id;
-        alter table role_with_authority  add column id int auto_increment primary key;
-    </update>
 
 </mapper>

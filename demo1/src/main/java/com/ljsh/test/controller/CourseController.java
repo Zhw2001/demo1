@@ -15,6 +15,7 @@ public class CourseController {
     private CourseService courseService;
 
 
+
     @GetMapping("/list")
     public Result<?> getCourseList()
     {
@@ -24,26 +25,38 @@ public class CourseController {
 
     @PostMapping("/update")
     public Result<?> updateCourse(@RequestBody Course course){
-        if(courseService.upCourse(course)){
-            return Result.success();
+        if(course != null){
+            String msg = courseService.upCourse(course);
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/delete")
     public Result<?> delCourse(@RequestBody Course course){
-        if(courseService.delCourse(course.getId())){
-            return Result.success();
+        if(course != null){
+            String msg = courseService.delCourse(course.getId());
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/insert")
     public Result<?> addCourse(@RequestBody Course course){
-        if(courseService.addCourse(course)){
-            return Result.success();
+        if(course != null){
+            String msg = courseService.addCourse(course);
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
 }

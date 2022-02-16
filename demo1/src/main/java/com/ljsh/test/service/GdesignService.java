@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GdesignService {
     List<Gdesign> get_All_Gd();
-    Boolean addGdesign(Gdesign gdesign);
-    Boolean delGdesign(Long id);
-    Boolean updateGdesign(Gdesign gdesign);
+    String addGdesign(Gdesign gdesign);
+    String delGdesign(Long id);
+    String updateGdesign(Gdesign gdesign);
 }

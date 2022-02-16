@@ -99,7 +99,7 @@
 
     <select id="selectPage" resultMap="userMap">
         SELECT * FROM
-        (((SELECT* FROM admin_user ORDER BY uid limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER})tmp	LEFT JOIN user_with_role ON user_with_role.UR_uid = tmp.uid) left join admin_role on user_with_role.UR_role_id = admin_role.role_id)
+        (((SELECT* FROM admin_user ORDER BY uid limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER})tmp	LEFT JOIN admin_user_role ON admin_user_role.UR_uid = tmp.uid) left join admin_role on admin_user_role.UR_role_id = admin_role.role_id)
         where account like '%${search}%'
     </select>
 
@@ -114,7 +114,7 @@
     <select id="get_info_By_Account"  parameterType="String" resultMap="userMap">
         SELECT *
         FROM
-        ((admin_user LEFT JOIN user_with_role ON user_with_role.UR_uid = admin_user.uid) left join admin_role on user_with_role.UR_role_id = admin_role.role_id)
+        ((admin_user LEFT JOIN admin_user_role ON admin_user_role.UR_uid = admin_user.uid) left join admin_role on admin_user_role.UR_role_id = admin_role.role_id)
         WHERE
         account = #{account}
     </select>
@@ -122,7 +122,7 @@
     <select id="get_Info_By_Account" parameterType="String" resultMap="userInfoMap">
         SELECT *
         FROM
-        (((admin_user LEFT JOIN user_with_role ON uid = UR_uid) LEFT JOIN admin_role on UR_role_id = role_id) LEFT JOIN role_with_authority on role_id = RA_role_id ) LEFT JOIN admin_authority on authority_id = RA_authority_id
+        (((admin_user LEFT JOIN admin_user_role ON uid = UR_uid) LEFT JOIN admin_role on UR_role_id = role_id) LEFT JOIN admin_role_auth on role_id = RA_role_id ) LEFT JOIN admin_authority on authority_id = RA_authority_id
         WHERE
         account = #{account}
     </select>

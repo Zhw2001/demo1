@@ -5,11 +5,11 @@ import com.ljsh.test.mbg.model.AdminUser;
 import java.util.List;
 
 public interface AdminUserService {
-    Boolean regist(AdminUser u);
+    String regist(AdminUser u);
     AdminUser login(String account,String password);
     List<AdminUser> getusers();
     List<AdminUser> selectPage(int pageNum, int pageSize, String search);
-    Boolean del_user(String account);
+    String del_user(String account);
     AdminUser getRole(String account);
     AdminUser get_Info_By_Account(String account);
 }

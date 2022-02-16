@@ -25,26 +25,38 @@ public class CdesignController {
 
     @PostMapping("/update")
     public Result<?> updateCdesign(@RequestBody Cdesign cdesign){
-        if(cdesignService.updateCdesign(cdesign)){
-            return Result.success();
+        if(cdesign != null){
+            String msg = cdesignService.updateCdesign(cdesign);
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/delete")
     public Result<?> delCdesign(@RequestBody Cdesign cdesign){
-        if(cdesignService.delCdesign(cdesign.getId())){
-            return Result.success();
+        if(cdesign != null){
+            String msg = cdesignService.delCdesign(cdesign.getId());
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/insert")
     public Result<?> addCdesign(@RequestBody Cdesign cdesign){
-        if(cdesignService.addCdesign(cdesign)){
-            return Result.success();
+        if(cdesign != null){
+            String msg = cdesignService.addCdesign(cdesign);
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
 }

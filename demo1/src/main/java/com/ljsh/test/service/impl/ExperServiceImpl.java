@@ -18,31 +18,31 @@ public class ExperServiceImpl implements ExperService {
         return experimentMapper.get_All_E();
     }
 
-    public Boolean addExperiment(Experiment experiment){
+    public String addExperiment(Experiment experiment){
         try {
             experimentMapper.addExperiment(experiment);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean delExperiment(Long id){
+    public String delExperiment(Long id){
         try {
             experimentMapper.delExperiment(id);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean updateExperiment(Experiment experiment){
+    public String updateExperiment(Experiment experiment){
         try {
             experimentMapper.updateExperiment(experiment);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
 }

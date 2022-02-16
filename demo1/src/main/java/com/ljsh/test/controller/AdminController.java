@@ -46,23 +46,25 @@ public class AdminController {
     @PostMapping("/regist")
     public Result<?> regist(@RequestBody AdminUser user){
         if(user != null){
-            if(adminUserService.regist(user)) return Result.success();
+            String msg = adminUserService.regist(user);
+            if(msg == ""){return Result.success();}
             else{
-                return Result.error("111","sql_error");
+                return Result.error("500",msg);
             }
         }
-        return Result.error("1","输入为空");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/delete")
     public Result<?> del(@RequestBody AdminUser user){
-        if(user !=null){
-            if(adminUserService.del_user(user.getAccount()))return Result.success();
+        if(user != null){
+            String msg = adminUserService.del_user(user.getAccount());
+            if(msg == ""){return Result.success();}
             else{
-                return Result.error("111","sql_error");
+                return Result.error("500",msg);
             }
         }
-        return Result.error("1","输入为空");
+        return Result.error("204","输入为空");
     }
 
     @GetMapping("/list")

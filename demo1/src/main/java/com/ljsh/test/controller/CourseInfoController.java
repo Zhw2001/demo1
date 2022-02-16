@@ -26,6 +26,17 @@ public class CourseInfoController {
     @Autowired
     private GdesignService gdesignService;
 
+    @GetMapping("/list_CD")
+    public Result<?> getCourseInfoList2(
+            @RequestParam(value="cid",defaultValue = "XX110100") String cid,
+            @RequestParam(value="dep",defaultValue = "计算机系") String department,
+            @RequestParam(value="stime",defaultValue = "计算机系")
+    )
+    {
+        List<CourseInfo> courseInfoList = new ArrayList<CourseInfo>();
+        courseInfoList = courseInfoService.getCInfoByCidDep(cid,department);
+        return Result.success(courseInfoList);
+    }
 
     @GetMapping("/list_CD")
     public Result<?> getCourseInfoList(@RequestParam(value="cid",defaultValue = "XX110100") String cid,@RequestParam(value="dep",defaultValue = "计算机系") String department)

@@ -70,7 +70,6 @@
       cook(data){
         if(this.hasParent(data)){
             let parent = this.mydata.find(function(x){return x.label == data.authority_parent_name});
-            console.log(parent);
             parent.children.push({id:data.authority_id,label:data.authority_name,children:[]});
         }
         else{

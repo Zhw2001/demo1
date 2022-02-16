@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ExperService {
     List<Experiment> get_All_E();
-    Boolean addExperiment(Experiment experiment);
-    Boolean delExperiment(Long id);
-    Boolean updateExperiment(Experiment experiment);
+    String addExperiment(Experiment experiment);
+    String delExperiment(Long id);
+    String updateExperiment(Experiment experiment);
 }

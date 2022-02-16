@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CourseService {
     List<Course> getAll();
-    Boolean addCourse(Course course);
-    Boolean delCourse(Long id);
-    Boolean upCourse(Course course);
+    String addCourse(Course course);
+    String delCourse(Long id);
+    String upCourse(Course course);
 }

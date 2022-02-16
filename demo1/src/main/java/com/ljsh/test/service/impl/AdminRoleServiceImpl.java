@@ -1,5 +1,6 @@
 package com.ljsh.test.service.impl;
 
+import com.ljsh.test.dto.RoleAuthDTO;
 import com.ljsh.test.mbg.mapper.AdminRoleMapper;
 import com.ljsh.test.mbg.model.AdminRole;
 import com.ljsh.test.service.AdminRoleService;
@@ -18,5 +19,18 @@ public class AdminRoleServiceImpl implements AdminRoleService {
     }
     public List<AdminRole> getRoleList() {
         return adminRoleMapper.getRoleList();
+    }
+    public String updateRoleAuth(RoleAuthDTO roleAuth){
+        try {
+            for(int i = 0; i < roleAuth.getDelete().length; i++ ){
+                adminRoleMapper.del_Role_Auth(roleAuth.getRole_id(),roleAuth.getDelete()[i]);
+            }
+            for(int i = 0; i < roleAuth.getInsert().length; i++ ){
+                adminRoleMapper.set_Role_Auth(roleAuth.getRole_id(),roleAuth.getInsert()[i]);
+            }
+        }catch(Exception e){
+            return e.toString();
+        }
+        return "";
     }
 }

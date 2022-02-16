@@ -17,31 +17,31 @@ public class CdesignServiceImpl implements CdesignService {
         return cdesignMapper.get_All_Cd();
     }
 
-    public Boolean addCdesign(Cdesign cdesign){
+    public String addCdesign(Cdesign cdesign){
         try {
             cdesignMapper.addCdesign(cdesign);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean delCdesign(Long id){
+    public String delCdesign(Long id){
         try {
             cdesignMapper.delCdesign(id);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean updateCdesign(Cdesign cdesign){
+    public String updateCdesign(Cdesign cdesign){
         try {
             cdesignMapper.updateCdesign(cdesign);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
 }

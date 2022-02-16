@@ -8,4 +8,6 @@ import java.util.List;
 public interface AdminRoleMapper {
     AdminRole get_AuthInfo_By_roleName(String roleName);
     List<AdminRole> getRoleList();
+    void set_Role_Auth(Long role_id, Long authority_id);
+    void del_Role_Auth(Long role_id, Long authority_id);
 }

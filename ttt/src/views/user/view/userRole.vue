@@ -9,9 +9,7 @@
             :header-cell-style = "mytable"
             :cell-style = "mytableCell"
             :data="roleList"
-            :default-sort = "{prop: 'role_id', order: 'ascending'}"
-            @select="Select"
-            @select-all = "SelectAll">
+            :default-sort = "{prop: 'role_id', order: 'ascending'}">
 
             <el-table-column
               type="selection"
@@ -36,14 +34,14 @@
 
             <el-table-column
             label="操作">
-            <div>
+            <template slot-scope="scope">
               <span>
-                <el-button size='mini' type='primary' icon="el-icon-edit" @click = "show" ></el-button>
+                <el-button size='mini' type='primary' icon="el-icon-edit" @click = "show(scope.row)" ></el-button>
               </span>
               <span>
                 <el-button size='mini' type='danger' icon="el-icon-delete"></el-button>
               </span>
-            </div>
+            </template>
             </el-table-column>
 
           </el-table>
@@ -53,13 +51,13 @@
       title="分配权限"
       :visible.sync="vis"
       width="30%">
-        <el-tree :data="mydata" :props="defaultProps" :expand-on-click-node="false" show-checkbox @check-change="handleCheckChange" check-strictly >
+        <el-tree ref="AuthTree" default-expand-all node-key="id" :data="mydata" :props="defaultProps" show-checkbox @check-change="handleCheckChange" check-strictly >
           <span class="custom-tree-node" slot-scope="{ node }">
               <span>{{ node.label }}</span>
           </span>
         </el-tree>
         <div style="margin-top:20px; text-align:center;">
-          <el-button size="mini" type="primary">确定</el-button>
+          <el-button size="mini" type="primary" @click="editAuth()">确定</el-button>
           <el-button size="mini" type="message" @click="close">取消</el-button>
         </div>
       </el-dialog>
@@ -78,7 +76,10 @@ export default {
           children: 'children',
           label: 'label'
       },
-      selectedAuth: []
+      selectedAuth: [],
+      existedAuth: [],
+      fullAuth: [],
+      selectedRoleID: ''
     }
   },
   created(){
@@ -86,8 +87,37 @@ export default {
     this.loadTree()
   },
   methods: {
-    show(){
+    authConcat(existed,selected,full){
+      var deleteList = []
+      var insertList = []
+      var map = []
+      for(let i of selected){
+        if(!map[i.id]){map[i.id] = 0}
+        map[i.id] = map[i.id] + 1
+      }
+      for (let i of existed){
+        if(!map[i]){map[i] = 0}
+        map[i] = map[i] - 1
+      }
+      for(let i = 0; i < map.length; i++){
+        if(map[i] == -1){deleteList.push(i)}
+        if(map[i] == 1){insertList.push(i)}
+      }
+      var result = {}
+      result.insert = insertList
+      result.delete = deleteList
+      result.role_id = this.selectedRoleID
+      return result
+    },
+    editAuth(){
+      var updateList = this.authConcat(this.existedAuth ,this.selectedAuth,this.fullAuth)
+      console.log(updateList)
+      this.$request.post("/api_S/role/update",updateList).then( res => {location.reload()})
+    },
+    show(row){
       this.vis = true
+      this.selectedRoleID = row.role_id
+      this.loadDefault(row.role_name)
     },
     close(){
       this.vis = false
@@ -104,7 +134,6 @@ export default {
         return
         }
       this.selectedAuth = this.selectedAuth.concat(data)
-      console.log(this.selectedAuth)
     },
     remove(v){
       for(let i = 0; i < this.selectedAuth.length; i++ ){
@@ -122,14 +151,25 @@ export default {
       return this.$setCss.tableCell
     },
 
+    loadDefault(roleName){
+      var Checkedkeys = []
+      this.$request.get("/api_S/role/authlist?rolename=" + roleName ).then(res=>{
+        var yourAuthList = res.data.adminAuthList
+        for (let i = 0; i < yourAuthList.length; i++){
+          if (yourAuthList[i].authority_parent_id){ Checkedkeys.push(yourAuthList[i].authority_id) }
+        }
+        this.existedAuth = Checkedkeys
+        this.$refs.AuthTree.setCheckedKeys(Checkedkeys)
+      })
+    },
 
     loadTree(){
       this.$request.get("/api_S/auth/list").then(res=>{
-          var data = res.data;
+          var data = res.data
+          this.fullAuth = data
           for(let i of data){
               this.cook(i);
           }
-          console.log('TREE',this.mydata);
       })
     },
     hasParent(data){
@@ -146,14 +186,14 @@ export default {
             label: data.authority_name,
             url: data.authority_url,
             children:[]
-            });
+          });
       }
       else{
           this.mydata.push({id:data.authority_id,label:data.authority_name,children:[]});
       }
     }
 
-  }
+  },
 }
 </script>
 

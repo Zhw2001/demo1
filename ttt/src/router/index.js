@@ -10,6 +10,20 @@ const router = new Router({
   routes:constRoutes
 })
 
+
+function setPath( url, routes ){
+  var tempRoute = {}
+  for(let i = 0; i < routes.children.length; i++){
+    if ( url == ('/' + routes.children[i].path) ){
+      tempRoute.name = routes.children[i].name
+      return tempRoute
+    }
+  }
+  tempRoute.name = 'main'
+  return tempRoute
+}
+
+
 // 导航守卫
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
@@ -27,7 +41,9 @@ router.beforeEach((to, from, next) => {
         const aside = JSON.parse(localStorage.getItem('aside'))
         let routes = addRoute(aside)
         router.addRoute(routes)
-        router.replace(from.path)
+        console.log('next',to.path)
+        let tempR = setPath(to.path, routes)
+        router.replace(tempR)
       }
       next()
     }

@@ -129,18 +129,6 @@ export default {
             return 'gdesign'
         }
       },
-      setStime: function(){
-        switch (this.type) {
-          case '0':
-            return this.dataList.CourseData[0].stime
-          case '1':
-            return this.ExperData[0].stime
-          case '2':
-            return this.CdesignData[0].stime
-          case '3':
-            return this.GdesignData[0].stime
-        }
-      }
     },
     methods:{
       handleTypeChange(v){
@@ -148,24 +136,25 @@ export default {
         this.type = v;
       },
       get_cidList(){
-        var cidList = localStorage.getItem('cidList')
-        this.cidList = cidList ? cidList : ''
+        if( localStorage.getItem('role').cidList ){
+          this.cidList = localStorage.getItem('role').cidList
+        }
       },
       get_Stime(){
-        this.$request.get( "/api_S/cinfo/stimeList?&cid="+this.cidList ).then( res => {
+        this.$request.get( "/api_S/cinfo/stime?&cid="+this.cidList ).then( res => {
           //[{type : xxx, stime: xxx}]
           switch(this.type){
             case '0':
-              this.addCourse(this.dataList.CourseData);
+              
               break;
             case '1':
-              this.addExperData(this.dataList.ExperData);
+              
               break;
             case '2':
-              this.addCDData(this.dataList.CdesignData);
+              
               break;
             case '3':
-              this.addGDData(this.dataList.GdesignData);
+              
               break;
           }
         })

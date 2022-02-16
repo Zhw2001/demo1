@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2022-02-15 18:37:24
+Date: 2022-02-16 18:28:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,15 +37,15 @@ CREATE TABLE `admin_authority` (
 -- Records of admin_authority
 -- ----------------------------
 INSERT INTO `admin_authority` VALUES ('1', '工程认证', '1', null, '', 'generate', '1', '查看数据', '1', '2022-01-06 15:09:48');
-INSERT INTO `admin_authority` VALUES ('2', '课程数据', '1', null, '', 'courseData', '2', '填写&生成', '1', '2022-01-24 14:01:27');
-INSERT INTO `admin_authority` VALUES ('3', '用户管理', '1', null, '', 'userSetting', '3', '用户管理', '1', '2022-01-24 14:03:37');
-INSERT INTO `admin_authority` VALUES ('4', '填写课程数据', '2', '1', '工程认证', '/input/view/AddData', '1', '上传所负责课程数据的表格', '1', '2022-01-24 13:59:36');
-INSERT INTO `admin_authority` VALUES ('5', '考试考核内容合理性审核', '2', '1', '工程认证', '/input/view/ExamAudit', '2', '审查所负责课程的考试考核内容的合理性', '1', '2022-02-13 16:18:15');
-INSERT INTO `admin_authority` VALUES ('6', '课程教学目标达成度评价', '2', '1', '工程认证', '/input/view/CourseDegree', '3', '生成课程教学目标达成度评价表以及合理性审核，达成度评价表', '1', '2022-02-13 16:21:56');
-INSERT INTO `admin_authority` VALUES ('7', '查看与修改', '2', '2', '课程数据', '/course', '4', '增删改查所负责课程数据', '1', '2022-02-13 16:21:59');
-INSERT INTO `admin_authority` VALUES ('8', '用户信息', '2', '3', '用户管理', '/user/view/user', '5', '管理用户信息', '1', '2022-02-13 16:23:37');
-INSERT INTO `admin_authority` VALUES ('9', '用户角色', '2', '3', '用户管理', '/user/view/userRole', '6', '分配用户角色', '1', '2022-02-13 16:24:11');
-INSERT INTO `admin_authority` VALUES ('10', '用户权限', '2', '3', '用户管理', '/user/view/userRoleMenu', '7', '分配用户权限', '1', '2022-02-13 16:24:49');
+INSERT INTO `admin_authority` VALUES ('2', '课程数据', '1', null, '', 'course', '2', '填写&生成', '1', '2022-01-24 14:01:27');
+INSERT INTO `admin_authority` VALUES ('3', '用户管理', '1', null, '', 'user', '3', '用户管理', '1', '2022-01-24 14:03:37');
+INSERT INTO `admin_authority` VALUES ('4', '填写课程数据', '1', '1', '工程认证', 'addData', '1', '上传所负责课程数据的表格', '1', '2022-01-24 13:59:36');
+INSERT INTO `admin_authority` VALUES ('5', '考试考核内容合理性审核', '1', '1', '工程认证', 'examAudit', '2', '审查所负责课程的考试考核内容的合理性', '1', '2022-02-13 16:18:15');
+INSERT INTO `admin_authority` VALUES ('6', '课程教学目标达成度评价', '1', '1', '工程认证', 'courseDegree', '3', '生成课程教学目标达成度评价表以及合理性审核，达成度评价表', '1', '2022-02-13 16:21:56');
+INSERT INTO `admin_authority` VALUES ('7', '查看与修改', '1', '2', '课程数据', 'courseInfo', '4', '增删改查所负责课程数据', '1', '2022-02-13 16:21:59');
+INSERT INTO `admin_authority` VALUES ('8', '用户信息', '1', '3', '用户管理', 'userInfo', '5', '管理用户信息', '1', '2022-02-13 16:23:37');
+INSERT INTO `admin_authority` VALUES ('9', '用户角色', '1', '3', '用户管理', 'userRole', '6', '分配用户角色', '1', '2022-02-13 16:24:11');
+INSERT INTO `admin_authority` VALUES ('10', '用户权限', '1', '3', '用户管理', 'userRoleMenu', '7', '分配用户权限', '1', '2022-02-13 16:24:49');
 
 -- ----------------------------
 -- Table structure for `admin_role`
@@ -66,6 +66,48 @@ INSERT INTO `admin_role` VALUES ('1', 'super admin', 'super admin', '2022-01-10 
 INSERT INTO `admin_role` VALUES ('2', '测试', '测试', '2022-01-18 14:50:05');
 INSERT INTO `admin_role` VALUES ('3', '课程组长', '查看课程详细数据', '2022-01-30 14:53:46');
 INSERT INTO `admin_role` VALUES ('4', '任课老师', '读写负责课程数据', '2022-01-30 14:54:13');
+
+-- ----------------------------
+-- Table structure for `admin_role_auth`
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_role_auth`;
+CREATE TABLE `admin_role_auth` (
+  `RA_role_id` bigint(20) NOT NULL,
+  `RA_authority_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`RA_role_id`,`RA_authority_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+
+-- ----------------------------
+-- Records of admin_role_auth
+-- ----------------------------
+INSERT INTO `admin_role_auth` VALUES ('1', '1');
+INSERT INTO `admin_role_auth` VALUES ('1', '2');
+INSERT INTO `admin_role_auth` VALUES ('1', '3');
+INSERT INTO `admin_role_auth` VALUES ('1', '4');
+INSERT INTO `admin_role_auth` VALUES ('1', '5');
+INSERT INTO `admin_role_auth` VALUES ('1', '6');
+INSERT INTO `admin_role_auth` VALUES ('1', '7');
+INSERT INTO `admin_role_auth` VALUES ('1', '8');
+INSERT INTO `admin_role_auth` VALUES ('1', '9');
+INSERT INTO `admin_role_auth` VALUES ('1', '10');
+INSERT INTO `admin_role_auth` VALUES ('2', '1');
+INSERT INTO `admin_role_auth` VALUES ('2', '2');
+INSERT INTO `admin_role_auth` VALUES ('2', '3');
+INSERT INTO `admin_role_auth` VALUES ('3', '1');
+INSERT INTO `admin_role_auth` VALUES ('3', '2');
+INSERT INTO `admin_role_auth` VALUES ('3', '3');
+INSERT INTO `admin_role_auth` VALUES ('3', '4');
+INSERT INTO `admin_role_auth` VALUES ('3', '5');
+INSERT INTO `admin_role_auth` VALUES ('3', '6');
+INSERT INTO `admin_role_auth` VALUES ('3', '7');
+INSERT INTO `admin_role_auth` VALUES ('3', '8');
+INSERT INTO `admin_role_auth` VALUES ('4', '1');
+INSERT INTO `admin_role_auth` VALUES ('4', '2');
+INSERT INTO `admin_role_auth` VALUES ('4', '3');
+INSERT INTO `admin_role_auth` VALUES ('4', '4');
+INSERT INTO `admin_role_auth` VALUES ('4', '5');
+INSERT INTO `admin_role_auth` VALUES ('4', '6');
+INSERT INTO `admin_role_auth` VALUES ('4', '7');
 
 -- ----------------------------
 -- Table structure for `admin_user`
@@ -97,6 +139,27 @@ INSERT INTO `admin_user` VALUES ('8', 'user07', '小苟', '1', '17024972739', 'd
 INSERT INTO `admin_user` VALUES ('9', 'user08', '小茂', '1', '16761011175', 'catty@163.com', null, '2022-01-19 16:01:27');
 INSERT INTO `admin_user` VALUES ('10', 'user09', '小松', '1', '17024913295', 'squirral@126.com', null, '2022-01-19 16:01:57');
 INSERT INTO `admin_user` VALUES ('11', 'test', '游客', '123456', '17017219915', '1@1.com', null, '2022-01-18 14:49:40');
+
+-- ----------------------------
+-- Table structure for `admin_user_role`
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_user_role`;
+CREATE TABLE `admin_user_role` (
+  `UR_role_id` bigint(20) NOT NULL,
+  `UR_uid` bigint(20) NOT NULL,
+  `user_cid` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`UR_role_id`,`UR_uid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+
+-- ----------------------------
+-- Records of admin_user_role
+-- ----------------------------
+INSERT INTO `admin_user_role` VALUES ('1', '1', 'XX110110s,XX127130,XX127030');
+INSERT INTO `admin_user_role` VALUES ('2', '11', null);
+INSERT INTO `admin_user_role` VALUES ('4', '1', 'XX110100');
+INSERT INTO `admin_user_role` VALUES ('4', '2', 'XX110100');
+INSERT INTO `admin_user_role` VALUES ('4', '3', 'XX110100');
+INSERT INTO `admin_user_role` VALUES ('2', '1', 'XX110100');
 
 -- ----------------------------
 -- Table structure for `cdesign`
@@ -1466,48 +1529,6 @@ INSERT INTO `gdesign` VALUES ('2020-2021-1', 'XX127130', '01', '201710413007', '
 INSERT INTO `gdesign` VALUES ('2020-2021-1', 'XX127130', '01', '201710414002', '杨毅铭', '4.00', '4.00', '4.00', '8.00', '5.00', '8.00', '4.00', '4.00', '12.00', '4.00', '9.00', '8.00', '8.00', '82.00', '218');
 
 -- ----------------------------
--- Table structure for `role_with_authority`
--- ----------------------------
-DROP TABLE IF EXISTS `role_with_authority`;
-CREATE TABLE `role_with_authority` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `RA_role_id` bigint(20) DEFAULT NULL,
-  `RA_authority_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
-
--- ----------------------------
--- Records of role_with_authority
--- ----------------------------
-INSERT INTO `role_with_authority` VALUES ('1', '1', '1');
-INSERT INTO `role_with_authority` VALUES ('2', '1', '2');
-INSERT INTO `role_with_authority` VALUES ('3', '1', '3');
-INSERT INTO `role_with_authority` VALUES ('4', '1', '4');
-INSERT INTO `role_with_authority` VALUES ('5', '1', '5');
-INSERT INTO `role_with_authority` VALUES ('6', '1', '6');
-INSERT INTO `role_with_authority` VALUES ('7', '1', '7');
-INSERT INTO `role_with_authority` VALUES ('8', '1', '8');
-INSERT INTO `role_with_authority` VALUES ('9', '1', '9');
-INSERT INTO `role_with_authority` VALUES ('10', '1', '10');
-INSERT INTO `role_with_authority` VALUES ('11', '2', '1');
-INSERT INTO `role_with_authority` VALUES ('12', '2', '2');
-INSERT INTO `role_with_authority` VALUES ('13', '2', '3');
-INSERT INTO `role_with_authority` VALUES ('14', '3', '1');
-INSERT INTO `role_with_authority` VALUES ('15', '3', '2');
-INSERT INTO `role_with_authority` VALUES ('16', '3', '3');
-INSERT INTO `role_with_authority` VALUES ('17', '3', '4');
-INSERT INTO `role_with_authority` VALUES ('18', '3', '5');
-INSERT INTO `role_with_authority` VALUES ('19', '3', '6');
-INSERT INTO `role_with_authority` VALUES ('20', '3', '8');
-INSERT INTO `role_with_authority` VALUES ('21', '4', '1');
-INSERT INTO `role_with_authority` VALUES ('22', '4', '2');
-INSERT INTO `role_with_authority` VALUES ('23', '4', '3');
-INSERT INTO `role_with_authority` VALUES ('24', '4', '4');
-INSERT INTO `role_with_authority` VALUES ('25', '4', '5');
-INSERT INTO `role_with_authority` VALUES ('26', '4', '6');
-INSERT INTO `role_with_authority` VALUES ('27', '4', '7');
-
--- ----------------------------
 -- Table structure for `user`
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -1578,25 +1599,3 @@ CREATE TABLE `user_role` (
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('10000', '默认用户', '默认用户，拥有默认用户的权限', '1', '1', '2022-01-10 15:09:48');
 INSERT INTO `user_role` VALUES ('100000', '认证作者', '认证作者发布文章时，默认对所有人可见', '2', '1', '2022-01-10 15:09:48');
-
--- ----------------------------
--- Table structure for `user_with_role`
--- ----------------------------
-DROP TABLE IF EXISTS `user_with_role`;
-CREATE TABLE `user_with_role` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '逻辑主键',
-  `UR_role_id` bigint(20) DEFAULT NULL,
-  `UR_uid` bigint(20) DEFAULT NULL,
-  `user_cid` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
-
--- ----------------------------
--- Records of user_with_role
--- ----------------------------
-INSERT INTO `user_with_role` VALUES ('1', '1', '1', 'XX110110s,XX127130,XX127030');
-INSERT INTO `user_with_role` VALUES ('2', '2', '11', null);
-INSERT INTO `user_with_role` VALUES ('3', '4', '1', 'XX110100');
-INSERT INTO `user_with_role` VALUES ('4', '4', '2', 'XX110100');
-INSERT INTO `user_with_role` VALUES ('5', '4', '3', 'XX110100');
-INSERT INTO `user_with_role` VALUES ('8', '2', '1', 'XX110100');

@@ -1,13 +1,11 @@
 package com.ljsh.test.controller;
 
 import com.ljsh.test.dto.Result;
+import com.ljsh.test.dto.RoleAuthDTO;
 import com.ljsh.test.mbg.model.AdminRole;
 import com.ljsh.test.service.AdminRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +27,16 @@ public class AdminRoleController {
         return Result.success(adminRole);
     }
 
-
+    @PostMapping("/update")
+    public Result<?> updateRoleAuth(@RequestBody RoleAuthDTO roleAuth){
+        if(roleAuth != null){
+            String msg = adminRoleService.updateRoleAuth(roleAuth);
+            if(msg == ""){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
+        }
+        return Result.error("204","输入为空");
+    }
 
 }

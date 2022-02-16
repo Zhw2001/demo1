@@ -1,8 +1,8 @@
 import { allDynamicRoutes } from './routes'
 
-function StrInList(str, authList){
+function checkKey(key, authList){
     for( let i = 0; i < authList.length; i++ ){
-      if ( authList[i].authority_url.indexOf( str ) != -1 ) { return true }
+      if ( authList[i].authority_url ==  key ) { return true }
     }
     return false
   }
@@ -15,15 +15,13 @@ function StrInList(str, authList){
     }
     const map = {}
     const temp = JSON.parse(JSON.stringify(allDynamicRoutes))
-    console.log(allDynamicRoutes, temp);
     temp.forEach(item => {
         map[item.id] = item
     })
     temp.forEach(item => {
       const parent = map[item.parent_id]
         if (parent) {
-          console.log('parent',parent)
-            if ( StrInList( item.component, authList ) ) { 
+            if ( checkKey( item.key, authList ) ) { 
               (parent.children || (parent.children = [])).push(item) 
             }
         } else {
