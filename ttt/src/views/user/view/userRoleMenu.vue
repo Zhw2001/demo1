@@ -56,11 +56,9 @@
       load(){
         this.$request.get("/api_S/auth/list").then(res=>{
             var data = res.data;
-            console.log(data);
             for(let i of data){
                 this.cook(i);
             }
-            console.log(this.mydata);
         })
       },
       hasParent(data){

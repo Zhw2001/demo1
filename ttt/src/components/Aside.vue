@@ -9,9 +9,9 @@
             <div class="logo-div">
                 <span class="logo-text">website</span>
             </div>
-            
-            <component v-if ='hasChildren(value) != ""' 
-             v-for = "(value) in aside_list" :key = "value.id" :index = ' null + value.id '
+            <component
+            :class="NoChildren(value)"
+             v-for="value in aside_list" :key = "value.id" :index = ' null + value.id '
             :is="( value.children && value.children.length>0 ) ? 'el-submenu':'el-menu-item'" >
                 <template :slot = "hasChildren(value)">
                 <i :class="[value.icon]"></i>
@@ -23,7 +23,6 @@
                     </el-menu-item>
                 </template>
             </component>
-
         </el-menu>
     </div>
 </template>
@@ -59,6 +58,14 @@ export default {
                 }
                 return ""
             }
+        },
+        NoChildren() {
+            return function (value) {
+                if (value.children && value.children.length > 0){
+                    return ""
+                }
+                return "show_menu_item"
+            }
         }
     },
 }
@@ -66,6 +73,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+.show_menu_item{
+    display: none;
+}
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 256px;

@@ -126,11 +126,10 @@ export default {
     loadTree(){
       this.$request.get("/api_S/auth/list").then(res=>{
           var data = res.data;
-          console.log(data);
           for(let i of data){
               this.cook(i);
           }
-          console.log(this.mydata);
+          console.log('TREE',this.mydata);
       })
     },
     hasParent(data){
@@ -142,7 +141,6 @@ export default {
     cook(data){
       if(this.hasParent(data)){
           let parent = this.mydata.find(function(x){return x.label == data.authority_parent_name});
-          console.log(parent);
           parent.children.push({
             id: data.authority_id, 
             label: data.authority_name,
