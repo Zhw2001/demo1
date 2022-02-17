@@ -14,7 +14,7 @@
         <result property="cNum" column="cNum" javaType="Integer" jdbcType="INTEGER"/>
         <result property="sId" column="sId" javaType="String" jdbcType="VARCHAR"/>
         <result property="sName" column="sName" javaType="String" jdbcType="VARCHAR"/>
-        <result property="sClass" column="sId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="sClass" column="sClass" javaType="String" jdbcType="VARCHAR"/>
         <result property="sState" column="sState" javaType="String" jdbcType="VARCHAR"/>
 
         <result property="p1" column="p1" javaType="Double" jdbcType="DOUBLE"/>
@@ -32,7 +32,7 @@
         <result property="p7" column="p7" javaType="Double" jdbcType="DOUBLE"/>
         <result property="r7" column="r7" javaType="Double" jdbcType="DOUBLE"/>
         <result property="p8" column="p8" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="r8" column="t8" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="r8" column="r8" javaType="Double" jdbcType="DOUBLE"/>
         <result property="regular" column="regular" javaType="Double" jdbcType="DOUBLE"/>
         <result property="written" column="written" javaType="Double" jdbcType="DOUBLE"/>
         <result property="overall" column="overall" javaType="Double" jdbcType="DOUBLE"/>

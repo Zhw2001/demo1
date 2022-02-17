@@ -38,6 +38,13 @@
           </el-table-column>
 
           <el-table-column
+          label="密码">
+            <template>
+              <span>******</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column
           prop="nickname"
           label="昵称">
           </el-table-column>

@@ -8,9 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface CourseInfoMapper {
-    CourseInfo get_Course_By_cid_Dep(@Param("cid") String cid,@Param("dep")String dep);
-    CourseInfo get_Cdesign_By_cid_Dep(@Param("cid") String cid,@Param("dep")String dep);
-    CourseInfo get_Gdesign_By_cid_Dep(@Param("cid") String cid,@Param("dep")String dep);
-    CourseInfo get_Exp_By_cid_Dep(@Param("cid") String cid,@Param("dep")String dep);
-    int get_Type_By_Cid(String cid);
+    List<CourseInfo> get_Course_Cid(String[] cids);
+    List<CourseInfo> get_Exper_Cid(String[] cids);
+    List<CourseInfo> get_Cdesign_Cid(String[] cids);
+    List<CourseInfo> get_Gdesign_Cid(String[] cids);
 }

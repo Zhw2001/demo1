@@ -2,13 +2,13 @@
     <div class="home-container">
         <div class="card">
           <div class="card-body">
-            <div class="mydiv">
+            <div v-if="divVis" class="mydiv">
               <span>第一步：下载课程模板表格，填写数据</span>
               <div><el-button @click="showModel()" round><i class='el-icon-thumb'></i></el-button></div>
             </div>
 
 
-            <div class="mydiv">
+            <div v-else class="mydiv">
               <span>第二步：上传填写完成的表格</span>
               <div>
                 <el-form>
@@ -25,6 +25,9 @@
                       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
                       <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button>
                     </el-upload>
+                  </el-form-item>
+                  <el-form-item style="float:right;">
+                    <el-button @click='nextPage(0,1)'>返回</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -328,6 +331,7 @@ import global from '@/components/Global';
     data() {
       return {
         ModelVis:false,
+        divVis: true,
         table1:'',
         table2:'',
         table3:'',
@@ -370,6 +374,12 @@ import global from '@/components/Global';
 
 
     methods: {
+      nextPage(newV, oldV){
+        this.VisList[newV] = true
+        this.VisList[oldV] = false
+        console.log('ccc')
+        console.log(this.VisList)
+      },
 
       showModel(){
         this.ModelVis = true;
@@ -413,10 +423,17 @@ import global from '@/components/Global';
 
       //下载模板
       download_template_xlsx(){
+        if(!this.value){ 
+          this.$alert("请选择模板") 
+          return
+          }
+        this.nextPage(1,0)
+        this.ModelVis = false
         this.$request.get("/api_S/files/get_port").then(res=>{
-          let port = res.data;
-          let url = global.ip+port+"/files/"+this.value;
-          this.$alert(url, '下载链接');
+          let port = res.data
+          let url = global.ip+port+"/files/"+this.value
+          console.log(url)
+          window.open(url)
         });
       },
 

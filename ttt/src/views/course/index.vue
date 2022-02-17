@@ -1,31 +1,30 @@
 <template>
     <div class="home-container">
-      <div class = "btnRow" ><el-button type='primary' @click="add($event)">新增记录</el-button></div>
+      <div class = "btnRow" >
+        <el-button type='primary' @click="add($event)">新增记录</el-button>
+        <div style="display:none" label="专业:">
+          <el-select v-model="major" placeholder="MAJOR">
+            <el-option
+            v-for = "item in Majors"
+            :key = "item.value"
+            :label = "item.label"
+            :value = "item.value">
+            </el-option>
+          </el-select>
+        </div>
+          <el-select :value="type" placeholder="TYPE" @change = "handleTypeChange">
+            <el-option
+            v-for = "item in courseType"
+            :key = "item.value"
+            :label = "item.label"
+            :value = "item.value">
+            </el-option>
+          </el-select>
+      </div>
+      
       <div class="card">
         <div class="card-body" style='width:100%;'>
-          <el-form :inline="true" class="demo-form-inline">
-            <el-form-item  label="专业:">
-              <el-select v-model="major" placeholder="MAJOR">
-                <el-option
-                v-for = "item in Majors"
-                :key = "item.value"
-                :label = "item.label"
-                :value = "item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item  label="课程类型:">
-              <el-select :value="type" placeholder="TYPE" @change = "handleTypeChange">
-                <el-option
-                v-for = "item in courseType"
-                :key = "item.value"
-                :label = "item.label"
-                :value = "item.value">
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-          <component :w_lock="wlock" @delEmptyRow ="delERow($event)" :dataList = "dataList" :is = "setView"></component>
+          <component :major="major" :w_lock="wlock" @delEmptyRow ="delERow($event)" :dataList = "dataList" :is = "setView"></component>
         </div>
       </div>
     </div>
@@ -42,15 +41,18 @@ export default {
     data() {
       return {
         wlock: true,
-        stimeList: [],
-        sTime: '',
+        cinfo: {
+          ccids: [],
+          ecids: [],
+          cdcids: [],
+          gdcids: []
+        },
         dataList: {
           CourseData: [],
           ExperData: [],
           CdesignData: [],
           GdesignData: []
         },
-        cidList:'',
         courseType: [
           {
           value: '0',
@@ -108,13 +110,12 @@ export default {
             label: '计算机系'
           }, 
         ],
-        major: '计算机系',
+        major: '',
       }
     },
     created(){
       this.get_cidList();
-      this.load('');
-      console.log(this.dataList)
+      this.load();
     },
     computed:{
       setView: function () {
@@ -136,66 +137,57 @@ export default {
         this.type = v;
       },
       get_cidList(){
-        if( localStorage.getItem('role').cidList ){
-          this.cidList = localStorage.getItem('role').cidList
+        if( localStorage.getItem('role') ){
+          var cids = JSON.parse( localStorage.getItem('role') ).cidList.split(',')
+          if(cids == 'ALL'){ return }
+          for(let i of cids){
+            switch(i.split('_')[0]){
+              case 'C':
+                this.cinfo.ccids.push(i.split('_')[1])
+                break
+              case 'E':
+                this.cinfo.ecids.push(i.split('_')[1])
+                break
+              case 'CD':
+                this.cinfo.cdcids.push(i.split('_')[1])
+                break
+              case 'GD':
+                this.cinfo.gdcids.push(i.split('_')[1])
+                break
+              default:
+                this.cinfo.ccids.push('')
+                this.cinfo.ecids.push('')
+                this.cinfo.cdcids.push('')
+                this.cinfo.gdcids.push('')
+            }
+          }
         }
       },
-      get_Stime(){
-        this.$request.get( "/api_S/cinfo/stime?&cid="+this.cidList ).then( res => {
-          //[{type : xxx, stime: xxx}]
-          switch(this.type){
-            case '0':
-              
-              break;
-            case '1':
-              
-              break;
-            case '2':
-              
-              break;
-            case '3':
-              
-              break;
-          }
-        })
-      },
-      load(dep){
-        this.$request.get("/api_S/cinfo/list_CD?&cid="+this.cidList+"&dep="+dep).then( res=> {
+      load(){
+        this.$request.post("/api_S/cinfo/list_cid",this.cinfo).then( res=> {
           this.dataList.CourseData = [];
           this.dataList.ExperData = [];
           this.dataList.CdesignData = [];
           this.dataList.GdesignData = [];
           for(let i of res.data){
-            if(i != null && i.courseList!=null){
-              for(let j of i.courseList){
-                j.selected = false;
-                this.dataList.CourseData.push(j);
-              }
+            if( i.course_type == 0 ){
+              this.dataList.CourseData.push(i);
             }
 
-            if(i != null && i.experimentList != null){
-              for(let j of i.experimentList){
-                j.selected = false;
-                this.dataList.ExperData.push(j);
-              } 
+            if( i.course_type == 1 ){
+              this.dataList.ExperData.push(i);
             }
 
-            if(i != null && i.cdesignList != null){
-              for(let j of i.cdesignList){
-                j.selected = false;
-                this.dataList.CdesignData.push(j);
-              } 
+            if( i.course_type == 2 ){
+              this.dataList.CdesignData.push(i);
             }
 
-            if(i != null && i.gdesignList != null){
-              for(let j of i.gdesignList){
-                  j.selected = false;
-                  this.dataList.GdesignData.push(j);
-              }
-            } 
+            if( i.course_type == 3 ){
+              this.dataList.GdesignData.push(i);
+            }
           }
+          console.log('load finish',this.dataList)
         })
-         console.log('load finish',this.dataList)
       },
       add(evt){
         this.$setCss.clickHandler(evt)
@@ -334,12 +326,6 @@ export default {
       'experiment':experiment,
       'cdesign': cdesign,
       'gdesign': gdesign
-    },
-    watch:{
-        major: function(newMajor,oldMajor){
-          console.log('change_major',newMajor)
-          this.load(newMajor);
-        }
     },
 }
 </script>
