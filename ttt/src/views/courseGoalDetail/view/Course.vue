@@ -31,10 +31,10 @@
 </template>
 
 <script>
-import course from "./component/course";
-import experiment from "./component/experiment";
-import cdesign from "./component/cdesign";
-import gdesign from "./component/gdesign";
+import course from "../component/course";
+import experiment from "../component/experiment";
+import cdesign from "../component/cdesign";
+import gdesign from "../component/gdesign";
 
 export default {
     name: 'home',

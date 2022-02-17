@@ -7,7 +7,7 @@
         router
         >
             <div class="logo-div">
-                <span class="logo-text">website</span>
+                <span class="logo-text"></span>
             </div>
             <component
             :class="NoChildren(value)"

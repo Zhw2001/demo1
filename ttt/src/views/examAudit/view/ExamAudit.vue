@@ -1680,10 +1680,10 @@ export default {
     GenerateCTarget(){
       var ct = new Array;
       var data = new Object;
-      data.semeseter = this.basicInfo.AuditSemester;
+      data.semester = 'xxxx-xxxx-x' //this.basicInfo.AuditSemester;
       data.date = this.basicInfo.AuditTime;
-      data.name = this.basicInfo.cname;
-      data.number = this.basicInfo.info_cid;
+      data.course_name = this.basicInfo.cname;
+      data.course_number = this.basicInfo.info_cid;
       data.classes = this.basicInfo.class;
       data.exam_type = this.basicInfo.testtype;
       data.course_goals = new Array;
@@ -1691,15 +1691,15 @@ export default {
         var tmpObj = new Object;
         tmpObj.description = this.testContent.ctarget[i];
         tmpObj.support_graduation_require="支撑毕业要求1,1";
-        tmpObj.evaluation_usual =[
+        tmpObj.usual_evaluations =[
           "考勤",
           "课堂表现",
           "作业"
         ];
-        tmpObj.evaluation_end=[
+        tmpObj.end_evaluations=[
           "卷面考试"
         ];
-        tmpObj.evaluation_proportion={
+        tmpObj.evaluation_distribution={
           "考勤": this.testContent.ContentDis.Attendance[i],
           "课堂表现": this.testContent.ContentDis.CPerformance[i],
           "作业": this.testContent.ContentDis.HomeWork[i],
@@ -1724,7 +1724,7 @@ export default {
       return data;
     },
     send(){
-      this.$request.post('/api_P/ea/data',this.GenerateCTarget());
+      this.$request.post('/api_P/audit',this.GenerateCTarget());
     }
   },
 

@@ -27,7 +27,7 @@
                     </el-upload>
                   </el-form-item>
                   <el-form-item style="float:right;">
-                    <el-button @click='nextPage(0,1)'>返回</el-button>
+                    <el-button @click='nextPage()'>返回</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -374,11 +374,8 @@ import global from '@/components/Global';
 
 
     methods: {
-      nextPage(newV, oldV){
-        this.VisList[newV] = true
-        this.VisList[oldV] = false
-        console.log('ccc')
-        console.log(this.VisList)
+      nextPage(){
+        this.divVis = ! this.divVis
       },
 
       showModel(){
@@ -427,7 +424,7 @@ import global from '@/components/Global';
           this.$alert("请选择模板") 
           return
           }
-        this.nextPage(1,0)
+        this.nextPage()
         this.ModelVis = false
         this.$request.get("/api_S/files/get_port").then(res=>{
           let port = res.data
