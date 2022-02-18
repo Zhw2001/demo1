@@ -20,6 +20,9 @@ export default {
       clicked:false,
     }
   },
+  created(){
+    console.log(this.$router)
+  },
   components:{
     Header,
     Aside,

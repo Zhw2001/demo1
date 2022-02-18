@@ -5,19 +5,6 @@ const request = axios.create({
 })
 
 
-export function fetch ({ url, method, parameter, moreConfig = {} }) {
-    logRequests && console.log(`fetching ${url}...`)
-    return new Promise((resolve, reject) => {
-      service[method](url, parameter, moreConfig)
-        .then(res => {
-          const val = res.data
-          logRequests && console.log(`fetched ${url}.`)
-          resolve(val)
-        }, reject)
-        .catch(reject)
-    })
-  }
-
 
 // request 拦截器
 // 可以自请求发送前对请求做一些处理

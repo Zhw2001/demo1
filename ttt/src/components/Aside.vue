@@ -43,6 +43,7 @@ export default {
     created(){
         console.log('createAside')
         this.aside_list = JSON.parse( localStorage.getItem( 'aside' ) )
+        console.log(this.aside_list)
     },
     computed: {
         classObject: function () {

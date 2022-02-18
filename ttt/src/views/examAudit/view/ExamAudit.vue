@@ -120,957 +120,953 @@
             </div>
 
             <div v-if="VisList[1]">
-              <h1 style="margin-top:8pt; margin-bottom:3.1pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:12pt">
-                <span style="font-family:'Times New Roman'">
-                  2.
-                </span>
-                <span style="font-family:'黑体'">
-                  考核内容
-                </span>
-              </h1>
-              <table class = "myAuditTable">
-                <tr>
-                  <td style="width:80px;">
-                      <span >
-                        课程目标
-                      </span>
-                  </td>
-                  <td >
-                    <div>
-                      <span>{{testContent.ctarget[0]}}</span>
-                    </div>
-                    <div>
-                      <span>{{testContent.ctarget[1]}}</span>
-                    </div>
-                    <div >
-                      <span>{{testContent.ctarget[2]}}</span>
-                    </div>
-                    <div>
-                      <span>{{testContent.ctarget[3]}}</span>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:12pt">
-                <span style="font-family:'Times New Roman'">
-                  2.1
-                </span>
-                <span style="font-family:'黑体'">
-                  考核比例
-                </span>
-              </p>
-              <table cellspacing="0" cellpadding="0" style="width:426.85pt; border-collapse:collapse">
-                <tr style="height:1pt">
-                  <td rowspan="2" style="width:28.4pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        平时
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:82.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        考核方式：
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:82.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        考勤
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:56.2pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        课堂表现
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:56.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        作业
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:54.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        小计
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr style="height:1pt">
-                  <td style="width:82.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        所占比例
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:82.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'; color:#1f497d">
-                        {{calArray(testContent.ContentDis.Attendance)}}%
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:56.2pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'; color:#1f497d">
-                        {{calArray(testContent.ContentDis.CPerformance)}}%
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:56.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'; color:#1f497d">
-                        {{calArray(testContent.ContentDis.HomeWork)}}%
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:54.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'; color:#1f497d">
-                        {{calArray(testContent.ContentDis.Attendance)+calArray(testContent.ContentDis.CPerformance)+calArray(testContent.ContentDis.HomeWork)}}%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr style="height:1pt">
-                  <td rowspan="2" style="width:28.4pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        期末
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:82.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        考核方式
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:82.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'仿宋'">
-                        卷面考试
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:56.2pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:56.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:54.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr style="height:1pt">
-                  <td style="width:82.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        所占比例
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:82.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        70%
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:56.2pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:56.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:54.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        70%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr style="height:1pt">
-                  <td colspan="5" style="width:349.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'仿宋'">
-                        合计
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:54.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        100%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:12pt">
-                <span style="font-family:'Times New Roman'">
-                  2.2
-                </span>
-                <span style="font-family:'黑体'">
-                  内容分布
-                </span>
-              </p>
-              <table cellspacing="0" cellpadding="0" style="width:440.2pt; border-collapse:collapse">
-                <tr>
-                  <td rowspan="2" style="width:60.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        课程目标
-                      </span>
-                    </p>
-                  </td>
-                  <td rowspan="2" style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        支撑毕业要求
-                      </span>
-                    </p>
-                  </td>
-                  <td colspan="4" style="width:230.2pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        考核方式与比例
-                      </span>
-                    </p>
-                  </td>
-                  <td rowspan="2" style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        成绩比例
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr style="height:11.6pt">
-                  <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        考勤
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        课堂表现
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        作业
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        卷面考试
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:60.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:Calibri">
-                        1
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        毕业要求
-                      </span>
-                      <span style="font-family:Calibri">
-                        2.
-                      </span>
-                      <span style="font-family:Calibri">
-                        4
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.Attendance[0]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.CPerformance[0]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.HomeWork[0]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{this.testContent.ContentDis.Score[0]}}
-                      </span>
-                      <span style="font-family:Arial; font-size:7.5pt; color:#1f497d; background-color:#ffffff">
-                        X
-                      </span>
-                      <span style="font-family:Calibri; color:#1f497d">
-                        0.7
-                      </span>
-                      <span style="font-family:Calibri; color:#1f497d">
-                        ={{setScore[0]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{setRatio[0]}}%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:60.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:Calibri">
-                        2
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        毕业要求
-                      </span>
-                      <span style="font-family:Calibri">
-                        3.3
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.Attendance[1]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; letter-spacing:0.1pt; color:#1f497d">
-                        {{testContent.ContentDis.CPerformance[1]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.HomeWork[1]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; font-weight:bold; color:#1f497d">
+            <el-form>
+              <el-form-item>
+                <h1 style="margin-top:8pt; margin-bottom:3.1pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:12pt">
+                  <span style="font-family:'Times New Roman'">
+                    2.
+                  </span>
+                  <span style="font-family:'黑体'">
+                    考核内容
+                  </span>
+                </h1>
+                <table class = "myAuditTable">
+                  <tr>
+                    <td style="width:80px;">
+                        <span >
+                          课程目标
+                        </span>
+                    </td>
+                    <td >
+                      <div>
+                        <span>{{testContent.ctarget[0]}}</span>
+                      </div>
+                      <div>
+                        <span>{{testContent.ctarget[1]}}</span>
+                      </div>
+                      <div >
+                        <span>{{testContent.ctarget[2]}}</span>
+                      </div>
+                      <div>
+                        <span>{{testContent.ctarget[3]}}</span>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </el-form-item>
+              <el-form-item>
+                <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:12pt">
+                  <span style="font-family:'Times New Roman'">
+                    2.1
+                  </span>
+                  <span style="font-family:'黑体'">
+                    考核比例
+                  </span>
+                </p>
+                <table cellspacing="0" cellpadding="0" style="width:426.85pt; border-collapse:collapse">
+                  <tr style="height:1pt">
+                    <td rowspan="2" style="width:28.4pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          平时
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:82.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          考核方式：
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:82.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          考勤
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:56.2pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          课堂表现
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:56.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          作业
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:54.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          小计
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height:1pt">
+                    <td style="width:82.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          所占比例
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:82.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'; color:#1f497d">
+                          {{calArray(testContent.ContentDis.Attendance)}}%
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:56.2pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'; color:#1f497d">
+                          {{calArray(testContent.ContentDis.CPerformance)}}%
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:56.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'; color:#1f497d">
+                          {{calArray(testContent.ContentDis.HomeWork)}}%
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:54.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'; color:#1f497d">
+                          {{calArray(testContent.ContentDis.Attendance)+calArray(testContent.ContentDis.CPerformance)+calArray(testContent.ContentDis.HomeWork)}}%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height:1pt">
+                    <td rowspan="2" style="width:28.4pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          期末
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:82.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          考核方式
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:82.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'仿宋'">
+                          卷面考试
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:56.2pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:56.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:54.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height:1pt">
+                    <td style="width:82.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          所占比例
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:82.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          70%
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:56.2pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:56.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:54.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          70%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height:1pt">
+                    <td colspan="5" style="width:349.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'仿宋'">
+                          合计
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:54.95pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          100%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                  <span style="font-family:'Times New Roman'">
+                    &#xa0;
+                  </span>
+                </p>
+                <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:12pt">
+                  <span style="font-family:'Times New Roman'">
+                    2.2
+                  </span>
+                  <span style="font-family:'黑体'">
+                    内容分布
+                  </span>
+                </p>
+                <table cellspacing="0" cellpadding="0" style="width:440.2pt; border-collapse:collapse">
+                  <tr>
+                    <td rowspan="2" style="width:60.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          课程目标
+                        </span>
+                      </p>
+                    </td>
+                    <td rowspan="2" style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          支撑毕业要求
+                        </span>
+                      </p>
+                    </td>
+                    <td colspan="4" style="width:230.2pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          考核方式与比例
+                        </span>
+                      </p>
+                    </td>
+                    <td rowspan="2" style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          成绩比例
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height:11.6pt">
+                    <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          考勤
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          课堂表现
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          作业
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          卷面考试
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:60.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          课程目标
+                        </span>
+                        <span style="font-family:Calibri">
+                          1
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          毕业要求
+                        </span>
+                        <span style="font-family:Calibri">
+                          2.
+                        </span>
+                        <span style="font-family:Calibri">
+                          4
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
                         <span style="font-family:Calibri; color:#1f497d">
-                        {{this.testContent.ContentDis.Score[1]}}
-                      </span>
-                      <span style="font-family:Arial; font-size:7.5pt; color:#1f497d; background-color:#ffffff">
-                        X
-                      </span>
-                      <span style="font-family:Calibri; color:#1f497d">
-                        0.7
-                      </span>
-                      <span style="font-family:Calibri; color:#1f497d">
-                        ={{setScore[1]}}
-                      </span>
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{setRatio[1]}}%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:60.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:Calibri">
-                        3
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        毕业要求
-                      </span>
-                      <span style="font-family:Calibri">
-                        4.2
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.Attendance[2]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.CPerformance[2]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.HomeWork[2]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{this.testContent.ContentDis.Score[2]}}
-                      </span>
-                      <span style="font-family:Arial; font-size:7.5pt; color:#1f497d; background-color:#ffffff">
-                        X
-                      </span>
-                      <span style="font-family:Calibri; color:#1f497d">
-                        0.7
-                      </span>
-                      <span style="font-family:Calibri; color:#1f497d">
-                        ={{setScore[2]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{setRatio[2]}}%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:60.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:Calibri">
-                        4
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        毕业要求
-                      </span>
-                      <span style="font-family:Calibri">
-                        5.3
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.Attendance[3]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.CPerformance[3]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{testContent.ContentDis.HomeWork[3]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{this.testContent.ContentDis.Score[3]}}
-                      </span>
-                      <span style="font-family:Arial; font-size:7.5pt; color:#1f497d; background-color:#ffffff">
-                        X
-                      </span>
-                      <span style="font-family:Calibri; color:#1f497d">
-                        0.7
-                      </span>
-                      <span style="font-family:Calibri; color:#1f497d">
-                        ={{setScore[3]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                      {{setRatio[3]}}%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="2" style="width:138.05pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        合计
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; letter-spacing:0.1pt; color:#1f497d">
-                        {{setTotal[0]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; letter-spacing:0.1pt; color:#1f497d">
-                        {{setTotal[1]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{setTotal[2]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{setTotal[3]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        {{setTotal[4]}}
-                      </span>
-                      <span style="font-family:Calibri; color:#1f497d">
-                        %
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:12pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <table cellspacing="0" cellpadding="0" style="width:438.5pt; border-collapse:collapse">
-                <tr style="height:31.7pt">
-                  <td style="width:51.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        课程目标
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        支撑毕业要求
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:7.8pt; margin-bottom:0pt;   line-height:150%; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        考核方式
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:7.8pt; margin-bottom:0pt;   line-height:150%; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        考试题目
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:7.8pt; margin-bottom:0pt;   line-height:150%; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        成绩比例
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:51.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        1
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        毕业要求
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        2.4
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        考勤、考试
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        大题一（
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        10
-                      </span>
-                      <span style="font-family:'宋体'">
-                        分）、大题二（
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        15
-                      </span>
-                      <span style="font-family:'宋体'">
-                        分）、大题三（
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        15
-                      </span>
-                      <span style="font-family:'宋体'">
-                        分）
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        3
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        5%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:51.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        2
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        毕业要求
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        3.3
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课堂表现、作业
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        2
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        0%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:51.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        3
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        毕业要求
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        4.2
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        卷面考试
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        大题四（
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        32
-                      </span>
-                      <span style="font-family:'宋体'">
-                        分）
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        2
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        2.4%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:51.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        4
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        毕业要求
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        5.3
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        作业、卷面考试
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        大题五（
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        28
-                      </span>
-                      <span style="font-family:'宋体'">
-                        分）
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        22.6%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="2" style="width:150.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        合计
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        &#xa0;
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        1
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        00
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        %
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-              </table>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
+                          {{testContent.ContentDis.Attendance[0]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{testContent.ContentDis.CPerformance[0]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{testContent.ContentDis.HomeWork[0]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{this.testContent.ContentDis.Score[0]}}
+                        </span>
+                        <span style="font-family:Arial; font-size:7.5pt; color:#1f497d; background-color:#ffffff">
+                          X
+                        </span>
+                        <span style="font-family:Calibri; color:#1f497d">
+                          0.7
+                        </span>
+                        <span style="font-family:Calibri; color:#1f497d">
+                          ={{setScore[0]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{setRatio[0]}}%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:60.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          课程目标
+                        </span>
+                        <span style="font-family:Calibri">
+                          2
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          毕业要求
+                        </span>
+                        <span style="font-family:Calibri">
+                          3.3
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{testContent.ContentDis.Attendance[1]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; letter-spacing:0.1pt; color:#1f497d">
+                          {{testContent.ContentDis.CPerformance[1]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{testContent.ContentDis.HomeWork[1]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; font-weight:bold; color:#1f497d">
+                          <span style="font-family:Calibri; color:#1f497d">
+                          {{this.testContent.ContentDis.Score[1]}}
+                        </span>
+                        <span style="font-family:Arial; font-size:7.5pt; color:#1f497d; background-color:#ffffff">
+                          X
+                        </span>
+                        <span style="font-family:Calibri; color:#1f497d">
+                          0.7
+                        </span>
+                        <span style="font-family:Calibri; color:#1f497d">
+                          ={{setScore[1]}}
+                        </span>
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{setRatio[1]}}%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:60.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          课程目标
+                        </span>
+                        <span style="font-family:Calibri">
+                          3
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          毕业要求
+                        </span>
+                        <span style="font-family:Calibri">
+                          4.2
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{testContent.ContentDis.Attendance[2]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{testContent.ContentDis.CPerformance[2]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{testContent.ContentDis.HomeWork[2]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{this.testContent.ContentDis.Score[2]}}
+                        </span>
+                        <span style="font-family:Arial; font-size:7.5pt; color:#1f497d; background-color:#ffffff">
+                          X
+                        </span>
+                        <span style="font-family:Calibri; color:#1f497d">
+                          0.7
+                        </span>
+                        <span style="font-family:Calibri; color:#1f497d">
+                          ={{setScore[2]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{setRatio[2]}}%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:60.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          课程目标
+                        </span>
+                        <span style="font-family:Calibri">
+                          4
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          毕业要求
+                        </span>
+                        <span style="font-family:Calibri">
+                          5.3
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{testContent.ContentDis.Attendance[3]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{testContent.ContentDis.CPerformance[3]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{testContent.ContentDis.HomeWork[3]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{this.testContent.ContentDis.Score[3]}}
+                        </span>
+                        <span style="font-family:Arial; font-size:7.5pt; color:#1f497d; background-color:#ffffff">
+                          X
+                        </span>
+                        <span style="font-family:Calibri; color:#1f497d">
+                          0.7
+                        </span>
+                        <span style="font-family:Calibri; color:#1f497d">
+                          ={{setScore[3]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                        {{setRatio[3]}}%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="width:138.05pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          合计
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:38.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; letter-spacing:0.1pt; color:#1f497d">
+                          {{setTotal[0]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; letter-spacing:0.1pt; color:#1f497d">
+                          {{setTotal[1]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:45.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{setTotal[2]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{setTotal[3]}}
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:38.8pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:Calibri; color:#1f497d">
+                          {{setTotal[4]}}
+                        </span>
+                        <span style="font-family:Calibri; color:#1f497d">
+                          %
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:12pt">
+                  <span style="font-family:'Times New Roman'">
+                    &#xa0;
+                  </span>
+                </p>
+                <table cellspacing="0" cellpadding="0" style="width:438.5pt; border-collapse:collapse">
+                  <tr style="height:31.7pt">
+                    <td style="width:51.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          课程目标
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:88.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          支撑毕业要求
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:7.8pt; margin-bottom:0pt;   line-height:150%; widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          考核方式
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:7.8pt; margin-bottom:0pt;   line-height:150%; widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          考试题目
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:7.8pt; margin-bottom:0pt;   line-height:150%; widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'黑体'">
+                          成绩比例
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:51.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          课程目标
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          1
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:88.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          毕业要求
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          2.4
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          考勤、考试
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          大题一（
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          10
+                        </span>
+                        <span style="font-family:'宋体'">
+                          分）、大题二（
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          15
+                        </span>
+                        <span style="font-family:'宋体'">
+                          分）、大题三（
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          15
+                        </span>
+                        <span style="font-family:'宋体'">
+                          分）
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          3
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          5%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:51.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          课程目标
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          2
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:88.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          毕业要求
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          3.3
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          课堂表现、作业
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          2
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          0%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:51.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          课程目标
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          3
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:88.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          毕业要求
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          4.2
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          卷面考试
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          大题四（
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          32
+                        </span>
+                        <span style="font-family:'宋体'">
+                          分）
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          2
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          2.4%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="width:51.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          课程目标
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          4
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:88.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          毕业要求
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          5.3
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          作业、卷面考试
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          大题五（
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          28
+                        </span>
+                        <span style="font-family:'宋体'">
+                          分）
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          22.6%
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="width:150.55pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'宋体'">
+                          合计
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:67.15pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:102.6pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          &#xa0;
+                        </span>
+                      </p>
+                    </td>
+                    <td style="width:74.25pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
+                      <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                        <span style="font-family:'Times New Roman'">
+                          1
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          00
+                        </span>
+                        <span style="font-family:'Times New Roman'">
+                          %
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                  <span style="font-family:'Times New Roman'">
+                    &#xa0;
+                  </span>
+                </p>
+                <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                  <span style="font-family:'Times New Roman'">
+                    &#xa0;
+                  </span>
+                </p>
+                <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                  <span style="font-family:'Times New Roman'">
+                    &#xa0;
+                  </span>
+                </p>
+                <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+                  <span style="font-family:'Times New Roman'">
+                    &#xa0;
+                  </span>
+                </p>
+              </el-form-item>
+            </el-form>
             </div>
 
             <div v-if="VisList[2]">
@@ -1744,7 +1740,7 @@ export default {
         tmpObj.exam_proportion = this.testContent.ContentDis.Ratio[i];
         data.course_goals.push(tmpObj);
       };
-      var tmpArray = this.testSpecification;
+      const tmpArray = JSON.parse(JSON.stringify(this.testSpecification))
       tmpArray.push(this.passRatio);
       data.question_specification = tmpArray;
       data.question_setter = '命题人';
@@ -1753,7 +1749,24 @@ export default {
       return data;
     },
     send(){
-      this.$request.post('/api_P/audit',this.GenerateCTarget());
+      this.$request.post('/api_P/audit',this.GenerateCTarget(),{responseType: "blob"}).then(res =>{
+        console.log('11111111111',res)
+        let blob = new Blob([res], {type: "application/msword"}); // 将服务端返回的文件流excel文件
+        let fileName = `审核表${new Date().getTime()}.doc`; // 保存的文件名
+        this.downLoadFile(blob, fileName); 
+      });
+    },
+    downLoadFile (blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) { // IE10
+          navigator.msSaveBlob(blob, fileName);
+      } else {
+          let link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = URL.createObjectURL(blob); //创建一个指向该参数对象的URL
+          link.download = fileName;
+          link.click(); // 触发下载
+          URL.revokeObjectURL(link.href); // 释放通过 URL.createObjectURL() 创建的 URL
+      }
     }
   },
 
