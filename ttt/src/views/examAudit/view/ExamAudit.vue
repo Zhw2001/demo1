@@ -3,19 +3,20 @@
       <div class="card">
         <div class="card-body">
           <div class='mydoc'>
-            <div>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:15pt">
-                <span style="font-family:'宋体'; font-weight:bold; letter-spacing:2pt">
-                  考试
-                </span>
-                <span style="font-family:'Times New Roman'; font-weight:bold; letter-spacing:2pt">
-                  /
-                </span>
-                <span style="font-family:'宋体'; font-weight:bold; letter-spacing:2pt">
-                  考核内容合理性审核
-                </span>
-              </p>
-              <h1 style="margin-top:8pt; margin-bottom:3.1pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:12pt">
+            <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:15pt">
+              <span style="font-family:'宋体'; font-weight:bold; letter-spacing:2pt">
+                考试
+              </span>
+              <span style="font-family:'Times New Roman'; font-weight:bold; letter-spacing:2pt">
+                /
+              </span>
+              <span style="font-family:'宋体'; font-weight:bold; letter-spacing:2pt">
+                考核内容合理性审核
+              </span>
+            </p>
+
+            <div v-if="VisList[0]">
+              <h1 style="margin-top:8pt; margin-bottom:3.1pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:24pt">
                 <span style="font-family:'Times New Roman'">
                   1.
                 </span>
@@ -23,106 +24,102 @@
                   课程基本信息
                 </span>
               </h1>
-              <table cellspacing="0" cellpadding="0" style="width:438.65pt; border-collapse:collapse;">
-                <tr style="height:1pt">
-                  <td style="width:60.85pt; border-style:solid; border-width:0.75pt;">
-                    <p style="  widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
-                        审核学期
-                      </span>
-                    </p>
+              <table class = "myAuditTable">
+                <tr >
+                  <td>
+                    <span >
+                      审核学期
+                    </span>
                   </td>
-                  <td style="width:126.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'; color:#c0504d">
+                  <td >
+                      <span>
                         {{basicInfo.AuditSemester}}
                       </span>
-                    </p>
                   </td>
-                  <td style="width:58.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                  <td >
+                      <span>
                         审核时间
                       </span>
-                    </p>
                   </td>
-                  <td style="width:159.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'; color:#c0504d">
+                  <td>
+                    <p>
+                      <span>
                         {{basicInfo.AuditTime}}
                       </span>
                     </p>
                   </td>
                 </tr>
-                <tr style="height:1pt">
-                  <td style="width:49.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                <tr>
+                  <td>
+                    <p>
+                      <span>
                         课程名称
                       </span>
                     </p>
                   </td>
-                  <td style="width:126.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'仿宋'">
+                  <td>
+                    <p>
+                      <span>
                         {{basicInfo.cname}}
                       </span>
                     </p>
                   </td>
-                  <td style="width:58.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                  <td>
+                    <p>
+                      <span>
                         课程号
                       </span>
                     </p>
                   </td>
-                  <td style="width:159.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
+                  <td>
+                    <p>
+                      <span>
                         {{basicInfo.info_cid}}
                       </span>
                     </p>
                   </td>
                 </tr>
-                <tr style="height:1pt">
-                  <td style="width:49.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                <tr >
+                  <td>
+                    <p>
+                      <span>
                         班级
                       </span>
                     </p>
                   </td>
-                  <td style="width:126.65pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'仿宋'; color:#c0504d">
+                  <td>
+                    <p>
+                      <span>
                         {{basicInfo.class}}
                       </span>
                     </p>
                   </td>
-                  <td style="width:60.75pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                  <td>
+                    <p>
+                      <span>
                         考试
                       </span>
-                      <span style="font-family:'Times New Roman'">
+                      <span>
                         /
                       </span>
-                      <span style="font-family:'黑体'">
+                      <span>
                         考查
                       </span>
                     </p>
                   </td>
-                  <td style="width:159.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'仿宋'">
+                  <td >
+                    <p >
+                      <span>
                         {{basicInfo.testtype}}
                       </span>
                     </p>
                   </td>
                 </tr>
               </table>
+              <div><el-button type="text" @click="open">编辑</el-button></div>
             </div>
-            <div>
+
+            <div v-if="VisList[1]">
               <h1 style="margin-top:8pt; margin-bottom:3.1pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:12pt">
                 <span style="font-family:'Times New Roman'">
                   2.
@@ -131,36 +128,26 @@
                   考核内容
                 </span>
               </h1>
-              <table cellspacing="0" cellpadding="0" style="width:438.5pt; border-collapse:collapse">
+              <table class = "myAuditTable">
                 <tr>
-                  <td style="width:17.3pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                  <td style="width:80px;">
+                      <span >
                         课程目标
                       </span>
-                    </p>
                   </td>
-                  <td style="width:398.85pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{testContent.ctarget[0]}}
-                      </span>
-                    </p>
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{testContent.ctarget[1]}}
-                      </span>
-                    </p>
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{testContent.ctarget[2]}}
-                      </span>
-                    </p>
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{testContent.ctarget[3]}}
-                      </span>
-                    </p>
+                  <td >
+                    <div>
+                      <span>{{testContent.ctarget[0]}}</span>
+                    </div>
+                    <div>
+                      <span>{{testContent.ctarget[1]}}</span>
+                    </div>
+                    <div >
+                      <span>{{testContent.ctarget[2]}}</span>
+                    </div>
+                    <div>
+                      <span>{{testContent.ctarget[3]}}</span>
+                    </div>
                   </td>
                 </tr>
               </table>
@@ -1085,7 +1072,8 @@
                 </span>
               </p>
             </div>
-            <div>
+
+            <div v-if="VisList[2]">
               <h1 style="margin-top:8pt; margin-bottom:3.1pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:12pt">
                 <span style="font-family:'Times New Roman'">
                   3.
@@ -1354,7 +1342,8 @@
                 </span>
               </p>
             </div>
-            <div>
+
+            <div v-if="VisList[3]">
               <h1 style="margin-top:5pt; margin-bottom:0pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:12pt">
                 <span style="font-family:'Times New Roman'">
                   3.
@@ -1582,26 +1571,59 @@
                 </span>
               </p>
             </div>
+
           </div>
           <div style="text-align:center;">
-
             <el-button @click = 'send()'>发送</el-button>
           </div>
         </div>
       </div>
+      <el-dialog
+        v-if="setLogVis(0)"
+        :visible = true
+        title="提示"
+        width="30%"
+        @close = "close">
+        <el-form label-position="left" label-width="80px" :model="basicInfo">
+          <el-form-item label="审核学期">
+            <el-input v-model="basicInfo.AuditSemester"></el-input>
+          </el-form-item>
+          <el-form-item label="审核时间">
+            <el-input v-model="basicInfo.AuditTime"></el-input>
+          </el-form-item>
+          <el-form-item label="课程名称">
+            <el-input v-model="basicInfo.cname"></el-input>
+          </el-form-item>
+          <el-form-item label="课程号">
+            <el-input v-model="basicInfo.info_cid"></el-input>
+          </el-form-item>
+          <el-form-item label="班级">
+            <el-input v-model="basicInfo.class"></el-input>
+          </el-form-item>
+          <el-form-item label="考试/考查">
+            <el-input v-model="basicInfo.testtype"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="close">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
+
     </div>
 </template>
 
 <script>
-import global from '@/components/Global';
 
 export default {
   name:'examAudit',
 
   data() {
     return {
+      VisList: [ true, true, false, false ],
+      dialogVis: false,
       basicInfo:{
-        AuditSemester:'2018-2019学年第一学期',
+        AuditSemester:'2018-2019-1',
         AuditTime:'2018年12月',
         cname:'操作系统',
         info_cid:'XX123',
@@ -1610,10 +1632,10 @@ export default {
       },
       testContent:{
         ctarget:[
-          '课程目标 1 ： 能运用 操作系统的原理描述进程和线程，能分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，会对比不同解决方案 的优缺点， 给出结论',
+          '课程目标 1 ： 能运用操作系统的原理描述进程和线程，能分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，会对比不同解决方案 的优缺点， 给出结论',
           '课程目标 2 ： 在具体场景和任务有变化时，能针对新的用户目标和需求，设计新的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，并能分析解决方案在时间上或空间上的开销。',
-          '课程目标 3 ： 能分析程序的并发性程度，用 前趋图描述程序的并发执行 ，构建并发系统，能测算不同 的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本。',
-          '课程目标 4 ： 能就具体场景，模拟生产者消费者、 磁盘调度 、文件管理 统 或存储器管理 的操作流程，设计系统，并能分析、对比不同操作方案的成本和局限性.' 
+          '课程目标 3 ： 能分析程序的并发性程度，用前趋图描述程序的并发执行 ，构建并发系统，能测算不同 的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本。',
+          '课程目标 4 ： 能就具体场景，模拟生产者消费者、磁盘调度、文件管理统或存储器管理的操作流程，设计系统，并能分析、对比不同操作方案的成本和局限性.' 
         ],
         ContentDis:{//内容分布
           Attendance:[7,0,0,0],//考勤
@@ -1662,6 +1684,13 @@ export default {
     }
   },
   methods: {
+    open(){
+      this.dialogVis = true
+      console.log(this.setLogVis(0))
+    },
+    close(){
+      this.dialogVis = false
+    },
     setSpecify(event){
       if(event.target.checked == true){
         this.testSpecification[parseInt(event.target.id)-1] = 1;
@@ -1749,7 +1778,10 @@ export default {
         this.testContent.ContentDis.Total.push(this.calArray(this.testContent.ContentDis.Score));
         this.testContent.ContentDis.Total.push(this.calArray(this.testContent.ContentDis.Ratio));
         return this.testContent.ContentDis.Total;
-      }
+      },
+      setLogVis(i){return function(i){
+        return this.dialogVis && this.VisList[i]
+      }} 
   },
 
 }
@@ -1764,4 +1796,27 @@ export default {
 .mydoc table{
   margin: auto;
 }
+
+.myAuditTable{
+  border-collapse:collapse;
+  width:80%;
+}
+
+.myAuditTable tr{
+  height:80px;
+}
+
+.myAuditTable tr td{
+  border-style:solid; border-width:0.75pt;
+}
+
+.myAuditTable tr td span{
+  font-family:'黑体'; padding:2px;
+}
+
+.myAuditTable tr td div{
+  padding: 10px;
+  width: 100%;
+}
+
 </style>

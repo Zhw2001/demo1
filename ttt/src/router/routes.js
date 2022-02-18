@@ -10,6 +10,11 @@ const constRoutes = [
     name:'regist',
     component: () => import('@/views/regist')
   },
+  {
+    path:'/about',
+    name:'About',
+    component: () => import('@/views/About')
+  }
 ]
 
 const allDynamicRoutes = [
