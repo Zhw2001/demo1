@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 101.35.45.30_3306
+ Source Server         : test
  Source Server Type    : MySQL
- Source Server Version : 80028
- Source Host           : 101.35.45.30:3306
+ Source Server Version : 50734
+ Source Host           : localhost:3306
  Source Schema         : graduationdb
 
  Target Server Type    : MySQL
- Target Server Version : 80028
+ Target Server Version : 50734
  File Encoding         : 65001
 
- Date: 18/02/2022 19:46:31
+ Date: 19/02/2022 21:57:51
 */
 
 SET NAMES utf8mb4;
@@ -27,11 +27,11 @@ CREATE TABLE `admin_authority`  (
   `authority_parent_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '权限父ID',
   `authority_parent_name` char(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '父权限名字',
   `authority_url` char(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '权限树的连接路径',
-  `authority_sort` int(0) DEFAULT -1 COMMENT '权限树的排序',
+  `authority_sort` int(11) DEFAULT -1 COMMENT '权限树的排序',
   `authority_description` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '权限描述',
   `auth_enable` tinyint(1) DEFAULT 0 COMMENT '是否可以显示',
   `auth_create_date` datetime(0) DEFAULT NULL COMMENT '创建时间',
-  `authority_id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `authority_id` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`authority_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
@@ -57,7 +57,7 @@ INSERT INTO `admin_authority` VALUES ('用户权限', '1', '10', '用户管理',
 -- ----------------------------
 DROP TABLE IF EXISTS `admin_role`;
 CREATE TABLE `admin_role`  (
-  `role_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'id 主键，自增',
+  `role_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id 主键，自增',
   `role_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '账户',
   `role_description` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '角色描述',
   `role_create_date` datetime(0) DEFAULT NULL COMMENT '创建时间',
@@ -77,10 +77,10 @@ INSERT INTO `admin_role` VALUES (4, '任课老师', '读写负责课程数据', 
 -- ----------------------------
 DROP TABLE IF EXISTS `admin_role_auth`;
 CREATE TABLE `admin_role_auth`  (
-  `RA_role_id` bigint(0) NOT NULL,
-  `RA_authority_id` bigint(0) NOT NULL,
+  `RA_role_id` bigint(20) NOT NULL,
+  `RA_authority_id` bigint(20) NOT NULL,
   PRIMARY KEY (`RA_role_id`, `RA_authority_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of admin_role_auth
@@ -124,11 +124,11 @@ INSERT INTO `admin_role_auth` VALUES (4, 10);
 -- ----------------------------
 DROP TABLE IF EXISTS `admin_user`;
 CREATE TABLE `admin_user`  (
-  `uid` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'uid',
+  `uid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'uid',
   `account` char(80) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '账户',
   `nickname` varchar(16) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '昵称',
   `password` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '密码',
-  `phone` bigint(0) DEFAULT NULL COMMENT '手机号码',
+  `phone` bigint(20) DEFAULT NULL COMMENT '手机号码',
   `email` varchar(36) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '邮箱',
   `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '账户描述',
   `create_date` datetime(0) DEFAULT NULL COMMENT '创建时间',
@@ -200,11 +200,11 @@ INSERT INTO `admin_user` VALUES (55, NULL, NULL, NULL, NULL, NULL, NULL, NULL, N
 -- ----------------------------
 DROP TABLE IF EXISTS `admin_user_role`;
 CREATE TABLE `admin_user_role`  (
-  `UR_role_id` bigint(0) NOT NULL,
-  `UR_uid` bigint(0) NOT NULL,
+  `UR_role_id` bigint(20) NOT NULL,
+  `UR_uid` bigint(20) NOT NULL,
   `user_cid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`UR_role_id`, `UR_uid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of admin_user_role
@@ -224,7 +224,7 @@ DROP TABLE IF EXISTS `cdesign`;
 CREATE TABLE `cdesign`  (
   `sTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `cId` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `cNum` int(0) DEFAULT NULL,
+  `cNum` int(11) DEFAULT NULL,
   `sId` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `sName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `sClass` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -236,7 +236,7 @@ CREATE TABLE `cdesign`  (
   `answer` double(20, 2) DEFAULT NULL,
   `report` double(20, 2) DEFAULT NULL,
   `overall` double(20, 2) DEFAULT NULL,
-  `cdesign_id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `cdesign_id` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`cdesign_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 318 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -565,10 +565,10 @@ INSERT INTO `cdesign` VALUES ('2019-2020-2', 'XX127030', 1, '201710414002', '杨
 -- ----------------------------
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course`  (
-  `course_id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `course_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `sTime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `cId` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `cNum` int(0) DEFAULT NULL,
+  `cNum` int(11) DEFAULT NULL,
   `sId` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `sName` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `sClass` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -921,10 +921,8 @@ INSERT INTO `course` VALUES (292, '2019-2020-1', 'XX110100', 1, '201810313216', 
 -- ----------------------------
 DROP TABLE IF EXISTS `courseaudit`;
 CREATE TABLE `courseaudit`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `courseID` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `stime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `objective_num` int(0) DEFAULT NULL COMMENT '课程目标号',
   `module_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `percent` double(20, 2) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -933,19 +931,15 @@ CREATE TABLE `courseaudit`  (
 -- ----------------------------
 -- Records of courseaudit
 -- ----------------------------
-INSERT INTO `courseaudit` VALUES (1, 'XX110110', '2018-2019-1', 1, '平时', 0.30);
-INSERT INTO `courseaudit` VALUES (2, 'XX110110', '2018-2019-1', 1, '期末', 0.70);
-INSERT INTO `courseaudit` VALUES (3, 'XX110110', '2018-2019-1', 2, '平时', 0.30);
-INSERT INTO `courseaudit` VALUES (4, 'XX110110', '2018-2019-1', 3, '期末', 0.70);
-INSERT INTO `courseaudit` VALUES (5, 'XX110110', '2018-2019-1', 4, '平时', 0.30);
-INSERT INTO `courseaudit` VALUES (6, 'XX110110', '2018-2019-1', 4, '期末', 0.70);
+INSERT INTO `courseaudit` VALUES (1, 'XX110110', '平时', 0.30);
+INSERT INTO `courseaudit` VALUES (2, 'XX110110', '期末', 0.70);
 
 -- ----------------------------
 -- Table structure for courseinfo
 -- ----------------------------
 DROP TABLE IF EXISTS `courseinfo`;
 CREATE TABLE `courseinfo`  (
-  `info_cNum` int(0) NOT NULL,
+  `info_cNum` int(11) NOT NULL,
   `department` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `semester` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `info_cId` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -956,14 +950,14 @@ CREATE TABLE `courseinfo`  (
   `C` double(20, 2) DEFAULT NULL COMMENT '中等(<80,>70)',
   `D` double(20, 2) DEFAULT NULL COMMENT '及格(<70,>60)',
   `E` double(20, 2) DEFAULT NULL COMMENT '不及格(<60)',
-  `user_id` bigint(0) DEFAULT NULL,
-  `course_type` int(0) DEFAULT 0 COMMENT '课程的类型：0-理论课，1-实验课，2-课程设计，3-毕业设计',
-  `test_type` int(0) DEFAULT NULL COMMENT '考核类型：0-考试，1-考察',
-  `standard_num` int(0) DEFAULT NULL COMMENT '考核标准数量',
+  `user_id` bigint(20) DEFAULT NULL,
+  `course_type` int(11) DEFAULT 0 COMMENT '课程的类型：0-理论课，1-实验课，2-课程设计，3-毕业设计',
+  `test_type` int(11) DEFAULT NULL COMMENT '考核类型：0-考试，1-考察',
+  `standard_num` int(11) DEFAULT NULL COMMENT '考核标准数量',
   `standard_names` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '考核标准名称明细，JSON一维String数组',
-  `question_num` int(0) DEFAULT NULL COMMENT '考试大题数量',
+  `question_num` int(11) DEFAULT NULL COMMENT '考试大题数量',
   `question_names` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '考试大题名称明细，JSON一维String数组',
-  `goal_num` int(0) DEFAULT NULL COMMENT '教学目标数量',
+  `goal_num` int(11) DEFAULT NULL COMMENT '教学目标数量',
   `score_distribution` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '分数分布，JSON二维float数组，size=goal_num*(standard_num+question_num)',
   PRIMARY KEY (`info_cNum`) USING BTREE,
   INDEX `info_cId`(`info_cId`) USING BTREE
@@ -1056,23 +1050,13 @@ INSERT INTO `courseinfo` VALUES (82, '计算机系', NULL, 'XX110820', '微机�
 INSERT INTO `courseinfo` VALUES (83, '计算机系', NULL, 'XX110820s', '微机接口技术实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
--- Table structure for evalinfo
--- ----------------------------
-DROP TABLE IF EXISTS `evalinfo`;
-CREATE TABLE `evalinfo`  (
-  `cid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`cid`) USING BTREE,
-  CONSTRAINT `fk_evalinfo_courseinfo` FOREIGN KEY (`cid`) REFERENCES `courseinfo` (`info_cId`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用来保存上次客户在网页段提交的课程审核信息，例如内容审核表中的介绍等信息、课程目标描述信息、分值分配信息等。' ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Table structure for experiment
 -- ----------------------------
 DROP TABLE IF EXISTS `experiment`;
 CREATE TABLE `experiment`  (
   `sTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `cId` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `cNum` int(0) DEFAULT NULL,
+  `cNum` int(11) DEFAULT NULL,
   `sId` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `sName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `sClass` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -1096,7 +1080,7 @@ CREATE TABLE `experiment`  (
   `regular` double(20, 2) DEFAULT NULL,
   `written` double(20, 2) DEFAULT NULL,
   `overall` double(20, 2) DEFAULT NULL,
-  `exper_id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `exper_id` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`exper_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 332 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -1432,26 +1416,6 @@ INSERT INTO `experiment` VALUES ('2020-2021-1', 'XX110111s', 1, '201810311250', 
 INSERT INTO `experiment` VALUES ('2020-2021-1', 'XX110111s', 1, '201810311255', '邹沈杰', '计算机181卓', '正常', 95.00, 95.00, 90.00, 90.00, 92.00, 90.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 100.00, 331);
 
 -- ----------------------------
--- Table structure for finalitem
--- ----------------------------
-DROP TABLE IF EXISTS `finalitem`;
-CREATE TABLE `finalitem`  (
-  `question_num` int(0) NOT NULL,
-  `question_score` double(20, 2) DEFAULT NULL,
-  `courseAudit_id` bigint(0) NOT NULL,
-  PRIMARY KEY (`question_num`, `courseAudit_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
-
--- ----------------------------
--- Records of finalitem
--- ----------------------------
-INSERT INTO `finalitem` VALUES (1, 10.00, 1);
-INSERT INTO `finalitem` VALUES (2, 15.00, 1);
-INSERT INTO `finalitem` VALUES (3, 15.00, 1);
-INSERT INTO `finalitem` VALUES (4, 32.00, 3);
-INSERT INTO `finalitem` VALUES (5, 28.00, 4);
-
--- ----------------------------
 -- Table structure for gdesign
 -- ----------------------------
 DROP TABLE IF EXISTS `gdesign`;
@@ -1475,7 +1439,7 @@ CREATE TABLE `gdesign`  (
   `grade3_2` double(20, 2) DEFAULT NULL,
   `grade3_3` double(20, 2) DEFAULT NULL,
   `overall` double(20, 2) DEFAULT NULL,
-  `gdesign_id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `gdesign_id` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`gdesign_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 219 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -1700,11 +1664,32 @@ INSERT INTO `gdesign` VALUES ('2020-2021-1', 'XX127130', '01', '201710413007', '
 INSERT INTO `gdesign` VALUES ('2020-2021-1', 'XX127130', '01', '201710414002', '杨毅铭', 4.00, 4.00, 4.00, 8.00, 5.00, 8.00, 4.00, 4.00, 12.00, 4.00, 9.00, 8.00, 8.00, 82.00, 218);
 
 -- ----------------------------
+-- Table structure for item
+-- ----------------------------
+DROP TABLE IF EXISTS `item`;
+CREATE TABLE `item`  (
+  `item_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '卷面评分项',
+  `item_value` double(20, 2) DEFAULT NULL COMMENT '评分项分值',
+  `cid` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT ' 一门课一种计算方法',
+  `part` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '对应期末模块的?部分',
+  PRIMARY KEY (`item_name`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of item
+-- ----------------------------
+INSERT INTO `item` VALUES ('第一大题', 10.00, 'XX110110', '卷面');
+INSERT INTO `item` VALUES ('第二大题', 15.00, 'XX110110', '卷面');
+INSERT INTO `item` VALUES ('第三大题', 15.00, 'XX110110', '卷面');
+INSERT INTO `item` VALUES ('第四大题', 32.00, 'XX110110', '卷面');
+INSERT INTO `item` VALUES ('第五大题', 28.00, 'XX110110', '卷面');
+
+-- ----------------------------
 -- Table structure for module
 -- ----------------------------
 DROP TABLE IF EXISTS `module`;
 CREATE TABLE `module`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -1716,22 +1701,23 @@ INSERT INTO `module` VALUES (1, '平时');
 INSERT INTO `module` VALUES (2, '期末');
 
 -- ----------------------------
--- Table structure for usualitem
+-- Table structure for part
 -- ----------------------------
-DROP TABLE IF EXISTS `usualitem`;
-CREATE TABLE `usualitem`  (
-  `ratio` double(20, 2) NOT NULL,
-  `part` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `courseAudit_id` bigint(0) NOT NULL,
-  PRIMARY KEY (`courseAudit_id`, `part`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+DROP TABLE IF EXISTS `part`;
+CREATE TABLE `part`  (
+  `part` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '平时成绩模块组成部分',
+  `ratio` double(20, 2) DEFAULT NULL COMMENT '比例',
+  `cid` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '一门课有一种计算平时分组成的算法',
+  `module_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`part`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of usualitem
+-- Records of part
 -- ----------------------------
-INSERT INTO `usualitem` VALUES (0.70, '考勤1', 1);
-INSERT INTO `usualitem` VALUES (8.00, '课堂表现2', 3);
-INSERT INTO `usualitem` VALUES (12.00, '作业2', 3);
-INSERT INTO `usualitem` VALUES (3.00, '作业3', 5);
+INSERT INTO `part` VALUES ('考勤', 0.07, 'XX110110', 1);
+INSERT INTO `part` VALUES ('课堂表现', 0.08, 'XX110110', 1);
+INSERT INTO `part` VALUES ('作业', 0.15, 'XX110110', 1);
+INSERT INTO `part` VALUES ('卷面', 0.70, 'XX110110', 2);
 
 SET FOREIGN_KEY_CHECKS = 1;

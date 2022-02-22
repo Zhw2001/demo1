@@ -10,6 +10,13 @@ import request from '@/utils/request.js'
 import setCss from '@/utils/setCss.js'
 
 
+Array.prototype.remove = function(val) { 
+  var index = this.indexOf(val); 
+  if (index > -1) { 
+  this.splice(index, 1); 
+  } 
+};
+
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$request = request
