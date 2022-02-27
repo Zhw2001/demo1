@@ -1,7 +1,7 @@
 package com.ljsh.test.controller;
 
 import com.ljsh.test.dto.Result;
-import com.ljsh.test.mbg.model.Cdesign;
+import com.ljsh.test.domain.model.CdesignData;
 
 import com.ljsh.test.service.CdesignService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,32 +19,44 @@ public class CdesignController {
     @GetMapping("/list")
     public Result<?> getCdesignList()
     {
-        List<Cdesign> cdesignList =cdesignService.get_All_Cd();
-        return Result.success(cdesignList);
+        List<CdesignData> cdesignDataList =cdesignService.get_All_Cd();
+        return Result.success(cdesignDataList);
     }
 
     @PostMapping("/update")
-    public Result<?> updateCdesign(@RequestBody Cdesign cdesign){
-        if(cdesignService.updateCdesign(cdesign)){
-            return Result.success();
+    public Result<?> updateCdesign(@RequestBody CdesignData cdesignData){
+        if(cdesignData.getId() != null){
+            String msg = cdesignService.updateCdesign(cdesignData);
+            if(msg.equals("")){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/delete")
-    public Result<?> delCdesign(@RequestBody Cdesign cdesign){
-        if(cdesignService.delCdesign(cdesign.getId())){
-            return Result.success();
+    public Result<?> delCdesign(@RequestBody CdesignData cdesignData){
+        if(cdesignData.getId() != null){
+            String msg = cdesignService.delCdesign(cdesignData.getId());
+            if(msg.equals("")){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
     @PostMapping("/insert")
-    public Result<?> addCdesign(@RequestBody Cdesign cdesign){
-        if(cdesignService.addCdesign(cdesign)){
-            return Result.success();
+    public Result<?> addCdesign(@RequestBody CdesignData cdesignData){
+        if(cdesignData.getCId() != null){
+            String msg = cdesignService.addCdesign(cdesignData);
+            if(msg.equals("")){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
         }
-        return Result.error("111","sqlError");
+        return Result.error("204","输入为空");
     }
 
 }

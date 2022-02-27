@@ -6,11 +6,11 @@
 
 
 
-<mapper namespace="com.ljsh.test.mbg.mapper.AdminUserMapper">
+<mapper namespace="com.ljsh.test.domain.mapper.AdminUserMapper">
     <sql id="admin_user">admin_user</sql>
 
 
-    <resultMap type="com.ljsh.test.mbg.model.AdminUser" id="userMap">
+    <resultMap type="com.ljsh.test.domain.model.AdminUser" id="userMap">
         <id  property="uid" column="uid" javaType="Long" jdbcType="BIGINT"/>
         <result property="account" column="account" javaType="String" jdbcType="CHAR"/>
         <result property="nickname" column="nickname" javaType="String" jdbcType="VARCHAR"/>
@@ -18,21 +18,27 @@
         <result property="phone" column="phone" javaType="Long" jdbcType="BIGINT"/>
         <result property="email" column="email" javaType="String" jdbcType="VARCHAR"/>
         <result property="description" column="description" javaType="String" jdbcType="VARCHAR"/>
-        <result property="userCid" column="user_cid" javaType="String" jdbcType="VARCHAR"/>
-        <collection property="adminRoleList"  ofType="com.ljsh.test.mbg.model.AdminRole">
-            <id  property="role_id" column="role_id" javaType="Long" jdbcType="BIGINT"/>
-            <result property="role_name" column="role_name" javaType="String" jdbcType="VARCHAR"/>
-            <result property="role_description" column="role_description" javaType="String" jdbcType="VARCHAR"/>
-        </collection>
+        <collection property="adminRoleList" ofType="com.ljsh.test.domain.model.AdminRole" resultMap="com.ljsh.test.domain.mapper.AdminRoleMapper.roleMap"/>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.domain.model.AdminUser" id="userInfoMap">
+        <id  property="uid" column="uid" javaType="Long" jdbcType="BIGINT"/>
+        <result property="account" column="account" javaType="String" jdbcType="CHAR"/>
+        <result property="nickname" column="nickname" javaType="String" jdbcType="VARCHAR"/>
+        <result property="password" column="password" javaType="String" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" javaType="Long" jdbcType="BIGINT"/>
+        <result property="email" column="email" javaType="String" jdbcType="VARCHAR"/>
+        <result property="description" column="description" javaType="String" jdbcType="VARCHAR"/>
+        <collection property="adminRoleList" ofType="com.ljsh.test.domain.model.AdminRole" resultMap="com.ljsh.test.domain.mapper.AdminRoleMapper.roleInfoMap"/>
     </resultMap>
 
 
-    <insert id="newu" parameterType="com.ljsh.test.mbg.model.AdminUser">
+    <insert id="newu" parameterType="com.ljsh.test.domain.model.AdminUser">
         INSERT INTO
         <include refid="admin_user"/>
-        (account,nickname,password,phone,email,description,use_cid,create_date)
+        (account,nickname,password,phone,email,description,create_date)
         VALUES
-        (#{account},#{nickname},#{password},#{phone},#{email},#{description},#{userCid},NOW())
+        (#{account},#{nickname},#{password},#{phone},#{email},#{description},NOW())
     </insert>
 
 
@@ -72,7 +78,7 @@
 
     <select id="selectPage" resultMap="userMap">
         SELECT * FROM
-        (((SELECT* FROM admin_user ORDER BY uid limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER})tmp	LEFT JOIN admin_with_role ON admin_with_role.admin_uid = tmp.uid) left join admin_role on admin_with_role.admin_role_id = admin_role.role_id)
+        (((SELECT* FROM admin_user ORDER BY uid limit #{pageNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER})tmp	LEFT JOIN admin_user_role ON admin_user_role.UR_uid = tmp.uid) left join admin_role on admin_user_role.UR_role_id = admin_role.role_id)
         where account like '%${search}%'
     </select>
 
@@ -84,15 +90,20 @@
     </delete>
 
 
-    <select id="get_Roleinfo_By_Account"  parameterType="String" resultMap="userMap">
+    <select id="get_info_By_Account"  parameterType="String" resultMap="userMap">
         SELECT *
         FROM
-        ((admin_user LEFT JOIN admin_with_role ON admin_with_role.admin_uid = admin_user.uid) left join admin_role on admin_with_role.admin_role_id = admin_role.role_id)
+        ((admin_user LEFT JOIN admin_user_role ON admin_user_role.UR_uid = admin_user.uid) left join admin_role on admin_user_role.UR_role_id = admin_role.role_id)
         WHERE
         account = #{account}
     </select>
 
-
-
+    <select id="get_Info_By_Account" parameterType="String" resultMap="userInfoMap">
+        SELECT *
+        FROM
+        (((admin_user LEFT JOIN admin_user_role ON uid = UR_uid) LEFT JOIN admin_role on UR_role_id = role_id) LEFT JOIN admin_role_auth on role_id = RA_role_id ) LEFT JOIN admin_authority on authority_id = RA_authority_id
+        WHERE
+        account = #{account}
+    </select>
 
 </mapper>

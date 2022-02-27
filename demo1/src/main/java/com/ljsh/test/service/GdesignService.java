@@ -1,12 +1,12 @@
 package com.ljsh.test.service;
 
-import com.ljsh.test.mbg.model.Gdesign;
+import com.ljsh.test.domain.model.GdesignData;
 
 import java.util.List;
 
 public interface GdesignService {
-    List<Gdesign> get_All_Gd();
-    Boolean addGdesign(Gdesign gdesign);
-    Boolean delGdesign(Long id);
-    Boolean updateGdesign(Gdesign gdesign);
+    List<GdesignData> get_All_Gd();
+    String addGdesign(GdesignData gdesignData);
+    String delGdesign(Long id);
+    String updateGdesign(GdesignData gdesignData);
 }

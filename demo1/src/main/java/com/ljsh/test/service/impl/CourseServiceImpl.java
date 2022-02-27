@@ -1,7 +1,7 @@
 package com.ljsh.test.service.impl;
 
-import com.ljsh.test.mbg.mapper.CourseMapper;
-import com.ljsh.test.mbg.model.Course;
+import com.ljsh.test.domain.mapper.CourseMapper;
+import com.ljsh.test.domain.model.CourseData;
 import com.ljsh.test.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,35 +13,35 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseMapper courseMapper;
 
-    public List<Course> getAll(){
+    public List<CourseData> getAll(){
         return courseMapper.get_All_C();
     }
 
-    public Boolean addCourse(Course course){
+    public String addCourse(CourseData courseData){
         try {
-            courseMapper.addCourse(course);
+            courseMapper.addCourse(courseData);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean delCourse(Long id){
+    public String delCourse(Long id){
         try {
             courseMapper.delCourse(id);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean upCourse(Course course){
+    public String upCourse(CourseData courseData){
         try {
-            courseMapper.updateCourse(course);
+            courseMapper.updateCourse(courseData);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
 }

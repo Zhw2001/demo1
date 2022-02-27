@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <router-view/>     <!-- 路由跳转基于此处 -->
+  <div class="app">
+    <router-view ></router-view>     <!-- 路由跳转基于此处 -->
   </div>
 </template>
 
@@ -9,6 +9,7 @@
 export default {
   name: 'App',
 }
+
 </script>
 
 <style>

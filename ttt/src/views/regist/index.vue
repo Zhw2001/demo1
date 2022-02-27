@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import request from "@/request";
 
 export default{
     name:"regist",
@@ -36,7 +35,7 @@ export default{
 
    methods:{
        regist(){
-           request.post("/api_S/user/regist",this.form).then(res =>{
+           this.$request.post("/api_S/user/regist",this.form).then(res =>{
                if(res.code === '0'){
                    this.$message({
                        type:"success",

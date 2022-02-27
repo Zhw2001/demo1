@@ -1,7 +1,7 @@
 package com.ljsh.test.service.impl;
 
-import com.ljsh.test.mbg.mapper.ExperimentMapper;
-import com.ljsh.test.mbg.model.Experiment;
+import com.ljsh.test.domain.mapper.ExperimentMapper;
+import com.ljsh.test.domain.model.ExperimentData;
 
 import com.ljsh.test.service.ExperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,35 +14,35 @@ public class ExperServiceImpl implements ExperService {
     @Autowired
     private ExperimentMapper experimentMapper;
 
-    public List<Experiment> get_All_E(){
+    public List<ExperimentData> get_All_E(){
         return experimentMapper.get_All_E();
     }
 
-    public Boolean addExperiment(Experiment experiment){
+    public String addExperiment(ExperimentData experimentData){
         try {
-            experimentMapper.addExperiment(experiment);
+            experimentMapper.addExperiment(experimentData);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean delExperiment(Long id){
+    public String delExperiment(Long id){
         try {
             experimentMapper.delExperiment(id);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
-    public Boolean updateExperiment(Experiment experiment){
+    public String updateExperiment(ExperimentData experimentData){
         try {
-            experimentMapper.updateExperiment(experiment);
+            experimentMapper.updateExperiment(experimentData);
         }catch(Exception e){
-            return false;
+            return e.toString();
         }
-        return true;
+        return "";
     }
 
 }

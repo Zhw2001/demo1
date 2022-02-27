@@ -1,150 +1,222 @@
 <template>
-    <div class="aside">
+    <div :class="classObject">
         <el-menu
-        style="width:200px;height:calc(100vh);"
-        class="aside-menu"
+        class="el-menu-vertical-demo"
+        :unique-opened = 'true'
+        :collapse="clicked"
         router
         >
             <div class="logo-div">
-                <span class="logo-text">website</span>
+                <span class="logo-text"></span>
             </div>
-            <el-submenu index="1" v-if="menu1" >
-                <template slot="title">
-                    <i class="el-icon-data-analysis" ></i>
-                    <span >查看数据</span>
+            <component
+            :class="NoChildren(value)"
+             v-for="value in aside_list" :key = "value.id" :index = ' null + value.id '
+            :is="( value.children && value.children.length>0 ) ? 'el-submenu':'el-menu-item'" >
+                <template :slot = "hasChildren(value)">
+                <i :class="[value.icon]"></i>
+                <span>{{value.title}}</span>
                 </template>
-                <el-menu-item index="/course">check_or_edit</el-menu-item>
-            </el-submenu>
-
-            <el-submenu index="2" v-if="menu2">
-                <template slot="title">
-                    <i class="el-icon-edit" ></i>
-                    <span >生成表格</span>
+                <template v-if="value.children && value.children.length > 0">
+                    <el-menu-item v-for="(v) in value.children" :key="v.id" :index="v.path">
+                        <span>{{v.title}}</span>
+                    </el-menu-item>
                 </template>
-                <el-menu-item index="/input">generate</el-menu-item>
-            </el-submenu>
-
-            <el-submenu index="3" v-if="menu3">
-                <template slot="title">
-                    <i class="el-icon-user" ></i>
-                    <span>用户管理</span>
-                </template>
-                <el-menu-item index="/userList">user</el-menu-item>
-                <el-menu-item>userRole</el-menu-item>
-                <el-menu-item index="/userRoleMenu">userRoleMenu</el-menu-item>
-            </el-submenu>
-
-
+            </component>
         </el-menu>
     </div>
 </template>
 
 <script>
+
 export default {
+    props:{
+        clicked:Boolean,
+    },
     data(){
         return{
-            menu1:'',
-            menu2:'',
-            menu3:'',
+            aside_list: []
         }
     },
     methods: {
     },
     created(){
-        var RoleList = localStorage.getItem('Role').split(',');
-        for (let i=0; i<RoleList.length; i++){
-            switch(RoleList[i])
-                {
-                    case '教学秘书':
-                        this.menu1 = true;
-                        break;
-                    case '任课老师':
-                        this.menu1 = true;
-                        this.menu2 = true;
-                        break;
-                    case '课程负责人':
-                        this.menu1 = true;
-                        this.menu2 = true;
-                    case 'super admin':
-                        this.menu1 = true;
-                        this.menu2 = true;
-                        this.menu3 = true;
-                        break;
-                    default:
-                        this.menu1 = false;
-                        this.menu2 = false;
-                        this.menu3 = false;
+        console.log('createAside')
+        this.aside_list = JSON.parse( localStorage.getItem( 'aside' ) )
+    },
+    computed: {
+        classObject: function () {
+            return {
+                'aside': !this.clicked,
+                'aside_click': this.clicked,
+            }
+        },
+        hasChildren() {
+            return function (value) {
+                if (value.children && value.children.length > 0){
+                    return "title"
                 }
+                return ""
+            }
+        },
+        NoChildren() {
+            return function (value) {
+                if (value.children && value.children.length > 0){
+                    return ""
+                }
+                return "show_menu_item"
+            }
         }
     },
-
 }
+
 </script>
 
 <style lang="less" scoped>
 
-
-/deep/ .el-menu{
-    background-color: transparent;
+.show_menu_item{
+    display: none;
 }
 
-/deep/ .el-menu-item{
-    color:#bdc1dd;
-}
-
-/deep/ .el-menu-item:focus, .el-menu-item:hover {//二级标题穿透
-    background: transparent;
-    color: azure;
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 256px;
 }
 
 .aside{
-    background: linear-gradient(135deg, #8f75da 0, #727cf5 60%);
-    min-height: cal(100vh - 100px);
+    flex: 0 0 256px;
+    background: linear-gradient(135deg, #e9d3ff 0, #b4bfff 60%);
+    transition: all 1s;
+    -webkit-transition: all 1s;
 }
 
-.aside .aside-menu {
-    /deep/ .el-icon-arrow-down:before {//展开图标穿透
-        content: "\E6DF";
-        color: azure;
+.aside {
+    /deep/ .el-menu {
+        border-right: none;
+        list-style: none;
+        position: relative;
+        margin: 0;
+        padding-left: 0;
+        background:transparent;
     }
 }
-.aside .aside-menu .logo-div{
+
+
+.aside .el-menu .logo-div{
     height:70px;
     padding-left:30px;
     line-height:70px;
     display:flex;
 }
-.aside .aside-menu .logo-div .logo-text {
-    font-size: 18px;
+.aside .el-menu .logo-div .logo-text {
+    font-size: 24px;
     font-weight: 500;
     display: inline-block;
     vertical-align: middle;
-    color: #ffffff;
+    color: #000000;
 }
 
 
-.aside .aside-menu {//自定义导航栏样式覆盖
-    border-right: solid 1px #e6e6e6;
-    list-style: none;
-    position: relative;
-    margin: 0;
-    padding-left: 0;
-    background:transparent;
-}
 
-
-.aside .aside-menu .el-submenu{//一级标题穿透
+.aside .el-menu .el-submenu{//一级标题穿透
     /deep/ .el-submenu__title{
         background: transparent;
-        color:#bdc1dd;
+    }
+    /deep/ .el-submenu__title i{
+        color:#000000;
     }
     /deep/ .el-submenu__title:hover i{
-        background: transparent;
-        color:#ffffff;
+        color:#d15637;
+    }
+    /deep/ .el-submenu__title span{
+        color:#000000;
     }
     /deep/ .el-submenu__title:hover span{
-        background: transparent;
-        color:#ffffff;
+        color:#fb5a1a;
     }
 }
+
+.aside .el-menu .el-submenu{//二级标题穿透
+    /deep/ .el-menu{//ul
+        background: transparent;
+    }
+    /deep/ .el-menu :hover{
+        background: transparent;
+    }
+
+    /deep/ .el-menu .el-menu-item{//li
+        background: transparent;
+    }
+    /deep/ .el-menu .el-menu-item :hover{
+        background: transparent;
+    }
+
+    /deep/ .el-menu .el-menu-item span{
+        color:#6c6c70;
+    }
+    /deep/ .el-menu .el-menu-item:hover span{
+        color:#000000;
+    }
+}
+
+
+
+.aside_click{
+    flex: 0 0 80px;
+    background: linear-gradient(135deg, #e9d3ff 0, #b4bfff 60%);
+    transition: all 1s;
+    -webkit-transition: all 1s;
+}
+
+.aside_click{
+    /deep/ .el-menu {
+        border-right: none;
+        list-style: none;
+        position: relative;
+        margin: 0;
+        padding-left: 0;
+        background:transparent;
+    }
+}
+
+.aside_click .el-menu .logo-div{
+    height:70px;
+    padding-left:30px;
+    line-height:70px;
+    display:flex;
+}
+.aside_click .el-menu .logo-div .logo-text {
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+    vertical-align: middle;
+    color: #000000;
+}
+
+
+.aside_click .el-menu .el-submenu{//一级标题穿透
+    /deep/ .el-submenu__title{
+        background: transparent;
+    }
+    /deep/ .el-submenu__title i{
+        color:#000000;
+    }
+    /deep/ .el-submenu__title:hover i{
+        color:#d15637;
+    }
+    /deep/ .el-submenu__title span{
+        color:#000000;
+    }
+    /deep/ .el-submenu__title:hover span{
+        color:#fb5a1a;
+    }
+}
+
+.aside_click .el-menu .el-submenu{//二级标题穿透
+    /deep/ .el-menu{
+        display: none;
+    }
+}
+
+
+
 </style>

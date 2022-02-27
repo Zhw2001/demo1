@@ -1,6 +1,6 @@
 package com.ljsh.test.service;
 
-import com.ljsh.test.mbg.model.AdminAuth;
+import com.ljsh.test.domain.model.AdminAuth;
 
 import java.util.List;
 

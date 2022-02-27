@@ -12,7 +12,7 @@ spring:
 
   datasource:
     name:
-    url: jdbc:mysql://127.0.0.1:3306/webtry?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/graduationdb?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
     username: root
     password: 123456
 
@@ -26,3 +26,8 @@ shiro:
 
 my:
   filepath: C:\Users\13999\Desktop\MyFile\
+
+
+logging:
+  level:
+    com.ljsh.test.domain.mapper: debug

@@ -1,43 +1,59 @@
 package com.ljsh.test.service.impl;
 
-import com.ljsh.test.mbg.mapper.CourseInfoMapper;
-import com.ljsh.test.mbg.model.CourseInfo;
+import com.ljsh.test.domain.model.CourseInfo;
+import com.ljsh.test.domain.model.cinfo;
+import com.ljsh.test.dto.CinfoResDTO;
+import com.ljsh.test.domain.mapper.CourseInfoMapper;
 import com.ljsh.test.service.CourseInfoService;
-import org.apache.commons.collections.list.AbstractLinkedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class CourseInfoServiceImpl implements CourseInfoService {
     @Autowired
     private CourseInfoMapper courseInfoMapper;
 
-
-
-    public List<CourseInfo> getCInfoByCidDep(String cids,String dep){
-        String[] cidList = cids.split(",");
-        List<CourseInfo> courseInfoList = new ArrayList<CourseInfo>();
-        int[] typeList = new int[cidList.length];
-        for(int i=0;i<typeList.length;i++){
-            typeList[i]=courseInfoMapper.get_Type_By_Cid(cidList[i]);
-        }
-        for(int i=0;i<cidList.length;i++){
-            switch(typeList[i]){
-                case 0://0-理论课，1-实验课，2-课程设计，3-毕业设计
-                    courseInfoList.add(courseInfoMapper.get_Course_By_cid_Dep(cidList[i],dep));
+    public CinfoResDTO getCInfoByCid(List<String> cids){
+        List<cinfo> cinfos = courseInfoMapper.GET_BINFO_CID(cids);
+        CinfoResDTO cinfoRes = new CinfoResDTO();
+        List<String> ccids = new ArrayList<>();
+        List<String> ecids = new ArrayList<>();
+        List<String> cdcids = new ArrayList<>();
+        List<String> gdcids = new ArrayList<>();
+        for(cinfo i : cinfos){
+            switch(i.getCourse_type()){
+                case 0:
+                    ccids.add(i.getCId());
+                    break;
                 case 1:
-                    courseInfoList.add( courseInfoMapper.get_Exp_By_cid_Dep(cidList[i],dep));
+                    ecids.add(i.getCId());
+                    break;
                 case 2:
-                    courseInfoList.add( courseInfoMapper.get_Cdesign_By_cid_Dep(cidList[i],dep));
+                    cdcids.add(i.getCId());
+                    break;
                 case 3:
-                    courseInfoList.add( courseInfoMapper.get_Gdesign_By_cid_Dep(cidList[i],dep));
+                    gdcids.add(i.getCId());
+                    break;
             }
         }
-        return courseInfoList;
+        if(ccids.size() > 0){
+            cinfoRes.setCourse_list(courseInfoMapper.get_Course_Cid(ccids));}
+        if(ecids.size() > 0){
+            cinfoRes.setExper_list( courseInfoMapper.get_Exper_Cid(ecids));}
+        if(cdcids.size() > 0){
+            cinfoRes.setCdesign_list( courseInfoMapper.get_Cdesign_Cid(cdcids));}
+        if(gdcids.size() > 0){
+            cinfoRes.setGdesign_list( courseInfoMapper.get_Gdesign_Cid(gdcids));
+        }
+        return cinfoRes;
     }
 
+    public List<CourseInfo> get_All_cnames_cids(){
+        return courseInfoMapper.get_All_cNames_cids();
+    }
 
 }
