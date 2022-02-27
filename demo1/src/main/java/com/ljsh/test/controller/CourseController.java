@@ -1,7 +1,7 @@
 package com.ljsh.test.controller;
 
 import com.ljsh.test.dto.Result;
-import com.ljsh.test.mbg.model.Course;
+import com.ljsh.test.domain.model.CourseData;
 import com.ljsh.test.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +19,15 @@ public class CourseController {
     @GetMapping("/list")
     public Result<?> getCourseList()
     {
-        List<Course> course =courseService.getAll();
-        return Result.success(course);
+        List<CourseData> courseData =courseService.getAll();
+        return Result.success(courseData);
     }
 
     @PostMapping("/update")
-    public Result<?> updateCourse(@RequestBody Course course){
-        if(course != null){
-            String msg = courseService.upCourse(course);
-            if(msg == ""){return Result.success();}
+    public Result<?> updateCourse(@RequestBody CourseData courseData){
+        if(courseData.getId()!=null){
+            String msg = courseService.upCourse(courseData);
+            if(msg.equals("")){return Result.success();}
             else{
                 return Result.error("500",msg);
             }
@@ -36,10 +36,10 @@ public class CourseController {
     }
 
     @PostMapping("/delete")
-    public Result<?> delCourse(@RequestBody Course course){
-        if(course != null){
-            String msg = courseService.delCourse(course.getId());
-            if(msg == ""){return Result.success();}
+    public Result<?> delCourse(@RequestBody CourseData courseData){
+        if(courseData.getId()!=null){
+            String msg = courseService.delCourse(courseData.getId());
+            if(msg.equals("")){return Result.success();}
             else{
                 return Result.error("500",msg);
             }
@@ -48,10 +48,10 @@ public class CourseController {
     }
 
     @PostMapping("/insert")
-    public Result<?> addCourse(@RequestBody Course course){
-        if(course != null){
-            String msg = courseService.addCourse(course);
-            if(msg == ""){return Result.success();}
+    public Result<?> addCourse(@RequestBody CourseData courseData){
+        if(courseData.getCId()!=null){
+            String msg = courseService.addCourse(courseData);
+            if(msg.equals("")){return Result.success();}
             else{
                 return Result.error("500",msg);
             }

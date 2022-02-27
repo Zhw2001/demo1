@@ -11,7 +11,7 @@
  Target Server Version : 50734
  File Encoding         : 65001
 
- Date: 19/02/2022 21:57:51
+ Date: 27/02/2022 21:27:25
 */
 
 SET NAMES utf8mb4;
@@ -23,34 +23,71 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `admin_authority`;
 CREATE TABLE `admin_authority`  (
   `authority_name` char(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '权限名字',
-  `authority_type` char(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '权限类型',
-  `authority_parent_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '权限父ID',
+  `authority_type` int(20) DEFAULT NULL COMMENT '权限类型',
+  `authority_parent_id` bigint(20) DEFAULT NULL COMMENT '权限父ID',
   `authority_parent_name` char(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '父权限名字',
   `authority_url` char(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '权限树的连接路径',
   `authority_sort` int(11) DEFAULT -1 COMMENT '权限树的排序',
   `authority_description` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '权限描述',
-  `auth_enable` tinyint(1) DEFAULT 0 COMMENT '是否可以显示',
+  `auth_enable` int(1) DEFAULT 0 COMMENT '是否可以显示',
   `auth_create_date` datetime(0) DEFAULT NULL COMMENT '创建时间',
   `authority_id` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`authority_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin_authority
 -- ----------------------------
-INSERT INTO `admin_authority` VALUES ('内容合理性审核', '1', NULL, '', 'EA', 1, '', 1, '2022-01-06 15:09:48', 1);
-INSERT INTO `admin_authority` VALUES ('考核信息填写', '1', '1', '内容合理性审核', 'EA_Input', 1, '填写内容合理性审核所需信息', 1, '2022-01-24 14:03:37', 2);
-INSERT INTO `admin_authority` VALUES ('课程目标成绩明细', '1', NULL, '', 'CGD', 2, '', 1, '2022-01-24 13:59:36', 3);
-INSERT INTO `admin_authority` VALUES ('课程成绩录入', '1', '3', '课程目标成绩明细', 'CGD_Input', 1, '录入课程成绩数据', 1, '2022-02-13 16:21:56', 4);
-INSERT INTO `admin_authority` VALUES ('课程目标达成度评价', '1', NULL, '', 'ADE', 3, '', 1, '2022-02-13 16:21:59', 5);
-INSERT INTO `admin_authority` VALUES ('目标信息填写', '1', '5', '课程目标达成度评价', 'ADE_Input', 1, '目标达成度评价所需信息填写', 1, '2022-02-13 16:24:11', 6);
-INSERT INTO `admin_authority` VALUES ('我的历史课程信息', '1', NULL, '', 'MyCourse', 4, '', 1, '2022-02-13 16:24:49', 7);
-INSERT INTO `admin_authority` VALUES ('课程列表', '1', '7', '我的历史课程信息', 'Latest_C_Info', 1, '所负责课程信息的展示', 1, '2022-02-17 22:15:12', 8);
-INSERT INTO `admin_authority` VALUES ('课程目标明细', '1', '7', '我的历史课程信息', 'Latest_A_Detail', 2, '历史生成的课程目标明细下载', 1, '2022-02-17 22:15:16', 9);
-INSERT INTO `admin_authority` VALUES ('用户管理', '1', NULL, NULL, 'User', 5, NULL, 1, '2022-02-17 22:15:18', 10);
-INSERT INTO `admin_authority` VALUES ('用户信息', '1', '10', '用户管理', 'UserInfo', 1, '读取和写入用户信息', 1, '2022-02-17 22:15:20', 11);
-INSERT INTO `admin_authority` VALUES ('用户角色', '1', '10', '用户管理', 'UserRole', 2, '设置用户角色', 1, '2022-02-17 22:15:23', 12);
-INSERT INTO `admin_authority` VALUES ('用户权限', '1', '10', '用户管理', 'UserAuth', 3, '查看用户权限', 1, '2022-02-17 22:15:25', 13);
+INSERT INTO `admin_authority` VALUES ('内容合理性审核', 1, NULL, '', 'EA', 1, '', 1, '2022-01-06 15:09:48', 1);
+INSERT INTO `admin_authority` VALUES ('考核信息填写', 1, 1, '内容合理性审核', 'EA_Input', 1, '填写内容合理性审核所需信息', 1, '2022-01-24 14:03:37', 2);
+INSERT INTO `admin_authority` VALUES ('课程目标成绩明细', 1, NULL, '', 'CGD', 2, '', 1, '2022-01-24 13:59:36', 3);
+INSERT INTO `admin_authority` VALUES ('课程成绩录入', 1, 3, '课程目标成绩明细', 'CGD_Input', 1, '录入课程成绩数据', 1, '2022-02-13 16:21:56', 4);
+INSERT INTO `admin_authority` VALUES ('课程目标达成度评价', 1, NULL, '', 'ADE', 3, '', 1, '2022-02-13 16:21:59', 5);
+INSERT INTO `admin_authority` VALUES ('目标信息填写', 1, 5, '课程目标达成度评价', 'ADE_Input', 1, '目标达成度评价所需信息填写', 1, '2022-02-13 16:24:11', 6);
+INSERT INTO `admin_authority` VALUES ('我的历史课程信息', 1, NULL, '', 'MyCourse', 4, '', 1, '2022-02-13 16:24:49', 7);
+INSERT INTO `admin_authority` VALUES ('课程列表', 1, 7, '我的历史课程信息', 'Latest_C_Info', 1, '所负责课程信息的展示', 1, '2022-02-17 22:15:12', 8);
+INSERT INTO `admin_authority` VALUES ('课程目标明细', 1, 7, '我的历史课程信息', 'Latest_A_Detail', 2, '历史生成的课程目标明细下载', 1, '2022-02-17 22:15:16', 9);
+INSERT INTO `admin_authority` VALUES ('用户管理', 1, NULL, NULL, 'User', 5, NULL, 1, '2022-02-17 22:15:18', 10);
+INSERT INTO `admin_authority` VALUES ('用户信息', 1, 10, '用户管理', 'UserInfo', 1, '读取和写入用户信息', 1, '2022-02-17 22:15:20', 11);
+INSERT INTO `admin_authority` VALUES ('用户角色', 1, 10, '用户管理', 'UserRole', 2, '设置用户角色', 1, '2022-02-17 22:15:23', 12);
+INSERT INTO `admin_authority` VALUES ('用户权限', 1, 10, '用户管理', 'UserAuth', 3, '查看用户权限', 1, '2022-02-17 22:15:25', 13);
+INSERT INTO `admin_authority` VALUES ('分配课程', 1, 10, '用户管理', 'UserCC', 4, '为用户分配教授的课程', 1, '2022-02-26 14:39:34', 14);
+
+-- ----------------------------
+-- Table structure for admin_course_class
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_course_class`;
+CREATE TABLE `admin_course_class`  (
+  `cc_account` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `cc_role_id` bigint(20) NOT NULL,
+  `user_cid` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `course_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `course_class` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`cc_account`, `cc_role_id`, `user_cid`, `course_class`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+
+-- ----------------------------
+-- Records of admin_course_class
+-- ----------------------------
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'XX110110', '操作系统', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'XX110110', '操作系统', '计算机193');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'XX110110s', '操作系统实验', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin', 2, 'XX110110', '操作系统', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin', 2, 'XX127030', '操作系统课程设计', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin', 4, 'XX110110', '操作系统', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin01', 1, 'XX110110', '操作系统', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin01', 4, 'XX110110', '操作系统', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin02', 4, 'XX110110', '操作系统', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin10', 2, 'XX110110', '操作系统', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'JY391001', '国际航运概论', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'JY391001', '国际航运概论', '计算机193');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'WL320020', '物理实验', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'WL320020', '物理实验', '计算机193');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'XX110210', '计算机网络', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'XX110210', '计算机网络', '计算机193');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'XX110240', '计算机原理与汇编', '计算机191');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'XX110240', '计算机原理与汇编', '计算机192');
+INSERT INTO `admin_course_class` VALUES ('admin', 1, 'XX110240', '计算机原理与汇编', '计算机181');
 
 -- ----------------------------
 -- Table structure for admin_role
@@ -98,16 +135,24 @@ INSERT INTO `admin_role_auth` VALUES (1, 10);
 INSERT INTO `admin_role_auth` VALUES (1, 11);
 INSERT INTO `admin_role_auth` VALUES (1, 12);
 INSERT INTO `admin_role_auth` VALUES (1, 13);
+INSERT INTO `admin_role_auth` VALUES (1, 14);
 INSERT INTO `admin_role_auth` VALUES (2, 1);
+INSERT INTO `admin_role_auth` VALUES (2, 2);
 INSERT INTO `admin_role_auth` VALUES (2, 3);
+INSERT INTO `admin_role_auth` VALUES (2, 4);
 INSERT INTO `admin_role_auth` VALUES (2, 5);
 INSERT INTO `admin_role_auth` VALUES (2, 7);
 INSERT INTO `admin_role_auth` VALUES (2, 10);
+INSERT INTO `admin_role_auth` VALUES (2, 12);
 INSERT INTO `admin_role_auth` VALUES (3, 1);
+INSERT INTO `admin_role_auth` VALUES (3, 2);
 INSERT INTO `admin_role_auth` VALUES (3, 3);
+INSERT INTO `admin_role_auth` VALUES (3, 4);
 INSERT INTO `admin_role_auth` VALUES (3, 5);
+INSERT INTO `admin_role_auth` VALUES (3, 6);
 INSERT INTO `admin_role_auth` VALUES (3, 7);
 INSERT INTO `admin_role_auth` VALUES (3, 10);
+INSERT INTO `admin_role_auth` VALUES (3, 14);
 INSERT INTO `admin_role_auth` VALUES (4, 1);
 INSERT INTO `admin_role_auth` VALUES (4, 2);
 INSERT INTO `admin_role_auth` VALUES (4, 3);
@@ -132,90 +177,77 @@ CREATE TABLE `admin_user`  (
   `email` varchar(36) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '邮箱',
   `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '账户描述',
   `create_date` datetime(0) DEFAULT NULL COMMENT '创建时间',
-  `user_cid` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '负责教授的所有课程编号',
   PRIMARY KEY (`uid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin_user
 -- ----------------------------
-INSERT INTO `admin_user` VALUES (1, 'admin', 'zzz', '123456', 15821713348, 'admin@my.com', NULL, '2022-01-30 14:46:42', 'XX110100,XX110110s,XX127030,XX127130,XX127290');
-INSERT INTO `admin_user` VALUES (2, 'admin01', 'ZhangXf', '123456', 15821713344, 'xiaoxiaohong@163.com', NULL, '2022-01-19 16:01:22', 'XX110110,XX110110s,XX127030,XX127290');
-INSERT INTO `admin_user` VALUES (3, 'admin02', 'BiK', '123456', 17326543984, 'bluelan@126.com', NULL, '2022-01-19 16:02:04', 'XX110110,XX110110s,XX127030,XX110210,XX110210s,XX127290');
-INSERT INTO `admin_user` VALUES (4, 'admin03', 'ZhangL', '123456', 18921234465, 'white@163.com', NULL, '2022-01-19 16:01:54', 'XX110240,XX110240s,XX127060,XX127290');
-INSERT INTO `admin_user` VALUES (5, 'admin04', 'ChenL', '123456', 13811723654, 'square@163.com', NULL, '2022-01-19 16:01:52', 'XX110270,XX127290');
-INSERT INTO `admin_user` VALUES (6, 'admin05', 'SunW', '123456', 16217484542, 'chensir@126.com', NULL, '2022-01-19 16:02:01', 'XX110590,XX110170s,XX110380,XX110380s,XX127290');
-INSERT INTO `admin_user` VALUES (7, 'admin06', 'XuM', '123456', 17022800114, 'joker@gmail.com', NULL, '2022-01-19 16:01:49', 'XX110590,XX110170s,XX110280,XX127270,XX110290s,XX127290');
-INSERT INTO `admin_user` VALUES (8, 'admin07', 'LiuYx', '123456', 17024972739, 'doggoy@163.com', NULL, '2022-01-19 16:01:31', 'XX110380,XX110380s,XX127290');
-INSERT INTO `admin_user` VALUES (9, 'admin08', 'HuangXx', '123456', 16761011175, 'catty@163.com', NULL, '2022-01-19 16:01:27', 'XX110420,XX110420s,XX127290');
-INSERT INTO `admin_user` VALUES (10, 'admin09', 'ZhuCh', '123456', 17024913295, 'squirral@126.com', NULL, '2022-01-19 16:01:57', 'XX110820，XX110820s,XX110120,XX127290');
-INSERT INTO `admin_user` VALUES (11, 'admin10', 'JiaoJj', '123456', 17017219915, '1@1.com', NULL, '2022-01-18 14:49:40', 'XX110240,XX110240s,XX120230,XX127290');
-INSERT INTO `admin_user` VALUES (12, 'admin11', 'YangZy', '123456', NULL, NULL, NULL, NULL, 'XX120440,XX120760,XX127290');
-INSERT INTO `admin_user` VALUES (13, 'admin12', 'YuN', '123456', NULL, NULL, NULL, NULL, 'XX110120,XX127290');
-INSERT INTO `admin_user` VALUES (14, 'admin13', 'HanYj', '123456', NULL, NULL, NULL, NULL, 'XX120180,XX127290');
-INSERT INTO `admin_user` VALUES (15, 'admin14', 'LuanCj', '123456', NULL, NULL, NULL, NULL, 'XX110380,XX110380s,XX110390,XX110390s,XX127090,XX127290');
-INSERT INTO `admin_user` VALUES (16, 'admin15', 'ShiYh', '123456', NULL, NULL, NULL, NULL, 'XX120760,XX127290');
-INSERT INTO `admin_user` VALUES (17, 'admin16', 'WuH', '123456', NULL, NULL, NULL, NULL, 'XX110100,XX127040,XX127290');
-INSERT INTO `admin_user` VALUES (18, 'admin17', 'JinSs', '123456', NULL, NULL, NULL, NULL, 'XX110590,XX110170s,XX110280,XX127270,XX110290s,XX127110，XX127010,XX127290');
-INSERT INTO `admin_user` VALUES (19, 'admin18', 'XuQ', '123456', NULL, NULL, NULL, NULL, 'XX110590,XX110170s,XX110280,XX127270,XX110290s,XX127010,XX127290');
-INSERT INTO `admin_user` VALUES (20, 'admin19', 'SongM', '123456', NULL, NULL, NULL, NULL, 'XX110280,XX127270,XX110290s,XX127040,XX127290');
-INSERT INTO `admin_user` VALUES (21, 'user01', 'LiuJ', '123456', NULL, NULL, NULL, NULL, 'XX110110,XX110110s,XX127030,XX127290');
-INSERT INTO `admin_user` VALUES (22, 'user02', 'ZhuCm', '123456', NULL, NULL, NULL, NULL, 'XX110110,XX110110s,XX127030,XX127290');
-INSERT INTO `admin_user` VALUES (23, 'user03', 'LiQm', '123456', NULL, NULL, NULL, NULL, 'XX110210,XX110210s,XX127290');
-INSERT INTO `admin_user` VALUES (24, 'user04', 'LiuGz', '123456', NULL, NULL, NULL, NULL, 'XX110210,XX110210s,XX127290');
-INSERT INTO `admin_user` VALUES (25, 'user05', 'JiangSm', '123456', NULL, NULL, NULL, NULL, 'XX110210,XX110210s,XX127290');
-INSERT INTO `admin_user` VALUES (26, 'user06', 'YaoM', '123456', NULL, NULL, NULL, NULL, 'XX110240,XX110240s,XX110420,XX110420s,XX127290');
-INSERT INTO `admin_user` VALUES (27, 'user07', 'LiuTy', '123456', NULL, NULL, NULL, NULL, 'XX110270,XX120180,XX127290');
-INSERT INTO `admin_user` VALUES (28, 'user08', 'BaiZj', '123456', NULL, NULL, NULL, NULL, 'XX110270,XX120180,XX127290');
-INSERT INTO `admin_user` VALUES (29, 'user09', 'GeY', '123456', NULL, NULL, NULL, NULL, 'XX110270,XX127290');
-INSERT INTO `admin_user` VALUES (30, 'user10', 'ZhouRg', '123456', NULL, NULL, NULL, NULL, 'XX110280,XX127270,XX110290s,XX110380,XX110380s,XX127290');
-INSERT INTO `admin_user` VALUES (31, 'user11', 'WangWh', '123456', NULL, NULL, NULL, NULL, 'XX110280,XX127270,XX110290s,XX120440,XX127290');
-INSERT INTO `admin_user` VALUES (32, 'user12', 'WangXf', '123456', NULL, NULL, NULL, NULL, 'XX110280,XX127270,XX110290s,XX127290');
-INSERT INTO `admin_user` VALUES (33, 'user13', 'GaoMt', '123456', NULL, NULL, NULL, NULL, 'XX110380,XX110380s,XX127290');
-INSERT INTO `admin_user` VALUES (34, 'user14', 'ZhangYf', '123456', NULL, NULL, NULL, NULL, 'XX110380,XX110380s,XX127290');
-INSERT INTO `admin_user` VALUES (35, 'user15', 'WeiL', '123456', NULL, NULL, NULL, NULL, 'XX110380,XX110380s,XX127290');
-INSERT INTO `admin_user` VALUES (36, 'user16', 'LiuYh', '123456', NULL, NULL, NULL, NULL, 'XX120230,XX127290');
-INSERT INTO `admin_user` VALUES (37, 'user17', 'LiuJing', '123456', NULL, NULL, NULL, NULL, 'XX120440,XX127010,XX127290');
-INSERT INTO `admin_user` VALUES (38, 'user18', 'SongAj', '123456', NULL, NULL, NULL, NULL, 'XX110120,XX127290');
-INSERT INTO `admin_user` VALUES (39, 'user19', 'LiMj', '123456', NULL, '', '', '2022-02-07 19:47:19', 'XX110390,XX110390s,XX127090,XX127290');
-INSERT INTO `admin_user` VALUES (40, 'user20', 'TanFx', '123456', NULL, NULL, NULL, NULL, 'XX110100,XX127290');
-INSERT INTO `admin_user` VALUES (41, 'user21', 'ShiXh', '123456', NULL, NULL, NULL, NULL, 'XX110590,XX110170s,XX127010,XX127290');
-INSERT INTO `admin_user` VALUES (42, 'user22', 'HuXc', '123456', NULL, NULL, NULL, NULL, 'XX127040,XX127290');
-INSERT INTO `admin_user` VALUES (43, 'user23', 'ZengWm', '123456', NULL, NULL, NULL, NULL, 'XX110590,XX110170s,XX127290');
-INSERT INTO `admin_user` VALUES (44, 'user24', 'ZhouF', '123456', NULL, NULL, NULL, NULL, 'XX110590,XX110170s,XX127290');
-INSERT INTO `admin_user` VALUES (45, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `admin_user` VALUES (46, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `admin_user` VALUES (47, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `admin_user` VALUES (48, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `admin_user` VALUES (49, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `admin_user` VALUES (50, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `admin_user` VALUES (51, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `admin_user` VALUES (52, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `admin_user` VALUES (53, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `admin_user` VALUES (54, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `admin_user` VALUES (55, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (1, 'admin', 'zzz', '123456', 15821713348, 'admin@my.com', NULL, '2022-01-30 14:46:42');
+INSERT INTO `admin_user` VALUES (2, 'admin01', 'ZhangXf', '123456', 15821713344, 'xiaoxiaohong@163.com', NULL, '2022-01-19 16:01:22');
+INSERT INTO `admin_user` VALUES (3, 'admin02', 'BiK', '123456', 17326543984, 'bluelan@126.com', NULL, '2022-01-19 16:02:04');
+INSERT INTO `admin_user` VALUES (4, 'admin03', 'ZhangL', '123456', 18921234465, 'white@163.com', NULL, '2022-01-19 16:01:54');
+INSERT INTO `admin_user` VALUES (5, 'admin04', 'ChenL', '123456', 13811723654, 'square@163.com', NULL, '2022-01-19 16:01:52');
+INSERT INTO `admin_user` VALUES (6, 'admin05', 'SunW', '123456', 16217484542, 'chensir@126.com', NULL, '2022-01-19 16:02:01');
+INSERT INTO `admin_user` VALUES (7, 'admin06', 'XuM', '123456', 17022800114, 'joker@gmail.com', NULL, '2022-01-19 16:01:49');
+INSERT INTO `admin_user` VALUES (8, 'admin07', 'LiuYx', '123456', 17024972739, 'doggoy@163.com', NULL, '2022-01-19 16:01:31');
+INSERT INTO `admin_user` VALUES (9, 'admin08', 'HuangXx', '123456', 16761011175, 'catty@163.com', NULL, '2022-01-19 16:01:27');
+INSERT INTO `admin_user` VALUES (10, 'admin09', 'ZhuCh', '123456', 17024913295, 'squirral@126.com', NULL, '2022-01-19 16:01:57');
+INSERT INTO `admin_user` VALUES (11, 'admin10', 'JiaoJj', '123456', 17017219915, '1@1.com', NULL, '2022-01-18 14:49:40');
+INSERT INTO `admin_user` VALUES (12, 'admin11', 'YangZy', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (13, 'admin12', 'YuN', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (14, 'admin13', 'HanYj', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (15, 'admin14', 'LuanCj', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (16, 'admin15', 'ShiYh', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (17, 'admin16', 'WuH', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (18, 'admin17', 'JinSs', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (19, 'admin18', 'XuQ', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (20, 'admin19', 'SongM', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (21, 'user01', 'LiuJ', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (22, 'user02', 'ZhuCm', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (23, 'user03', 'LiQm', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (24, 'user04', 'LiuGz', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (25, 'user05', 'JiangSm', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (26, 'user06', 'YaoM', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (27, 'user07', 'LiuTy', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (28, 'user08', 'BaiZj', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (29, 'user09', 'GeY', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (30, 'user10', 'ZhouRg', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (31, 'user11', 'WangWh', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (32, 'user12', 'WangXf', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (33, 'user13', 'GaoMt', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (34, 'user14', 'ZhangYf', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (35, 'user15', 'WeiL', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (36, 'user16', 'LiuYh', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (37, 'user17', 'LiuJing', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (38, 'user18', 'SongAj', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (39, 'user19', 'LiMj', '123456', NULL, '', '', '2022-02-07 19:47:19');
+INSERT INTO `admin_user` VALUES (40, 'user20', 'TanFx', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (41, 'user21', 'ShiXh', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (42, 'user22', 'HuXc', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (43, 'user23', 'ZengWm', '123456', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_user` VALUES (44, 'user24', 'ZhouF', '123456', NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for admin_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS `admin_user_role`;
 CREATE TABLE `admin_user_role`  (
-  `UR_role_id` bigint(20) NOT NULL,
   `UR_uid` bigint(20) NOT NULL,
-  `user_cid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  PRIMARY KEY (`UR_role_id`, `UR_uid`) USING BTREE
+  `UR_role_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`UR_uid`, `UR_role_id`) USING BTREE
 ) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of admin_user_role
 -- ----------------------------
-INSERT INTO `admin_user_role` VALUES (1, 1, 'E_XX110110s,GD_XX127130,CD_XX127030,C_XX110100');
-INSERT INTO `admin_user_role` VALUES (2, 11, NULL);
-INSERT INTO `admin_user_role` VALUES (4, 1, 'C_XX110100');
-INSERT INTO `admin_user_role` VALUES (4, 2, 'C_XX110100');
-INSERT INTO `admin_user_role` VALUES (4, 3, 'C_XX110100');
-INSERT INTO `admin_user_role` VALUES (2, 1, 'C_XX110100');
-INSERT INTO `admin_user_role` VALUES (1, 2, '');
+INSERT INTO `admin_user_role` VALUES (1, 1);
+INSERT INTO `admin_user_role` VALUES (1, 2);
+INSERT INTO `admin_user_role` VALUES (1, 4);
+INSERT INTO `admin_user_role` VALUES (2, 1);
+INSERT INTO `admin_user_role` VALUES (2, 4);
+INSERT INTO `admin_user_role` VALUES (3, 4);
+INSERT INTO `admin_user_role` VALUES (11, 2);
 
 -- ----------------------------
 -- Table structure for cdesign
@@ -921,133 +953,123 @@ INSERT INTO `course` VALUES (292, '2019-2020-1', 'XX110100', 1, '201810313216', 
 -- ----------------------------
 DROP TABLE IF EXISTS `courseaudit`;
 CREATE TABLE `courseaudit`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `courseID` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `module_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `percent` double(20, 2) DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  `module_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `courseID` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`module_name`, `courseID`) USING BTREE
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of courseaudit
 -- ----------------------------
-INSERT INTO `courseaudit` VALUES (1, 'XX110110', '平时', 0.30);
-INSERT INTO `courseaudit` VALUES (2, 'XX110110', '期末', 0.70);
+INSERT INTO `courseaudit` VALUES ('实验', 'XX110110s');
+INSERT INTO `courseaudit` VALUES ('平时', 'XX110110');
+INSERT INTO `courseaudit` VALUES ('平时', 'XX110240');
+INSERT INTO `courseaudit` VALUES ('期末', 'XX110110');
+INSERT INTO `courseaudit` VALUES ('期末', 'XX110240');
 
 -- ----------------------------
 -- Table structure for courseinfo
 -- ----------------------------
 DROP TABLE IF EXISTS `courseinfo`;
 CREATE TABLE `courseinfo`  (
-  `info_cNum` int(11) NOT NULL,
-  `department` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `semester` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `semester` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '审核学期',
   `info_cId` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `cName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `cTarget` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `A` double(20, 2) DEFAULT NULL COMMENT '优秀（>=90)',
-  `B` double(20, 2) DEFAULT NULL COMMENT '良好(<90,>80)',
-  `C` double(20, 2) DEFAULT NULL COMMENT '中等(<80,>70)',
-  `D` double(20, 2) DEFAULT NULL COMMENT '及格(<70,>60)',
-  `E` double(20, 2) DEFAULT NULL COMMENT '不及格(<60)',
-  `user_id` bigint(20) DEFAULT NULL,
+  `cTarget` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `excellent` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '优秀（>=90)',
+  `good` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '良好(<90,>80)',
+  `normal` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '中等(<80,>70)',
+  `pass` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '及格(<70,>60)',
+  `poor` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '不及格(<60)',
   `course_type` int(11) DEFAULT 0 COMMENT '课程的类型：0-理论课，1-实验课，2-课程设计，3-毕业设计',
-  `test_type` int(11) DEFAULT NULL COMMENT '考核类型：0-考试，1-考察',
-  `standard_num` int(11) DEFAULT NULL COMMENT '考核标准数量',
-  `standard_names` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '考核标准名称明细，JSON一维String数组',
-  `question_num` int(11) DEFAULT NULL COMMENT '考试大题数量',
-  `question_names` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '考试大题名称明细，JSON一维String数组',
-  `goal_num` int(11) DEFAULT NULL COMMENT '教学目标数量',
-  `score_distribution` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '分数分布，JSON二维float数组，size=goal_num*(standard_num+question_num)',
-  PRIMARY KEY (`info_cNum`) USING BTREE,
+  `test_type` int(11) DEFAULT NULL COMMENT '考核类型：0-考试，1-考查',
+  PRIMARY KEY (`info_cId`) USING BTREE,
   INDEX `info_cId`(`info_cId`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of courseinfo
 -- ----------------------------
-INSERT INTO `courseinfo` VALUES (1, '数学系', NULL, 'WL310011', '大学物理(一)', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (2, '数学系', NULL, 'WL310012', '大学物理(二)', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (3, '数学系', NULL, 'WL320020', '物理实验', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (4, '数学系', NULL, 'WL210011', '高等数学A（一）', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (5, '数学系', NULL, 'WL210012', '高等数学A（二）', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (6, '数学系', NULL, 'WL210140', '概率论与数理统计', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (7, '数学系', NULL, 'WL210040', '线性代数', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (8, '行政系', NULL, 'WL410010', '中国近现代史纲要', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (9, '行政系', NULL, 'WL410040', '马克思主义原理', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (10, '行政系', NULL, 'WL420020', '思想道德与法律基础', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (11, '体育部', NULL, 'WL510011', '体育（一）', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (12, '体育部', NULL, 'WL510012', '体育（二）', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (13, '体育部', NULL, 'WL510013', '体育（三）', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (14, '体育部', NULL, 'WL510014', '体育（四）', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (15, '学生处', NULL, 'QT620010', '军事理论', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (16, '学生处', NULL, 'QT620020', '形势与政策', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (17, '教务处', NULL, 'QT820010', '第二课堂', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (18, '计算机系', NULL, 'XX110270', '离散数学', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (19, '计算机系', NULL, 'XX110590', '高级语言程序设计', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (20, '计算机系', NULL, 'XX110170s', '高级语言程序设计实验', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (21, '计算机系', NULL, 'XX110280', '面向对象程序设计', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (22, '计算机系', NULL, 'XX127270', '面向对象程序设计课程设计', '', NULL, NULL, NULL, NULL, NULL, 1, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (23, '计算机系', NULL, 'XX110120', '电路与电子学', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (24, '计算机系', NULL, 'XX110120s', '电路与电子学实验', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (25, '计算机系', NULL, 'XX110420', '数字逻辑', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (26, '计算机系', NULL, 'XX110420s', '数字逻辑实验', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (27, '计算机系', NULL, 'XX110380', '数据结构', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (28, '计算机系', NULL, 'XX110380s', '数据结构实验', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (29, '计算机系', NULL, 'XX110110', '操作系统', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 3, '[\"考勤\", \"课堂表现\", \"作业\"]', 4, '[\"第1大题\", \"第2大题\", \"第3大题\", \"第4大题\"]', 4, '[[7, 0, 0, 70, 70, 0, 0], [0, 8, 12, 0, 0, 0, 0], [0, 0, 0, 0, 0, 70, 0], [0, 0, 3, 0, 0, 0, 70]]');
-INSERT INTO `courseinfo` VALUES (30, '计算机系', NULL, 'XX110110s', '操作系统实验', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (31, '计算机系', NULL, 'XX127030', '操作系统课程设计', '', NULL, NULL, NULL, NULL, NULL, 1, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (32, '计算机系', NULL, 'XX110210', '计算机网络', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (33, '计算机系', NULL, 'XX110210s', '计算机网络实验', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (34, '计算机系', NULL, 'XX110240', '计算机原理与汇编', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (35, '计算机系', NULL, 'XX110240s', '计算机原理与汇编实验', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (36, '计算机系', NULL, 'XX110390', '数据库原理及应用', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (37, '计算机系', NULL, 'XX110390s', '数据库原理及应用实验', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (38, '计算机系', NULL, 'XX127090', '数据库原理及应用课程设计', '', NULL, NULL, NULL, NULL, NULL, 1, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (39, '计算机系', NULL, 'XX110480', '微型计算机技术', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (40, '计算机系', NULL, 'XX110480s', '微型计算机技术实验', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (41, '计算机系', NULL, 'XX110100', '编译原理', '课程目标1：能阐述和解释文法与语言、正规文法、正规表达式、自动机、上下文无关文法，LL(1)文法、LR(0)、 SLR(1)、LR(1)、LALR(1)、语法制导的语义计算、属性文法中的关键概念，能列举出这些关键概念的典型例子, 并能判断关于这些关键概念的基本命题的正确性。（支撑毕业要求1.1中“掌握表述计算机工程问题所需的数学、自然科学和工程基础理论”）；\n课程目标2：能描述词法分析所需的正规表达式的构造规则，并能设计基本词法规则的正规式。能使用自动机的相互转换方法将不同类型的自动机转换为对应的等价形式', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (42, '计算机系', NULL, 'XX120180', '计算方法', '课程目标1：标点1.2：掌握计算机程序设计所需的数学表达方式、计算方法、数据结构。课程目标2：指标点4.3：能够分析系统运行所需的时空成本；能分析和解释实验结果对应的物理意义，理解系统的使用对象、适用范围，综合得到合理有效的结论。课程目标3：指标点5.3：能对复杂计算机系统的运行进行测试和模拟，能分析系统、算法和工具的局限性。', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (43, '计算机系', NULL, 'XX120230', '计算机系统结构', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (44, '计算机系', NULL, 'XX127060', '计算机硬件课程设计', '', NULL, NULL, NULL, NULL, NULL, 1, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (45, '计算机系', NULL, 'XX120440', '算法设计与分析', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (46, '计算机系', NULL, 'XX127110', '应用软件开发课程设计', '', NULL, NULL, NULL, NULL, NULL, 1, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (47, '计算机系', NULL, 'XX127290', '毕业设计（论文）（含毕业实习）', '', NULL, NULL, NULL, NULL, NULL, 1, 3, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (48, '计算机系', NULL, 'XX120620', 'JAVA编程基础', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (49, '计算机系', NULL, 'XX120200', '计算机图形学', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (50, '计算机系', NULL, 'XX120730', '计算机图像处理', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (51, '管理系', NULL, 'JY120280', '供应链管理', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (52, '英语系', NULL, 'WY110650', '物流英语', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (53, '计算机系', NULL, 'XX120760', '计算机科学导论', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (54, '英语系', NULL, '00100061', '大学英语（一）', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (55, '体育部', NULL, '00370007', '武术散打', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (56, '英语系', NULL, 'WY120721', '商务英语（一）', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (57, '计算机系', NULL, 'XX110290s', '面向对象程序设计实验', '', NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (58, '英语系', NULL, 'WY110680', '口语实践', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (59, '行政系', NULL, '00340028', '中国古典小说欣赏', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (60, '法学院', NULL, '00330011', '法律与社会', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (61, '英语系', NULL, '00100062', '大学英语（二）', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (62, '计算机系', NULL, 'XX110360', '软件工程', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (63, '法学院', NULL, '00330001', '海商法', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (64, '管理系', NULL, '00320006', '物流学概论', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (65, '法学院', NULL, '00330004', '海上货物运输法规', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (66, '英语系', NULL, 'WY120710', '中级口译', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (67, '教务处', NULL, '00370010', '大学生心理健康教育', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (68, '英语系', NULL, '00350011', '职业汉语', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (69, '行政系', NULL, 'WL410060', '概论', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (70, '英语系', NULL, 'WY110660', '口译实践', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (71, '计算机系', NULL, 'XX127010', '实用软件实践', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (72, '计算机系', NULL, 'XX127040', '程序设计课程设计', '', NULL, NULL, NULL, NULL, NULL, 1, 2, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (74, '', NULL, 'QT110010', '物流信息系统', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (75, '', NULL, 'JY120280', '供应链管理', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (76, '', NULL, 'JY391001', '国际航运概论', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (77, '', NULL, 'JY191001', '港口概论', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (78, '', NULL, 'QT892001', '美学通论', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (79, '', NULL, 'HH395003', '奇异的仿生学', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (80, '', NULL, 'YS193001', '大学美术', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (81, '', NULL, 'QT493001', '音乐名作鉴赏', '', NULL, NULL, NULL, NULL, NULL, 1, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (82, '计算机系', NULL, 'XX110820', '微机接口技术', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `courseinfo` VALUES (83, '计算机系', NULL, 'XX110820s', '微机接口技术实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `courseinfo` VALUES (NULL, '00100061', '大学英语（一）', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, '00100062', '大学英语（二）', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, '00320006', '物流学概论', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, '00330001', '海商法', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, '00330004', '海上货物运输法规', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, '00330011', '法律与社会', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, '00340028', '中国古典小说欣赏', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, '00350011', '职业汉语', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, '00370007', '武术散打', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, '00370010', '大学生心理健康教育', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'HH395003', '奇异的仿生学', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'JY120280', '供应链管理', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'JY191001', '港口概论', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'JY391001', '国际航运概论', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'QT110010', '物流信息系统', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'QT493001', '音乐名作鉴赏', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'QT620010', '军事理论', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'QT620020', '形势与政策', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'QT820010', '第二课堂', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'QT892001', '美学通论', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL210011', '高等数学A（一）', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL210012', '高等数学A（二）', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL210040', '线性代数', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL210140', '概率论与数理统计', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL310011', '大学物理(一)', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL310012', '大学物理(二)', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL320020', '物理实验', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL410010', '中国近现代史纲要', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL410040', '马克思主义原理', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL410060', '概论', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL420020', '思想道德与法律基础', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL510011', '体育（一）', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL510012', '体育（二）', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL510013', '体育（三）', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WL510014', '体育（四）', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'WY110650', '物流英语', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'WY110660', '口译实践', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'WY110680', '口语实践', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'WY120710', '中级口译', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'WY120721', '商务英语（一）', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES ('2018-2019-1', 'XX110110', '操作系统', ' 能运用操作系统的原理描述进程和线程，能分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，会对比不同解决方案的优缺点，给出结论。 :]在具体场景和任务有变化时，能针对新的用户目标和需求，设计新的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，并能分析解决方案在时间上或空间上的开销。:]能分析程序的并发性程度，用前趋图描述程序的并发执行，构建并发系统，能测算不同的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本。:]能就具体场景，模拟生产者消费者、磁盘调度、文件管理统或存储器管理的操作流程，设计系统，并能分析、对比不同操作方案的成本和局限性。:]', '能准确运用操作系统的原理描述进程和线程，能准备分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，能准确对比不同解决方案的优缺点。:]针对新的用户目标和需求，能系统设计新的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，能合理分析解决方案在时间上或空间上的开销:]能准确分析程序的并发性程度，会用前趋图描述程序的并发执行，构建完善的并发系统，能准备测算不同的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本:]就具体场景，能准确模拟生产者消费者、磁盘调度、文件管理统或存储器管理的操作流程，设计系统，能准备分析、对比不同操作方案的成本和局限性:]', '能合理运用操作系统的原理描述进程和线程，能分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，会对比不同解决方案的优缺点。:]针对新的用户目标和需求，能设计合理的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，能分析解决方案在时间上或空间上的开销:]能合理分析程序的并发性程度，会用前趋图描述程序的并发执行，构建并发系统，能测算不同的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本:]就具体场景，能合理模拟生产者消费者、磁盘调度、文件管理统或存储器管理的操作流程，设计系统，能合理分析、对比不同操作方案的时间和空间成本:]', '能合理运用操作系统的原理描述进程和线程，能分析影响处理调度、磁盘调度、存储器管理、文件管理和输ppppppp:]针对新的用户目标和需求，基本能设计新的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，111111111111:]能合理分析程序的并发性程度，会用前趋图描述程序的并发执行，构建并发系统，能测算不同的调度机制、信号量和同步机制、存储方式和置换算法11111111111111111:]就具体场景，能合理模拟生产者消费者、磁盘调度、文件管理统或存储器管理的操作流程，设计系统，能合理分析、对比不同操作1111111111:]', '能运用操作系统的原理描述进程和线程，基本能分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，基本上会对比不同解决方案的优缺点。:]针对新的用户目标和需求，基本能设计新的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，基本能分析解决方案在时间上或空间上的开销:]基本能分析程序的并发性程度，基本会用前趋图描述程序的并发执行，能构建并发系统，基本能测算不同的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本:]就具体场景，基本能模拟生产者消费者、磁盘调度、文件管理统或存储器管理的操作流程，设计系统，能基本分析、对比不同操作方案的成本和局限性:]', '不能分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，不能对比不同解决方案的优缺点。:]不能针对新的用户目标和需求设计新的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，不能分析解决方案在时间上或空间上的开销:]无法分析程序的并发性程度，不会用前趋图描述程序的并发执行，不能能测算不同的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本:]能就具体场景，模拟生产者消费者、磁盘调度、文件管理统或存储器管理的操作流程，设计系统，并能分析、对比不同操作方案的成本和局限性:]', 0, 0);
+INSERT INTO `courseinfo` VALUES ('2018-2019-1', 'XX110110s', '操作系统实验', '能部署使用虚拟机，理解虚拟机和宿主机之间是可通讯的、共享宿主机的资源，一样存在信息安全问题；能操纵多进程的并发、所占资源，编写程序时自觉控制进程规模，保护计算机的健康和运行环境。:]能创建并设计含不同类型线程的并发系统，能根据需求设计处理机调度系统；在所设计的系统中，用恰当计算机语言、调用恰当的库函数，编写代码，测试运行；在所设计的系统中，能采集不同数据进行测试、对比、分析产生不同结果的原因。:]能分析计算机系统中的置换算法，构建模型，测试对比缺页率，寻找最佳操作点；能分析文件系统中的读写问题，权衡利弊后选择符合需求的读写方式，编写函数功能，测试运行。:]', '会准确部署虚拟机，自主安装虚拟机和宿主机之间的通讯工具，准确理解虚拟机存在信息安全问题；能准确操纵多进程的并发，编写程序时会完美控制进程规模，保护计算机的健康和运行环境:]能自主阅读相关文献后创建并设计含不同类型线程的并发系统，能根据需求准确设计处理机调度系统；能准确调用合适的库函数，编写代码，测试运行；能准确采集不同数据进行测试、对比，准备分析产生不同结果的原因:]基本能分析计算机系统中的置换算法，能基本构建模型、测试对比缺页率，寻找最佳操作点；基本能分析文件系统中的读写问题，权衡利弊后选择符合需求的读写方式，编写函数功能，测试运行:]', '会部署虚拟机，会安装虚拟机和宿主机之间的通讯工具，理解虚拟机存在信息安全问题；能操纵多进程的并发，编写程序时会控制进程规模，以保护计算机的健康和运行环境:]经提示，能创建并设计含不同类型线程的并发系统，基本能根据需求设计处理机调度系统；能自主调用合适的库函数，编写代码，测试运行；能自主采集不同数据进行测试、基本能对比，分析产生不同结果的原因:]基本能分析计算机系统中的置换算法，能基本构建模型、测试对比缺页率，寻找最佳操作点；基本能分析文件系统中的读写问题，权衡利弊后选择符合需求的读写方式，编写函数功能，测试运行:]', '能部署虚拟机，能安装虚拟机和宿主机之间的通讯工具，比较理解虚拟机存在信息安全问题；操纵多进程的并发，编写程序时会控制进程规模，以保护计算机的健康和运行环境:]经提示，能创建并设计含不同类型线程的并发系统，基本能根据需求设计处理机调度系统；能自主调用合适的库函数，编写代码，测试运行；能自主采集不同数据进行测试、基本能对比，分析产生不同结果的原因:]基本能分析计算机系统中的置换算法，能基本构建模型、测试对比缺页率，寻找最佳操作点；基本能分析文件系统中的读写问题，权衡利弊后选择符合需求的读写方式，编写函数功能，测试运行:]', '基本会部署虚拟机，经提示后会安装虚拟机和宿主机之间的通讯工具，基本理解虚拟机存在信息安全问题；基本能操纵多进程的并发，编写程序时会控制进程规模，以保护计算机的健康和运行环境:]经多次指导后，能创建并设计含不同类型线程的并发系统，基本能根据需求设计处理机调度系统；经多次指导后，能调用合适的库函数，编写代码，测试运行；经提示后，能采集不同数据进行测试，基本能对比、分析产生不同结果的原因:]基本能分析计算机系统中的置换算法，能基本构建模型、测试对比缺页率，寻找最佳操作点；基本能分析文件系统中的读写问题，权衡利弊后选择符合需求的读写方式，编写函数功能，测试运行:]', '不会安装虚拟机，不会安装虚拟机和宿主机之间的通讯工具，不理解虚拟机存在信息安全问题；不能操纵多进程的并发，编写程序时不会控制进程规模:]经指导后，仍不能创建或设计含不同类型线程的并发系统，不能设计处理机调度系统；不会调用库函数，编写代码，测试运行；经提示后，仍旧不能采集不同数据进行测试，不能对比、分析产生不同结果的原因:]基本能分析计算机系统中的置换算法，能基本构建模型、测试对比缺页率，寻找最佳操作点；基本能分析文件系统中的读写问题，权衡利弊后选择符合需求的读写方式，编写函数功能，测试运行:]', 1, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110120', '电路与电子学', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110120s', '电路与电子学实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110170s', '高级语言程序设计实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110210', '计算机网络', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110210s', '计算机网络实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+INSERT INTO `courseinfo` VALUES ('2018-2019-1', 'XX110240', '计算机原理与汇编', '能描述计算机硬件系统的五大功能部件及其基本功能；能描述计算机的工作原理，能描述并区分计算机数据的表示方法及特点，能区分汇编语言不同句法概念和作用，能描述处理器内部各专用寄存器的概念，能描述不同控制器的概念和优缺点，能描述I/O不同传输方式的特点，能描述不同存储方式的特点，能描述计算机时序控制方式，能描述不同的寻址方式。:]能描述存储程序工作方式原理及计算机硬件组成方式，能描述计算机系统中不同的存储地址表示方式及原理，能转换不同码制、数制表示的机器数，能说明定点数、浮点数的表示方式，能描述控制器的原理，能分析不同指令的功能。:]能完成带符号的不同进制的加减法运算，能从计算机的角度完成定点数、浮点数的算术运算，能从计算机的角度完成定点数乘除的运算，能分析计算机硬件结构及其不同部件的功能、联通方式，从寄存器级的角度分析指令执行过程，能描述指令的表示方法，能根据指令扩展技术计算指令个数和设计指令操作码扩展方案，根据cache和虚存的不同映射方式能计算相应的地址表示。能分析如何将不同存储部件有机结合组成在一个存储层次体系中，具备分析和设计存储系统的初步能力。:]能分析存储器地址分段的原理和方法，逻辑地址与物理地址的关系，能分析80x86寻址方式及相关指令操作，能解释汇编语言程序和机器语言程序之间的关系并比较与高级语言的区别和特点，利用汇编语言语法、结构化程序等知识，开发新的汇编语言程序根据工程需要实现算法功能。 :]', '能准确描述计算机硬件系统的部件及其基本功能及内部通路的信息传递过程，能明确分析、对比不同信息表示方法，能正确区分汇编语言不同句法概念和作用。:]能准确描述计算机硬件组成方式、存储程序工作方式和原理，能明确分析计算机系统中不同的存储地址表示方式及原理，能正确转换不同码制、数制表示的机器数，能准确说明定点数、浮点数的表示方式，能明确描述控制器的原理，能正确分析不同指令的功能。:]能正确完成带符号的不同进制的加减法运算、从计算机角度完成定点数、浮点数的算术运算、从计算机的角度完成定点数乘除的运算，能准确分析计算机硬件结构及其不同部件的功能、联通方式，并从寄存器级的角度分析指令执行过程，能根据指令扩展技术正确计算指令个数和设计指令操作码扩展方案，能根据cache和虚存的不同映射方式正确计算相应的地址表示。能正确分析如何将不同存储部件有机结合组成在一个存储层次体系中，具备扎实的分析和设计存储系统的能力。:]能正确使用80x86寻址方式及相关指令操作，能准确解释汇编语言程序和机器语言程序之间的关系并比较与高级语言的区别和特点，能准确利用汇编语言语法、结构化程序等知识，高效开发新的汇编语言程序并根据工程需要正确实现算法功能。:]', '能描述计算机硬件系统的部件及其基本功能及内部通路的信息传递过程，但有些许遗漏，能分析、对比不同信息表示方法，能区分汇编语言不同句法概念和作用，但有些许错误。:]能描述计算机硬件组成方式、存储程序工作方式和原理，能分析计算机系统中不同的存储地址表示方式及原理，能转换不同码制、数制表示的机器数，能说明定点数、浮点数的表示方式，能描述控制器的原理，能分析不同指令的功能，但有些许遗漏或错误。:]能完成带符号的不同进制的加减法运算、从计算机角度完成定点数、浮点数的算术运算、从计算机的角度完成定点数乘除的运算，能分析计算机硬件结构及其不同部件的功能、联通方式，并从寄存器级的角度分析指令执行过程，能根据指令扩展技术计算指令个数和设计指令操作码扩展方案，能根据cache和虚存的不同映射方式计算相应的地址表示。能分析如何将不同存储部件有机结合组成在一个存储层次体系中，但以上任务有些许遗漏或错误，具备良好的分析和设计存储系统的能力。:]能使用80x86寻址方式及相关指令操作，能解释汇编语言程序和机器语言程序之间的关系并比较与高级语言的区别和特点，能利用汇编语言语法、结构化程序等知识，开发新的汇编语言程序并根据工程需要实现算法功能，但以上任务有些许遗漏或错误。:]', '能描述计算机硬件系统的部件及其基本功能及内部通路的信息传递过程，但有较多遗漏，能分析、对比不同信息表示方法，能区分汇编语言不同句法概念和作用，但有较多错误。:]能描述计算机硬件组成方式、存储程序工作方式和原理，能分析计算机系统中不同的存储地址表示方式及原理，能转换不同码制、数制表示的机器数，能说明定点数、浮点数的表示方式，能描述控制器的原理，能分析不同指令的功能，但有较多遗漏或错误。:]能完成带符号的不同进制的加减法运算、从计算机角度完成定点数、浮点数的算术运算、从计算机的角度完成定点数乘除的运算，能分析计算机硬件结构及其不同部件的功能、联通方式，并从寄存器级的角度分析指令执行过程，能根据指令扩展技术计算指令个数和设计指令操作码扩展方案，能根据cache和虚存的不同映射方式计算相应的地址表示。能分析如何将不同存储部件有机结合组成在一个存储层次体系中，但以上任务有较多遗漏或错误，具备基本的分析和设计存储系统的能力。:]能使用80x86寻址方式及相关指令操作，能解释汇编语言程序和机器语言程序之间的关系并比较与高级语言的区别和特点，能利用汇编语言语法、结构化程序等知识，开发新的汇编语言程序并根据工程需要实现算法功能，但以上任务有较多遗漏或错误。:]', '能描述计算机硬件系统的部件及其基本功能及内部通路的信息传递过程，但有很多遗漏，能分析、对比不同信息表示方法，能区分汇编语言不同句法概念和作用，但有很多错误。:]能描述计算机硬件组成方式、存储程序工作方式和原理，能分析计算机系统中不同的存储地址表示方式及原理，能转换不同码制、数制表示的机器数，能说明定点数、浮点数的表示方式，能描述控制器的原理，能分析不同指令的功能，但有很多遗漏或错误。:]能完成带符号的不同进制的加减法运算、从计算机角度完成定点数、浮点数的算术运算、从计算机的角度完成定点数乘除的运算，能分析计算机硬件结构及其不同部件的功能、联通方式，并从寄存器级的角度分析指令执行过程，能根据指令扩展技术计算指令个数和设计指令操作码扩展方案，能根据cache和虚存的不同映射方式计算相应的地址表示。能分析如何将不同存储部件有机结合组成在一个存储层次体系中，但以上任务有很多遗漏或错误，具备基本的分析和设计存储系统的能力。:]能使用80x86寻址方式及相关指令操作，能解释汇编语言程序和机器语言程序之间的关系并比较与高级语言的区别和特点，能利用汇编语言语法、结构化程序等知识，开发新的汇编语言程序并根据工程需要实现算法功能，但以上任务有很多遗漏或错误。:]', '不能描述计算机硬件系统的部件及其基本功能及内部通路的信息传递过程，不能分析、对比不同信息表示方法，不能区分汇编语言不同句法概念和作用。:]不能完成下面的多项任务：描述计算机硬件组成方式、存储程序工作方式和原理，分析计算机系统中不同的存储地址表示方式及原理，转换不同码制、数制表示的机器数，说明定点数、浮点数的表示方式，描述控制器的原理，分析不同指令的功能。:]不能完成下面的多项任务：带符号的不同进制的加减法运算、从计算机角度完成定点数、浮点数的算术运算、从计算机的角度完成定点数乘除的运算，分析计算机硬件结构及其不同部件的功能、联通方式，并从寄存器级的角度分析指令执行过程，根据指令扩展技术计算指令个数和设计指令操作码扩展方案，根据cache和虚存的不同映射方式计算相应的地址表示。分析如何将不同存储部件有机结合组成在一个存储层次体系中，不具备分析和设计存储系统的能力。:]不能完成下面的多项任务：使用80x86寻址方式及相关指令操作，解释汇编语言程序和机器语言程序之间的关系并比较与高级语言的区别和特点，利用汇编语言语法、结构化程序等知识，开发新的汇编语言程序并根据工程需要实现算法功能。:]', 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110240s', '计算机原理与汇编实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110270', '离散数学', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110280', '面向对象程序设计', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110290s', '面向对象程序设计实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110360', '软件工程', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110380', '数据结构', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110380s', '数据结构实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110390', '数据库原理及应用', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110390s', '数据库原理及应用实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110420', '数字逻辑', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110420s', '数字逻辑实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110480', '微型计算机技术', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110480s', '微型计算机技术实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110590', '高级语言程序设计', NULL, '1', '2', '3', '4', '5', 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110820', '微机接口技术', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX110820s', '微机接口技术实验', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX120180', '计算方法', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX120200', '计算机图形学', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX120230', '计算机系统结构', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX120440', '算法设计与分析', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX120620', 'JAVA编程基础', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX120730', '计算机图像处理', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX120760', '计算机科学导论', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX127010', '实用软件实践', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX127030', '操作系统课程设计', NULL, NULL, NULL, NULL, NULL, NULL, 2, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX127040', '程序设计课程设计', NULL, NULL, NULL, NULL, NULL, NULL, 2, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX127060', '计算机硬件课程设计', NULL, NULL, NULL, NULL, NULL, NULL, 2, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX127090', '数据库原理及应用课程设计', NULL, NULL, NULL, NULL, NULL, NULL, 2, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX127110', '应用软件开发课程设计', NULL, NULL, NULL, NULL, NULL, NULL, 2, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX127270', '面向对象程序设计课程设计', NULL, NULL, NULL, NULL, NULL, NULL, 2, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'XX127290', '毕业设计（论文）（含毕业实习）', NULL, NULL, NULL, NULL, NULL, NULL, 3, 1);
+INSERT INTO `courseinfo` VALUES (NULL, 'YS193001', '大学美术', NULL, NULL, NULL, NULL, NULL, NULL, 0, 1);
 
 -- ----------------------------
 -- Table structure for experiment
@@ -1669,36 +1691,31 @@ INSERT INTO `gdesign` VALUES ('2020-2021-1', 'XX127130', '01', '201710414002', '
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item`  (
   `item_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '卷面评分项',
-  `item_value` double(20, 2) DEFAULT NULL COMMENT '评分项分值',
-  `cid` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT ' 一门课一种计算方法',
+  `item_value` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '评分项分值',
+  `cid` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT ' 一门课一种计算方法',
   `part` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '对应期末模块的?部分',
-  PRIMARY KEY (`item_name`) USING BTREE
+  PRIMARY KEY (`item_name`, `cid`) USING BTREE
 ) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of item
 -- ----------------------------
-INSERT INTO `item` VALUES ('第一大题', 10.00, 'XX110110', '卷面');
-INSERT INTO `item` VALUES ('第二大题', 15.00, 'XX110110', '卷面');
-INSERT INTO `item` VALUES ('第三大题', 15.00, 'XX110110', '卷面');
-INSERT INTO `item` VALUES ('第四大题', 32.00, 'XX110110', '卷面');
-INSERT INTO `item` VALUES ('第五大题', 28.00, 'XX110110', '卷面');
-
--- ----------------------------
--- Table structure for module
--- ----------------------------
-DROP TABLE IF EXISTS `module`;
-CREATE TABLE `module`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of module
--- ----------------------------
-INSERT INTO `module` VALUES (1, '平时');
-INSERT INTO `module` VALUES (2, '期末');
+INSERT INTO `item` VALUES ('大题五', '28', 'XX110110', '卷面');
+INSERT INTO `item` VALUES ('大题四', '32', 'XX110110', '卷面');
+INSERT INTO `item` VALUES ('大题三', '15', 'XX110110', '卷面');
+INSERT INTO `item` VALUES ('大题二', '15', 'XX110110', '卷面');
+INSERT INTO `item` VALUES ('大题一', '10', 'XX110110', '卷面');
+INSERT INTO `item` VALUES ('程序P1+P2', '15', 'XX110110s', '程序和报告');
+INSERT INTO `item` VALUES ('报告R1+R2', '10', 'XX110110s', '程序和报告');
+INSERT INTO `item` VALUES ('程序P3+ P4', '20', 'XX110110s', '程序和报告');
+INSERT INTO `item` VALUES ('报告R3+R4', '10', 'XX110110s', '程序和报告');
+INSERT INTO `item` VALUES ('测试题', '20', 'XX110110s', '程序和报告');
+INSERT INTO `item` VALUES ('程序P5+ P6', '15', 'XX110110s', '程序和报告');
+INSERT INTO `item` VALUES ('报告R5+R6', '10', 'XX110110s', '程序和报告');
+INSERT INTO `item` VALUES ('大题一', '24', 'XX110240', '卷面考试');
+INSERT INTO `item` VALUES ('大题二', '16', 'XX110240', '卷面考试');
+INSERT INTO `item` VALUES ('大题三', '36', 'XX110240', '卷面考试');
+INSERT INTO `item` VALUES ('大题四', '24', 'XX110240', '卷面考试');
 
 -- ----------------------------
 -- Table structure for part
@@ -1706,18 +1723,75 @@ INSERT INTO `module` VALUES (2, '期末');
 DROP TABLE IF EXISTS `part`;
 CREATE TABLE `part`  (
   `part` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '平时成绩模块组成部分',
-  `ratio` double(20, 2) DEFAULT NULL COMMENT '比例',
-  `cid` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '一门课有一种计算平时分组成的算法',
-  `module_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`part`) USING BTREE
+  `ratio` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '比例',
+  `cid` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '一门课有一种计算平时分组成的算法',
+  `module_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  PRIMARY KEY (`part`, `cid`) USING BTREE
 ) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of part
 -- ----------------------------
-INSERT INTO `part` VALUES ('考勤', 0.07, 'XX110110', 1);
-INSERT INTO `part` VALUES ('课堂表现', 0.08, 'XX110110', 1);
-INSERT INTO `part` VALUES ('作业', 0.15, 'XX110110', 1);
-INSERT INTO `part` VALUES ('卷面', 0.70, 'XX110110', 2);
+INSERT INTO `part` VALUES ('卷面', '70', 'XX110110', '期末');
+INSERT INTO `part` VALUES ('作业2', '3', 'XX110110', '平时');
+INSERT INTO `part` VALUES ('作业1', '12', 'XX110110', '平时');
+INSERT INTO `part` VALUES ('课堂表现', '8', 'XX110110', '平时');
+INSERT INTO `part` VALUES ('考勤', '7', 'XX110110', '平时');
+INSERT INTO `part` VALUES ('程序和报告', '100', 'XX110110s', '实验');
+INSERT INTO `part` VALUES ('考勤', '5', 'XX110240', '平时');
+INSERT INTO `part` VALUES ('课堂表现', '10', 'XX110240', '平时');
+INSERT INTO `part` VALUES ('1-4章作业', '5', 'XX110240', '平时');
+INSERT INTO `part` VALUES ('5-7章作业', '10', 'XX110240', '平时');
+INSERT INTO `part` VALUES ('卷面考试', '70', 'XX110240', '期末');
+
+-- ----------------------------
+-- Table structure for procedure_standard
+-- ----------------------------
+DROP TABLE IF EXISTS `procedure_standard`;
+CREATE TABLE `procedure_standard`  (
+  `course_type` int(11) NOT NULL,
+  `standard` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`course_type`, `standard`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of procedure_standard
+-- ----------------------------
+INSERT INTO `procedure_standard` VALUES (0, 'AB卷是否不雷同，且难度相同、题量相当');
+INSERT INTO `procedure_standard` VALUES (0, '与上一届试卷的重复度是否低于30%');
+INSERT INTO `procedure_standard` VALUES (0, '命题内容是否符合课程大纲');
+INSERT INTO `procedure_standard` VALUES (0, '命题难度是否符合教学实际');
+INSERT INTO `procedure_standard` VALUES (0, '题型结构是否符合多样化要求');
+INSERT INTO `procedure_standard` VALUES (0, '题意123是否规范');
+INSERT INTO `procedure_standard` VALUES (0, '题意、用词、符号、图形是否规范');
+INSERT INTO `procedure_standard` VALUES (0, '题量是否符合考核时间要求');
+
+-- ----------------------------
+-- Table structure for study_goal
+-- ----------------------------
+DROP TABLE IF EXISTS `study_goal`;
+CREATE TABLE `study_goal`  (
+  `course_goal_id` int(20) NOT NULL COMMENT '课程目标号',
+  `cid` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '课程号',
+  `graduate_require` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '支撑毕业指标点',
+  `eva_point` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '观测点',
+  `total_score` float(20, 2) DEFAULT NULL COMMENT '总分',
+  PRIMARY KEY (`course_goal_id`, `cid`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of study_goal
+-- ----------------------------
+INSERT INTO `study_goal` VALUES (0, 'XX110110', '2.4', '考勤,卷面：[大题一,大题二,大题三]', 35.00);
+INSERT INTO `study_goal` VALUES (0, 'XX110110s', '8.3', '程序和报告：[程序P1+P2,报告R1+R2]', 25.00);
+INSERT INTO `study_goal` VALUES (0, 'XX110240', '1.1', '考勤,卷面考试：[大题一]', 21.80);
+INSERT INTO `study_goal` VALUES (1, 'XX110110', '3.3', '课堂表现,作业1', 20.00);
+INSERT INTO `study_goal` VALUES (1, 'XX110110s', '4.2', '程序和报告：[程序P3+ P4,报告R3+R4,测试题]', 50.00);
+INSERT INTO `study_goal` VALUES (1, 'XX110240', '2.1', '卷面考试：[大题二]', 11.20);
+INSERT INTO `study_goal` VALUES (2, 'XX110110', '4.2', '卷面：[大题四]', 22.40);
+INSERT INTO `study_goal` VALUES (2, 'XX110110s', '5.2', '程序和报告：[程序P5+ P6,报告R5+R6]', 25.00);
+INSERT INTO `study_goal` VALUES (2, 'XX110240', '2.2', '课堂表现,1-4章作业,卷面考试：[大题三]', 40.20);
+INSERT INTO `study_goal` VALUES (3, 'XX110110', '5.3', '卷面：[大题五],作业2', 22.60);
+INSERT INTO `study_goal` VALUES (3, 'XX110240', '2.4', '5-7章作业,卷面考试：[大题四]', 26.80);
 
 SET FOREIGN_KEY_CHECKS = 1;

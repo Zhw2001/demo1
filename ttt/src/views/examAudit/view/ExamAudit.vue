@@ -76,7 +76,7 @@
                   </td>
                   <td>
                       <span>
-                        {{basicInfo.class}}
+                        {{basicInfo.classes}}
                       </span>
                   </td>
                   <td>
@@ -100,7 +100,7 @@
               <div><el-button type="text" @click="open(0)">编辑</el-button></div>
             </div>
 
-            <div v-if="true">
+            <div v-if="docVis === 1">
               <el-form>
                 <el-form-item>
                   <h1 style="margin-top:8pt; margin-bottom:3.1pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:24pt">
@@ -318,518 +318,224 @@
                 </tr>
               </table>
               <div><el-button type="text" @click="open(3)">编辑</el-button></div>
+              <el-button v-if="setEditVis" @click="nextDoc(3)">下一步</el-button>
             </div>
 
             <div v-if="docVis === 3">
-              <h1 style="margin-top:8pt; margin-bottom:3.1pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:12pt">
+              <h1 style="margin-top:8pt; margin-bottom:3.1pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:24pt">
                 <span style="font-family:'Times New Roman'">
                   3.
                 </span>
                 <span style="font-family:'黑体'">
-                  评分
-                </span>
-                <span style="font-family:'黑体'">
-                  标准
+                  评分标准
                 </span>
               </h1>
-              <table cellspacing="0" cellpadding="0" style="width:438.5pt; border-collapse:collapse">
-                <tr style="height:15.6pt">
-                  <td rowspan="3" style="width:30.05pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+              <table class="ContentDisTable">
+                <tr>
+                  <th rowspan="2">
+                    <p>
+                      <span>
                         课程目标
                       </span>
                     </p>
-                  </td>
-                  <td colspan="4" style="width:386.1pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                  </th>
+                  <th colspan="5">
+                    <p>
+                      <span>
                         评分标准
                       </span>
                     </p>
-                  </td>
+                  </th>
                 </tr>
                 <tr>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                  <td>
+                    <p>
+                      <span>
                         优秀
                       </span>
                     </p>
                   </td>
-                  <td style="width:81.3pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                  <td>
+                    <p>
+                      <span>
                         良好
                       </span>
                     </p>
                   </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                   <td>
+                    <p>
+                      <span>
+                        中等
+                      </span>
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                      <span>
                         及格
                       </span>
                     </p>
                   </td>
-                  <td style="width:95.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'黑体'">
+                  <td>
+                    <p>
+                      <span>
                         不及格
                       </span>
                     </p>
                   </td>
                 </tr>
-                <tr>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri">
-                        90-100
+                
+                <tr v-for="(ctarget, i) in cTargetForm.ctargets" :key="i">
+                  <td >
+                    <p>
+                      <span>
+                        课程目标{{i+1}}
                       </span>
                     </p>
                   </td>
-                  <td style="width:81.3pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri">
-                        75-89
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri">
-                        60-
-                      </span>
-                      <span style="font-family:Calibri">
-                        74
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:95.5pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri">
-                        0-59
+                  <td v-for="(standard, j) in ctarget.standards" :key="j">
+                    <p>
+                      <span >
+                        {{standard}}
                       </span>
                     </p>
                   </td>
                 </tr>
-                <tr style="height:155.05pt">
-                  <td style="width:30.05pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:Calibri">
-                        1
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.a[0]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45ptpt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.b[0]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.d[0]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45ptpt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.f[0]}}
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:30.05pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:Calibri">
-                        1
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.a[1]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45ptpt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.b[1]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.d[1]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45ptpt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.f[1]}}
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr >
-                  <td style="width:30.05pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:Calibri">
-                        1
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.a[2]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.b[2]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.d[2]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.f[2]}}
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:30.05pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        课程目标
-                      </span>
-                      <span style="font-family:Calibri">
-                        1
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.a[3]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45ptpt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.b[3]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.d[3]}}
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:88.45ptpt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt; widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#1f497d">
-                        {{markStandard.f[3]}}
-                      </span>
-                    </p>
-                  </td>
-                </tr>
+
               </table>
-              <h1 style="margin-top:5pt; margin-bottom:0pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:12pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </h1>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:Calibri">
-                  &#xa0;
-                </span>
-              </p>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:Calibri">
-                  &#xa0;
-                </span>
-              </p>
+              <el-button style="margin-top:20px;" @click="nextDoc(4)">下一步</el-button>
             </div>
 
             <div v-if="docVis === 4">
-              <h1 style="margin-top:5pt; margin-bottom:0pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:12pt">
+              <h1 style="margin-top:5pt; margin-bottom:0pt;   page-break-inside:avoid; page-break-after:avoid; line-height:150%; widows:0; orphans:0; font-size:24pt">
                 <span style="font-family:'Times New Roman'">
-                  3.
+                  4.
                 </span>
                 <span style="font-family:'黑体'">
                   命题规范
                 </span>
               </h1>
-              <table cellspacing="0" cellpadding="0" style="width:417.25pt; border-collapse:collapse">
-                <tr>
-                  <td style="width:286.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        命题内容是否符合课程大纲
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
+              <table class="QStandardTable">
+                <tr v-for="(item, index) in question_standard" :key="index">
+                  <td>
+                    <p>
                       <span>
-                        <input id='1' name="checkbox" type="checkbox"  @click="setSpecify"  checked=true />
+                        {{item}}
+                      </span>
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                      <span>
+                        <input :id="index" name="checkbox" type="checkbox"  @click="setSpecify"  checked=true />
                       </span>
                     </p>
                   </td>
                 </tr>
                 <tr>
-                  <td style="width:286.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        命题难度是否符合教学实际
+                  <td>
+                    <p>
+                      <span>
+                        期望通过考核的学生比例
                       </span>
                     </p>
                   </td>
-                  <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        <input id='2' name="checkbox" type="checkbox"  @click="setSpecify"  checked=true />
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:286.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        题型结构是否符合多样化要求
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        <input id='3' name="checkbox" type="checkbox" @click="setSpecify"  checked=true />
+                  <td>
+                    <p>
+                      <span>
+                        <input style="text-align:center;" v-model="passRatio"/>%
                       </span>
                     </p>
                   </td>
                 </tr>
-                <tr>
-                  <td style="width:286.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        题量是否符合考核时间要求
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        <input id='4' name="checkbox" type="checkbox" @click="setSpecify"  checked=true />
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:286.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        题意、用词、符号、图形是否规范
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        <input id='5' name="checkbox" type="checkbox" @click="setSpecify"  checked=true />
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:286.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'">
-                        AB
-                      </span>
-                      <span style="font-family:'宋体'">
-                        卷是否不雷同，且难度相同、题量相当
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        <input id='6' name="checkbox" type="checkbox" @click="setSpecify"  checked=true />
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:286.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        与上一届试卷的重复度是否低于
-                      </span>
-                      <span style="font-family:'Times New Roman'">
-                        30%
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:Calibri; color:#1f497d">
-                        <input id='7' name="checkbox" type="checkbox" @click="setSpecify"  checked=true />
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width:286.9pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        期望通过考试的学生比例
-                      </span>
-                    </p>
-                  </td>
-                  <td style="width:108pt; border-style:solid; border-width:0.75pt; padding-right:5.03pt; padding-left:5.03pt; vertical-align:top">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'; color:#1f497d">
-                        {{this.passRatio}}%
-                      </span>
-                    </p>
-                  </td>
-                </tr>
+              
               </table>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
-              <table cellspacing="0" cellpadding="0" style="width:437.75pt; border-collapse:collapse">
-                <tr style="height:24.45pt">
-                  <td style="width:51.3pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        命题教师：
+             
+              <table style="margin-top:10px;" class="FinalTable">
+                <tr>
+                  <th >
+                    <p>
+                      <span>
+                        命题教师:
                       </span>
                     </p>
-                  </td>
-                  <td style="width:74.25pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'; color:#c0504d">
+                  </th>
+                  <td >
+                    <p>
+                      <span >
                         刘晋
                       </span>
                     </p>
                   </td>
-                  <td style="width:53pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        审核人：
-                      </span>
-                      <span style="font-family:'宋体'">
+                  <th>
+                    <p>
+                      <span >
+                        审核人:
                       </span>
                     </p>
-                  </td>
-                  <td style="width:60.1pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'楷体'; color:#c0504d">
+                  </th>
+                  <td >
+                    <p >
+                      <span >
                         章夏芬
                       </span>
                     </p>
                   </td>
-                  <td style="width:45.9pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'宋体'">
-                        日期：
+                  <th >
+                    <p >
+                      <span >
+                        日期:
                       </span>
                     </p>
-                  </td>
-                  <td style="width:88.4pt; padding-right:5.4pt; padding-left:5.4pt; vertical-align:middle">
-                    <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                      <span style="font-family:'Times New Roman'; color:#c0504d">
-                        2018
-                      </span>
-                      <span style="font-family:'宋体'; color:#c0504d">
-                        年
-                      </span>
-                      <span style="font-family:'Times New Roman'; color:#c0504d">
-                        12
-                      </span>
-                      <span style="font-family:'宋体'; color:#c0504d">
-                        月
+                  </th>
+                  <td >
+                    <p >
+                      <span >
+                        2018年12月
                       </span>
                     </p>
                   </td>
                 </tr>
               </table>
-              <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0; font-size:10.5pt">
-                <span style="font-family:'Times New Roman'">
-                  &#xa0;
-                </span>
-              </p>
+
+              <div style="margin-top:20px;">
+                <el-button @click = 'sendDataBase()'>发送DATABASE</el-button>
+                <el-button @click = 'send()'>发送</el-button>
+              </div>
             </div>
 
-          </div>
-          <div style="text-align:center;">
-            <el-button @click = 'send()'>发送</el-button>
           </div>
         </div>
       </div>
 
       <el-dialog
+        :showClose="false"
+        :visible ="chooseCourse === 1"
+        width="30%">
+        <div style='display:flex;flex-direction:column;flex-wrap: nowrap;justify-content:space-between;'>
+          
+          <div style='flex:0 1 auto;'><label>请选择您要审核的课程</label></div>
+          <div  style='flex:1 0 auto;height:20px;'></div>
+          <div style='flex:0 1 auto;'>
+            <el-select v-model="basicInfo.course_number" placeholder="请选择" @change="handleCourseChange">
+              <el-option
+                v-for="(cid,i) in cidList"
+                :key="i"
+                :label="cid.label"
+                :value="cid.value">
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="startLoad()">确定</el-button>
+        </span>
+      </el-dialog>
+     
+      <el-dialog
+        :showClose="false"
         :visible ="dialogVis === 0"
-        width="30%"
-        @close = "close">
+        width="30%">
         <el-form :rules='basicInfoRules' label-position="left" label-width="100px" :model="basicInfo" ref="basicInfo"> 
           <el-form-item label="审核学期" prop="semester">
             <el-input v-model="basicInfo.semester"></el-input>
@@ -852,17 +558,47 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="resetForm('basicInfo')">重置</el-button>
-          <el-button type="primary" @click="submitForm('basicInfo')">确定</el-button>
+          <el-button type="primary" @click="submitBasicForm('basicInfo')">确定</el-button>
         </span>
       </el-dialog>
 
+       <el-dialog
+        :showClose="false"
+        :visible ="standardSetting === 1"
+        width="50%">
+        <el-form label-position="top" :model="standardForm" ref="standard">
+          <label style="margin:10px 0px;">课程目标{{standardForm.ctarget_index+1}}</label>
+          <el-form-item label="优秀" prop="S_Grade" :rules="{ required: true, message: '不能为空', trigger: 'blur' }">
+            <el-input v-model="standardForm.S_Grade"></el-input>
+          </el-form-item>
+          <el-form-item label="良好" prop="A_Grade" :rules="{ required: true, message: '不能为空', trigger: 'blur' }">
+            <el-input v-model="standardForm.A_Grade"></el-input>
+          </el-form-item>
+          <el-form-item label="中等" prop="B_Grade" :rules="{ required: true, message: '不能为空', trigger: 'blur' }">
+            <el-input v-model="standardForm.B_Grade"></el-input>
+          </el-form-item >
+          <el-form-item label="及格" prop="C_Grade" :rules="{ required: true, message: '不能为空', trigger: 'blur' }">
+            <el-input v-model="standardForm.C_Grade"></el-input>
+          </el-form-item>
+          <el-form-item label="不及格" prop="D_Grade" :rules="{ required: true, message: '不能为空', trigger: 'blur' }">
+            <el-input v-model="standardForm.D_Grade"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <div style='display:flex;justify-content:flex-start;'>
+              <el-button type="primary" @click="submitStandard('standard')">确定</el-button>
+              <el-button @click="resetForm('standard')">重置</el-button>
+            </div>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
+
       <el-dialog
+        :showClose="false"
         :visible ="dialogVis === 1"
-        width="50%"
-        @close = "close">
+        width="50%">
         <el-form label-position="left" :model="cTargetForm" ref="cTargetForm" >
           <el-form-item>
-            <el-button style='float:left;' @click="addCTarget" size = 'mini' icon="el-icon-plus" circle></el-button>
+            <el-button style='float:left;' @click="addCTarget()" size = 'mini' icon="el-icon-plus" circle></el-button>
           </el-form-item>
           <el-form-item
             v-for="(ctarget, index) in cTargetForm.ctargets"
@@ -876,7 +612,8 @@
           <div style='display:flex;flex-direction:row;flex-wrap: nowrap;'>
             <el-input style='flex:0 1 auto;' v-model="ctarget.value"></el-input>
             <div style = "width:10px;flex:1 0 auto;"></div>
-            <el-button style='flex:0 1 auto;' type='text' @click="removeMod(ctarget)">删除</el-button>
+            <el-button style='flex:0 1 auto;' type='text' @click="openStandardSetting(index)">设置评分标准</el-button>
+            <el-button style='flex:0 1 auto;' type='text' @click="removeCtarget(ctarget)">删除</el-button>
           </div>
           </el-form-item>
           <el-form-item
@@ -890,9 +627,10 @@
           >
             <el-input placeholder="1.1" style='width:50px;' v-model="ctarget.support_graduation_require"></el-input>
           </el-form-item>
+          
           <el-form-item>
             <div style='display:flex;justify-content:flex-start;'>
-              <el-button type="primary" @click="submitForm('cTargetForm')">确定</el-button>
+              <el-button type="primary" @click="submitCForm('cTargetForm')">确定</el-button>
               <el-button @click="resetForm('cTargetForm')">重置</el-button>
             </div>
           </el-form-item>
@@ -917,21 +655,18 @@
           
           <template v-if='step === 0'>
             <div style='margin:10px;'><el-button @click="addMod()" size = 'mini' icon="el-icon-plus" circle></el-button></div>
-            <el-form  label-position="left" :model="modForm" ref="modForm" >
+            <el-form label-position="left" :model="modForm" ref="modForm" >
               <el-form-item
                 label="模块名"
-                v-for="(item, index) in modForm.mods"
+                v-for="(mod, index) in modForm.mods"
                 :key="index"
                 :prop="'mods.' + index + '.name'"
                 :rules="modRules"
               >
-              <div style='display:flex;flex-direction:row;flex-wrap: nowrap;'>
-                <el-input style='flex:0 2 auto;' v-model="item.name"></el-input>
-                <div style = "width:10px;flex:1 0 auto;"></div>
-                <label style='flex:1 0 auto;' class='el-form-item__label' slot='label'>所占比例</label>
-                <el-input onkeyup="value=value.replace(/[^\d]/g,'')" style='flex:0 2 auto;' v-model="item.ratio"></el-input>
-                <div style = "width:10px;flex:1 0 auto;"></div>
-                <el-button style='flex:0 0 auto;' type='text' @click="removeMod(item)">删除</el-button>
+              <div style='display:flex;flex-direction:row;flex-wrap: nowrap;justify-content:space-evenly;'>
+                <el-input style='flex:0 1 auto;' v-model="mod.name"></el-input>
+                <span style='width:10px;flex:1 0 auto;'></span>
+                <el-button style='flex:0 1 auto;' type='text' @click="removeMod(mod)">删除</el-button>
               </div>
               </el-form-item>
               <el-form-item >
@@ -950,18 +685,19 @@
             <el-form  label-position="left" :model="partForm" ref="partForm" >
               <el-form-item
                 label="名称"
-                v-for="(item, index) in partForm.parts"
+                v-for="(part, index) in partForm.parts"
                 :key="index"
                 :prop="'parts.' + index + '.name'"
                 :rules="partRules"
               >
               <div style='display:flex;flex-direction:row;flex-wrap: nowrap;'>
-                <el-input style='flex:0 2 auto;' v-model="item.name"></el-input>
-                <div style = "width:10px;flex:1 0 auto;"></div>
+                <el-input style='flex:0 2 auto;' v-model="part.name"></el-input>
+                <span style='width:10px;flex:1 0 auto;'></span>
                 <label style='flex:1 0 auto;' class='el-form-item__label' slot='label'>所占比例</label>
-                <el-input onkeyup="value=value.replace(/[^\d]/g,'')" style='flex:0 2 auto;' v-model="item.ratio"></el-input>
-                <div style = "width:10px;flex:1 0 auto;"></div>
-                <el-button style='flex:0 0 auto;' type='text' @click="removePart(item)">删除</el-button>
+                <el-input onkeyup="value=value.replace(/[^\d]/g,'')" style='flex:0 2 auto;' v-model="part.ratio"></el-input>
+                <span style = "flex:1 0 auto;padding:0px 2px;">%</span>
+                <span style='width:10px;flex:1 0 auto;'></span>
+                <el-button style='flex:0 0 auto;' type='text' @click="removePart(part)">删除</el-button>
               </div>
               </el-form-item>
               <el-form-item >
@@ -987,10 +723,10 @@
               >
               <div style='display:flex;flex-direction:row;flex-wrap: nowrap;'>
                 <el-input style='flex:0 2 auto;' v-model="item.name"></el-input>
-                <div style = "width:10px;flex:1 0 auto;"></div>
+                <span style='width:10px;flex:1 0 auto;'></span>
                 <label style='flex:1 0 auto;' class='el-form-item__label' slot='label'>分值:</label>
                 <el-input onkeyup="value=value.replace(/[^\d]/g,'')" style='flex:0 2 auto;' v-model="item.score"></el-input>
-                <div style = "width:10px;flex:1 0 auto;"></div>
+                <span style='width:10px;flex:1 0 auto;'></span>
                 <el-button style='flex:0 0 auto;' type='text' @click="removeItem(item)">删除</el-button>
               </div>
               </el-form-item>
@@ -1044,9 +780,9 @@
       </el-dialog>
 
       <el-dialog
+        :showClose="false"
         :visible ="dialogVis === 3"
-        width="30%"
-        @close = "close">
+        width="30%">
         <el-form label-position="left" :model="cTargetForm" ref="cTargetForm2" >
           <el-form-item
             v-for="(ctarget, index) in cTargetForm.ctargets"
@@ -1120,21 +856,27 @@ export default {
       }
     };
     return {
+      cc_map:[],
+      cidList:[],
+      EditFinished:false,
+      chooseCourse: 1,
+      standardSetting: 0,
       total:0, //模块合计比例,calModTotal中计算
       ctotal:0, //课程目标合计比例
       emptyBlocks:[],
       step:0,
       fatherOfItem:[],
-      docVis:2,
+      docVis:0,
       dialogVis: -1,
-      basicInfo: {
-        semester:'2018-2019-1',
-        date:'2018年12月',
-        course_name:'操作系统',
-        course_number:'XX123',
-        classes:'计算机111,计算机123',
-        exam_type:'考试',
+      standardForm:{
+        ctarget_index:0,
+        S_Grade:'',
+        A_Grade:'',
+        B_Grade:'',
+        C_Grade:'',
+        D_Grade:''
       },
+      basicInfo: {},
       basicInfoRules: {
         semester: [
           { required: true, message: '请输入学年', trigger: 'blur' },
@@ -1179,62 +921,98 @@ export default {
         validator: validateItemName,
         trigger: 'change'
       },
-      testContent:{
-        ContentDis:{//内容分布
-          Attendance:[7,0,0,0],//考勤
-          CPerformance:[0,8,0,0],//课堂表现
-          HomeWork:[0,12,0,3],//作业
-          Score:[40,0,32,28],//卷面考试
-          Ratio:[35,20,21,24],//成绩比例
-          Total:[7,8,15,70,100],//合计
-        }
-      },
-      markStandard:{
-        a:[
-          '能准确运用 操作系统的原理描述进程和线程，能准备分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，能准确对比不同解决方案 的优缺点 。',
-          '针对新的用户目标和需求，能系统设计新的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，能合理分析解决方案在时间上或空间上的开销',
-          '能准确分析程序的并发性程度，会用 前趋图描述程序的并发执行 ，构建完善的并发系统，能准备测算不同 的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本',
-          '就具体场景，能准确模拟生产者消费者、 磁盘调度 、文件管理 统 或存储器管理 的操作流程，设计系统，能准备分析、对比不同操作方案的成本和局限性',
-        ],
-        b:[
-          '能合理运用 操作系统的原理描述进程和线程，能分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，会对比不同解决方案 的优缺点 。',
-          '针对新的用户目标和需求，能设计合理的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，能分析解决方案在时间上或空间上的开销',
-          '能合理分析程序的并发性程度，会用 前趋图描述程序的并发执行 ，构建并发系统，能测算不同 的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本',
-          '就具体场景，能合理模拟生产者消费者、 磁盘调度 、文件管理 统 或存储器管理 的操作流程，设计系统，能合理分析、对比不同操作方案的时间和空间成本',
-        ],
-        d:[
-          '能运用 操作系统的原理描述进程和线程，基本能分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，基本上会对比不同解决方案 的优缺点 。',
-          '针对新的用户目标和需求，基本能设计新的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，基本能分析解决方案在时间上或空间上的开销',
-          '基本能分析程序的并发性程度，基本会用 前趋图描述程序的并发执行 ，能构建并发系统，基本能测算不同 的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本',
-          '就具体场景，基本能模拟生产者消费者、 磁盘调度 、文件管理 统 或存储器管理 的操作流程，设计系统，能基本分析、对比不同操作方案的成本和局限性',
-        ],
-        f:[
-          '不能 分析影响处理调度、磁盘调度、存储器管理、文件管理和输入输出系统的因素，不能对比不同解决方案 的优缺点 。',
-          '不能针对新的用户目标和需求设计新的处理机调度方案、存储器访问方案、文件分配方案或设备管理方案，不能分析解决方案在时间上或空间上的开销',
-          '无法分析程序的并发性程度，不会用 前趋图描述程序的并发执行 ，不能能测算不同 的调度机制、信号量和同步机制、存储方式和置换算法下的时间和空间的成本',
-          '能就具体场景，模拟生产者消费者、 磁盘调度 、文件管理 统 或存储器管理 的操作流程，设计系统，并能分析、对比不同操作方案的成本和局限性',
-        ],
-        c:[//中等
-          '',
-          '',
-          '',
-          '',
-        ],
-      },
-      testSpecification:[1,1,1,1,1,1,1],
+      question_standard:[],
+      testSpecification:[],
       passRatio:0,
     }
   },
   methods: {
-    CFormFinalConfirm(){
+    handleCourseChange(v){
+      this.basicInfo.classes = this.cc_map[v]
+    },
+
+    startLoad(){
+      this.chooseCourse = 0
+      this.load()
+    },
+
+    getCids(){
+      const cc = JSON.parse(localStorage.getItem("role")).cc
+      for(let i of cc){
+        let temp = {}
+        this.cc_map[i.cid] = i.classes
+        temp.value = i.cid
+        temp.label = i.cname
+        this.cidList.push(temp)
+      }
+    },
+
+    load(){
+      this.$request.get('/api_S/exam_audit/load_info?cid=' + this.basicInfo.course_number + '&classes=' + this.basicInfo.classes).then(res => {
+        let data = res.data
+        this.basicInfo = data.basicInfo
+        this.cTargetForm.ctargets = (data.ctargets !== null ? data.ctargets : [])
+        this.modForm.mods = (data.mods !== null ? data.mods : [])
+        this.partForm.parts = (data.parts !== null ? data.parts : [])
+        this.itemForm.items = (data.items !== null ? data.items : [])
+        this.fatherOfItem = (data.fatherOfItem !== null ? data.fatherOfItem : [])
+        this.question_standard = data.question_standard
+        for(let i of this.question_standard){
+          this.testSpecification.push(1)
+        }
+      })
+    },
+
+    sendDataBase(){
+      let data = {}
+      data.ctargets = this.cTargetForm.ctargets
+      data.basicInfo = this.basicInfo
+      data.mods = this.modForm.mods
+      data.items = this.itemForm.items
+      data.fatherOfItem = this.fatherOfItem
+      this.$request.post('/api_S/exam_audit/update',data).then(res =>{
+        console.log('11111111111',res)
+      });
+    },
+
+    submitStandard(formName){
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          let index = this.$refs[formName]._props.model.ctarget_index
+          if(this.cTargetForm.ctargets[index].standards){this.cTargetForm.ctargets[index].standards = []}
+          this.cTargetForm.ctargets[index].standards.push(this.$refs[formName]._props.model.S_Grade)
+          this.cTargetForm.ctargets[index].standards.push(this.$refs[formName]._props.model.A_Grade)
+          this.cTargetForm.ctargets[index].standards.push(this.$refs[formName]._props.model.B_Grade)
+          this.cTargetForm.ctargets[index].standards.push(this.$refs[formName]._props.model.C_Grade)
+          this.cTargetForm.ctargets[index].standards.push(this.$refs[formName]._props.model.D_Grade)
+          this.standardSetting = 0
+          this.resetForm(formName)
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      });
+    },
+    openStandardSetting(i){
+      this.standardSetting = 1
+      this.standardForm.ctarget_index = i
+      this.standardForm.S_Grade = this.cTargetForm.ctargets[i].standards[0]
+      this.standardForm.A_Grade = this.cTargetForm.ctargets[i].standards[1]
+      this.standardForm.B_Grade = this.cTargetForm.ctargets[i].standards[2]
+      this.standardForm.C_Grade = this.cTargetForm.ctargets[i].standards[3]
+      this.standardForm.D_Grade = this.cTargetForm.ctargets[i].standards[4]
+    },
+    CFormFinalConfirm(){  //课程目标表最后一步，填写考核方式和考试题目
       this.setCRatio()
       this.calCTargetTotal()
       this.close()
+      this.EditFinished = true;
     },
     calCTargetTotal(){
       let temp = 0
       for(let i of this.cTargetForm.ctargets){
-        temp = temp + parseInt(i.total)
+        let total = (i.total == '')? 0 : parseInt(i.total)
+        temp = temp + total
       }
       this.ctotal = temp
     },
@@ -1245,20 +1023,23 @@ export default {
         for(let j of i.content){ //计算课程目标考试题目的总分
           for (let k = 0; k < this.itemForm.items.length; k++){
             if(this.itemForm.items[k].name == j){
-              contentScore = contentScore + parseFloat(this.itemForm.items[k].score)
+              let score = (this.itemForm.items[k].score == "")? 0 : parseFloat(this.itemForm.items[k].score)
+              contentScore = contentScore + score
+              break
             }
           }
         }
-        for(let j of i.parts){
-          for (let k = 0; k < this.partForm.parts.length; k++){
-            if(this.partForm.parts[k].name == j){//根据名字找到part总表中的part对象
-              if(this.fatherOfItem.indexOf(j)!=-1){//需要将课程目标所具有的考试题目与其对应部分的比例相乘，才是此课程目标真正的比例
-                let part_ratio = parseFloat(this.partForm.parts[k].ratio) / 100
-                console.log('part_ratio',part_ratio)
+        for(let x of i.parts){
+          for (let y = 0; y < this.partForm.parts.length; y++){
+            if(this.partForm.parts[y].name == x){//根据名字找到part总表中的part对象
+              if(this.fatherOfItem.indexOf(x)!=-1){//需要将课程目标所具有的考试题目与其对应部分的比例相乘，才是此课程目标真正的比例
+                let part_ratio = ( (this.partForm.parts[y].ratio == '')? 0 : parseFloat(this.partForm.parts[y].ratio) )/ 100
                 temp_total = temp_total + part_ratio * contentScore
               }else{
-              temp_total = temp_total + parseFloat(this.partForm.parts[k].ratio)
+                let ratio = (this.partForm.parts[y].ratio == "")? 0 : parseFloat(this.partForm.parts[y].ratio)
+                temp_total = temp_total + ratio
               }
+              break
             }
           }
         }
@@ -1280,11 +1061,13 @@ export default {
         if(i.partNames){
           max = (i.partNames.length > max ) ? i.partNames.length : max
         }
+        i.partRatios = [] //压入比例前先清空已有的
         for(let j of i.partNames){
           for (let k = 0; k < this.partForm.parts.length; k++){
             if(this.partForm.parts[k].name == j){
               i.partRatios.push(this.partForm.parts[k].ratio)
-              temp_total = temp_total + parseFloat(this.partForm.parts[k].ratio)
+              let total = (this.partForm.parts[k].ratio == '')? 0 : parseFloat(this.partForm.parts[k].ratio)
+              temp_total = temp_total + total
             }
           }
         }
@@ -1305,7 +1088,8 @@ export default {
     calModTotal(){
       let temp = 0
       for(let i of this.modForm.mods){
-        temp = temp + parseInt(i.total)
+        let total = (i.total == '')? 0 : parseInt(i.total)
+        temp = temp + total
       }
       this.total = temp
     },
@@ -1392,10 +1176,11 @@ export default {
 
     //评分项编辑
     addItem(){
+      if(!this.itemForm.items){this.itemForm.items = []}
       this.itemForm.items.push(
         {
           name:'',
-          score:0,
+          score:'',
           checklock: true
         }
       )
@@ -1409,10 +1194,11 @@ export default {
 
     //组成项编辑
     addPart(){
+      if(!this.partForm.parts){this.partForm.parts=[]}
       this.partForm.parts.push(
         {
           name:'',
-          ratio:0,
+          ratio:'',
           checklock: true //true表示未占用
         }
       )
@@ -1426,10 +1212,10 @@ export default {
 
     //模块编辑
     addMod(){
+      if(!this.modForm.mods){this.modForm.mods = []}
       this.modForm.mods.push(
         {
           name:'',
-          ratio:0,
           partNames: [],
           partRatios: [],
           emptyBlocks: [],
@@ -1452,91 +1238,158 @@ export default {
         }
     },
     addCTarget(){
+      if(!this.cTargetForm.ctargets){this.cTargetForm.ctargets=[]}
       this.cTargetForm.ctargets.push({
         value: '',  //input框输入
         content: [],  //从checkbox中获取
         support_graduation_require: '', //手动输入
         parts:[],  //从checkbox中获取
-        total:0 //最后计算，=parts中元素对应的比例之和
+        total:0, //最后计算，=parts中元素对应的比例之和
+        standards:[] //评分标准
       });
     },
-
-    //提交和重置,所有表单共用
-    submitForm(formName){
+    submitCForm(formName){
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          let ctarget_length = 0
+          let A_LENGTH = 0
+          let B_LENGTH = 0
+          let C_LENGTH = 0
+          let D_LENGTH = 0
+          let E_LENGTH = 0
+          for(let i =0; i < this.$refs[formName]._props.model.ctargets.length;i++){
+            if(this.$refs[formName]._props.model.ctargets[i].standards.length === 0){
+              this.$message({
+                message: '请为课程目标'+(i+1)+'设置评分标准',
+                type: 'warning'
+              })
+              return false
+            }
+            A_LENGTH = A_LENGTH + this.$refs[formName]._props.model.ctargets[i].standards[0].length
+            B_LENGTH = B_LENGTH + this.$refs[formName]._props.model.ctargets[i].standards[1].length
+            C_LENGTH = C_LENGTH + this.$refs[formName]._props.model.ctargets[i].standards[2].length
+            D_LENGTH = D_LENGTH + this.$refs[formName]._props.model.ctargets[i].standards[3].length
+            E_LENGTH = E_LENGTH + this.$refs[formName]._props.model.ctargets[i].standards[4].length
+            ctarget_length = ctarget_length + this.$refs[formName]._props.model.ctargets[i].value.length
+          }
+          if(ctarget_length >= 1000){
+            this.$message({
+              message: '课程目标描述不得大于1000字',
+              type: 'warning'
+            })
+            return false
+          }
+          if(Math.max(A_LENGTH,B_LENGTH,C_LENGTH,D_LENGTH,E_LENGTH) >= 1000){
+            this.$message({
+              message: '评分标准过长',
+              type: 'warning'
+            })
+            return false
+          }
           this.close()
+          this.nextDoc(2)
         } else {
           console.log('error submit!!')
           return false
         }
       });
     },
+    submitBasicForm(formName){
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.close()
+          this.nextDoc(1)
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      });
+    },
+
+    //重置表单,可以复用
     resetForm(formName){
       this.$refs[formName].resetFields()
     },
-    //所有编辑框的打开和关闭
+
+    //打开和关闭
     open(i){
       this.dialogVis = i
     },
     close(){
       this.dialogVis = -1
     },
-
+    closeDoc(){
+      this.docVis = -1
+    },
+    openDoc(i){
+      this.docVis = i
+    },
+    nextDoc(i){
+      this.closeDoc()
+      this.openDoc(i)
+    },
 
     //流程规范赋值
     setSpecify(event){
       if(event.target.checked == true){
-        this.testSpecification[parseInt(event.target.id)-1] = 1;
+        this.testSpecification[parseInt(event.target.id)] = 1;
       }
       else{
-        this.testSpecification[parseInt(event.target.id)-1] = 0;
+        this.testSpecification[parseInt(event.target.id)] = 0;
       }
     },
-
-    //求数组元素之和
-    calArray(array){
-      var ans = 0;
-      for (let i of array){
-        ans = ans + i;
+    findPart(name){
+      for(let i of this.partForm.parts){
+        if(i.name === name ){
+          return i
+        }
       }
-      return ans;
     },
-
+    findItem(name){
+      for(let i of this.itemForm.items){
+        if(i.name === name){
+          return i
+        }
+      }
+    },
     //生成接口数据对象
     GenerateCTarget(){
-      var ct = new Array;
-      var data = new Object;
-      data.semester = 'xxxx-xxxx-x' //this.basicInfo.semester;
-      data.date = this.basicInfo.date;
-      data.course_name = this.basicInfo.course_name;
-      data.course_number = this.basicInfo.course_number;
-      data.classes = this.basicInfo.classes;
-      data.exam_type = this.basicInfo.exam_type;
-      data.course_goals = new Array;
-      for(let i = 0; i<this.cTargetForm.ctargets.length;i++){
-        var tmpObj = new Object;
-        tmpObj.description = this.cTargetForm.ctargets[i].value
-        tmpObj.support_graduation_require="支撑毕业要求1,1"
-        tmpObj.usual_evaluations = this.testContent.modules //0-平时, 1-期末, 2-XXX
-        tmpObj.end_evaluations=[
-          "卷面考试"
-        ]
-        tmpObj.evaluation_distribution={
-          "考勤": this.testContent.ContentDis.Attendance[i],
-          "课堂表现": this.testContent.ContentDis.CPerformance[i],
-          "作业": this.testContent.ContentDis.HomeWork[i],
-          "卷面考试": this.testContent.ContentDis.Score[i]
+      let data = {}
+      data.semester = this.basicInfo.semester
+      data.date = this.basicInfo.date
+      data.course_name = this.basicInfo.course_name
+      data.course_number = this.basicInfo.course_number
+      data.classes = this.basicInfo.classes
+      data.exam_type = this.basicInfo.exam_type
+      data.course_goals = []
+      for(let i of this.cTargetForm.ctargets){
+        let tmpObj = {}
+        tmpObj["description"] = i.value
+        tmpObj["support_graduation_require"] = "支撑毕业要求" + i.support_graduation_require
+        let tempMod = {}
+        for(let mod of this.modForm.mods){
+          let modName = mod.name
+          let tempPart = {}
+          for(let partName of i.parts){ //遍历当前课程目标的part
+            let tempItem = {}
+            if(mod.partNames.indexOf(partName) != -1){  //当前课程目标的part属于这个模块则添加
+              if(this.fatherOfItem.indexOf(partName) != -1){  //有考试题目项
+                tempItem["proportion"] = this.findPart(partName).ratio
+                let content = {}
+                for(let item of i.content){
+                  content[item] = this.findItem(item).score
+                }
+                tempItem["content"] = content
+                tempPart[partName] = tempItem
+              }else{
+                tempPart[partName] = this.findPart(partName).ratio
+              }
+            }
+          }
+          tempMod[modName] = tempPart
         }
-        tmpObj.standard = [
-          this.markStandard.a[i],
-          this.markStandard.b[i],
-          this.markStandard.d[i],
-          this.markStandard.f[i]
-        ]
-        tmpObj.exam_question = '对应题目'
-        console.log( this.testContent.ContentDis)
-        tmpObj.exam_proportion = this.testContent.ContentDis.Ratio[i]
+        tmpObj["modules"] = tempMod
+        tmpObj["standard"] = i.standards
         data.course_goals.push(tmpObj)
       }
       const tmpArray = JSON.parse(JSON.stringify(this.testSpecification))
@@ -1571,12 +1424,20 @@ export default {
     }
   },
 
+  created(){
+    this.getCids()
+    this.chooseCourse = 1
+  },
+
   //实时计算相关属性并更新
   computed: {
+    setEditVis: function(){
+      let vis =( this.EditFinished && (! (this.docVis === 3)))
+      return vis
+    },
     modRatioValidate: function(){
       // if( this.calPartsRatio(this.partForm.parts) != this.modForm.mods
       console.log('setR')
-
     },
   },
 
@@ -1656,8 +1517,11 @@ export default {
   font-size: 20px;
 }
 
-.ExamRatioTable tr td>p>span{/*普通格子*/
+.ExamRatioTable tr td>p{/*普通格子*/
   padding: 10px;
+}
+
+.ExamRatioTable tr td>p>span{/*普通格子*/
   width: 100%;
   font-size: 15px;
 }
@@ -1668,7 +1532,7 @@ export default {
 }
 
 .ContentDisTable tr{
-  height:30px;
+  height:40px;
 }
 
 .ContentDisTable tr th{
@@ -1681,15 +1545,63 @@ export default {
   border-width:0.5pt;
 }
 
+.ContentDisTable tr th>p{
+   padding: 10px;
+}
+
+.ContentDisTable tr td>p{
+   padding: 10px;
+}
+
 .ContentDisTable tr th>p>span{ /*表头格子*/
   font-family: "\4EFF\5B8B_GB2312";
   font-size: 18px;
 }
 
 .ContentDisTable tr td>p>span{/*普通格子*/
-  padding: 10px;
   width: 100%;
   font-size: 15px;
+}
+
+.QStandardTable{
+  border-collapse:collapse;
+  width:80%;
+}
+
+.QStandardTable tr{
+  height:50px;
+}
+
+.QStandardTable tr td{
+  border-style:solid;
+  border-width:0.5pt;
+}
+
+.QStandardTable tr td>p>span{/*普通格子*/
+  width: 100%;
+  font-size: 16px;
+}
+
+.FinalTable{
+  border-collapse:collapse;
+}
+
+.FinalTable tr{
+  height:30px;
+}
+
+.FinalTable tr th>p{
+  margin:5px 5px 5px 20px;
+}
+
+.FinalTable tr th>p>span{
+  width: 100%;
+  font-size: 16px;
+}
+
+.FinalTable tr td>p>span{/*普通格子*/
+  width: 100%;
+  font-size: 16px;
 }
 
 </style>

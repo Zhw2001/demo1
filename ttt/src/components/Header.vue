@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { composeTree, addRoute } from '@/router/action.js'
+import { changeRole } from '@/utils/login.js'
 
 export default {
     name:"Header",
@@ -52,7 +52,6 @@ export default {
             name:'',
             roles: [], //角色选项表
             role_id:'', //选中的角色
-            roleInfo: []
         }
     },
     methods: {
@@ -60,16 +59,9 @@ export default {
             if(this.role.role_id == this.role_id || !this.role_id ) { 
                 this.roleChange = false
                 return
-                }
-            for(let i of this.roleInfo){
-                if(i.role_id == this.role_id){
-                    localStorage.removeItem('role')
-                    localStorage.setItem('role', JSON.stringify(i) )
-                    let aside = composeTree(i.adminAuthList)
-                    localStorage.removeItem('aside')
-                    localStorage.setItem('aside', JSON.stringify(aside))
-                    location.reload()
-                }
+            }else{
+                changeRole(this.role_id)
+                location.reload()
             }
         },
         handleRoleChange(v){
@@ -123,7 +115,6 @@ export default {
             this.name = user.nickname
             this.role = JSON.parse(localStorage.getItem('role'))
             this.getRoles(user.adminRoleList)
-            this.roleInfo = user.adminRoleList
         }
     },
     computed: {

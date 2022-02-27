@@ -1,12 +1,12 @@
 package com.ljsh.test.service;
 
-import com.ljsh.test.mbg.model.Course;
+import com.ljsh.test.domain.model.CourseData;
 
 import java.util.List;
 
 public interface CourseService {
-    List<Course> getAll();
-    String addCourse(Course course);
+    List<CourseData> getAll();
+    String addCourse(CourseData courseData);
     String delCourse(Long id);
-    String upCourse(Course course);
+    String upCourse(CourseData courseData);
 }

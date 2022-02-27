@@ -1,8 +1,8 @@
 package com.ljsh.test.service.impl;
 
 import com.ljsh.test.dto.RoleAuthDTO;
-import com.ljsh.test.mbg.mapper.AdminRoleMapper;
-import com.ljsh.test.mbg.model.AdminRole;
+import com.ljsh.test.domain.mapper.AdminRoleMapper;
+import com.ljsh.test.domain.model.AdminRole;
 import com.ljsh.test.service.AdminRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -3,11 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.ljsh.test.mbg.mapper.CourseMapper">
+<mapper namespace="com.ljsh.test.domain.mapper.CourseMapper">
 
     <sql id="c">course</sql>
 
-    <resultMap type="com.ljsh.test.mbg.model.Course" id="cMap">
+    <resultMap type="com.ljsh.test.domain.model.CourseData" id="cMap">
         <id  property="id" column="course_id" javaType="Long" jdbcType="BIGINT"/>
         <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
         <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
@@ -33,7 +33,7 @@
         course_id = #{id}
     </delete>
 
-    <insert id="addCourse" parameterType="com.ljsh.test.mbg.model.Course">
+    <insert id="addCourse" parameterType="com.ljsh.test.domain.model.CourseData">
         INSERT INTO
         <include refid="c"/>
         (sTime,cId,cNum,sId,sName,sClass,sState,regular,written,overall)
@@ -41,8 +41,8 @@
         (#{sTime},#{cId},#{cNum},#{sId},#{sName},#{sClass},#{sState},#{regular},#{written},#{overall})
     </insert>
 
-    <update id="updateCourse" parameterType="com.ljsh.test.mbg.model.Course">
-        update course set
+    <update id="updateCourse" parameterType="com.ljsh.test.domain.model.CourseData">
+        update <include refid="c"/> set
         sTime = #{sTime},
         cId = #{cId},
         cNum = #{cNum},

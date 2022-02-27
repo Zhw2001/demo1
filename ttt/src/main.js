@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/css/global.css'
 import request from '@/utils/request.js'
 import setCss from '@/utils/setCss.js'
+import 'default-passive-events'
 
 
 Array.prototype.remove = function(val) { 

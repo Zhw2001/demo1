@@ -1,11 +1,14 @@
 package com.ljsh.test.controller;
 
+import com.ljsh.test.domain.model.Course_Classes;
 import com.ljsh.test.dto.Result;
-import com.ljsh.test.mbg.model.AdminUser;
+import com.ljsh.test.domain.model.AdminUser;
 import com.ljsh.test.service.AdminUserService;
 import com.ljsh.test.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -28,26 +31,12 @@ public class AdminController {
     }
 
 
-    @GetMapping ("/get_Role")
-    public Result<?> getadminRole(@RequestParam String account) {
-        if(account != null){
-            AdminUser adminUser = adminUserService.getRole(account);
-            if(adminUser != null) return Result.success(adminUser);
-            else{
-                return Result.error("404","找不到用户数据");
-            }
-        }
-        else{
-            return Result.error("1","输入为空");
-        }
-    }
-
 
     @PostMapping("/regist")
     public Result<?> regist(@RequestBody AdminUser user){
-        if(user != null){
+        if(user.getAccount() != null && user.getPassword()!= null){
             String msg = adminUserService.regist(user);
-            if(msg == ""){return Result.success();}
+            if(msg.equals("")){return Result.success();}
             else{
                 return Result.error("500",msg);
             }
@@ -57,9 +46,9 @@ public class AdminController {
 
     @PostMapping("/delete")
     public Result<?> del(@RequestBody AdminUser user){
-        if(user != null){
+        if(user.getAccount() != null){
             String msg = adminUserService.del_user(user.getAccount());
-            if(msg == ""){return Result.success();}
+            if(msg.equals("")){return Result.success();}
             else{
                 return Result.error("500",msg);
             }
@@ -80,8 +69,20 @@ public class AdminController {
     }
 
     @GetMapping("/info")
-    public Result<?> get_Info_By_ID(@RequestParam String account){
+    public Result<?> get_Info_By_Account(@RequestParam String account){
         return Result.success(adminUserService.get_Info_By_Account(account));
+    }
+
+    @PostMapping("/setCC")
+    public Result<?> setCC(@RequestBody List<Course_Classes> course_classList){
+        if(course_classList.size() > 0){
+            String msg = adminUserService.setCC(course_classList);
+            if(msg.equals("")){return Result.success();}
+            else{
+                return Result.error("500",msg);
+            }
+        }
+        return Result.error("204","输入为空");
     }
 
 }

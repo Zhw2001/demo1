@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ljsh.test.domain.mapper.CourseAuditMapper">
+
+    <resultMap type="com.ljsh.test.domain.model.CourseAudit" id="cAMap">
+        <id  property="id" column="id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="courseID" column="courseID" javaType="String" jdbcType="VARCHAR"/>
+        <result property="module_name" column="module_name" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.domain.model.MyPart" id="partMap">
+        <id  property="part" column="part" javaType="String" jdbcType="VARCHAR"/>
+        <id property="cid" column="cid" javaType="String" jdbcType="VARCHAR"/>
+        <result property="ratio" column="ratio" javaType="String" jdbcType="VARCHAR"/>
+        <result property="module_name" column="module_name" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.domain.model.MyItem" id="itemMap">
+        <id  property="item_name" column="item_name" javaType="String" jdbcType="VARCHAR"/>
+        <id property="cid" column="cid" javaType="String" jdbcType="VARCHAR"/>
+        <result property="item_value" column="item_value" javaType="String" jdbcType="VARCHAR"/>
+        <result property="part" column="part" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.domain.model.QStandard" id="standardMap">
+        <id  property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <id property="standard" column="standard" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="course_Goal_infoMap" type="com.ljsh.test.domain.model.course_goal_info">
+        <id property="id" javaType="Integer" column="course_goal_id" jdbcType="INTEGER"/>
+        <id property="cid" javaType="String" column="cid" jdbcType="VARCHAR"/>
+        <result property="G_R" javaType="String" column="graduate_require" jdbcType="VARCHAR"/>
+        <result property="eva_point" javaType="String" column="eva_point" jdbcType="VARCHAR"/>
+        <result property="total_score" javaType="Float" column="total_score" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <select id="get_CG_By_Cid" parameterType="String" resultMap="course_Goal_infoMap">
+        SELECT *
+        FROM study_goal
+        WHERE cid = #{cid}
+    </select>
+
+    <select id="get_S_By_CourseType" parameterType="Integer" resultMap="standardMap">
+        SELECT *
+        FROM procedure_standard
+        WHERE course_type = #{course_type}
+    </select>
+
+    <select id="get_Item_By_CID" parameterType="String" resultMap="itemMap">
+        SELECT *
+        FROM item
+        WHERE cid = #{cid}
+    </select>
+
+    <select id="get_Part_By_CID" parameterType="String" resultMap="partMap">
+        SELECT *
+        FROM part
+        WHERE cid = #{cid}
+    </select>
+
+    <select id="get_CA_By_CID" parameterType="String" resultMap="cAMap">
+        SELECT *
+        FROM courseaudit
+        WHERE courseID = #{cid}
+    </select>
+
+    <insert id="replaceMod" parameterType="com.ljsh.test.domain.model.CourseAudit">
+        REPLACE INTO courseaudit
+        (courseID,module_name)
+        VALUES
+        (#{courseID},#{module_name})
+    </insert>
+
+    <insert id="replacePart" parameterType="com.ljsh.test.domain.model.MyPart">
+        REPLACE INTO part
+        (part,ratio,cid,module_name)
+        VALUES
+        (#{part},#{ratio},#{cid},#{module_name})
+    </insert>
+
+    <insert id="replaceItem" parameterType="com.ljsh.test.domain.model.MyItem">
+        REPLACE INTO item
+        (item_name,item_value,cid,part)
+        VALUES
+        (#{item_name},#{item_value},#{cid},#{part})
+    </insert>
+
+    <insert id="replace_CGInfo" parameterType="com.ljsh.test.domain.model.course_goal_info">
+        REPLACE INTO study_goal
+        (course_goal_id,cid,graduate_require,eva_point,total_score)
+        VALUES
+        (#{id},#{cid},#{G_R},#{eva_point},#{total_score})
+    </insert>
+
+    <delete id="delMod" parameterType="com.ljsh.test.domain.model.CourseAudit">
+        DELETE FROM courseaudit
+        WHERE courseID = #{courseID} AND module_name = #{module_name}
+    </delete>
+
+    <delete id="delPart" parameterType="com.ljsh.test.domain.model.MyPart">
+        DELETE FROM part
+        WHERE cid = #{cid} AND part = #{part}
+    </delete>
+
+    <delete id="delItem" parameterType="com.ljsh.test.domain.model.MyItem">
+        DELETE FROM item
+        WHERE cid = #{cid} AND item_name = #{item_name}
+    </delete>
+
+    <delete id="del_CGInfo" parameterType="com.ljsh.test.domain.model.course_goal_info">
+        DELETE FROM study_goal
+        WHERE cid = #{cid} AND course_goal_id = #{id}
+    </delete>
+    
+    <update id="refreshCA">
+        ALTER TABLE courseaudit
+        DROP id;
+        ALTER TABLE courseaudit
+        ADD id BIGINT auto_increment PRIMARY KEY;
+    </update>
+
+</mapper>

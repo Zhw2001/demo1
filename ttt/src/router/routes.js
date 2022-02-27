@@ -30,7 +30,8 @@ const allDynamicRoutes = [
   { id: '10', name: 'user', title: '用户管理', icon: 'el-icon-data-analysis', key:'User' },
   { id: '11', parent_id: '10', name: 'user_info', title: '用户信息', path: 'userInfo', component: '/user/view/user', key:'UserInfo' },
   { id: '12', parent_id: '10', name: 'user_role', title: '用户角色', path: 'userRole', component: '/user/view/userRole', key:'UserRole' },
-  { id: '13', parent_id: '10', name: 'user_auth', title: '用户权限', path: 'userRoleMenu', component: '/user/view/userRoleMenu', key:'UserAuth' }
+  { id: '13', parent_id: '10', name: 'user_auth', title: '用户权限', path: 'userRoleMenu', component: '/user/view/userRoleMenu', key:'UserAuth' },
+  { id: '14', parent_id: '10', name: 'user_cc', title: '分配课程', path: 'userCC', component: '/user/view/userCourseClass', key:'UserCC' }
 ]
 
 export { allDynamicRoutes, constRoutes }

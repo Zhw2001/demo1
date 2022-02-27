@@ -1,12 +1,12 @@
 package com.ljsh.test.service;
 
-import com.ljsh.test.mbg.model.Cdesign;
+import com.ljsh.test.domain.model.CdesignData;
 
 import java.util.List;
 
 public interface CdesignService {
-    List<Cdesign> get_All_Cd();
-    String addCdesign(Cdesign cdesign);
+    List<CdesignData> get_All_Cd();
+    String addCdesign(CdesignData cdesignData);
     String delCdesign(Long id);
-    String updateCdesign(Cdesign cdesign);
+    String updateCdesign(CdesignData cdesignData);
 }

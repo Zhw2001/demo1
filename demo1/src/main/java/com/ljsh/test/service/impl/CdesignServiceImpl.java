@@ -1,7 +1,7 @@
 package com.ljsh.test.service.impl;
 
-import com.ljsh.test.mbg.mapper.CdesignMapper;
-import com.ljsh.test.mbg.model.Cdesign;
+import com.ljsh.test.domain.mapper.CdesignMapper;
+import com.ljsh.test.domain.model.CdesignData;
 import com.ljsh.test.service.CdesignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +13,13 @@ public class CdesignServiceImpl implements CdesignService {
     @Autowired
     private CdesignMapper cdesignMapper;
 
-    public List<Cdesign> get_All_Cd(){
+    public List<CdesignData> get_All_Cd(){
         return cdesignMapper.get_All_Cd();
     }
 
-    public String addCdesign(Cdesign cdesign){
+    public String addCdesign(CdesignData cdesignData){
         try {
-            cdesignMapper.addCdesign(cdesign);
+            cdesignMapper.addCdesign(cdesignData);
         }catch(Exception e){
             return e.toString();
         }
@@ -35,9 +35,9 @@ public class CdesignServiceImpl implements CdesignService {
         return "";
     }
 
-    public String updateCdesign(Cdesign cdesign){
+    public String updateCdesign(CdesignData cdesignData){
         try {
-            cdesignMapper.updateCdesign(cdesign);
+            cdesignMapper.updateCdesign(cdesignData);
         }catch(Exception e){
             return e.toString();
         }

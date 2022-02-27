@@ -3,77 +3,126 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.ljsh.test.mbg.mapper.CourseInfoMapper">
+<mapper namespace="com.ljsh.test.domain.mapper.CourseInfoMapper">
 
     <sql id="info">courseinfo</sql>
 
-    <resultMap type="com.ljsh.test.mbg.model.CourseInfo" id="cinfoMap">
-        <id  property="cNum" column="info_cNum" javaType="Integer" jdbcType="INTEGER"/>
-        <result property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="department" column="department" javaType="String" jdbcType="VARCHAR"/>
+    <resultMap id="name_id_Map" type="com.ljsh.test.domain.model.CourseInfo">
+        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
         <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cTarget" column="cTarget" javaType="String" jdbcType="VARCHAR"/>
-        <result property="A" column="A" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="B" column="B" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="C" column="C" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="D" column="D" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="F" column="F" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
-        <collection property="Course" column="info_cId" ofType="com.ljsh.test.mbg.model.Course" resultMap="com.ljsh.test.mbg.mapper.CourseMapper.cMap"/>
     </resultMap>
 
-    <resultMap type="com.ljsh.test.mbg.model.CourseInfo" id="einfoMap">
-        <id  property="cNum" column="info_cNum" javaType="Integer" jdbcType="INTEGER"/>
-        <result property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="department" column="department" javaType="String" jdbcType="VARCHAR"/>
+    <resultMap id="infoMap" type="com.ljsh.test.domain.model.CourseInfo">
+        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="semester" column="semester" javaType="String" jdbcType="VARCHAR"/>
         <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
         <result property="cTarget" column="cTarget" javaType="String" jdbcType="VARCHAR"/>
-        <result property="A" column="A" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="B" column="B" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="C" column="C" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="D" column="D" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="F" column="F" javaType="Double" jdbcType="DOUBLE"/>
+        <result property="A" column="excellent" javaType="String" jdbcType="VARCHAR"/>
+        <result property="B" column="good" javaType="String" jdbcType="VARCHAR"/>
+        <result property="C" column="normal" javaType="String" jdbcType="VARCHAR"/>
+        <result property="D" column="pass" javaType="String" jdbcType="VARCHAR"/>
+        <result property="F" column="poor" javaType="String" jdbcType="VARCHAR"/>
         <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
-        <collection property="Experiment" column="info_cId" ofType="com.ljsh.test.mbg.model.Experiment" resultMap="com.ljsh.test.mbg.mapper.ExperimentMapper.eMap"/>
+        <result property="exam_type" column="test_type" javaType="Integer" jdbcType="INTEGER"/>
     </resultMap>
 
-    <resultMap type="com.ljsh.test.mbg.model.CourseInfo" id="cdinfoMap">
-        <id  property="cNum" column="info_cNum" javaType="Integer" jdbcType="INTEGER"/>
-        <result property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="department" column="department" javaType="String" jdbcType="VARCHAR"/>
+    <resultMap type="com.ljsh.test.domain.model.Course" id="cinfoMap">
+        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
         <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cTarget" column="cTarget" javaType="String" jdbcType="VARCHAR"/>
-        <result property="A" column="A" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="B" column="B" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="C" column="C" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="D" column="D" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="F" column="F" javaType="Double" jdbcType="DOUBLE"/>
         <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
-        <collection property="Cdesign" column="info_cId" ofType="com.ljsh.test.mbg.model.Cdesign" resultMap="com.ljsh.test.mbg.mapper.CdesignMapper.cdMap"/>
+        <collection property="CourseData" ofType="com.ljsh.test.domain.model.CourseData" resultMap="com.ljsh.test.domain.mapper.CourseMapper.cMap"/>
     </resultMap>
 
-    <resultMap type="com.ljsh.test.mbg.model.CourseInfo" id="gdinfoMap">
-        <id  property="cNum" column="info_cNum" javaType="Integer" jdbcType="INTEGER"/>
-        <result property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="department" column="department" javaType="String" jdbcType="VARCHAR"/>
+    <resultMap type="com.ljsh.test.domain.model.Exper" id="einfoMap">
+        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
         <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cTarget" column="cTarget" javaType="String" jdbcType="VARCHAR"/>
-        <result property="A" column="A" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="B" column="B" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="C" column="C" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="D" column="D" javaType="Double" jdbcType="DOUBLE"/>
-        <result property="F" column="F" javaType="Double" jdbcType="DOUBLE"/>
         <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
-        <collection property="Gdesign" column="gdesign_id" ofType="com.ljsh.test.mbg.model.Gdesign" resultMap="com.ljsh.test.mbg.mapper.GdesignMapper.gdMap"/>
+        <collection property="ExperimentData" ofType="com.ljsh.test.domain.model.ExperimentData" resultMap="com.ljsh.test.domain.mapper.ExperimentMapper.eMap"/>
     </resultMap>
 
+    <resultMap type="com.ljsh.test.domain.model.CDesign" id="cdinfoMap">
+        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="CdesignData" ofType="com.ljsh.test.domain.model.CdesignData" resultMap="com.ljsh.test.domain.mapper.CdesignMapper.cdMap"/>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.domain.model.GDesign" id="gdinfoMap">
+        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="GdesignData" ofType="com.ljsh.test.domain.model.GdesignData" resultMap="com.ljsh.test.domain.mapper.GdesignMapper.gdMap"/>
+    </resultMap>
+
+    <select id="GET_BINFO_CID" parameterType="String" resultMap="infoMap">
+        SELECT info_cId,cName,course_type FROM courseinfo
+        <where>
+            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="get_All_cNames_cids" resultMap="name_id_Map">
+        SELECT cName,info_cId FROM
+        courseinfo
+    </select>
+
+    <update id="updateCourseInfo" parameterType="com.ljsh.test.domain.model.CourseInfo">
+        UPDATE courseinfo
+        <set>
+            <if test="semester != null">
+                semester = #{semester},
+            </if>
+            <if test="cName != null">
+                cName = #{cName},
+            </if>
+            <if test="cTarget != null">
+                cTarget = #{cTarget},
+            </if>
+            <if test="A != null">
+                excellent = #{A},
+            </if>
+            <if test="B != null">
+                good = #{B},
+            </if>
+            <if test="C != null">
+                normal = #{C},
+            </if>
+            <if test="D != null">
+                pass = #{D},
+            </if>
+            <if test="F != null">
+                poor = #{F},
+            </if>
+            <if test="course_type != null">
+                course_type = #{course_type},
+            </if>
+            <if test="exam_type != null">
+                test_type = #{exam_type},
+            </if>
+        </set>
+        WHERE info_cId = #{cId}
+    </update>
+
+    <insert id="replaceCourseInfo" parameterType="com.ljsh.test.domain.model.CourseInfo">
+        REPLACE INTO courseinfo
+        (semester,info_cId,cName,cTarget,excellent,good,normal,pass,poor,course_type,test_type)
+        VALUES
+        (#{semester},#{cId},#{cName},#{cTarget},#{A},#{B},#{C},#{D},#{F},#{course_type},#{exam_type})
+    </insert>
+
+    <select id="GET_CINFO_CID" parameterType="String" resultMap="infoMap">
+        SELECT * FROM courseinfo
+        WHERE info_cId = #{cid}
+    </select>
 
     <select id="get_Course_Cid"  resultMap="cinfoMap" >
         SELECT *
         FROM
         (courseinfo left join course on cId = info_cId)
         <where>
-            <foreach item="item" index="index" collection="array"  open="info_cId in (" separator="," close=")">
+            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
                 #{item}
             </foreach>
         </where>
@@ -84,7 +133,7 @@
         FROM
         (courseinfo left join experiment on cId = info_cId)
         <where>
-            <foreach item="item" index="index" collection="array"  open="info_cId in (" separator="," close=")">
+            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
                 #{item}
             </foreach>
         </where>
@@ -95,7 +144,7 @@
         FROM
         (courseinfo left join cdesign on cId = info_cId)
         <where>
-            <foreach item="item" index="index" collection="array"  open="info_cId in (" separator="," close=")">
+            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
                 #{item}
             </foreach>
         </where>
@@ -106,7 +155,7 @@
         FROM
         (courseinfo left join gdesign on cId = info_cId)
         <where>
-            <foreach item="item" index="index" collection="array"  open="info_cId in (" separator="," close=")">
+            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
                 #{item}
             </foreach>
         </where>

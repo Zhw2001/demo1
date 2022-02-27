@@ -2,7 +2,7 @@ package com.ljsh.test.controller;
 
 import com.ljsh.test.dto.Result;
 
-import com.ljsh.test.mbg.model.Experiment;
+import com.ljsh.test.domain.model.ExperimentData;
 
 import com.ljsh.test.service.ExperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +21,15 @@ public class ExperimentController {
     @GetMapping("/list")
     public Result<?> getExperList()
     {
-        List<Experiment> experimentList =experService.get_All_E();
-        return Result.success(experimentList);
+        List<ExperimentData> experimentDataList =experService.get_All_E();
+        return Result.success(experimentDataList);
     }
 
     @PostMapping("/update")
-    public Result<?> updateExperiment(@RequestBody Experiment experiment){
-        if(experiment != null){
-            String msg = experService.updateExperiment(experiment);
-            if(msg == ""){return Result.success();}
+    public Result<?> updateExperiment(@RequestBody ExperimentData experimentData){
+        if(experimentData.getId()!=null){
+            String msg = experService.updateExperiment(experimentData);
+            if(msg.equals("")){return Result.success();}
             else{
                 return Result.error("500",msg);
             }
@@ -38,10 +38,10 @@ public class ExperimentController {
     }
 
     @PostMapping("/delete")
-    public Result<?> delExperiment(@RequestBody Experiment experiment){
-        if(experiment != null){
-            String msg = experService.delExperiment(experiment.getId());
-            if(msg == ""){return Result.success();}
+    public Result<?> delExperiment(@RequestBody ExperimentData experimentData){
+        if(experimentData.getId()!=null){
+            String msg = experService.delExperiment(experimentData.getId());
+            if(msg.equals("")){return Result.success();}
             else{
                 return Result.error("500",msg);
             }
@@ -50,10 +50,10 @@ public class ExperimentController {
     }
 
     @PostMapping("/insert")
-    public Result<?> addExperiment(@RequestBody Experiment experiment){
-        if(experiment != null){
-            String msg = experService.addExperiment(experiment);
-            if(msg == ""){return Result.success();}
+    public Result<?> addExperiment(@RequestBody ExperimentData experimentData){
+        if(experimentData.getCId()!=null){
+            String msg = experService.addExperiment(experimentData);
+            if(msg.equals("")){return Result.success();}
             else{
                 return Result.error("500",msg);
             }

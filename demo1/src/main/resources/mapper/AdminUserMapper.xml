@@ -6,11 +6,11 @@
 
 
 
-<mapper namespace="com.ljsh.test.mbg.mapper.AdminUserMapper">
+<mapper namespace="com.ljsh.test.domain.mapper.AdminUserMapper">
     <sql id="admin_user">admin_user</sql>
 
 
-    <resultMap type="com.ljsh.test.mbg.model.AdminUser" id="userMap">
+    <resultMap type="com.ljsh.test.domain.model.AdminUser" id="userMap">
         <id  property="uid" column="uid" javaType="Long" jdbcType="BIGINT"/>
         <result property="account" column="account" javaType="String" jdbcType="CHAR"/>
         <result property="nickname" column="nickname" javaType="String" jdbcType="VARCHAR"/>
@@ -18,15 +18,10 @@
         <result property="phone" column="phone" javaType="Long" jdbcType="BIGINT"/>
         <result property="email" column="email" javaType="String" jdbcType="VARCHAR"/>
         <result property="description" column="description" javaType="String" jdbcType="VARCHAR"/>
-        <collection property="adminRoleList"  ofType="com.ljsh.test.mbg.model.AdminRole">
-            <id  property="role_id" column="role_id" javaType="Long" jdbcType="BIGINT"/>
-            <result property="role_name" column="role_name" javaType="String" jdbcType="VARCHAR"/>
-            <result property="role_description" column="role_description" javaType="String" jdbcType="VARCHAR"/>
-            <result property="cidList" column="user_cid" javaType="String" jdbcType="VARCHAR" />
-        </collection>
+        <collection property="adminRoleList" ofType="com.ljsh.test.domain.model.AdminRole" resultMap="com.ljsh.test.domain.mapper.AdminRoleMapper.roleMap"/>
     </resultMap>
 
-    <resultMap type="com.ljsh.test.mbg.model.AdminUser" id="userInfoMap">
+    <resultMap type="com.ljsh.test.domain.model.AdminUser" id="userInfoMap">
         <id  property="uid" column="uid" javaType="Long" jdbcType="BIGINT"/>
         <result property="account" column="account" javaType="String" jdbcType="CHAR"/>
         <result property="nickname" column="nickname" javaType="String" jdbcType="VARCHAR"/>
@@ -34,27 +29,11 @@
         <result property="phone" column="phone" javaType="Long" jdbcType="BIGINT"/>
         <result property="email" column="email" javaType="String" jdbcType="VARCHAR"/>
         <result property="description" column="description" javaType="String" jdbcType="VARCHAR"/>
-        <collection property="adminRoleList"  ofType="com.ljsh.test.mbg.model.AdminRole">
-            <id  property="role_id" column="role_id" javaType="Long" jdbcType="BIGINT"/>
-            <result property="role_name" column="role_name" javaType="String" jdbcType="VARCHAR"/>
-            <result property="role_description" column="role_description" javaType="String" jdbcType="VARCHAR"/>
-            <result property="cidList" column="user_cid" javaType="String" jdbcType="VARCHAR" />
-            <collection property="adminAuthList" ofType="com.ljsh.test.mbg.model.AdminAuth">
-                <id  property="authority_id" column="authority_id" javaType="Long" jdbcType="BIGINT"/>
-                <result property="authority_name" column="authority_name" javaType="String" jdbcType="CHAR"/>
-                <result property="authority_type" column="authority_type" javaType="String" jdbcType="CHAR"/>
-                <result property="authority_parent_id" column="authority_parent_id" javaType="String" jdbcType="VARCHAR"/>
-                <result property="authority_parent_name" column="authority_parent_name" javaType="String" jdbcType="CHAR"/>
-                <result property="authority_url" column="authority_url" javaType="String" jdbcType="CHAR"/>
-                <result property="authority_sort" column="authority_sort" javaType="int" jdbcType="INTEGER"/>
-                <result property="authority_description" column="authority_description" javaType="String" jdbcType="VARCHAR"/>
-                <result property="authority_enable" column="auth_enable" javaType="int" jdbcType="TINYINT"/>
-            </collection>
-        </collection>
+        <collection property="adminRoleList" ofType="com.ljsh.test.domain.model.AdminRole" resultMap="com.ljsh.test.domain.mapper.AdminRoleMapper.roleInfoMap"/>
     </resultMap>
 
 
-    <insert id="newu" parameterType="com.ljsh.test.mbg.model.AdminUser">
+    <insert id="newu" parameterType="com.ljsh.test.domain.model.AdminUser">
         INSERT INTO
         <include refid="admin_user"/>
         (account,nickname,password,phone,email,description,create_date)

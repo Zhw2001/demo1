@@ -1,7 +1,7 @@
 package com.ljsh.test.service.impl;
 
-import com.ljsh.test.mbg.mapper.GdesignMapper;
-import com.ljsh.test.mbg.model.Gdesign;
+import com.ljsh.test.domain.mapper.GdesignMapper;
+import com.ljsh.test.domain.model.GdesignData;
 import com.ljsh.test.service.GdesignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +13,13 @@ public class GdesignServiceImpl implements GdesignService {
     @Autowired
     private GdesignMapper gdesignMapper;
 
-    public List<Gdesign> get_All_Gd(){
+    public List<GdesignData> get_All_Gd(){
         return gdesignMapper.get_All_Gd();
     }
 
-    public String addGdesign(Gdesign gdesign){
+    public String addGdesign(GdesignData gdesignData){
         try {
-            gdesignMapper.addGdesign(gdesign);
+            gdesignMapper.addGdesign(gdesignData);
         }catch(Exception e){
             return e.toString();
         }
@@ -35,9 +35,9 @@ public class GdesignServiceImpl implements GdesignService {
         return "";
     }
 
-    public String updateGdesign(Gdesign gdesign){
+    public String updateGdesign(GdesignData gdesignData){
         try {
-            gdesignMapper.updateGdesign(gdesign);
+            gdesignMapper.updateGdesign(gdesignData);
         }catch(Exception e){
             return e.toString();
         }

@@ -186,11 +186,10 @@ export default {
       });
     },
     load(){
-      var roleList = new Array();
       this.$request.get("/api_S/admin/list?pageNum="+this.currentPage+"&pageSize="+this.pageSize+"&search="+this.search).then(res=>{//等价于.then(function(res){console.log(res.data)})
         this.tableData=[];
         for(let i of res.data){
-          roleList = [];
+          let roleList = [];
           for(let j of i.adminRoleList){
             roleList.push(j.role_name);
           }

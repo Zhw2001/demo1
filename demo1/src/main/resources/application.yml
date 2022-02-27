@@ -26,3 +26,8 @@ shiro:
 
 my:
   filepath: C:\Users\13999\Desktop\MyFile\
+
+
+logging:
+  level:
+    com.ljsh.test.domain.mapper: debug

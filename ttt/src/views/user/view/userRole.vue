@@ -78,7 +78,6 @@ export default {
       },
       selectedAuth: [],
       existedAuth: [],
-      fullAuth: [],
       selectedRoleID: ''
     }
   },
@@ -87,15 +86,15 @@ export default {
     this.loadTree()
   },
   methods: {
-    authConcat(existed,selected,full){
-      var deleteList = []
-      var insertList = []
-      var map = []
-      for(let i of selected){
+    authConcat(existed,selected){
+      let deleteList = []
+      let insertList = []
+      let map = []
+      for(let i of selected){ //被选中的加一
         if(!map[i.id]){map[i.id] = 0}
         map[i.id] = map[i.id] + 1
       }
-      for (let i of existed){
+      for (let i of existed){ //已存在的减一
         if(!map[i]){map[i] = 0}
         map[i] = map[i] - 1
       }
@@ -103,14 +102,14 @@ export default {
         if(map[i] == -1){deleteList.push(i)}
         if(map[i] == 1){insertList.push(i)}
       }
-      var result = {}
+      let result = {}
       result.insert = insertList
       result.delete = deleteList
       result.role_id = this.selectedRoleID
       return result
     },
     editAuth(){
-      var updateList = this.authConcat(this.existedAuth ,this.selectedAuth,this.fullAuth)
+      let updateList = this.authConcat(this.existedAuth ,this.selectedAuth)
       console.log(updateList)
       this.$request.post("/api_S/role/update",updateList).then( res => {location.reload()})
     },
@@ -152,9 +151,9 @@ export default {
     },
 
     loadDefault(roleName){
-      var Checkedkeys = []
+      let Checkedkeys = []
       this.$request.get("/api_S/role/authlist?rolename=" + roleName ).then(res=>{
-        var yourAuthList = res.data.adminAuthList
+        let yourAuthList = res.data.adminAuthList
         for (let i = 0; i < yourAuthList.length; i++){
           if (yourAuthList[i].authority_parent_id){ Checkedkeys.push(yourAuthList[i].authority_id) }
         }
@@ -165,8 +164,7 @@ export default {
 
     loadTree(){
       this.$request.get("/api_S/auth/list").then(res=>{
-          var data = res.data
-          this.fullAuth = data
+          let data = res.data
           for(let i of data){
               this.cook(i);
           }
