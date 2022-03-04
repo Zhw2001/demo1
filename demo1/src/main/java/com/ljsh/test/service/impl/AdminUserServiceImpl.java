@@ -1,26 +1,31 @@
 package com.ljsh.test.service.impl;
 
+import com.ljsh.test.domain.mapper.CourseInfoMapper;
+import com.ljsh.test.domain.model.CInfo;
 import com.ljsh.test.dto.AUserInfoDTO;
 import com.ljsh.test.domain.mapper.AdminUserMapper;
-import com.ljsh.test.domain.mapper.CourseClassMapper;
-import com.ljsh.test.domain.model.AdminRole;
 import com.ljsh.test.domain.model.AdminUser;
-import com.ljsh.test.domain.model.Course_Classes;
+import com.ljsh.test.dto.RelationUpdateDTO;
 import com.ljsh.test.service.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
     @Autowired
     private AdminUserMapper adminUserMapper;
     @Autowired
-    private CourseClassMapper courseClassMapper;
+    private CourseInfoMapper courseInfoMapper;
 
-
+    private <T> List<T> getRemoveList(List<T> oldlist, List<T> currList) {
+        return oldlist.stream().filter(item -> !currList.contains(item)).collect(toList()); //在A不在B
+    }
+    private <T> List<T> getAddList(List<T> oldlist, List<T> currList) {
+        return currList.stream().filter(item -> !oldlist.contains(item)).collect(toList()); //在B不在A
+    }
 
     public String regist(AdminUser u){
         AdminUser existuser =  adminUserMapper.getUserByAccount(u.getAccount());
@@ -44,7 +49,6 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     public List<AdminUser> getusers(){
-
         return adminUserMapper.getAll();
     }
 
@@ -62,26 +66,41 @@ public class AdminUserServiceImpl implements AdminUserService {
         return "";
     }
 
-    public AUserInfoDTO get_Info_By_Account(String account){
+    public AUserInfoDTO get_Info(String account){
         AdminUser adminUser = adminUserMapper.get_Info_By_Account(account);
-        List<AdminRole> roleList = adminUser.getAdminRoleList();
-        List<Course_Classes> ccList = new ArrayList<>();
-        for(AdminRole i : roleList){
-            ccList.addAll( courseClassMapper.getCCListByAR(account,i.getRole_id()));
-        }
-        return new AUserInfoDTO(adminUser,ccList);
+        Long uid = adminUser.getUid();
+        List<String> cids = adminUserMapper.getCidsOfUser(uid);
+        List<CInfo> cinfoList = courseInfoMapper.get_CInfoList(cids);
+        return new AUserInfoDTO(adminUser,cinfoList);
     }
 
-    public String setCC(List<Course_Classes> cc_list){
+    public String updateCourseOfUser(RelationUpdateDTO relationUpdate){   //更新教师教授的课程
         try {
-            for (Course_Classes cc : cc_list) {
-                if(cc.getCid() == null || cc.getCid().equals("") ){return "输入为空";}
-                courseClassMapper.setCCList(cc);
+            Long uid = Long.parseLong(relationUpdate.getSubject_id().toString());
+            for( Object i : relationUpdate.getInsert()){
+                adminUserMapper.replaceCidOfUser(uid,i.toString());
             }
         }catch (Exception e) {
             return e.toString();
         }
         return "";
+    }
+
+    public String delCourseOfUser(RelationUpdateDTO relationUpdate){   //删除教师教授的课程
+        try {
+            Long uid = Long.parseLong(relationUpdate.getSubject_id().toString());
+            for( Object i : relationUpdate.getDelete()){
+                adminUserMapper.delCidOfUser(uid,i.toString());
+            }
+        }catch (Exception e) {
+            return e.toString();
+        }
+        return "";
+    }
+
+    public List<CInfo> getCourseList(Long uid){
+        List<String> cids = adminUserMapper.getCidsOfUser(uid);
+        return courseInfoMapper.get_CInfoList(cids);
     }
 
 }

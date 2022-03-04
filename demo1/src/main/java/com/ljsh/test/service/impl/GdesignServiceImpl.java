@@ -1,7 +1,7 @@
 package com.ljsh.test.service.impl;
 
 import com.ljsh.test.domain.mapper.GdesignMapper;
-import com.ljsh.test.domain.model.GdesignData;
+import com.ljsh.test.domain.model.Course_Data.GdesignData;
 import com.ljsh.test.service.GdesignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

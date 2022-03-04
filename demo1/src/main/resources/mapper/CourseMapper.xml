@@ -7,7 +7,7 @@
 
     <sql id="c">course</sql>
 
-    <resultMap type="com.ljsh.test.domain.model.CourseData" id="cMap">
+    <resultMap type="com.ljsh.test.domain.model.Course_Data.CourseData" id="cMap">
         <id  property="id" column="course_id" javaType="Long" jdbcType="BIGINT"/>
         <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
         <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
@@ -33,7 +33,7 @@
         course_id = #{id}
     </delete>
 
-    <insert id="addCourse" parameterType="com.ljsh.test.domain.model.CourseData">
+    <insert id="addCourse" parameterType="com.ljsh.test.domain.model.Course_Data.CourseData">
         INSERT INTO
         <include refid="c"/>
         (sTime,cId,cNum,sId,sName,sClass,sState,regular,written,overall)
@@ -41,7 +41,7 @@
         (#{sTime},#{cId},#{cNum},#{sId},#{sName},#{sClass},#{sState},#{regular},#{written},#{overall})
     </insert>
 
-    <update id="updateCourse" parameterType="com.ljsh.test.domain.model.CourseData">
+    <update id="updateCourse" parameterType="com.ljsh.test.domain.model.Course_Data.CourseData">
         update <include refid="c"/> set
         sTime = #{sTime},
         cId = #{cId},

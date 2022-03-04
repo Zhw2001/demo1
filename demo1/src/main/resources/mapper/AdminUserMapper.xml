@@ -8,7 +8,7 @@
 
 <mapper namespace="com.ljsh.test.domain.mapper.AdminUserMapper">
     <sql id="admin_user">admin_user</sql>
-
+    <sql id="user_course">admin_user_course</sql>
 
     <resultMap type="com.ljsh.test.domain.model.AdminUser" id="userMap">
         <id  property="uid" column="uid" javaType="Long" jdbcType="BIGINT"/>
@@ -73,7 +73,7 @@
 
     <select id="getAll" resultMap="userMap">
         SELECT * FROM
-        <include refid="admin_user"/>
+        (<include refid="admin_user"/> LEFT JOIN admin_user_role ON admin_user_role.UR_uid = uid) left join admin_role on admin_user_role.UR_role_id = admin_role.role_id
     </select>
 
     <select id="selectPage" resultMap="userMap">
@@ -105,5 +105,22 @@
         WHERE
         account = #{account}
     </select>
+
+    <select id="getCidsOfUser" parameterType="Long" resultType="String">
+        SELECT cid FROM <include refid="user_course"/>
+        WHERE uid = #{uid}
+    </select>
+
+    <insert id="replaceCidOfUser">
+        REPLACE INTO <include refid="user_course"/>
+        (uid,cid)
+        VALUES
+        (#{uid},#{cid})
+    </insert>
+
+    <delete id="delCidOfUser">
+        DELETE FROM <include refid="user_course"/>
+        WHERE uid = #{uid} AND cid = #{cid}
+    </delete>
 
 </mapper>

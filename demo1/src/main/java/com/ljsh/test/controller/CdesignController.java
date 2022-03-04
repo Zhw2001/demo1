@@ -1,7 +1,7 @@
 package com.ljsh.test.controller;
 
 import com.ljsh.test.dto.Result;
-import com.ljsh.test.domain.model.CdesignData;
+import com.ljsh.test.domain.model.Course_Data.CdesignData;
 
 import com.ljsh.test.service.CdesignService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CdesignController {
 
     @PostMapping("/update")
     public Result<?> updateCdesign(@RequestBody CdesignData cdesignData){
-        if(cdesignData.getId() != null){
+        if(cdesignData.getId() != null && !cdesignData.getId().equals("")){
             String msg = cdesignService.updateCdesign(cdesignData);
             if(msg.equals("")){return Result.success();}
             else{
@@ -37,7 +37,7 @@ public class CdesignController {
 
     @PostMapping("/delete")
     public Result<?> delCdesign(@RequestBody CdesignData cdesignData){
-        if(cdesignData.getId() != null){
+        if(cdesignData.getId() != null && !cdesignData.getId().equals("")){
             String msg = cdesignService.delCdesign(cdesignData.getId());
             if(msg.equals("")){return Result.success();}
             else{
@@ -49,7 +49,7 @@ public class CdesignController {
 
     @PostMapping("/insert")
     public Result<?> addCdesign(@RequestBody CdesignData cdesignData){
-        if(cdesignData.getCId() != null){
+        if(cdesignData.getId() != null && !cdesignData.getId().equals("")){
             String msg = cdesignService.addCdesign(cdesignData);
             if(msg.equals("")){return Result.success();}
             else{

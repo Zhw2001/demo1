@@ -1,20 +1,20 @@
 package com.ljsh.test.dto;
 
 import com.ljsh.test.domain.model.AdminUser;
-import com.ljsh.test.domain.model.Course_Classes;
+import com.ljsh.test.domain.model.CInfo;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class AUserInfoDTO {
-    public AUserInfoDTO(AdminUser adminUser, List<Course_Classes> cc_list) {
+public class AUserInfoDTO { //返回用户完整信息到前端
+    public AUserInfoDTO(AdminUser adminUser, List<CInfo> courseList) {
         this.adminUser = adminUser;
-        this.cc_list = cc_list;
+        this.courseList = courseList;
     }
 
     public AUserInfoDTO(){}
 
     AdminUser adminUser;
-    List<Course_Classes> cc_list;
+    List<CInfo> courseList;
 }

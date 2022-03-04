@@ -4,18 +4,19 @@ import lombok.Data;
 
 @Data
 public class MyItem {
-    public MyItem(String item_name, String item_value, String cid, String part) {
-        this.item_name = item_name;
-        this.item_value = item_value;
-        this.cid = cid;
-        this.part = part;
-    }
-
+    private Long item_id;
+    private String name;
+    private String score;
+    private Integer index;
+    private Long part_id;
     public MyItem() {
     }
 
-    private String item_name;
-    private String item_value;
-    private String cid;
-    private String part;
+    public MyItem(Long item_id, String name, String score, Integer index, Long part_id) {
+        this.item_id = item_id;
+        this.name = name;
+        this.score = score;
+        this.index = index;
+        this.part_id = part_id;
+    }
 }

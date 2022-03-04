@@ -3,6 +3,7 @@
       <div class = "btnRow" ><el-button type="danger">批量删除角色</el-button></div>
       <div class="card">
         <div class="card-body">
+          <div class="myELTable">
             <el-table
             :fit = "true"
             stripe
@@ -44,7 +45,8 @@
             </template>
             </el-table-column>
 
-          </el-table>
+            </el-table>
+          </div>
         </div>
       </div>
       <el-dialog
@@ -105,7 +107,7 @@ export default {
       let result = {}
       result.insert = insertList
       result.delete = deleteList
-      result.role_id = this.selectedRoleID
+      result.subject_id = this.selectedRoleID
       return result
     },
     editAuth(){
@@ -158,6 +160,7 @@ export default {
           if (yourAuthList[i].authority_parent_id){ Checkedkeys.push(yourAuthList[i].authority_id) }
         }
         this.existedAuth = Checkedkeys
+        console.log(Checkedkeys)
         this.$refs.AuthTree.setCheckedKeys(Checkedkeys)
       })
     },

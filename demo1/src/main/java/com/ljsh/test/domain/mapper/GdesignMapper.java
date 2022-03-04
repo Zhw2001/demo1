@@ -1,6 +1,6 @@
 package com.ljsh.test.domain.mapper;
 
-import com.ljsh.test.domain.model.GdesignData;
+import com.ljsh.test.domain.model.Course_Data.GdesignData;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

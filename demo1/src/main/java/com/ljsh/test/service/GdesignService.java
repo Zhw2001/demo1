@@ -1,6 +1,6 @@
 package com.ljsh.test.service;
 
-import com.ljsh.test.domain.model.GdesignData;
+import com.ljsh.test.domain.model.Course_Data.GdesignData;
 
 import java.util.List;
 

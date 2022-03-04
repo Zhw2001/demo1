@@ -4,18 +4,20 @@ import lombok.Data;
 
 @Data
 public class MyPart {
-    public MyPart(String part, String ratio, String cid, String module_name) {
-        this.part = part;
-        this.ratio = ratio;
-        this.cid = cid;
-        this.module_name = module_name;
-    }
+    private Long part_id;
+    private String name;
+    private String ratio;
+    private Integer index;
+    private Long module_id;
 
     public MyPart() {
     }
 
-    private String part;
-    private String ratio;
-    private String cid;
-    private String module_name;
+    public MyPart(Long part_id, String name, String ratio, Integer index, Long module_id) {
+        this.part_id = part_id;
+        this.name = name;
+        this.ratio = ratio;
+        this.index = index;
+        this.module_id = module_id;
+    }
 }

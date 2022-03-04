@@ -17,4 +17,7 @@ public interface AdminUserMapper {
     void del_user(String account);
     AdminUser get_info_By_Account(String account);
     AdminUser get_Info_By_Account(String account);
+    List<String> getCidsOfUser(Long uid);
+    void delCidOfUser(@Param("uid") Long uid, @Param("cid") String cid);
+    void replaceCidOfUser(@Param("uid") Long uid, @Param("cid") String cid);
 }

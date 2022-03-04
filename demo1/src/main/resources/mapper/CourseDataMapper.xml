@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ljsh.test.domain.mapper.CourseDataMapper">
+    <sql id="course_info">courseinfo</sql>
+
+    <resultMap type="com.ljsh.test.domain.model.Course" id="cinfoMap">
+        <id property="cid" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cname" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="CourseData" ofType="com.ljsh.test.domain.model.Course_Data.CourseData" resultMap="com.ljsh.test.domain.mapper.CourseMapper.cMap"/>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.domain.model.Exper" id="einfoMap">
+        <id property="cid" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cname" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="ExperimentData" ofType="com.ljsh.test.domain.model.Course_Data.ExperimentData" resultMap="com.ljsh.test.domain.mapper.ExperimentMapper.eMap"/>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.domain.model.CDesign" id="cdinfoMap">
+        <id property="cid" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cname" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="CdesignData" ofType="com.ljsh.test.domain.model.Course_Data.CdesignData" resultMap="com.ljsh.test.domain.mapper.CdesignMapper.cdMap"/>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.domain.model.GDesign" id="gdinfoMap">
+        <id property="cid" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cname" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="GdesignData" ofType="com.ljsh.test.domain.model.Course_Data.GdesignData" resultMap="com.ljsh.test.domain.mapper.GdesignMapper.gdMap"/>
+    </resultMap>
+
+    <select id="get_CourseDataList"  resultMap="cinfoMap" >
+        SELECT *
+        FROM
+        (<include refid="course_info"/> left join course on cid = info_cId)
+        <where>
+            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="get_ExperDataList"  resultMap="einfoMap" >
+        SELECT *
+        FROM
+        (<include refid="course_info"/> left join experiment on cid = info_cId)
+        <where>
+            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="get_CdesignDataList"  resultMap="cdinfoMap" >
+        SELECT *
+        FROM
+        (<include refid="course_info"/> left join cdesign on cid = info_cId)
+        <where>
+            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="get_GdesignDataList"  resultMap="gdinfoMap" >
+        SELECT *
+        FROM
+        (<include refid="course_info"/> left join gdesign on cid = info_cId)
+        <where>
+            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+</mapper>

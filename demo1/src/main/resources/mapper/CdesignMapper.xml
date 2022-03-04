@@ -7,7 +7,7 @@
 
     <sql id="cd">cdesign</sql>
 
-    <resultMap type="com.ljsh.test.domain.model.CdesignData" id="cdMap">
+    <resultMap type="com.ljsh.test.domain.model.Course_Data.CdesignData" id="cdMap">
         <id  property="id" column="cdesign_id" javaType="Long" jdbcType="BIGINT"/>
         <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
         <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
@@ -37,7 +37,7 @@
         cdesign_id = #{id}
     </delete>
 
-    <insert id="addCdesign" parameterType="com.ljsh.test.domain.model.CdesignData">
+    <insert id="addCdesign" parameterType="com.ljsh.test.domain.model.Course_Data.CdesignData">
         INSERT INTO
         <include refid="cd"/>
         (sTime,cId,cNum,sId,sName,sClass,sState,`select`,`begin`,`medium`,program,answer,report,overall)
@@ -45,7 +45,7 @@
         (#{sTime},#{cId},#{cNum},#{sId},#{sName},#{sClass},#{sState},#{select},#{begin},#{medium},#{program},#{answer},#{report},#{overall})
     </insert>
 
-    <update id="updateCdesign" parameterType="com.ljsh.test.domain.model.CdesignData">
+    <update id="updateCdesign" parameterType="com.ljsh.test.domain.model.Course_Data.CdesignData">
         update <include refid="cd"/> set
         sTime = #{sTime},
         cId = #{cId},

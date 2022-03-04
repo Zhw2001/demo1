@@ -16,6 +16,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+
 @Service
 public class CourseAuditServiceImpl implements CourseAuditService {
     @Autowired
@@ -23,124 +24,44 @@ public class CourseAuditServiceImpl implements CourseAuditService {
     @Autowired
     private CourseInfoMapper courseInfoMapper;
 
-    private final String separator = ":]";
-
-    private void updateCInfo(CourseInfo oldInfo,basicInfoDTO basic_info,Integer course_type,String ctar, String excellent,String good,String normal,String pass,String poor,Integer exam_type){
-        if(TestEntity.objCheckHasNull(oldInfo)){
-            CourseInfo currCInfo = new CourseInfo(oldInfo.getCId(),basic_info.getCourse_name(),course_type,basic_info.getSemester(),ctar, excellent, good, normal, pass, poor, exam_type);
-            courseInfoMapper.replaceCourseInfo(currCInfo);
-        } else
-        {
-            CourseInfo currCInfo = new CourseInfo();
-            currCInfo.setCId(oldInfo.getCId());
-            currCInfo.setCName(basic_info.getCourse_name());
-            if (oldInfo.getCourse_type().equals(course_type)) {
-                currCInfo.setCourse_type(null);
-            } else {
-                currCInfo.setCourse_type(course_type);
-            }
-            if (oldInfo.getSemester().equals(basic_info.getSemester())) {
-                currCInfo.setSemester(null);
-            } else {
-                currCInfo.setSemester(basic_info.getSemester());
-            }
-            if (oldInfo.getCTarget().equals(ctar)) {
-                currCInfo.setCTarget(null);
-            } else {
-                currCInfo.setCTarget(ctar);
-            }
-            if (oldInfo.getA().equals(excellent)) {
-                currCInfo.setA(null);
-            } else {
-                currCInfo.setA(excellent);
-            }
-            if (oldInfo.getB().equals(good)) {
-                currCInfo.setB(null);
-            } else {
-                currCInfo.setB(good);
-            }
-            if (oldInfo.getC().equals(normal)) {
-                currCInfo.setC(null);
-            } else {
-                currCInfo.setC(normal);
-            }
-            if (oldInfo.getD().equals(pass)) {
-                currCInfo.setD(null);
-            } else {
-                currCInfo.setD(pass);
-            }
-            if (oldInfo.getF().equals(poor)) {
-                currCInfo.setF(null);
-            } else {
-                currCInfo.setF(poor);
-            }
-            if (oldInfo.getExam_type().equals(exam_type)) {
-                currCInfo.setExam_type(null);
-            } else {
-                currCInfo.setExam_type(exam_type);
-            }
-            courseInfoMapper.updateCourseInfo(currCInfo);
-        }
+    private <T> List<T> getRemoveList(List<T> oldlist, List<T> currList) {
+        return oldlist.stream().filter(item -> !currList.contains(item)).collect(toList()); //在A不在B,保留未被修改的数据
     }
-    private<T> List<T> getRemoveList(List<T> oldlist, List<T> currList ){
-        return oldlist.stream().filter(item -> !currList.contains(item)).collect(toList()); //在A不在B
-    }
-    private<T> List<T> getAddList(List<T> oldlist, List<T> currList ){
+    private <T> List<T> getAddList(List<T> oldlist, List<T> currList) {
         return currList.stream().filter(item -> !oldlist.contains(item)).collect(toList()); //在B不在A
     }
-    private String[] StrToArray(String str,String Separator){
-        return str.split(Separator);
-    }
-    private String StrArrayToString(String[] arr, String Separator){
+
+    private String StrArrayToString(String[] arr, String Separator) {
         StringBuilder res = new StringBuilder();
-        for(String i:arr){
+        for (String i : arr) {
             res.append(i);
             res.append(Separator);
         }
         return res.toString();
     }
-    private String generateConcatStr(String value, String Separator){return value + Separator;}
-    private List<String[]> generateCStandard(String A,String B,String C,String D, String F){
-        String[] As = A.split(":]");
-        String[] Bs = B.split(":]");
-        String[] Cs = C.split(":]");
-        String[] Ds = D.split(":]");
-        String[] Fs = F.split(":]");
-        List<String[]> results = new ArrayList<>();
-        for(int i =0; i< As.length; i++){
-            String[] temp = new String[5];
-            temp[0] = As[i];
-            temp[1] = Bs[i];
-            temp[2] = Cs[i];
-            temp[3] = Ds[i];
-            temp[4] = Fs[i];
-            results.add(temp);
-        }
-        return results;
-    }
-    private course_goal_info generateCGInfo(Integer id,cTargetDTO ctarget,List<String> fatherOfItem, String cid){
+    private Course_Goal generateCGInfo(Integer id, CTargetDTO ctarget, List<String> fatherOfItem, Long audit_id) {
         StringBuilder builder = new StringBuilder();
-        String content = StrArrayToString(ctarget.getContent(),",");
-        content = (content.length() < 1 ? "" : content.substring(0,content.length()-1));
-        for(String part : ctarget.getParts()){
-            if(fatherOfItem.contains(part)){
+        String content = StrArrayToString(ctarget.getContent(), ",");
+        content = (content.length() < 1 ? "" : content.substring(0, content.length() - 1));
+        for (String part : ctarget.getParts()) {
+            if (fatherOfItem.contains(part)) {
                 builder.append(part);
                 builder.append("：");
                 builder.append("[");
                 builder.append(content);
                 builder.append("]");
                 builder.append(",");
-            }else{
+            } else {
                 builder.append(part);
                 builder.append(",");
             }
         }
         String build = builder.toString();
-        return new course_goal_info(id, cid,ctarget.getSupport_graduation_require(),build.substring(0,build.length()-1),ctarget.getTotal());
+        return new Course_Goal(id, audit_id, ctarget.getValue(), ctarget.getStandards()[0], ctarget.getStandards()[1], ctarget.getStandards()[2], ctarget.getStandards()[3], ctarget.getStandards()[4], ctarget.getSupport_graduation_require(), build.substring(0, build.length() - 1), ctarget.getTotal(), null, null, null, null, null);
     }
-    private String getExamType(int type){
+    private String getExamType(int type) {
         String res = "";
-        switch (type){
+        switch (type) {
             case 0:
                 res = "考试";
                 break;
@@ -150,9 +71,9 @@ public class CourseAuditServiceImpl implements CourseAuditService {
         }
         return res;
     }
-    private int SetExamType(String type){
+    private int SetExamType(String type) {
         int res = -1;
-        switch (type){
+        switch (type) {
             case "考试":
                 res = 0;
                 break;
@@ -162,171 +83,204 @@ public class CourseAuditServiceImpl implements CourseAuditService {
         }
         return res;
     }
-    private int SetCourseType(String cname){
+    private int SetCourseType(String cname) {
         int e_i = cname.indexOf("实验");
         int c_i = cname.indexOf("课程设计");
         int g_i = cname.indexOf("毕业设计");
-        if(e_i != -1) {
+        if (e_i != -1) {
             return 1;
-        }else if(c_i != -1){
+        } else if (c_i != -1) {
             return 2;
-        }else if(g_i != -1){
+        } else if (g_i != -1) {
             return 3;
         }
         return 0;
     }
+    private <T> T findTByName(String name, List<T> tList){
+        for ( T i : tList){
+            if(TestEntity.objCheckHasName(i,name)){
+                return i;
+            }
+        }
+        return null;
+    }
+    private MyPart FindMyPart(Long id, List<MyPart> myParts){
+        for ( MyPart p : myParts){
+            if(p.getPart_id() == id){
+                return p;
+            }
+        }
+        return null;
+    }
 
-    public String update(courseAuditDTO cAudit){
+    public List<String> getSemester(String cid){
+        return courseAuditMapper.get_SemesterList(cid);
+    }
+
+    public String update(CourseAuditDTO cAudit) {
         try {
-            List<CourseAudit> courseAudits = new ArrayList<>();
-            List<MyPart> myParts = new ArrayList<>();
-            List<MyItem> myItems = new ArrayList<>();
-            List<course_goal_info> course_goal_infos = new ArrayList<>();
-            basicInfoDTO basic_info = cAudit.getBasicInfo();
-            List<cTargetDTO> cTargets = cAudit.getCtargets();
-            List<modDTO> mods = cAudit.getMods();
+            List<MyMod> currMods = new ArrayList<>();
+            List<MyPart> currParts = new ArrayList<>();
+            List<MyItem> currItems = new ArrayList<>();
+            List<Course_Goal> course_goals = new ArrayList<>();
+            //获取数据
+            BasicInfoDTO basic_info = cAudit.getBasicInfo();
+            List<CTargetDTO> cTargets = cAudit.getCtargets();
+            List<ModDTO> mods = cAudit.getMods();
+            List<PartDTO> parts = cAudit.getParts();
             List<String> fatherOfItem = cAudit.getFatherOfItem();
-            List<itemDTO> items = cAudit.getItems();
-            if(basic_info == null || cTargets.isEmpty() || mods.isEmpty() || fatherOfItem.isEmpty()|| items.isEmpty()){return "输入不完整";}
+            List<ItemDTO> items = cAudit.getItems();
+            //如果获取数据不完整则返回错误信息
+            if (basic_info == null || cTargets.isEmpty() || mods.isEmpty() || fatherOfItem.isEmpty() || items.isEmpty() || basic_info.getSemester() == null || basic_info.getCourse_number() == null) {
+                return "输入不完整";
+            }
+            if (TestEntity.objCheckHasNull(basic_info)) {
+                return "输入不完整";
+            }
             String cid = basic_info.getCourse_number();//获取课程编号
-            StringBuilder cTar = new StringBuilder();
-            StringBuilder excellent = new StringBuilder();
-            StringBuilder good = new StringBuilder();
-            StringBuilder normal = new StringBuilder();
-            StringBuilder pass = new StringBuilder();
-            StringBuilder poor = new StringBuilder();
+            String semester = basic_info.getSemester();//获取审核学期
+            AuditInfo auditInfo = courseAuditMapper.get_AuditInfo(semester, cid);    //找到已有的审核记录
+            if (auditInfo == null) {  //如果没有审核记录就新建一条
+                courseAuditMapper.addAuditInfo(new AuditInfo(null, semester, cid,basic_info.getClasses(), null, null, null, null, null, null, null, SetExamType(cAudit.getBasicInfo().getExam_type()), null, null));
+                auditInfo = courseAuditMapper.get_AuditInfo(semester, cid);
+            } else {
+                courseAuditMapper.updateAInfo_Sem_Etype(auditInfo.getId(),semester,SetExamType(cAudit.getBasicInfo().getExam_type()));
+            }
+            Long audit_id = auditInfo.getId();  //获取审核ID
+            List<Course_Goal> old_CGList = courseAuditMapper.get_CGList(audit_id);  //获取历史信息
+            List<MyMod> oldMods = courseAuditMapper.get_ModList(audit_id);
+            //存储课程目标信息
             int count = 0;
-            for (cTargetDTO l : cTargets) {//有序遍历课程目标
-                cTar.append(generateConcatStr(l.getValue(), separator));
-                excellent.append(generateConcatStr(l.getStandards()[0], separator));
-                good.append(generateConcatStr(l.getStandards()[1], separator));
-                normal.append(generateConcatStr(l.getStandards()[2], separator));
-                pass.append(generateConcatStr(l.getStandards()[3], separator));
-                poor.append(generateConcatStr(l.getStandards()[4], separator));
-                course_goal_infos.add(generateCGInfo(count++, l, cAudit.getFatherOfItem(), cid)); //遍历课程目标的时候顺便获取course_goal_info所需数据
+            for (CTargetDTO l : cTargets) {//有序遍历课程目标
+                course_goals.add(generateCGInfo(count++, l, cAudit.getFatherOfItem(), audit_id));
             }
-            int exam_type = SetExamType(cAudit.getBasicInfo().getExam_type()); //获取考试类型
-            int course_type = SetCourseType(cAudit.getBasicInfo().getCourse_name()); //根据课程名设置课程种类
-            for (modDTO i : mods) { //获取模块中包含的parts
-                for (int j = 0; j < i.getPartNames().length; j++) {
-                    myParts.add(new MyPart(i.getPartNames()[j], i.getPartRatios()[j], cid, i.getName()));
-                }
-                courseAudits.add(new CourseAudit(cid, i.getName()));//根据模块更新模块表
+            for(Course_Goal cg : getRemoveList(old_CGList,course_goals)){
+                courseAuditMapper.del_CG(cg);
             }
-            for (String x : fatherOfItem) { //根据item-part对应关系获取items
-                for (itemDTO y : items) {
-                    myItems.add(new MyItem(y.getName(), y.getScore(), cid, x));
-                }
+            for(Course_Goal cg : getAddList(old_CGList,course_goals)) {
+                courseAuditMapper.add_CG(cg);
             }
-            CourseInfo oldInfo = courseInfoMapper.GET_CINFO_CID(cid);    //如果没有该课程信息则新建
-            if(oldInfo == null){
-                courseInfoMapper.replaceCourseInfo(new CourseInfo(cid, basic_info.getCourse_name(), course_type, basic_info.getSemester(), cTar.toString(), excellent.toString(), good.toString(), normal.toString(), pass.toString(), poor.toString(), exam_type));//插入新课程信息
-                for (CourseAudit t :courseAudits) {
-                    courseAuditMapper.replaceMod(t);
-                }
-                for (MyPart part : myParts) {
-                    courseAuditMapper.replacePart(part);
-                }
-                for (MyItem item : myItems) {
-                    courseAuditMapper.replaceItem(item);
-                }
-                for (course_goal_info cg : course_goal_infos) {
-                    courseAuditMapper.replace_CGInfo(cg);
-                }
-            }else {
-                updateCInfo(oldInfo,basic_info,course_type,cTar.toString(),excellent.toString(), good.toString(), normal.toString(), pass.toString(), poor.toString(), exam_type);
-                List<CourseAudit> oldCAList = courseAuditMapper.get_CA_By_CID(cid);
-                List<MyPart> oldPList = courseAuditMapper.get_Part_By_CID(cid);
-                List<MyItem> oldIList = courseAuditMapper.get_Item_By_CID(cid);
-                List<course_goal_info> oldCG = courseAuditMapper.get_CG_By_Cid(cid);
-                for (CourseAudit t : getAddList(oldCAList, courseAudits)) {
-                    courseAuditMapper.replaceMod(t);
-                }
-                for (CourseAudit t : getRemoveList(oldCAList, courseAudits)) {
-                    courseAuditMapper.delMod(t);
-                }
-                for (MyPart part : getAddList(oldPList, myParts)) {
-                    courseAuditMapper.replacePart(part);
-                }
-                for (MyPart part : getRemoveList(oldPList, myParts)) {
-                    courseAuditMapper.delPart(part);
-                }
-                for (MyItem item : getAddList(oldIList, myItems)) {
-                    courseAuditMapper.replaceItem(item);
-                }
-                for (MyItem item : getRemoveList(oldIList, myItems)) {
-                    courseAuditMapper.delItem(item);
-                }
-                for (course_goal_info cg : getAddList(oldCG, course_goal_infos)) {
-                    courseAuditMapper.replace_CGInfo(cg);
-                }
-                for (course_goal_info cg : getRemoveList(oldCG, course_goal_infos)) {
-                    courseAuditMapper.del_CGInfo(cg);
+            //存储MOD信息
+            for(int i = 0; i < mods.size(); i++){   //遍历modDTOList中的mod，获取mod数据
+                ModDTO modDTO = mods.get(i);
+                //此处的module_id可能为空
+                currMods.add(new MyMod(modDTO.getId(),modDTO.getName(),audit_id,i));
+            }
+            for(MyMod m : getRemoveList(oldMods,currMods)){ //删除mod脏数据的同时,由于数据库中外键约束，级联删除part和item中的脏数据
+                courseAuditMapper.delMod(m);
+            }
+            for(MyMod m : getAddList(oldMods,currMods)){
+                courseAuditMapper.addMod(m);
+            }
+            currMods = courseAuditMapper.get_ModList(audit_id); //改变当前cuurMods的指向,从指向由前台数据构建的mods变更为指向数据库中存储的mods
+            //存储part信息
+            for(ModDTO m : mods){   //遍历modDTOList中的mod，获取mod名字和index
+                for( int j = 0; j < m.getPartNames().length; j++){ //获取MyPart并录入
+                    String partName = m.getPartNames()[j];
+                    PartDTO part_dto = findTByName(partName,parts);
+                    //此处的part_id可能为空
+                    currParts.add(new MyPart(part_dto.getId(),partName,part_dto.getRatio(),j,findTByName(m.getName(),currMods).getModule_id()));
                 }
             }
-        }catch(Exception e){
+            for(MyPart p : currParts){
+                courseAuditMapper.addPart(p);
+            }
+            currParts = new ArrayList<>();  //更新currParts为数据库中的part
+            for(MyMod m : currMods){
+                currParts.addAll(courseAuditMapper.get_PartList(m.getModule_id()));
+            }
+            //存储item信息
+            for (String x : fatherOfItem) { //存储当前课程所有part的item信息
+                MyPart part = findTByName(x,currParts);
+                for(int i = 0; i < items.size(); i++){
+                    ItemDTO itemDTO = items.get(i);
+                    currItems.add(new MyItem(itemDTO.getId(),itemDTO.getName(),itemDTO.getScore(),i,part.getPart_id()));
+                }
+            }
+            for(MyItem i : currItems){
+                courseAuditMapper.addItem(i);
+            }
+            courseAuditMapper.refreshItem();
+        } catch (Exception e) {
             return e.toString();
         }
         return "";
     }
 
-    public courseAuditDTO getInfo(String cid, String classes){
+    public CourseAuditDTO getInfo(String semester, String cid) {
         String[] empty = new String[0];
-        CourseInfo courseInfo = courseInfoMapper.GET_CINFO_CID(cid);
-        List<QStandard> QStandardList = courseAuditMapper.get_S_By_CourseType(courseInfo.getCourse_type());
+        AuditInfo auditInfo = courseAuditMapper.get_AuditInfo(semester, cid);
+        CInfo cInfo = courseInfoMapper.get_CInfo(cid);
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy.MM.dd");
+        BasicInfoDTO basicInfo = new BasicInfoDTO(semester, ft.format(dNow), cInfo.getCname(), cInfo.getCid(), null, null);
+        List<QStandard> QStandardList = courseAuditMapper.get_Standard(cInfo.getCourse_type());
         String[] question_standard = new String[QStandardList.size()];
-        for(int x = 0; x< QStandardList.size(); x++){
+        for (int x = 0; x < QStandardList.size(); x++) {
             question_standard[x] = QStandardList.get(x).getStandard();
         }
-        Date dNow = new Date( );
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd");
-        basicInfoDTO basicInfo = new basicInfoDTO(courseInfo.getSemester(),ft.format(dNow),courseInfo.getCName(),courseInfo.getCId(),classes,getExamType(courseInfo.getExam_type()));
-        if(courseInfo.getCTarget() == null){return new courseAuditDTO(basicInfo,null,null,null,null,null,question_standard);} //如果数据库中课程信息不全，只返回课程基本信息和流程规范评价标准（需要课程类型）
-
-        List<CourseAudit> courseAuditList = courseAuditMapper.get_CA_By_CID(cid);
-        List<MyPart> partList = courseAuditMapper.get_Part_By_CID(cid);
-        List<MyItem> itemList = courseAuditMapper.get_Item_By_CID(cid);
-        List<course_goal_info> GR = courseAuditMapper.get_CG_By_Cid(cid);
-        List<cTargetDTO> ctargets = new ArrayList<>();
-        List<modDTO> mods = new ArrayList<>();
-        List<partDTO> parts = new ArrayList<>();
-        List<itemDTO> items = new ArrayList<>();
+        if (auditInfo == null) {  //如果没有找到审核相关信息返回NULL
+            return new CourseAuditDTO(basicInfo, null, null, null, null, null, question_standard);
+        }
+        Long audit_id = auditInfo.getId();
+        basicInfo.setClasses(auditInfo.getClasses());
+        basicInfo.setExam_type(getExamType(auditInfo.getExam_type()));
+        List<MyMod> myModList = courseAuditMapper.get_ModList(audit_id);
+        List<MyPart> partList = new ArrayList<>();
+        List<MyItem> itemList = new ArrayList<>();
+        for(MyMod m : myModList){
+            partList.addAll(courseAuditMapper.get_PartList(m.getModule_id()));
+        }
+        for(MyPart p : partList){
+            itemList.addAll(courseAuditMapper.get_ItemList(p.getPart_id()));
+        }
+        List<Course_Goal> CG = courseAuditMapper.get_CGList(audit_id);
+        List<CTargetDTO> ctargets = new ArrayList<>();
+        List<ModDTO> mods = new ArrayList<>();
+        List<PartDTO> parts = new ArrayList<>();
+        List<ItemDTO> items = new ArrayList<>();
         List<String> fatherOfItem = new ArrayList<>();
-        List<String[]> CStandards = generateCStandard(courseInfo.getA(),courseInfo.getB(),courseInfo.getC(),courseInfo.getD(),courseInfo.getF());
-        String[] ctargetValue = StrToArray(courseInfo.getCTarget(),separator);
-        for(int j = 0; j<ctargetValue.length; j++){
-            cTargetDTO cTarget = new cTargetDTO(ctargetValue[j],empty,GR.get(j).getG_R(),empty,0f,CStandards.get(j));
+        for (Course_Goal i : CG) {
+            String[] CStandards = new String[5];
+            CStandards[0] = i.getExcellent();
+            CStandards[1] = i.getGood();
+            CStandards[2] = i.getNormal();
+            CStandards[3] = i.getPass();
+            CStandards[4] = i.getPoor();
+            CTargetDTO cTarget = new CTargetDTO(i.getCourse_goal_text(), empty, i.getGraduate_require(), empty, 0f, CStandards);
             ctargets.add(cTarget);
         }
-        for(CourseAudit i:courseAuditList){
-            modDTO mod = new modDTO(
-                    i.getModule_name(),
+        for (MyMod i : myModList) {
+            ModDTO mod = new ModDTO(
+                    i.getModule_id(),
+                    i.getName(),
                     empty,
                     empty,
                     empty,
                     0f
-                    );
+            );
             mods.add(mod);//在最后面进行插入，不需要进行位移
         }
-        for(MyPart j:partList){
-            partDTO part = new partDTO(
-                    j.getPart(),
+        for (MyPart j : partList) {
+            PartDTO part = new PartDTO(
+                    j.getPart_id(),
+                    j.getName(),
                     j.getRatio(),
                     true
             );
             parts.add(part);
         }
-        for(int k=0; k<itemList.size();k++){
-            String father = itemList.get(k).getPart();
-            if(k == 0){
+        for (int k = 0; k < itemList.size(); k++) {
+            String father = FindMyPart(itemList.get(k).getPart_id(),partList).getName();
+            if (k == 0) {
                 fatherOfItem.add(father);
-            }else if(!fatherOfItem.contains(father)){
+            } else if (!fatherOfItem.contains(father)) {
                 fatherOfItem.add(father);
             }
-            itemDTO item = new itemDTO(itemList.get(k).getItem_name(),itemList.get(k).getItem_value(),true);
+            ItemDTO item = new ItemDTO(itemList.get(k).getItem_id(),itemList.get(k).getName(), itemList.get(k).getScore(), true);
             items.add(item);
         }
-        return new courseAuditDTO(basicInfo,ctargets,mods,parts,items,fatherOfItem,question_standard);
+        return new CourseAuditDTO(basicInfo, ctargets, mods, parts, items, fatherOfItem, question_standard);
     }
 
 }

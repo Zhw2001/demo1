@@ -1,6 +1,6 @@
 package com.ljsh.test.service;
 
-import com.ljsh.test.domain.model.CdesignData;
+import com.ljsh.test.domain.model.Course_Data.CdesignData;
 
 import java.util.List;
 

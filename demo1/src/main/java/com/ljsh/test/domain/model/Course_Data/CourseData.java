@@ -1,4 +1,4 @@
-package com.ljsh.test.domain.model;
+package com.ljsh.test.domain.model.Course_Data;
 
 import lombok.Data;
 

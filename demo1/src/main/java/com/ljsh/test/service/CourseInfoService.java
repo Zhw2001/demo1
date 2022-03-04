@@ -1,11 +1,9 @@
 package com.ljsh.test.service;
 
-import com.ljsh.test.domain.model.CourseInfo;
-import com.ljsh.test.dto.CinfoResDTO;
+import com.ljsh.test.domain.model.CInfo;
 
 import java.util.List;
 
 public interface CourseInfoService {
-    CinfoResDTO getCInfoByCid(List<String> cids);
-    List<CourseInfo> get_All_cnames_cids();
+    List<CInfo> getAllCourse();
 }

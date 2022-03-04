@@ -1,7 +1,7 @@
 package com.ljsh.test.service.impl;
 
 import com.ljsh.test.domain.mapper.CourseMapper;
-import com.ljsh.test.domain.model.CourseData;
+import com.ljsh.test.domain.model.Course_Data.CourseData;
 import com.ljsh.test.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

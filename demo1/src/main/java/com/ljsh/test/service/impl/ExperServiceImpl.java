@@ -1,7 +1,7 @@
 package com.ljsh.test.service.impl;
 
 import com.ljsh.test.domain.mapper.ExperimentMapper;
-import com.ljsh.test.domain.model.ExperimentData;
+import com.ljsh.test.domain.model.Course_Data.ExperimentData;
 
 import com.ljsh.test.service.ExperService;
 import org.springframework.beans.factory.annotation.Autowired;

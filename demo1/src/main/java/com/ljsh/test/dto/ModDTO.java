@@ -3,9 +3,9 @@ package com.ljsh.test.dto;
 import lombok.Data;
 
 @Data
-public class modDTO {
-
-    public modDTO(String name, String[] partNames, String[] partRatios, String[] emptyBlocks, Float total) {
+public class ModDTO {
+    public ModDTO(Long id, String name, String[] partNames, String[] partRatios, String[] emptyBlocks, Float total) {
+        this.id = id;
         this.name = name;
         this.partNames = partNames;
         this.partRatios = partRatios;
@@ -13,8 +13,8 @@ public class modDTO {
         this.total = total;
     }
 
-    public modDTO(){}
-
+    public ModDTO(){}
+    private Long id;
     private String name;
     private String[] partNames;
     private String[] partRatios;

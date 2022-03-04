@@ -4,25 +4,58 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.ljsh.test.domain.mapper.CourseAuditMapper">
+    <sql id="audit_info">audit_info</sql>
+    <sql id="course_module">course_module</sql>
+    <sql id="course_part">course_part</sql>
+    <sql id="course_item">course_item</sql>
+    <sql id="course_goal">course_goal</sql>
+    <sql id="procedure_standard">procedure_standard</sql>
 
-    <resultMap type="com.ljsh.test.domain.model.CourseAudit" id="cAMap">
-        <id  property="id" column="id" javaType="Long" jdbcType="BIGINT"/>
-        <result property="courseID" column="courseID" javaType="String" jdbcType="VARCHAR"/>
-        <result property="module_name" column="module_name" javaType="String" jdbcType="VARCHAR"/>
+    <resultMap id="AuditInfoMap" type="com.ljsh.test.domain.model.AuditInfo">
+        <id property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
+        <result property="semester" column="semester" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cid" column="cid" javaType="String" jdbcType="VARCHAR"/>
+        <result property="classes" column="classes" javaType="String" jdbcType="VARCHAR"/>
+        <result property="exam_type" column="exam_type" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="course_property" column="course_property" javaType="String" jdbcType="VARCHAR"/>
+        <result property="exam_date" column="exam_date" javaType="String" jdbcType="VARCHAR"/>
+        <result property="course_point" column="course_point" javaType="Float" jdbcType="FLOAT"/>
+        <result property="week_hour" column="week_hour" javaType="Float" jdbcType="FLOAT"/>
+        <result property="course_hour" column="course_hour" javaType="Float" jdbcType="FLOAT"/>
+        <result property="lesson_hour" column="lesson_hour" javaType="Float" jdbcType="FLOAT"/>
+        <result property="practice_hour" column="practice_hour" javaType="Float" jdbcType="FLOAT"/>
+        <result property="textbook" column="textbook" javaType="String" jdbcType="VARCHAR"/>
+        <result property="goals_degree_describe" column="goals_degree_describe" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="CourseAuditMap" type="com.ljsh.test.domain.model.CourseAudit">
+        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <collection property="auditInfoList" ofType="com.ljsh.test.domain.model.AuditInfo" resultMap="com.ljsh.test.domain.mapper.CourseAuditMapper.AuditInfoMap"/>
+    </resultMap>
+
+    <resultMap type="com.ljsh.test.domain.model.MyMod" id="ModMap">
+        <id property="module_id" column="module_id" javaType="Long" jdbcType="BIGINT"/>
+        <result  property="name" column="name" javaType="String" jdbcType="VARCHAR"/>
+        <result property="audit_id" column="audit_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="index" column="index" javaType="Integer" jdbcType="INTEGER"/>
     </resultMap>
 
     <resultMap type="com.ljsh.test.domain.model.MyPart" id="partMap">
-        <id  property="part" column="part" javaType="String" jdbcType="VARCHAR"/>
-        <id property="cid" column="cid" javaType="String" jdbcType="VARCHAR"/>
+        <id property="part_id" column="part_id" javaType="Long" jdbcType="BIGINT"/>
+        <result  property="name" column="name" javaType="String" jdbcType="VARCHAR"/>
         <result property="ratio" column="ratio" javaType="String" jdbcType="VARCHAR"/>
-        <result property="module_name" column="module_name" javaType="String" jdbcType="VARCHAR"/>
+        <result property="index" column="index" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="module_id" column="module_id" javaType="Long" jdbcType="BIGINT"/>
     </resultMap>
 
     <resultMap type="com.ljsh.test.domain.model.MyItem" id="itemMap">
-        <id  property="item_name" column="item_name" javaType="String" jdbcType="VARCHAR"/>
-        <id property="cid" column="cid" javaType="String" jdbcType="VARCHAR"/>
-        <result property="item_value" column="item_value" javaType="String" jdbcType="VARCHAR"/>
-        <result property="part" column="part" javaType="String" jdbcType="VARCHAR"/>
+        <id property="item_id" column="item_id" javaType="Long" jdbcType="BIGINT" />
+        <result  property="name" column="name" javaType="String" jdbcType="VARCHAR"/>
+        <result property="index" column="index" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="score" column="score" javaType="String" jdbcType="VARCHAR"/>
+        <result property="part_id" column="part_id" javaType="Long" jdbcType="BIGINT"/>
     </resultMap>
 
     <resultMap type="com.ljsh.test.domain.model.QStandard" id="standardMap">
@@ -30,97 +63,231 @@
         <id property="standard" column="standard" javaType="String" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="course_Goal_infoMap" type="com.ljsh.test.domain.model.course_goal_info">
-        <id property="id" javaType="Integer" column="course_goal_id" jdbcType="INTEGER"/>
-        <id property="cid" javaType="String" column="cid" jdbcType="VARCHAR"/>
-        <result property="G_R" javaType="String" column="graduate_require" jdbcType="VARCHAR"/>
-        <result property="eva_point" javaType="String" column="eva_point" jdbcType="VARCHAR"/>
-        <result property="total_score" javaType="Float" column="total_score" jdbcType="FLOAT"/>
+    <resultMap id="course_GoalMap" type="com.ljsh.test.domain.model.Course_Goal">
+        <id property="course_goal_id" column="course_goal_id" javaType="Integer" jdbcType="INTEGER"/>
+        <id property="audit_id" column="audit_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="course_goal_text" column="course_goal_text" javaType="String" jdbcType="VARCHAR"/>
+        <result property="excellent" column="excellent" javaType="String" jdbcType="VARCHAR"/>
+        <result property="good" column="good" javaType="String" jdbcType="VARCHAR"/>
+        <result property="normal" column="normal" javaType="String" jdbcType="VARCHAR"/>
+        <result property="pass" column="pass" javaType="String" jdbcType="VARCHAR"/>
+        <result property="poor" column="poor" javaType="String" jdbcType="VARCHAR"/>
+        <result property="graduate_require" column="graduate_require" javaType="String" jdbcType="VARCHAR"/>
+        <result property="eva_point" column="eva_point" javaType="String" jdbcType="VARCHAR"/>
+        <result property="total_score" column="total_score" javaType="Float" jdbcType="FLOAT"/>
+        <result property="expectation" column="expectation" javaType="Float" jdbcType="FLOAT"/>
+        <result property="not_reach" column="not_reach" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="achieve_degree" column="achieve_degree" javaType="Float" jdbcType="FLOAT"/>
+        <result property="score_description" column="score_description" javaType="String" jdbcType="VARCHAR"/>
+        <result property="score_analysis" column="score_analysis" javaType="String" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="get_CG_By_Cid" parameterType="String" resultMap="course_Goal_infoMap">
+    <select id="get_AuditInfo" resultMap="AuditInfoMap">
         SELECT *
-        FROM study_goal
-        WHERE cid = #{cid}
+        FROM <include refid="audit_info"/>
+        WHERE semester = #{semester} AND cid = #{cid}
     </select>
 
-    <select id="get_S_By_CourseType" parameterType="Integer" resultMap="standardMap">
+    <select id="get_CGList" parameterType="Long" resultMap="course_GoalMap">
         SELECT *
-        FROM procedure_standard
+        FROM <include refid="course_goal"/>
+        WHERE audit_id = #{audit_id}
+    </select>
+
+    <select id="get_Standard" parameterType="Integer" resultMap="standardMap">
+        SELECT *
+        FROM <include refid="procedure_standard"/>
         WHERE course_type = #{course_type}
     </select>
 
-    <select id="get_Item_By_CID" parameterType="String" resultMap="itemMap">
+    <select id="get_ItemList" parameterType="Long" resultMap="itemMap">
         SELECT *
-        FROM item
-        WHERE cid = #{cid}
+        FROM <include refid="course_item"/>
+        WHERE part_id = #{part_id}
     </select>
 
-    <select id="get_Part_By_CID" parameterType="String" resultMap="partMap">
+    <select id="get_PartList" parameterType="Long" resultMap="partMap">
         SELECT *
-        FROM part
-        WHERE cid = #{cid}
+        FROM <include refid="course_part"/>
+        WHERE module_id = #{module_id}
     </select>
 
-    <select id="get_CA_By_CID" parameterType="String" resultMap="cAMap">
+    <select id="get_ModList" parameterType="Long" resultMap="ModMap">
         SELECT *
-        FROM courseaudit
-        WHERE courseID = #{cid}
+        FROM <include refid="course_module"/>
+        WHERE audit_id = #{audit_id}
     </select>
 
-    <insert id="replaceMod" parameterType="com.ljsh.test.domain.model.CourseAudit">
-        REPLACE INTO courseaudit
-        (courseID,module_name)
+    <select id="get_Mod" resultMap="ModMap">
+        SELECT *
+        FROM <include refid="course_module"/>
+        WHERE name = #{name} AND audit_id = #{audit_id}
+    </select>
+
+    <select id="get_Part" resultMap="partMap">
+        SELECT *
+        FROM <include refid="course_part"/>
+        WHERE name = #{name} AND module_id = #{module_id}
+    </select>
+
+    <select id="get_Item" resultMap="itemMap">
+        SELECT *
+        FROM <include refid="course_item"/>
+        WHERE name = #{name} AND part_id = #{part_id}
+    </select>
+
+    <update id="updateAInfo_Sem_Etype">
+        UPDATE <include refid="audit_info"/> SET semester = #{semester}, exam_type = #{exam_type}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateAuditInfo" parameterType="com.ljsh.test.domain.model.AuditInfo">
+        UPDATE <include refid="audit_info"/>
+        <set>
+            <if test="semester != null">
+                semester = #{semester},
+            </if>
+            <if test="cid != null">
+                cid = #{cid},
+            </if>
+            <if test="exam_type != null">
+                exam_type = #{exam_type},
+            </if>
+            <if test="course_property != null">
+                course_property = #{course_property},
+            </if>
+            <if test="exam_date != null">
+                exam_date = #{exam_date},
+            </if>
+            <if test="course_point != null">
+                course_point = #{course_point},
+            </if>
+            <if test="course_point != null">
+                course_point = #{course_point},
+            </if>
+            <if test="week_hour != null">
+                week_hour = #{week_hour},
+            </if>
+            <if test="course_hour != null">
+                course_hour = #{course_hour},
+            </if>
+            <if test="lesson_hour != null">
+                lesson_hour = #{lesson_hour},
+            </if>
+            <if test="practice_hour != null">
+                practice_hour = #{practice_hour},
+            </if>
+            <if test="textbook != null">
+                textbook = #{textbook},
+            </if>
+            <if test="goals_degree_describe != null">
+                goals_degree_describe = #{goals_degree_describe},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <insert id="addAuditInfo" parameterType="com.ljsh.test.domain.model.AuditInfo">
+        INSERT INTO <include refid="audit_info"/>
+        (semester,cid,classes,exam_type,course_property,exam_date,course_point,week_hour,course_hour,lesson_hour,practice_hour,textbook,goals_degree_describe)
         VALUES
-        (#{courseID},#{module_name})
+        (#{semester},#{cid},#{classes},#{exam_type},#{course_property},#{exam_date},#{course_point},#{week_hour},#{course_hour},#{lesson_hour},#{practice_hour},#{textbook}, #{goals_degree_describe})
+    </insert>
+
+    <insert id="addMod" parameterType="com.ljsh.test.domain.model.MyMod">
+        INSERT INTO <include refid="course_module"/>
+        (audit_id,name,`index`)
+        VALUES
+        (#{audit_id},#{name},#{index})
+    </insert>
+
+    <insert id="addPart" parameterType="com.ljsh.test.domain.model.MyPart">
+        INSERT INTO <include refid="course_part"/>
+        (name,ratio,`index`,module_id)
+        VALUES
+        (#{name},#{ratio},#{index},#{module_id})
+    </insert>
+
+    <insert id="addItem" parameterType="com.ljsh.test.domain.model.MyItem">
+        INSERT INTO <include refid="course_item"/>
+        (name,score,`index`,part_id)
+        VALUES
+        (#{name},#{score},#{index},#{part_id})
+    </insert>
+
+    <insert id="replaceMod" parameterType="com.ljsh.test.domain.model.MyMod">
+        REPLACE INTO <include refid="course_module"/>
+        (module_id,audit_id,name,`index`)
+        VALUES
+        (#{module_id},#{audit_id},#{name},#{index})
     </insert>
 
     <insert id="replacePart" parameterType="com.ljsh.test.domain.model.MyPart">
-        REPLACE INTO part
-        (part,ratio,cid,module_name)
+        REPLACE INTO <include refid="course_part"/>
+        (part_id,name,ratio,`index`,module_name)
         VALUES
-        (#{part},#{ratio},#{cid},#{module_name})
+        (#{part_id},#{name},#{ratio},#{index},#{module_name})
     </insert>
 
     <insert id="replaceItem" parameterType="com.ljsh.test.domain.model.MyItem">
-        REPLACE INTO item
-        (item_name,item_value,cid,part)
+        REPLACE INTO <include refid="course_item"/>
+        (item_id,name,score,`index`,part_name)
         VALUES
-        (#{item_name},#{item_value},#{cid},#{part})
+        (#{item_id},#{name},#{score},#{index},#{part_name})
     </insert>
 
-    <insert id="replace_CGInfo" parameterType="com.ljsh.test.domain.model.course_goal_info">
-        REPLACE INTO study_goal
-        (course_goal_id,cid,graduate_require,eva_point,total_score)
+    <insert id="replace_CG" parameterType="com.ljsh.test.domain.model.Course_Goal">
+        REPLACE INTO <include refid="course_goal"/>
+        (course_goal_id,audit_id,course_goal_text,excellent,good,normal,pass,poor,graduate_require,eva_point,total_score,expectation,not_reach,achieve_degree,score_description,score_analysis)
         VALUES
-        (#{id},#{cid},#{G_R},#{eva_point},#{total_score})
+        (#{course_goal_id},#{audit_id},#{course_goal_text},#{excellent},#{good},#{normal},#{pass},#{poor},#{graduate_require},eva_point,total_score,expectation,not_reach,achieve_degree,score_description,score_analysis)
     </insert>
 
-    <delete id="delMod" parameterType="com.ljsh.test.domain.model.CourseAudit">
-        DELETE FROM courseaudit
-        WHERE courseID = #{courseID} AND module_name = #{module_name}
+    <insert id="add_CG" parameterType="com.ljsh.test.domain.model.Course_Goal">
+        INSERT INTO <include refid="course_goal"/>
+        (course_goal_id,audit_id,course_goal_text,excellent,good,normal,pass,poor,graduate_require,eva_point,total_score,expectation,not_reach,achieve_degree,score_description,score_analysis)
+        VALUES
+        (#{course_goal_id},#{audit_id},#{course_goal_text},#{excellent},#{good},#{normal},#{pass},#{poor},#{graduate_require},#{eva_point},#{total_score},#{expectation},#{not_reach},#{achieve_degree},#{score_description},#{score_analysis})
+    </insert>
+
+    <delete id="delMod" parameterType="com.ljsh.test.domain.model.MyMod">
+        DELETE FROM <include refid="course_module"/>
+        WHERE audit_id = #{audit_id} AND name = #{name}
     </delete>
 
     <delete id="delPart" parameterType="com.ljsh.test.domain.model.MyPart">
-        DELETE FROM part
-        WHERE cid = #{cid} AND part = #{part}
+        DELETE FROM <include refid="course_part"/>
+        WHERE module_id = #{module_id} AND name = #{name}
     </delete>
 
     <delete id="delItem" parameterType="com.ljsh.test.domain.model.MyItem">
-        DELETE FROM item
-        WHERE cid = #{cid} AND item_name = #{item_name}
+        DELETE FROM <include refid="course_item"/>
+        WHERE part_id = #{part_id} AND name = #{name}
     </delete>
 
-    <delete id="del_CGInfo" parameterType="com.ljsh.test.domain.model.course_goal_info">
-        DELETE FROM study_goal
-        WHERE cid = #{cid} AND course_goal_id = #{id}
+    <delete id="del_CG" parameterType="com.ljsh.test.domain.model.Course_Goal">
+        DELETE FROM <include refid="course_goal"/>
+        WHERE audit_id = #{audit_id} AND course_goal_id = #{id}
     </delete>
+
+    <update id="refreshItem">
+        ALTER TABLE <include refid="course_item"/>
+        DROP item_id;
+        ALTER TABLE <include refid="course_item"/>
+        ADD item_id BIGINT(20) auto_increment PRIMARY KEY;
+    </update>
+
     
-    <update id="refreshCA">
-        ALTER TABLE courseaudit
+    <update id="refreshXX">
+        ALTER TABLE XX
         DROP id;
-        ALTER TABLE courseaudit
+        ALTER TABLE XX
         ADD id BIGINT auto_increment PRIMARY KEY;
     </update>
+
+    <select id="get_SemesterList" parameterType="String" resultType="String">
+        SELECT semester FROM <include refid="audit_info"/>
+        WHERE cid = #{cid}
+    </select>
 
 </mapper>

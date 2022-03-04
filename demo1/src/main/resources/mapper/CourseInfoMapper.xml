@@ -5,57 +5,16 @@
 
 <mapper namespace="com.ljsh.test.domain.mapper.CourseInfoMapper">
 
-    <sql id="info">courseinfo</sql>
+    <sql id="course_info">courseinfo</sql>
 
-    <resultMap id="name_id_Map" type="com.ljsh.test.domain.model.CourseInfo">
-        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
-    </resultMap>
-
-    <resultMap id="infoMap" type="com.ljsh.test.domain.model.CourseInfo">
-        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="semester" column="semester" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cTarget" column="cTarget" javaType="String" jdbcType="VARCHAR"/>
-        <result property="A" column="excellent" javaType="String" jdbcType="VARCHAR"/>
-        <result property="B" column="good" javaType="String" jdbcType="VARCHAR"/>
-        <result property="C" column="normal" javaType="String" jdbcType="VARCHAR"/>
-        <result property="D" column="pass" javaType="String" jdbcType="VARCHAR"/>
-        <result property="F" column="poor" javaType="String" jdbcType="VARCHAR"/>
+    <resultMap id="CInfo_Map" type="com.ljsh.test.domain.model.CInfo">
+        <id property="cid" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="cname" column="cName" javaType="String" jdbcType="VARCHAR"/>
         <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
-        <result property="exam_type" column="test_type" javaType="Integer" jdbcType="INTEGER"/>
     </resultMap>
 
-    <resultMap type="com.ljsh.test.domain.model.Course" id="cinfoMap">
-        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
-        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
-        <collection property="CourseData" ofType="com.ljsh.test.domain.model.CourseData" resultMap="com.ljsh.test.domain.mapper.CourseMapper.cMap"/>
-    </resultMap>
-
-    <resultMap type="com.ljsh.test.domain.model.Exper" id="einfoMap">
-        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
-        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
-        <collection property="ExperimentData" ofType="com.ljsh.test.domain.model.ExperimentData" resultMap="com.ljsh.test.domain.mapper.ExperimentMapper.eMap"/>
-    </resultMap>
-
-    <resultMap type="com.ljsh.test.domain.model.CDesign" id="cdinfoMap">
-        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
-        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
-        <collection property="CdesignData" ofType="com.ljsh.test.domain.model.CdesignData" resultMap="com.ljsh.test.domain.mapper.CdesignMapper.cdMap"/>
-    </resultMap>
-
-    <resultMap type="com.ljsh.test.domain.model.GDesign" id="gdinfoMap">
-        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
-        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
-        <collection property="GdesignData" ofType="com.ljsh.test.domain.model.GdesignData" resultMap="com.ljsh.test.domain.mapper.GdesignMapper.gdMap"/>
-    </resultMap>
-
-    <select id="GET_BINFO_CID" parameterType="String" resultMap="infoMap">
-        SELECT info_cId,cName,course_type FROM courseinfo
+    <select id="get_CInfoList" parameterType="String" resultMap="CInfo_Map">
+        SELECT info_cId,cname,course_type FROM <include refid="course_info"/>
         <where>
             <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
                 #{item}
@@ -63,103 +22,34 @@
         </where>
     </select>
 
-    <select id="get_All_cNames_cids" resultMap="name_id_Map">
-        SELECT cName,info_cId FROM
-        courseinfo
+    <select id="get_All" resultMap="CInfo_Map">
+        SELECT * FROM
+        <include refid="course_info"/>
     </select>
 
-    <update id="updateCourseInfo" parameterType="com.ljsh.test.domain.model.CourseInfo">
-        UPDATE courseinfo
+    <update id="updateCourseInfo" parameterType="com.ljsh.test.domain.model.CInfo">
+        UPDATE <include refid="course_info"/>
         <set>
-            <if test="semester != null">
-                semester = #{semester},
-            </if>
-            <if test="cName != null">
-                cName = #{cName},
-            </if>
-            <if test="cTarget != null">
-                cTarget = #{cTarget},
-            </if>
-            <if test="A != null">
-                excellent = #{A},
-            </if>
-            <if test="B != null">
-                good = #{B},
-            </if>
-            <if test="C != null">
-                normal = #{C},
-            </if>
-            <if test="D != null">
-                pass = #{D},
-            </if>
-            <if test="F != null">
-                poor = #{F},
+            <if test="cname != null">
+                cName = #{cname},
             </if>
             <if test="course_type != null">
                 course_type = #{course_type},
             </if>
-            <if test="exam_type != null">
-                test_type = #{exam_type},
-            </if>
         </set>
-        WHERE info_cId = #{cId}
+        WHERE info_cId = #{cid}
     </update>
 
-    <insert id="replaceCourseInfo" parameterType="com.ljsh.test.domain.model.CourseInfo">
-        REPLACE INTO courseinfo
-        (semester,info_cId,cName,cTarget,excellent,good,normal,pass,poor,course_type,test_type)
+    <insert id="replaceCInfo" parameterType="com.ljsh.test.domain.model.CInfo">
+        REPLACE INTO <include refid="course_info"/>
+        (info_cId,cName,course_type)
         VALUES
-        (#{semester},#{cId},#{cName},#{cTarget},#{A},#{B},#{C},#{D},#{F},#{course_type},#{exam_type})
+        (#{cid},#{cname},#{course_type})
     </insert>
 
-    <select id="GET_CINFO_CID" parameterType="String" resultMap="infoMap">
-        SELECT * FROM courseinfo
+    <select id="get_CInfo" parameterType="String" resultMap="CInfo_Map">
+        SELECT * FROM <include refid="course_info"/>
         WHERE info_cId = #{cid}
     </select>
-
-    <select id="get_Course_Cid"  resultMap="cinfoMap" >
-        SELECT *
-        FROM
-        (courseinfo left join course on cId = info_cId)
-        <where>
-            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
-                #{item}
-            </foreach>
-        </where>
-    </select>
-
-    <select id="get_Exper_Cid"  resultMap="einfoMap" >
-        SELECT *
-        FROM
-        (courseinfo left join experiment on cId = info_cId)
-        <where>
-            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
-                #{item}
-            </foreach>
-        </where>
-    </select>
-
-    <select id="get_Cdesign_Cid"  resultMap="cdinfoMap" >
-        SELECT *
-        FROM
-        (courseinfo left join cdesign on cId = info_cId)
-        <where>
-            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
-                #{item}
-            </foreach>
-        </where>
-    </select>
-
-    <select id="get_Gdesign_Cid"  resultMap="gdinfoMap" >
-        SELECT *
-        FROM
-        (courseinfo left join gdesign on cId = info_cId)
-        <where>
-            <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
-                #{item}
-            </foreach>
-        </where>
-    </select>
-
 
 </mapper>

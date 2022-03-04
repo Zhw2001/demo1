@@ -9,10 +9,10 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CinfoResDTO {
-    public CinfoResDTO(){}
+public class CourseDataDTO {
+    public CourseDataDTO(){}
 
-    public CinfoResDTO(List<Course> course_list, List<Exper> exper_list, List<CDesign> cdesign_list, List<GDesign> gdesign_list) {
+    public CourseDataDTO(List<Course> course_list, List<Exper> exper_list, List<CDesign> cdesign_list, List<GDesign> gdesign_list) {
         this.course_list = course_list;
         this.exper_list = exper_list;
         this.cdesign_list = cdesign_list;
