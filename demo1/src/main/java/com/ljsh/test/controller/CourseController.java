@@ -1,7 +1,7 @@
 package com.ljsh.test.controller;
 
 import com.ljsh.test.dto.Result;
-import com.ljsh.test.domain.model.CourseData;
+import com.ljsh.test.domain.model.Course_Data.CourseData;
 import com.ljsh.test.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class CourseController {
 
     @PostMapping("/update")
     public Result<?> updateCourse(@RequestBody CourseData courseData){
-        if(courseData.getId()!=null){
+        if(courseData.getId()!=null && !courseData.getId().equals("")){
             String msg = courseService.upCourse(courseData);
             if(msg.equals("")){return Result.success();}
             else{
@@ -37,7 +37,7 @@ public class CourseController {
 
     @PostMapping("/delete")
     public Result<?> delCourse(@RequestBody CourseData courseData){
-        if(courseData.getId()!=null){
+        if(courseData.getId()!=null && !courseData.getId().equals("")){
             String msg = courseService.delCourse(courseData.getId());
             if(msg.equals("")){return Result.success();}
             else{
@@ -49,7 +49,7 @@ public class CourseController {
 
     @PostMapping("/insert")
     public Result<?> addCourse(@RequestBody CourseData courseData){
-        if(courseData.getCId()!=null){
+        if(courseData.getId()!=null && !courseData.getId().equals("")){
             String msg = courseService.addCourse(courseData);
             if(msg.equals("")){return Result.success();}
             else{

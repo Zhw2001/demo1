@@ -7,7 +7,7 @@
 
     <sql id="gd">gdesign</sql>
 
-    <resultMap type="com.ljsh.test.domain.model.GdesignData" id="gdMap">
+    <resultMap type="com.ljsh.test.domain.model.Course_Data.GdesignData" id="gdMap">
         <id  property="id" column="gdesign_id" javaType="Long" jdbcType="BIGINT"/>
         <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
         <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
@@ -42,7 +42,7 @@
         gdesign_id = #{id}
     </delete>
 
-    <insert id="addGdesign" parameterType="com.ljsh.test.domain.model.GdesignData">
+    <insert id="addGdesign" parameterType="com.ljsh.test.domain.model.Course_Data.GdesignData">
         INSERT INTO
         <include refid="gd"/>
         (sTime,cId,cNum,sId,sName,grade1_1 = #{a_1},grade1_2,grade1_3,grade1_4,grade1_5,grade1_6,grade2_1,grade2_2,grade2_3,grade1_4,grade3_1,grade3_2,grade3_3,overall)
@@ -50,7 +50,7 @@
         (#{sTime},#{cId},#{cNum},#{sId},#{sName},#{a_1},#{a_2},#{a_3},#{a_4},#{a_5},#{a_6},#{b_1},#{b_2},#{b_3},#{b_4},#{c_1},#{c_2},#{c_3},#{overall})
     </insert>
 
-    <update id="updateGdesign" parameterType="com.ljsh.test.domain.model.GdesignData">
+    <update id="updateGdesign" parameterType="com.ljsh.test.domain.model.Course_Data.GdesignData">
         update <include refid="gd"/> set
         sTime = #{sTime},
         cId = #{cId},

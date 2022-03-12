@@ -1,8 +1,8 @@
 package com.ljsh.test.service;
 
-import com.ljsh.test.domain.model.Course_Classes;
-import com.ljsh.test.dto.AUserInfoDTO;
+import com.ljsh.test.domain.model.CInfo;
 import com.ljsh.test.domain.model.AdminUser;
+import com.ljsh.test.dto.RelationUpdateDTO;
 
 import java.util.List;
 
@@ -12,6 +12,11 @@ public interface AdminUserService {
     List<AdminUser> getusers();
     List<AdminUser> selectPage(int pageNum, int pageSize, String search);
     String del_user(String account);
-    AUserInfoDTO get_Info_By_Account(String account);
-    String setCC(List<Course_Classes> cc_list);
+    AdminUser get_Info(String account);
+    //用户分配课程
+    String updateCourseOfUser(RelationUpdateDTO relationUpdate);
+    List<CInfo> getCourseList(Long ur_id);
+    Long getURIDByUserRole(Long uid, Long role_id);
+    //用户分配角色
+    String updateRole(RelationUpdateDTO relationUpdate);
 }

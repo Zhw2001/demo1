@@ -2,7 +2,7 @@ package com.ljsh.test.controller;
 
 import com.ljsh.test.dto.Result;
 
-import com.ljsh.test.domain.model.ExperimentData;
+import com.ljsh.test.domain.model.Course_Data.ExperimentData;
 
 import com.ljsh.test.service.ExperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class ExperimentController {
 
     @PostMapping("/update")
     public Result<?> updateExperiment(@RequestBody ExperimentData experimentData){
-        if(experimentData.getId()!=null){
+        if(experimentData.getId()!=null && !experimentData.getId().equals("")){
             String msg = experService.updateExperiment(experimentData);
             if(msg.equals("")){return Result.success();}
             else{
@@ -39,7 +39,7 @@ public class ExperimentController {
 
     @PostMapping("/delete")
     public Result<?> delExperiment(@RequestBody ExperimentData experimentData){
-        if(experimentData.getId()!=null){
+        if(experimentData.getId()!=null && !experimentData.getId().equals("")){
             String msg = experService.delExperiment(experimentData.getId());
             if(msg.equals("")){return Result.success();}
             else{
@@ -51,7 +51,7 @@ public class ExperimentController {
 
     @PostMapping("/insert")
     public Result<?> addExperiment(@RequestBody ExperimentData experimentData){
-        if(experimentData.getCId()!=null){
+        if(experimentData.getId()!=null && !experimentData.getId().equals("")){
             String msg = experService.addExperiment(experimentData);
             if(msg.equals("")){return Result.success();}
             else{

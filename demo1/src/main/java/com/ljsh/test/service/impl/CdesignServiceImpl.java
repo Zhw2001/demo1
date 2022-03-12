@@ -1,7 +1,7 @@
 package com.ljsh.test.service.impl;
 
 import com.ljsh.test.domain.mapper.CdesignMapper;
-import com.ljsh.test.domain.model.CdesignData;
+import com.ljsh.test.domain.model.Course_Data.CdesignData;
 import com.ljsh.test.service.CdesignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

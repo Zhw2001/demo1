@@ -3,7 +3,7 @@
     <div class = "btnRow" ><el-button type='primary' @click="createShow">添加用户</el-button></div>
     <div class="card">
       <div class="card-body">
-        <el-form :inline="true" class="demo-form-inline">
+        <el-form :inline="true">
           <el-form-item  label="查找:">
             <el-input v-model="search" placeholder="请输入关键字"></el-input>
           </el-form-item>
@@ -11,8 +11,8 @@
             <el-button type='primary' @click="load"><i class="el-icon-search"></i></el-button>
           </el-form-item>
         </el-form>
+        <div class="myELTable">
         <el-table
-          :fit = "true"
           stripe
           :header-cell-style = "mytable"
           :cell-style = "mytableCell"
@@ -69,6 +69,7 @@
           </el-table-column>
 
         </el-table>
+        </div>
         <el-pagination
           class="pagination"
           @size-change="SizeChange"
@@ -181,7 +182,7 @@ export default {
       this.$request.post("/api_S/admin/delete",{account: account}).then(res =>{this.$message("删除成功");});
     },
     cal_total(){
-      this.$request.get("/api_S/admin/cal_list").then(res=>{
+      this.$request.get("/api_S/admin/all").then(res=>{
         this.total = res.data.length;
       });
     },

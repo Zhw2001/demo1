@@ -40,9 +40,22 @@ function checkKey(key, authList){
     const result = {
       path: '/',
       name:'main',
+      redirect: '/blank',
       component: () => import('@/views/Main'), // main
       children: []
     }
+    let firstPage = {
+      path:'/blank',
+      name:'blank',
+      component: () => import('@/views/blank/view/blankPage')
+    }
+    let coursePage = {
+      path:'/myCourseList',
+      name:'my_course_list',
+      component: () => import('@/views/blank/view/courseList')
+    }
+    result.children.push(firstPage)
+    result.children.push(coursePage)
     let obj = {}
     data.forEach( item => {
       if(item.children) {

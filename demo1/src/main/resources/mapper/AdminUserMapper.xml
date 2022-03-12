@@ -8,7 +8,8 @@
 
 <mapper namespace="com.ljsh.test.domain.mapper.AdminUserMapper">
     <sql id="admin_user">admin_user</sql>
-
+    <sql id="user_role">admin_user_role</sql>
+    <sql id="user_course">admin_user_course</sql>
 
     <resultMap type="com.ljsh.test.domain.model.AdminUser" id="userMap">
         <id  property="uid" column="uid" javaType="Long" jdbcType="BIGINT"/>
@@ -73,7 +74,7 @@
 
     <select id="getAll" resultMap="userMap">
         SELECT * FROM
-        <include refid="admin_user"/>
+        (<include refid="admin_user"/> LEFT JOIN admin_user_role ON admin_user_role.UR_uid = uid) left join admin_role on admin_user_role.UR_role_id = admin_role.role_id
     </select>
 
     <select id="selectPage" resultMap="userMap">
@@ -105,5 +106,56 @@
         WHERE
         account = #{account}
     </select>
+
+    <!--给用户分配角色相关-->
+    <insert id="insertUserRole" >
+        REPLACE INTO <include refid="user_role"/>
+        (UR_ID, UR_uid, UR_role_id)
+        VALUES
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.UR_ID}, #{item.uid}, #{item.role_id})
+        </foreach>
+    </insert>
+
+    <delete id="delRoleOfUser">
+        DELETE FROM <include refid="user_role"/>
+        <where>
+            (UR_uid, UR_role_id) in
+            <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+                (#{item.uid}, #{item.role_id})
+            </foreach>
+        </where>
+    </delete>
+
+    <!--给用户分配课程相关-->
+    <select id="getURIDByUserRole"  resultType="Long">
+        SELECT UR_ID FROM <include refid="user_role"/>
+        WHERE UR_uid = #{UR_uid} AND UR_role_id = #{UR_role_id}
+    </select>
+
+    <select id="getCidsOfUser" parameterType="Long" resultType="String">
+        SELECT cid FROM <include refid="user_course"/>
+        WHERE UR_ID = #{UR_ID}
+    </select>
+
+    <insert id="insCourseOfUser" >
+        REPLACE INTO <include refid="user_course"/>
+        (UR_ID, cid)
+        VALUES
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.UR_ID}, #{item.cid})
+        </foreach>
+    </insert>
+
+    <delete id="delCourseOfUser" >
+        DELETE FROM <include refid="user_course"/>
+        <where>
+            (UR_ID, cid) in
+            <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+                (#{item.UR_ID}, #{item.cid})
+            </foreach>
+        </where>
+    </delete>
+
 
 </mapper>

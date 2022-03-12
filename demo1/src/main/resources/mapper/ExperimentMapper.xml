@@ -7,7 +7,7 @@
 
     <sql id="e">experiment</sql>
 
-    <resultMap type="com.ljsh.test.domain.model.ExperimentData" id="eMap">
+    <resultMap type="com.ljsh.test.domain.model.Course_Data.ExperimentData" id="eMap">
         <id  property="id" column="exper_id" javaType="Long" jdbcType="BIGINT"/>
         <result property="sTime" column="sTime" javaType="String" jdbcType="VARCHAR"/>
         <result property="cId" column="cId" javaType="String" jdbcType="VARCHAR"/>
@@ -50,7 +50,7 @@
         exper_id = #{id}
     </delete>
 
-    <insert id="addExperiment" parameterType="com.ljsh.test.domain.model.ExperimentData">
+    <insert id="addExperiment" parameterType="com.ljsh.test.domain.model.Course_Data.ExperimentData">
         INSERT INTO
         <include refid="e"/>
         (sTime,cId,cNum,sId,sName,sClass,sState,p1,r1,p2,r2,p3,r3,p4,r4,p5,r5,p6,r6,p7,r7,p8,t8,regular,written,overall)
@@ -58,7 +58,7 @@
         (#{sTime},#{cId},#{cNum},#{sId},#{sName},#{sClass},#{sState},#{p1},#{r1},#{p2},#{r2},#{p3},#{r3},#{p4},#{r4},#{p5},#{r5},#{p6},#{r6},#{p7},#{r7},#{p8},{r8},#{regular},#{written},#{overall})
     </insert>
 
-    <update id="updateExperiment" parameterType="com.ljsh.test.domain.model.ExperimentData">
+    <update id="updateExperiment" parameterType="com.ljsh.test.domain.model.Course_Data.ExperimentData">
         update <include refid="e"/> set
         sTime = #{sTime},
         cId = #{cId},
