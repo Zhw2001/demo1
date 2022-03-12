@@ -2,27 +2,72 @@
  <div class="home-container">
     <div class="card">
       <div class="card-body">
-        <div class="myELTable">
-          <el-table
-            stripe
-            :data="courseList"
-          >
-            <el-table-column prop="cid" label="课程编号"> </el-table-column>
-
-            <el-table-column prop="cname" label="课程名称"> </el-table-column>
-
-            <el-table-column label="操作">
-              <template slot-scope="scope">
-                <span>
-                  <el-button circle
-                    size="mini"
-                    icon="el-icon-s-open"
-                    @click="AuditConfirm(scope.row)"
-                  ></el-button>
-                </span>
-              </template>
-            </el-table-column>
-          </el-table>
+        <div class="card-card">
+          <div class="top">
+            <router-link to="/eaInput">
+                <div class="top-daohan">
+                  <img src="@/assets/img/1.png"/>
+                  <span>考试/考核信息</span>
+                </div>
+            </router-link>
+            <router-link to="/cgdInput">
+            <div class="top-daohan">
+              <img src="@/assets/img/2.png"/>
+              <span>课程成绩录入</span>
+            </div>
+            </router-link>
+            <router-link to="/cdInput">
+            <div class="top-daohan">
+              <img src="@/assets/img/3.png"/>
+              <span>达成度评价信息</span>
+            </div >
+            </router-link>
+            <router-link to="/cInfo">
+            <div class="top-daohan">
+              <img src="@/assets/img/4.png"/>
+              <span>历史课程信息</span>
+            </div>
+            </router-link>
+            <router-link to="/cAD">
+            <div class="top-daohan">
+              <img src="@/assets/img/1.png"/>
+              <span>历史课程目标明细</span>
+            </div>
+            </router-link>
+          </div>
+          <!-- 底部 -->
+          <div class="buttom">
+            <router-link to="/userInfo">
+            <div class="buttom-daohan">
+              <img src="@/assets/img/1.png"/>
+              <span>用户信息</span>
+            </div>
+            </router-link>
+            <router-link to="/userRole" >
+            <div class="buttom-daohan">
+              <img src="@/assets/img/2.png"/>
+              <span>用户角色</span>
+            </div>
+            </router-link>
+            <router-link to="/userRoleMenu">
+            <div class="buttom-daohan">
+              <img src="@/assets/img/3.png"/>
+              <span>用户权限</span>
+            </div >
+            </router-link>
+            <router-link to="/userCourse">
+            <div class="buttom-daohan">
+              <img src="@/assets/img/4.png"/>
+              <span>分配课程</span>
+            </div>  
+            </router-link>
+            <router-link to="/myCourseList">
+            <div class="buttom-daohan">
+              <img src="@/assets/img/4.png"/>
+              <span>我的课程</span>
+            </div>  
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -36,48 +81,69 @@ export default {
   name: "Blank",
   data() {
     return {
-      courseList: []
-    };
+    }
   },
-  created() {
-    this.getCList()
-  },
-  methods: {
-    setCourse(v){
-      localStorage.setItem("selected_course", JSON.stringify(v))
-      this.$message({
-        type: "success",
-        message: "成功"
-      });
-    },
-    getCList() {
-      if (JSON.parse(localStorage.getItem("role")).role_id === 4) {
-          this.courseList = JSON.parse(localStorage.getItem("teacher_course_list"))
-      } else {
-        this.$request.get("/api_S/cinfo/all").then(res => {
-          this.courseList = res.data;
-        });
-      }
-    },
-    AuditConfirm(v) {
-      this.$confirm("确定选择该课程吗?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.setCourse(v);
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消"
-          });
-        });
-    },
-  }
-};
+}
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
+.router-link-active {
+  text-decoration: none;
+}
+.card-card{
+  height: 530px;
+  width: 100%;
+}
+.top{
+  height: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  /* border: 1px solid black; */
+}
+.top-daohan{
+  height: 100%;
+  width: 200px;
+  /* border: 1px solid black; */
+}
+.top-daohan img{
+  height: 160px;
+  width: 200px;
+  /* border: 1px solid black; */
+}
+.top-daohan span{
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 40px;
+  /* border: 1px solid black; */
+}
+
+.buttom{
+  height: 200px;
+  width: 100%;
+  margin-top: 120px;
+  display: flex;
+  justify-content: space-around;
+  /* border: 1px solid black; */
+}
+.buttom-daohan{
+  height: 100%;
+  width: 200px;
+  /* border: 1px solid black; */
+}
+.buttom-daohan img{
+  height: 160px;
+  width: 200px;
+  /* border: 1px solid black; */
+}
+.buttom-daohan span{
+  padding:12px 0px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 40px;
+  /* border: 1px solid black; */
+}
 </style>

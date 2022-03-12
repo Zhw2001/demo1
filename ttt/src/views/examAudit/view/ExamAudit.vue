@@ -2,34 +2,7 @@
   <div class="home-container">
     <div class="card">
       <div class="card-body">
-        <div
-          style="display:flex;justify-content:flex-start ;flex-direction:row;"
-        >
-          <span
-            style="font-size:0.8vw;flex:0 1 auto;line-height:1.8vw;margin:0px 10px;"
-            >学年学期:</span
-          >
-          <el-select
-            style="flex:0 1 auto;"
-            size="small"
-            v-model="basicInfo.semester"
-            placeholder="请选择学期"
-          >
-            <el-option
-              v-for="(semester, i) in semesterList"
-              :key="i"
-              :label="semester"
-              :value="semester"
-            >
-            </el-option>
-          </el-select>
-          <el-button
-            size="small"
-            style="flex:0 1 auto;margin:0px 10px;"
-            @click="handleSemesterChange"
-            >切换学期</el-button
-          >
-        </div>
+        <semester-selector @semesterChange = "handleSemesterChange($event)" :semesterList = semesterList :semester = basicInfo.semester></semester-selector>
         <div class="mydoc">
           <p style="margin-top:0pt; margin-bottom:0pt;   widows:0; orphans:0;">
             <span
@@ -56,7 +29,7 @@
                   审核时间
                 </td>
                 <td>
-                  {{ basicInfo.date }}
+                  {{ basicInfo.audit_date }}
                 </td>
               </tr>
               <tr>
@@ -90,8 +63,8 @@
             </table>
 
             <div><el-button type="text" @click="open(0)">编辑</el-button></div>
+            <el-button style="margin-top:20px;" @click="nextDoc(1)" >下一步</el-button>
           </div>
-
           <div v-if="docVis === 1">
             <el-form>
               <el-form-item>
@@ -114,6 +87,8 @@
                 </div>
               </el-form-item>
             </el-form>
+            <el-button style="margin-top:20px;" @click="nextDoc(0)" >上一步</el-button>
+            <el-button style="margin-top:20px;" @click="nextDoc(2)" >下一步</el-button>
           </div>
           <div v-if="docVis === 2">
             <p class="mySecondTitle">
@@ -219,9 +194,9 @@
             </table>
 
             <div><el-button type="text" @click="open(3)">编辑</el-button></div>
-            <el-button v-if="setEditVis" @click="nextDoc(3)">下一步</el-button>
+            <el-button style="margin-top:20px;" @click="nextDoc(1)" >上一步</el-button>
+            <el-button @click="nextDoc(3)">下一步</el-button>
           </div>
-
           <div v-if="docVis === 3">
             <h1 class="myTitle">3.评分标准</h1>
             <table class="CTargetContextTable">
@@ -258,12 +233,9 @@
                 </td>
               </tr>
             </table>
-
-            <el-button style="margin-top:20px;" @click="nextDoc(4)"
-              >下一步</el-button
-            >
+            <el-button style="margin-top:20px;" @click="nextDoc(2)" >上一步</el-button>
+            <el-button style="margin-top:20px;" @click="nextDoc(4)" >下一步</el-button>
           </div>
-
           <div v-if="docVis === 4">
             <h1 class="myTitle">4.命题规范</h1>
             <table class="QStandardTable">
@@ -318,9 +290,7 @@
                 </th>
                 <td>
                   <p>
-                    <span>
-                      刘晋
-                    </span>
+                    <input style="text-align:center;" v-model="basicInfo.set_paper_person"/>
                   </p>
                 </td>
                 <th>
@@ -333,7 +303,7 @@
                 <td>
                   <p>
                     <span>
-                      章夏芬
+                      <input style="text-align:center;" v-model="basicInfo.audit_person"/>
                     </span>
                   </p>
                 </td>
@@ -347,7 +317,7 @@
                 <td>
                   <p>
                     <span>
-                      2018年12月
+                      <input style="text-align:center;" v-model="basicInfo.audit_date"/>
                     </span>
                   </p>
                 </td>
@@ -355,6 +325,7 @@
             </table>
 
             <div style="margin-top:20px;">
+              <el-button style="margin-top:20px;" @click="nextDoc(3)" >上一步</el-button>
               <el-button @click="sendDataBase()">发送DATABASE</el-button>
               <el-button @click="send()">发送</el-button>
             </div>
@@ -374,8 +345,8 @@
         <el-form-item label="审核学期" prop="semester">
           <el-input v-model="basicInfo.semester"></el-input>
         </el-form-item>
-        <el-form-item label="审核时间" prop="date">
-          <el-input v-model="basicInfo.date"></el-input>
+        <el-form-item label="审核时间" prop="audit_date">
+          <el-input v-model="basicInfo.audit_date"></el-input>
         </el-form-item>
         <el-form-item label="课程名称" prop="course_name">
           <el-input v-model="basicInfo.course_name"></el-input>
@@ -392,7 +363,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="resetForm('basicInfo')">重置</el-button>
-        <el-button type="primary" @click="submitBasicForm('basicInfo')"
+        <el-button type="primary" @click="submitBasicFormConfirm('basicInfo')"
           >确定</el-button
         >
       </span>
@@ -408,35 +379,35 @@
           prop="S_Grade"
           :rules="{ required: true, message: '不能为空', trigger: 'blur' }"
         >
-          <el-input v-model="standardForm.S_Grade"></el-input>
+          <el-input type="textarea" autosize v-model="standardForm.S_Grade"></el-input>
         </el-form-item>
         <el-form-item
           label="良好"
           prop="A_Grade"
           :rules="{ required: true, message: '不能为空', trigger: 'blur' }"
         >
-          <el-input v-model="standardForm.A_Grade"></el-input>
+          <el-input type="textarea" autosize v-model="standardForm.A_Grade"></el-input>
         </el-form-item>
         <el-form-item
           label="中等"
           prop="B_Grade"
           :rules="{ required: true, message: '不能为空', trigger: 'blur' }"
         >
-          <el-input v-model="standardForm.B_Grade"></el-input>
+          <el-input type="textarea" autosize v-model="standardForm.B_Grade"></el-input>
         </el-form-item>
         <el-form-item
           label="及格"
           prop="C_Grade"
           :rules="{ required: true, message: '不能为空', trigger: 'blur' }"
         >
-          <el-input v-model="standardForm.C_Grade"></el-input>
+          <el-input type="textarea" autosize v-model="standardForm.C_Grade"></el-input>
         </el-form-item>
         <el-form-item
           label="不及格"
           prop="D_Grade"
           :rules="{ required: true, message: '不能为空', trigger: 'blur' }"
         >
-          <el-input v-model="standardForm.D_Grade"></el-input>
+          <el-input type="textarea" autosize v-model="standardForm.D_Grade"></el-input>
         </el-form-item>
         <el-form-item>
           <div style="display:flex;justify-content:flex-start;">
@@ -472,7 +443,7 @@
           }"
         >
           <div style="display:flex;flex-direction:row;flex-wrap: nowrap;">
-            <el-input style="flex:0 1 auto;" v-model="ctarget.value"></el-input>
+            <el-input type="textarea" autosize style="flex:0 1 auto;" v-model="ctarget.value"></el-input>
             <div style="width:10px;flex:1 0 auto;"></div>
             <el-button
               style="flex:0 1 auto;"
@@ -508,7 +479,7 @@
 
         <el-form-item>
           <div style="display:flex;justify-content:flex-start;">
-            <el-button type="primary" @click="submitCForm('cTargetForm')"
+            <el-button type="primary" @click="submitCFormConfirm('cTargetForm')"
               >确定</el-button
             >
             <el-button @click="resetForm('cTargetForm')">重置</el-button>
@@ -567,7 +538,7 @@
               </div>
             </el-form-item>
             <el-form-item>
-              <el-button @click="resetForm('modForm')">重置</el-button>
+              <el-button @click="resetMod()">重置</el-button>
             </el-form-item>
             <el-form-item>
               <div style="display:flex;justify-content:flex-end;">
@@ -619,7 +590,7 @@
               </div>
             </el-form-item>
             <el-form-item>
-              <el-button @click="resetForm('partForm')">重置</el-button>
+              <el-button @click="resetPart()">重置</el-button>
             </el-form-item>
             <el-form-item>
               <div style="display:flex;justify-content:flex-end;">
@@ -670,7 +641,7 @@
               </div>
             </el-form-item>
             <el-form-item>
-              <el-button @click="resetForm('itemForm')">重置</el-button>
+              <el-button @click="resetItem()">重置</el-button>
             </el-form-item>
             <el-form-item>
               <div style="display:flex;justify-content:flex-end;">
@@ -823,9 +794,13 @@
 </template>
 
 <script>
+import { Decimal } from 'decimal.js'
+import SemesterSelector from "../component/SemesterSelector.vue"
 export default {
   name: "examAudit",
-
+    components: {
+    'semester-selector': SemesterSelector,
+  },
   data() {
     var validateSemester = (rule, value, callback) => {
       let patt = /[0-9]{4}-[0-9]{4}-[0-9]/;
@@ -863,8 +838,8 @@ export default {
       }
     };
     return {
+      edited: false,
       semesterList: [],
-      EditFinished: false,
       standardSetting: 0,
       total: 0, //模块合计比例,calModTotal中计算
       ctotal: 0, //课程目标合计比例
@@ -884,7 +859,7 @@ export default {
       basicInfo: {},
       basicInfoRules: {
         semester: [{ validator: validateSemester, trigger: "change" }],
-        date: [{ required: true, message: "请输入日期", trigger: "blur" }],
+        audit_date: [{ required: true, message: "请输入日期", trigger: "blur" }],
         course_name: [
           { required: true, message: "请输入课程名", trigger: "blur" }
         ],
@@ -923,7 +898,15 @@ export default {
     };
   },
   methods: {
-    handleSemesterChange() {
+    handleSemesterChange(v) {
+      if(!v){
+        this.$message({
+          type: "warning",
+          message: "未选择学期"
+        });
+        return
+      }
+      this.basicInfo.semester = v
       this.load();
     },
     getSemester() {
@@ -958,10 +941,18 @@ export default {
           for (let i of this.question_standard) {
             this.testSpecification.push(1);
           }
+          this.setRatio();
+          this.calModTotal();
+          this.setCRatio();
+          this.calCTargetTotal();
         });
     },
 
     sendDataBase() {
+      if(this.edited === false){
+        console.log("未曾修改")
+        return
+      }
       let data = {};
       data.ctargets = this.cTargetForm.ctargets;
       data.basicInfo = this.basicInfo;
@@ -969,11 +960,12 @@ export default {
       data.parts = this.partForm.parts;
       data.items = this.itemForm.items;
       data.fatherOfItem = this.fatherOfItem;
-      this.$request.post("/api_S/exam_audit/update", data).then(res => {
+      this.$request.post("/api_S/exam_audit/update_audit", data).then(res => {
         console.log("11111111111", res);
       });
     },
 
+    // 评分标准对话框提交
     submitStandard(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -1004,6 +996,7 @@ export default {
         }
       });
     },
+    // 打开评分标准对话框
     openStandardSetting(i) {
       this.standardSetting = 1;
       this.standardForm.ctarget_index = i;
@@ -1013,18 +1006,26 @@ export default {
       this.standardForm.C_Grade = this.cTargetForm.ctargets[i].standards[3];
       this.standardForm.D_Grade = this.cTargetForm.ctargets[i].standards[4];
     },
+
+    // 考核比例和内容分布
     CFormFinalConfirm() {
       //课程目标表最后一步，填写考核方式和考试题目
       this.setCRatio();
       this.calCTargetTotal();
+      if(this.ctotal != 100){
+        this.$message({
+          type: "warning",
+          message: "各课程目标所占比例之和应为100%"
+        });
+        return
+      }
       this.close();
-      this.EditFinished = true;
     },
     calCTargetTotal() {
       let temp = 0;
       for (let i of this.cTargetForm.ctargets) {
-        let total = i.total == "" ? 0 : parseInt(i.total);
-        temp = temp + total;
+        let total = i.total == "" ? 0 : parseFloat(i.total);
+        temp = new Decimal(temp).add(new Decimal(total)).toNumber().toFixed(2);
       }
       this.ctotal = temp;
     },
@@ -1052,17 +1053,14 @@ export default {
               //根据名字找到part总表中的part对象
               if (this.fatherOfItem.indexOf(x) != -1) {
                 //需要将课程目标所具有的考试题目与其对应部分的比例相乘，才是此课程目标真正的比例
-                let part_ratio =
-                  (this.partForm.parts[y].ratio == ""
-                    ? 0
-                    : parseFloat(this.partForm.parts[y].ratio)) / 100;
-                temp_total = temp_total + part_ratio * contentScore;
+                let part_ratio =  (this.partForm.parts[y].ratio == "" ? 0 : new Decimal( this.partForm.parts[y].ratio ).div(new Decimal( 100 ) ).toNumber());
+                temp_total = new Decimal(temp_total).add(new Decimal(part_ratio).mul(new Decimal(contentScore))).toNumber();
               } else {
                 let ratio =
                   this.partForm.parts[y].ratio == ""
                     ? 0
                     : parseFloat(this.partForm.parts[y].ratio);
-                temp_total = temp_total + ratio;
+                temp_total = new Decimal( temp_total ).add( new Decimal( ratio ) ).toNumber();
               }
               break;
             }
@@ -1071,13 +1069,26 @@ export default {
         i.total = temp_total;
       }
     },
-
+    //模块填写最后一步确认
     ModFormConfirm() {
-      //模块填写最后一步确认
-      this.setRatio();
-      this.calModTotal();
-      this.close();
-      this.step = 0;
+      this.setRatio()
+      if(this.fatherOfItem.length < 1 ){
+        this.$message({
+          type: "warning",
+          message: "请选择考试题目所属的部分"
+        });
+        return
+      }
+      if(this.calModTotal()){
+        this.close()
+        this.dialogVis = 3
+        this.step = 0
+      } else {
+        this.$message({
+          type: "warning",
+          message: "各模块比例之和应为100%"
+        });
+      }
     },
     setRatio() {
       console.log("SET");
@@ -1109,7 +1120,6 @@ export default {
             .split("");
         }
       }
-
       let maxArry = [];
       for (let i = 0; i < max; i++) {
         maxArry.push(i);
@@ -1123,7 +1133,14 @@ export default {
         temp = temp + total;
       }
       this.total = temp;
+      console.log(this.total)
+      if(this.total !== 100){
+        return false;
+      }
+      return true
     },
+
+    // MOD,PART.ITEM表单验证
     itemNameValidate(name) {
       let count = 0;
       for (let i = 0; i < this.itemForm.items.length; i++) {
@@ -1154,6 +1171,8 @@ export default {
       }
       return false;
     },
+
+    // 已选中的不能重复选
     handlePartCheckChange(p_index) {
       this.partForm.parts[p_index].checklock = !this.partForm.parts[p_index]
         .checklock;
@@ -1162,6 +1181,8 @@ export default {
       this.itemForm.items[i_index].checklock = !this.itemForm.items[i_index]
         .checklock;
     },
+
+    //重置选择
     itemReset() {
       for (let i of this.itemForm.items) {
         i.checklock = true;
@@ -1185,30 +1206,27 @@ export default {
       }
     },
 
+    // MOD,PART,ITEM表单的下一步
     Mnext(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (this.step++ > 2) {
-            //也许以后用的到
-            this.step = 0;
-            this.$set(this.RatioVisList, this.step, true);
-            this.close();
+          if(this.step === 2){
+            this.partReset()
           }
+          this.step++
         } else {
           console.log("error submit!!");
           return false;
         }
       });
     },
-
     Mback() {
       if (this.step-- < 1) {
         this.step = 0;
-        this.close();
       }
     },
 
-    //评分项编辑
+    //ITEM,PART,MOD编辑
     addItem() {
       if (!this.itemForm.items) {
         this.itemForm.items = [];
@@ -1227,7 +1245,6 @@ export default {
       }
     },
 
-    //组成项编辑
     addPart() {
       if (!this.partForm.parts) {
         this.partForm.parts = [];
@@ -1246,7 +1263,6 @@ export default {
       }
     },
 
-    //模块编辑
     addMod() {
       if (!this.modForm.mods) {
         this.modForm.mods = [];
@@ -1265,6 +1281,16 @@ export default {
       if (index !== -1) {
         this.modForm.mods.splice(index, 1);
       }
+    },
+
+    resetMod(){
+      this.modForm.mods = []
+    },
+    resetPart(){
+      this.partForm.parts = []
+    },
+    resetItem(){
+      this.itemForm.items = []
     },
 
     //课程目标编辑
@@ -1302,14 +1328,22 @@ export default {
             i++
           ) {
             if (
-              this.$refs[formName]._props.model.ctargets[i].standards.length ===
-              0
+              this.$refs[formName]._props.model.ctargets[i].standards.length === 0
             ) {
               this.$message({
                 message: "请为课程目标" + (i + 1) + "设置评分标准",
                 type: "warning"
               });
               return false;
+            }
+            for(let j = 0; j < this.$refs[formName]._props.model.ctargets[i].standards.length; j++){
+              if(!this.$refs[formName]._props.model.ctargets[i].standards[j]){
+                this.$message({
+                  message: "请补全评分标准",
+                  type: "warning"
+                });
+                return false;
+              }
             }
             A_LENGTH =
               A_LENGTH +
@@ -1346,33 +1380,130 @@ export default {
             });
             return false;
           }
-          this.close();
-          this.nextDoc(2);
+          this.close(); //校验通过，关闭对话框，否则不予关闭
         } else {
           console.log("error submit!!");
           return false;
         }
       });
     },
+    submitCFormConfirm(v) {
+      this.$confirm("确定修改该内容吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.submitCForm(v)
+          this.edited = true
+        })
+        .catch(() => {
+          this.resetForm(v)
+          this.close()
+          this.$message({
+            type: "info",
+            message: "已取消"
+          });
+        });
+    },
+
+    //基础信息编辑
     submitBasicForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.close();
-          this.nextDoc(1);
         } else {
           console.log("error submit!!");
           return false;
         }
       });
     },
-
+    submitBasicFormConfirm(v) {
+      this.$confirm("确定修改该内容吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+      .then(() => {
+        this.submitBasicForm(v)
+        this.edited = true
+      })
+      .catch(() => {
+        this.resetForm(v)
+        this.close()
+        this.$message({
+          type: "info",
+          message: "已取消"
+        });
+      });
+    },
     //重置表单,可以复用
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
 
+    // 编辑MOD,PART,ITEM前的确认
+    modRatioConfirm(i){
+      this.$confirm("确定修改该内容吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+      .then(() => {
+        this.edited = true
+        this.fatherOfItem = []
+        for(let t of this.modForm.mods){
+          t.partNames = []
+        }
+        for(let r of this.cTargetForm.ctargets){
+          r.content = []
+          r.parts = []
+        }
+        this.dialogVis = i
+      })
+      .catch(() => {
+        this.close()
+        this.$message({
+          type: "info",
+          message: "已取消"
+        });
+      });
+    },
+
+    // 编辑内容分布前的确认
+    ctargetRatioConfirm(i){
+      this.$confirm("确定修改该内容吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+      .then(() => {
+        this.edited = true
+        for(let i of this.cTargetForm.ctargets){
+          i.content = []
+          i.parts = []
+        }
+        this.dialogVis = i
+      })
+      .catch(() => {
+        this.close()
+        this.$message({
+          type: "info",
+          message: "已取消"
+        });
+      });
+    },
+    
     //打开和关闭
     open(i) {
+      if(i === 2 ){
+        this.modRatioConfirm(i)
+        return
+      }
+      if(i === 3 ){
+        this.ctargetRatioConfirm(i)
+        return
+      }
       this.dialogVis = i;
     },
     close() {
@@ -1415,7 +1546,7 @@ export default {
     GenerateCTarget() {
       let data = {};
       data.semester = this.basicInfo.semester;
-      data.date = this.basicInfo.date;
+      data.date = this.basicInfo.audit_date;
       data.course_name = this.basicInfo.course_name;
       data.course_number = this.basicInfo.course_number;
       data.classes = this.basicInfo.classes;
@@ -1458,8 +1589,8 @@ export default {
       const tmpArray = JSON.parse(JSON.stringify(this.testSpecification));
       tmpArray.push(this.passRatio);
       data.question_specification = tmpArray;
-      data.question_setter = "命题人";
-      data.question_reviewer = "审题人";
+      data.question_setter = this.basicInfo.set_paper_person;
+      data.question_reviewer = this.basicInfo.audit_person;
       console.log(data);
       return data;
     },
@@ -1469,7 +1600,7 @@ export default {
         .post("/api_P/audit", this.GenerateCTarget(), { responseType: "blob" })
         .then(res => {
           console.log("11111111111", res);
-          let blob = new Blob([res], { type: "application/msword" }); // 将服务端返回的文件流excel文件
+          let blob = new Blob([res], { type: "application/msword" }); // 服务端返回的文件流excel文件
           let fileName = `审核表${new Date().getTime()}.doc`; // 保存的文件名
           this.downLoadFile(blob, fileName);
         });
@@ -1507,10 +1638,6 @@ export default {
 
   //实时计算相关属性并更新
   computed: {
-    setEditVis: function() {
-      let vis = this.EditFinished && !(this.docVis === 3);
-      return vis;
-    },
     modRatioValidate: function() {
       // if( this.calPartsRatio(this.partForm.parts) != this.modForm.mods
       console.log("setR");

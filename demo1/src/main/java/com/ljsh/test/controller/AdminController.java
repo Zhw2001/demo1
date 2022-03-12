@@ -1,5 +1,6 @@
 package com.ljsh.test.controller;
 
+import com.ljsh.test.domain.model.CInfo;
 import com.ljsh.test.dto.RelationUpdateDTO;
 import com.ljsh.test.dto.Result;
 import com.ljsh.test.domain.model.AdminUser;
@@ -72,18 +73,26 @@ public class AdminController {
     }
 
     @GetMapping("/info")
-    public Result<?> get_Info(@RequestParam String account){
+    public Result<?> get_Info(@RequestParam(value = "account", required = true) String account){
         return Result.success(adminUserService.get_Info(account));
     }
 
+    //分配课程相关
+    @GetMapping("get_ur_id")
+    public Result<?> getURIDByUserRole(@RequestParam(value = "uid", required = true) Long uid, @RequestParam(value = "role_id", required = true) Long role_id){
+        return Result.success(adminUserService.getURIDByUserRole(uid, role_id));
+    }
+
     @GetMapping("/get_course_list")
-    public Result<?> getCList(@RequestParam(value = "uid", required = true) Long uid){
-        return Result.success(adminUserService.getCourseList(uid));
+    public Result<?> getCList(@RequestParam(value = "ur_id", required = true) Long ur_id){
+        List<CInfo> cInfos = adminUserService.getCourseList(ur_id);
+        if(cInfos == null){ return Result.error("204","NULL");}
+        return Result.success(adminUserService.getCourseList(ur_id));
     }
 
     @PostMapping("/set_course")
     public Result<?> setCourse(@RequestBody RelationUpdateDTO relationUpdate){
-        if(relationUpdate.getSubject_id() != null){
+        if(relationUpdate.getSubject_id() != null && !relationUpdate.getSubject_id().equals("")){
             String msg = adminUserService.updateCourseOfUser(relationUpdate);
             if(msg.equals("")){return Result.success();}
             else{
@@ -93,10 +102,11 @@ public class AdminController {
         return Result.error("204","输入为空");
     }
 
-    @PostMapping("/del_course")
-    public Result<?> delCourse(@RequestBody RelationUpdateDTO relationUpdate){
-        if(relationUpdate.getSubject_id() != null){
-            String msg = adminUserService.delCourseOfUser(relationUpdate);
+    //分配角色相关
+    @PostMapping("/set_role")
+    public Result<?> setRole(@RequestBody RelationUpdateDTO relationUpdate){
+        if(relationUpdate.getSubject_id() != null && !relationUpdate.getSubject_id().equals("")){
+            String msg = adminUserService.updateRole(relationUpdate);
             if(msg.equals("")){return Result.success();}
             else{
                 return Result.error("500",msg);
@@ -104,5 +114,4 @@ public class AdminController {
         }
         return Result.error("204","输入为空");
     }
-
 }

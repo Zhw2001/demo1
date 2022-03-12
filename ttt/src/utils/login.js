@@ -4,15 +4,18 @@ import { composeTree, addRoute } from '@/router/action.js'
 function getInfo( token, account, router ){
     setToken( token )
     request.get( '/api_S/admin/info'+'?account='+ account ).then(res => {
-        let userdata = res.data.adminUser
+        let userdata = res.data
         localStorage.setItem('userInfo',JSON.stringify(userdata))
-        let teacher_courseList = res.data.courseList
-        localStorage.setItem('teacher_course_list',JSON.stringify(teacher_courseList))
         changeRole(userdata.adminRoleList[0].role_id)
         let aside = JSON.parse(localStorage.getItem('aside'))
         let routes = addRoute(aside)
         router.addRoute(routes)
-        router.push('/')
+        request.get( '/api_S/admin/get_ur_id?uid='+ userdata.uid + '&role_id=' + userdata.adminRoleList[0].role_id ).then( res => {
+            request.get( '/api_S/admin/get_course_list?ur_id='+res.data ).then( res => {
+                localStorage.setItem("course_list", JSON.stringify(res.data))
+                router.push('/')
+            })
+        })
     })
 }
 

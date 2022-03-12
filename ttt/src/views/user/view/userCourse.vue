@@ -43,8 +43,35 @@
           <div
             style="display:flex;flex-direction:row;flex-wrap: nowrap;justify-content:flex-start;"
           >
-            <div style="flex 1 1 auto;margin-left:10px;">
-              <label style="margin:5px;">课程</label>
+            <span
+              style="font-size:0.8vw;flex:0 1 auto;margin:0vw 0.5vw 0vw 1vw;"
+              >角色:</span
+            >
+            <el-select
+              style="flex:0 1 auto;"
+              v-model="role_id"
+              placeholder="请选择角色"
+              @change="roleChange()"
+            >
+              <el-option
+                v-for="(role, i) in roleList"
+                :key="i"
+                :label="role.role_name"
+                :value="role.role_id"
+              >
+              </el-option>
+            </el-select>
+            <div style="flex 1 0 auto;margin-left:1vw;">
+              <el-button
+              size="medium"
+              type="primary"
+              style="flex:0 1 auto;"
+              @click="handleRoleChange()"
+              >切换角色</el-button
+            >
+            </div>
+            <div v-if="role_id !== 1" style="flex 1 1 auto;margin-left:1vw;">
+              <label style="margin:5px;">课程:</label>
               <el-select
                 multiple
                 filterable
@@ -61,13 +88,15 @@
                 </el-option>
               </el-select>
             </div>
-            <div style="flex 1 0 auto;margin-left:20px;">
+            <div v-if="role_id !== 1" style="flex 1 0 auto;margin-left:1vw;">
               <el-button
                 type="primary"
+                size="medium"
                 icon="el-icon-plus"
                 @click="AddConfirm()"
               ></el-button>
             </div>
+            
           </div>
         </el-form-item>
         <el-form-item>
@@ -81,7 +110,7 @@
 
             <el-table-column prop="cname" label="课程名称"> </el-table-column>
 
-            <el-table-column label="操作">
+            <el-table-column v-if="role_id !== 1" label="操作">
               <template slot-scope="scope">
                 <span>
                   <el-button
@@ -114,14 +143,27 @@ export default {
       tableData: [],
       course_list: [],
       courseOption: [],
-      selected_course: []
+      selected_course: [],
+      role_id: '',
+      roleList:[],
+      UR_ID:''
     };
   },
   created() {
     this.load();
   },
   methods: {
+    roleChange(){
+      this.course_list = []
+    },
     AddConfirm() {
+      if(this.role_id === ""){
+        this.$message({
+          type: "warning",
+          message: "请先选择角色"
+        });
+        return;
+      }
       this.$confirm("确定为该用户分配这些课程吗?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -161,10 +203,10 @@ export default {
       let index = this.course_list.indexOf(v);
       this.course_list.splice(index, 1);
       let result = {
-        subject_id: this.selected_uid,
+        subject_id: this.UR_ID,
         delete: [v.cid]
       };
-      this.$request.post("/api_S/admin/del_course", result).then(res => {
+      this.$request.post("/api_S/admin/set_course", result).then(res => {
         this.$message({
           type: "info",
           message: res.msg
@@ -173,7 +215,7 @@ export default {
     },
     addCourse() {
       let result = {
-        subject_id: this.selected_uid,
+        subject_id: this.UR_ID,
         insert: this.selected_course
       };
       this.$request.post("/api_S/admin/set_course", result).then(res => {
@@ -184,27 +226,34 @@ export default {
         this.close()
       });
     },
+
     show(row) {
+      this.role_id = '';
       this.vis = true;
       this.selected_uid = row.uid;
-      this.$request
-        .get("/api_S/admin/get_course_list?uid=" + row.uid)
-        .then(res => {
+      this.roleList = row.adminRoleList;
+      this.course_list = [];
+      this.selected_course = [];
+    },
+
+    handleRoleChange(){
+      if( this.role_id !== 1 ){
+        this.$request.get( '/api_S/admin/get_ur_id?uid='+ this.selected_uid + '&role_id=' + this.role_id ).then( res => {
+          this.UR_ID = res.data
+          this.$request.get( '/api_S/admin/get_course_list?ur_id='+this.UR_ID ).then( res => {
+            this.course_list = res.data;
+          })
+        })
+      } else{
+        this.$request.get("/api_S/cinfo/all").then(res => {
           this.course_list = res.data;
         });
+      }
     },
 
     load() {
       this.$request.get("/api_S/admin/all").then(res => {
-        this.tableData = [];
-        for (let i of res.data) {
-          for (let j = i.adminRoleList.length - 1; j > 0; j--) {
-            if (i.adminRoleList[j].role_id === 4) {
-              this.tableData.push(i);
-              break;
-            }
-          }
-        }
+        this.tableData = res.data;
       });
       this.$request.get("/api_S/cinfo/all").then(res => {
         this.courseOption = res.data;

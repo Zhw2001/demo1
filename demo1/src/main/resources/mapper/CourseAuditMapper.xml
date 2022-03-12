@@ -10,6 +10,13 @@
     <sql id="course_item">course_item</sql>
     <sql id="course_goal">course_goal</sql>
     <sql id="procedure_standard">procedure_standard</sql>
+    <sql id="goal_detail">goal_detail</sql>
+
+    <resultMap id="goalDetailMap" type="com.ljsh.test.domain.model.Goal_Detail">
+        <id property="goal_id" javaType="Long" column="goal_id" jdbcType="BIGINT" />
+        <id property="stu_id" javaType="Long" column="stu_id" jdbcType="BIGINT" />
+        <result property="value" javaType="Float" column="value" jdbcType="FLOAT"/>
+    </resultMap>
 
     <resultMap id="AuditInfoMap" type="com.ljsh.test.domain.model.AuditInfo">
         <id property="id" javaType="Long" column="id" jdbcType="BIGINT"/>
@@ -17,6 +24,8 @@
         <result property="cid" column="cid" javaType="String" jdbcType="VARCHAR"/>
         <result property="classes" column="classes" javaType="String" jdbcType="VARCHAR"/>
         <result property="exam_type" column="exam_type" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="audit_date" column="audit_date" javaType="String" jdbcType="VARCHAR"/>
+        <result property="eva_date" column="eva_date" javaType="String" jdbcType="VARCHAR"/>
         <result property="course_property" column="course_property" javaType="String" jdbcType="VARCHAR"/>
         <result property="exam_date" column="exam_date" javaType="String" jdbcType="VARCHAR"/>
         <result property="course_point" column="course_point" javaType="Float" jdbcType="FLOAT"/>
@@ -26,14 +35,11 @@
         <result property="practice_hour" column="practice_hour" javaType="Float" jdbcType="FLOAT"/>
         <result property="textbook" column="textbook" javaType="String" jdbcType="VARCHAR"/>
         <result property="goals_degree_describe" column="goals_degree_describe" javaType="String" jdbcType="VARCHAR"/>
+        <result property="audit_person" column="audit_person" javaType="String" jdbcType="VARCHAR"/>
+        <result property="eva_person" column="eva_person" javaType="String" jdbcType="VARCHAR"/>
+        <result property="set_paper_person" column="set_paper_person" javaType="String" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="CourseAuditMap" type="com.ljsh.test.domain.model.CourseAudit">
-        <id property="cId" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
-        <result property="cName" column="cName" javaType="String" jdbcType="VARCHAR"/>
-        <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
-        <collection property="auditInfoList" ofType="com.ljsh.test.domain.model.AuditInfo" resultMap="com.ljsh.test.domain.mapper.CourseAuditMapper.AuditInfoMap"/>
-    </resultMap>
 
     <resultMap type="com.ljsh.test.domain.model.MyMod" id="ModMap">
         <id property="module_id" column="module_id" javaType="Long" jdbcType="BIGINT"/>
@@ -56,6 +62,7 @@
         <result property="index" column="index" javaType="Integer" jdbcType="INTEGER"/>
         <result property="score" column="score" javaType="String" jdbcType="VARCHAR"/>
         <result property="part_id" column="part_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="goal_id" column="goal_id" javaType="Long" jdbcType="BIGINT"/>
     </resultMap>
 
     <resultMap type="com.ljsh.test.domain.model.QStandard" id="standardMap">
@@ -64,8 +71,9 @@
     </resultMap>
 
     <resultMap id="course_GoalMap" type="com.ljsh.test.domain.model.Course_Goal">
-        <id property="course_goal_id" column="course_goal_id" javaType="Integer" jdbcType="INTEGER"/>
-        <id property="audit_id" column="audit_id" javaType="Long" jdbcType="BIGINT"/>
+        <id property="goal_id" column="goal_id" javaType="Long" jdbcType="BIGINT"/>
+        <result property="course_goal_id" column="course_goal_id" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="audit_id" column="audit_id" javaType="Long" jdbcType="BIGINT"/>
         <result property="course_goal_text" column="course_goal_text" javaType="String" jdbcType="VARCHAR"/>
         <result property="excellent" column="excellent" javaType="String" jdbcType="VARCHAR"/>
         <result property="good" column="good" javaType="String" jdbcType="VARCHAR"/>
@@ -82,64 +90,23 @@
         <result property="score_analysis" column="score_analysis" javaType="String" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!--Goal_detail的CRUD-->
+    <select id="get_goalDetail" resultMap="goalDetailMap" parameterType="java.util.List">
+        SELECT * FROM <include refid="goal_detail"/>
+        <where>
+            goal_id in
+            <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <!--AuditInfo的CRUD-->
     <select id="get_AuditInfo" resultMap="AuditInfoMap">
         SELECT *
         FROM <include refid="audit_info"/>
         WHERE semester = #{semester} AND cid = #{cid}
     </select>
-
-    <select id="get_CGList" parameterType="Long" resultMap="course_GoalMap">
-        SELECT *
-        FROM <include refid="course_goal"/>
-        WHERE audit_id = #{audit_id}
-    </select>
-
-    <select id="get_Standard" parameterType="Integer" resultMap="standardMap">
-        SELECT *
-        FROM <include refid="procedure_standard"/>
-        WHERE course_type = #{course_type}
-    </select>
-
-    <select id="get_ItemList" parameterType="Long" resultMap="itemMap">
-        SELECT *
-        FROM <include refid="course_item"/>
-        WHERE part_id = #{part_id}
-    </select>
-
-    <select id="get_PartList" parameterType="Long" resultMap="partMap">
-        SELECT *
-        FROM <include refid="course_part"/>
-        WHERE module_id = #{module_id}
-    </select>
-
-    <select id="get_ModList" parameterType="Long" resultMap="ModMap">
-        SELECT *
-        FROM <include refid="course_module"/>
-        WHERE audit_id = #{audit_id}
-    </select>
-
-    <select id="get_Mod" resultMap="ModMap">
-        SELECT *
-        FROM <include refid="course_module"/>
-        WHERE name = #{name} AND audit_id = #{audit_id}
-    </select>
-
-    <select id="get_Part" resultMap="partMap">
-        SELECT *
-        FROM <include refid="course_part"/>
-        WHERE name = #{name} AND module_id = #{module_id}
-    </select>
-
-    <select id="get_Item" resultMap="itemMap">
-        SELECT *
-        FROM <include refid="course_item"/>
-        WHERE name = #{name} AND part_id = #{part_id}
-    </select>
-
-    <update id="updateAInfo_Sem_Etype">
-        UPDATE <include refid="audit_info"/> SET semester = #{semester}, exam_type = #{exam_type}
-        WHERE id = #{id}
-    </update>
 
     <update id="updateAuditInfo" parameterType="com.ljsh.test.domain.model.AuditInfo">
         UPDATE <include refid="audit_info"/>
@@ -150,6 +117,9 @@
             <if test="cid != null">
                 cid = #{cid},
             </if>
+            <if test="classes != null">
+                classes = #{classes},
+            </if>
             <if test="exam_type != null">
                 exam_type = #{exam_type},
             </if>
@@ -158,9 +128,6 @@
             </if>
             <if test="exam_date != null">
                 exam_date = #{exam_date},
-            </if>
-            <if test="course_point != null">
-                course_point = #{course_point},
             </if>
             <if test="course_point != null">
                 course_point = #{course_point},
@@ -183,16 +150,255 @@
             <if test="goals_degree_describe != null">
                 goals_degree_describe = #{goals_degree_describe},
             </if>
+            <if test="audit_person != null">
+                audit_person = #{audit_person},
+            </if>
+            <if test="audit_date != null">
+                audit_date = #{audit_date},
+            </if>
+            <if test="eva_date != null">
+                eva_date = #{eva_date},
+            </if>
+            <if test="eva_person != null">
+                eva_person = #{eva_person},
+            </if>
+            <if test="set_paper_person != null">
+                set_paper_person = #{set_paper_person},
+            </if>
         </set>
         WHERE id = #{id}
     </update>
 
     <insert id="addAuditInfo" parameterType="com.ljsh.test.domain.model.AuditInfo">
         INSERT INTO <include refid="audit_info"/>
-        (semester,cid,classes,exam_type,course_property,exam_date,course_point,week_hour,course_hour,lesson_hour,practice_hour,textbook,goals_degree_describe)
+        (semester,cid,classes,exam_type,course_property,exam_date,course_point,week_hour,course_hour,lesson_hour,practice_hour,textbook,goals_degree_describe,audit_date,eva_date,audit_person,eva_person,set_paper_person)
         VALUES
-        (#{semester},#{cid},#{classes},#{exam_type},#{course_property},#{exam_date},#{course_point},#{week_hour},#{course_hour},#{lesson_hour},#{practice_hour},#{textbook}, #{goals_degree_describe})
+        (#{semester},#{cid},#{classes},#{exam_type},#{course_property},#{exam_date},#{course_point},#{week_hour},#{course_hour},#{lesson_hour},#{practice_hour},#{textbook}, #{goals_degree_describe},#{audit_date},#{eva_date},#{audit_person},#{eva_person},#{set_paper_person})
     </insert>
+
+    <!--CourseGoal的CRUD-->
+    <select id="get_CGList" parameterType="Long" resultMap="course_GoalMap">
+        SELECT *
+        FROM <include refid="course_goal"/>
+        WHERE audit_id = #{audit_id}
+        ORDER BY course_goal_id
+    </select>
+
+    <update id="update_CG" parameterType="java.util.List">
+        update <include refid="course_goal"/>
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="course_goal_text = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.course_goal_text != null">
+                        when goal_id=#{item.goal_id} then #{item.course_goal_text}
+                    </if>
+                    <if test="item.course_goal_text == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.course_goal_text
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="excellent = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.excellent != null">
+                        when goal_id=#{item.goal_id} then #{item.excellent}
+                    </if>
+                    <if test="item.excellent == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.excellent
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="good = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.good != null">
+                        when goal_id=#{item.goal_id} then #{item.good}
+                    </if>
+                    <if test="item.good == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.good
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="normal = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.normal != null">
+                        when goal_id=#{item.goal_id} then #{item.normal}
+                    </if>
+                    <if test="item.normal == null">
+                        when goal_id=#{item.normal} then <include refid="course_goal"/>.normal
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="pass = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.pass != null">
+                        when goal_id=#{item.goal_id} then #{item.pass}
+                    </if>
+                    <if test="item.pass == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.pass
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="poor = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.poor != null">
+                        when goal_id=#{item.goal_id} then #{item.poor}
+                    </if>
+                    <if test="item.poor == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.poor
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="graduate_require = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.graduate_require != null">
+                        when goal_id=#{item.goal_id} then #{item.graduate_require}
+                    </if>
+                    <if test="item.graduate_require == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.graduate_require
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="eva_point = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.eva_point != null">
+                        when goal_id=#{item.goal_id} then #{item.eva_point}
+                    </if>
+                    <if test="item.eva_point == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.eva_point
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="total_score = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.total_score != null">
+                        when goal_id=#{item.goal_id} then #{item.total_score}
+                    </if>
+                    <if test="item.total_score == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.total_score
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="expectation = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.expectation != null">
+                        when goal_id=#{item.goal_id} then #{item.expectation}
+                    </if>
+                    <if test="item.expectation == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.expectation
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="not_reach = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.not_reach != null">
+                        when goal_id=#{item.goal_id} then #{item.not_reach}
+                    </if>
+                    <if test="item.not_reach == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.not_reach
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="achieve_degree = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.achieve_degree != null">
+                        when goal_id=#{item.goal_id} then #{item.achieve_degree}
+                    </if>
+                    <if test="item.achieve_degree == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.achieve_degree
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="score_description = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.score_description != null">
+                        when goal_id=#{item.goal_id} then #{item.score_description}
+                    </if>
+                    <if test="item.score_description == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.score_description
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="score_analysis = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.score_analysis != null">
+                        when goal_id=#{item.goal_id} then #{item.score_analysis}
+                    </if>
+                    <if test="item.score_analysis == null">
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.score_analysis
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where (course_goal_id, audit_id) in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            (#{item.course_goal_id,jdbcType=BIGINT}, #{item.audit_id,jdbcType=BIGINT})
+        </foreach>
+    </update>
+
+    <insert id="add_CG" parameterType="com.ljsh.test.domain.model.Course_Goal">
+        INSERT INTO <include refid="course_goal"/>
+        (goal_id,course_goal_id,audit_id,course_goal_text,excellent,good,normal,pass,poor,graduate_require,eva_point,total_score,expectation,not_reach,achieve_degree,score_description,score_analysis)
+        VALUES
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{goal_id},#{item.course_goal_id},#{item.audit_id},#{item.course_goal_text},#{item.excellent},#{item.good},#{item.normal},#{item.pass},#{item.poor},#{item.graduate_require},#{item.eva_point},#{item.total_score},#{item.expectation},#{item.not_reach},#{item.achieve_degree},#{item.score_description},#{item.score_analysis})
+        </foreach>
+    </insert>
+
+    <delete id="del_CG" parameterType="com.ljsh.test.domain.model.Course_Goal">
+        DELETE FROM <include refid="course_goal"/>
+        <where>
+            goal_id in
+            <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+                #{item.goal_id}
+            </foreach>
+        </where>
+    </delete>
+
+    <!--流程规范的CRUD-->
+    <select id="get_Standard" parameterType="Integer" resultMap="standardMap">
+        SELECT *
+        FROM <include refid="procedure_standard"/>
+        WHERE course_type = #{course_type}
+    </select>
+
+    <!--MOD,PART,ITEM的CRUD-->
+    <select id="get_ItemList" parameterType="Long" resultMap="itemMap">
+        SELECT *
+        FROM <include refid="course_item"/>
+        WHERE part_id = #{part_id}
+        ORDER BY `index`
+    </select>
+
+    <select id="get_PartList" parameterType="Long" resultMap="partMap">
+        SELECT *
+        FROM <include refid="course_part"/>
+        WHERE module_id = #{module_id}
+        ORDER BY `index`
+    </select>
+
+    <select id="get_ModList" parameterType="Long" resultMap="ModMap">
+        SELECT *
+        FROM <include refid="course_module"/>
+        WHERE audit_id = #{audit_id}
+        ORDER BY `index`
+    </select>
+
+    <select id="get_Mod" resultMap="ModMap">
+        SELECT *
+        FROM <include refid="course_module"/>
+        WHERE name = #{name} AND audit_id = #{audit_id}
+    </select>
+
+    <select id="get_Part" resultMap="partMap">
+        SELECT *
+        FROM <include refid="course_part"/>
+        WHERE name = #{name} AND module_id = #{module_id}
+    </select>
+
+    <select id="get_Item" resultMap="itemMap">
+        SELECT *
+        FROM <include refid="course_item"/>
+        WHERE name = #{name} AND part_id = #{part_id}
+    </select>
 
     <insert id="addMod" parameterType="com.ljsh.test.domain.model.MyMod">
         INSERT INTO <include refid="course_module"/>
@@ -210,44 +416,9 @@
 
     <insert id="addItem" parameterType="com.ljsh.test.domain.model.MyItem">
         INSERT INTO <include refid="course_item"/>
-        (name,score,`index`,part_id)
+        (name,score,`index`,part_id, goal_id)
         VALUES
-        (#{name},#{score},#{index},#{part_id})
-    </insert>
-
-    <insert id="replaceMod" parameterType="com.ljsh.test.domain.model.MyMod">
-        REPLACE INTO <include refid="course_module"/>
-        (module_id,audit_id,name,`index`)
-        VALUES
-        (#{module_id},#{audit_id},#{name},#{index})
-    </insert>
-
-    <insert id="replacePart" parameterType="com.ljsh.test.domain.model.MyPart">
-        REPLACE INTO <include refid="course_part"/>
-        (part_id,name,ratio,`index`,module_name)
-        VALUES
-        (#{part_id},#{name},#{ratio},#{index},#{module_name})
-    </insert>
-
-    <insert id="replaceItem" parameterType="com.ljsh.test.domain.model.MyItem">
-        REPLACE INTO <include refid="course_item"/>
-        (item_id,name,score,`index`,part_name)
-        VALUES
-        (#{item_id},#{name},#{score},#{index},#{part_name})
-    </insert>
-
-    <insert id="replace_CG" parameterType="com.ljsh.test.domain.model.Course_Goal">
-        REPLACE INTO <include refid="course_goal"/>
-        (course_goal_id,audit_id,course_goal_text,excellent,good,normal,pass,poor,graduate_require,eva_point,total_score,expectation,not_reach,achieve_degree,score_description,score_analysis)
-        VALUES
-        (#{course_goal_id},#{audit_id},#{course_goal_text},#{excellent},#{good},#{normal},#{pass},#{poor},#{graduate_require},eva_point,total_score,expectation,not_reach,achieve_degree,score_description,score_analysis)
-    </insert>
-
-    <insert id="add_CG" parameterType="com.ljsh.test.domain.model.Course_Goal">
-        INSERT INTO <include refid="course_goal"/>
-        (course_goal_id,audit_id,course_goal_text,excellent,good,normal,pass,poor,graduate_require,eva_point,total_score,expectation,not_reach,achieve_degree,score_description,score_analysis)
-        VALUES
-        (#{course_goal_id},#{audit_id},#{course_goal_text},#{excellent},#{good},#{normal},#{pass},#{poor},#{graduate_require},#{eva_point},#{total_score},#{expectation},#{not_reach},#{achieve_degree},#{score_description},#{score_analysis})
+        (#{name},#{score},#{index},#{part_id},#{goal_id})
     </insert>
 
     <delete id="delMod" parameterType="com.ljsh.test.domain.model.MyMod">
@@ -265,10 +436,6 @@
         WHERE part_id = #{part_id} AND name = #{name}
     </delete>
 
-    <delete id="del_CG" parameterType="com.ljsh.test.domain.model.Course_Goal">
-        DELETE FROM <include refid="course_goal"/>
-        WHERE audit_id = #{audit_id} AND course_goal_id = #{id}
-    </delete>
 
     <update id="refreshItem">
         ALTER TABLE <include refid="course_item"/>
@@ -277,7 +444,6 @@
         ADD item_id BIGINT(20) auto_increment PRIMARY KEY;
     </update>
 
-    
     <update id="refreshXX">
         ALTER TABLE XX
         DROP id;
@@ -285,9 +451,11 @@
         ADD id BIGINT auto_increment PRIMARY KEY;
     </update>
 
+    <!--根据课程编号获取审核学期的列表-->
     <select id="get_SemesterList" parameterType="String" resultType="String">
         SELECT semester FROM <include refid="audit_info"/>
         WHERE cid = #{cid}
+        ORDER BY id DESC
     </select>
 
 </mapper>

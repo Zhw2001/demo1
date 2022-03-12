@@ -62,3 +62,8 @@ html,body{
 .myELTable{
     width:75vw;
 }
+
+.myEChart{
+    width: 2vw;
+    height: 2vw;
+}

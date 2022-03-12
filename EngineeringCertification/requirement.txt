@@ -1,0 +1,9 @@
+docxtpl
+Flask
+matplotlib
+openpyxl
+pandas
+pip
+PyMySQL
+wheel
+XlsxWriter

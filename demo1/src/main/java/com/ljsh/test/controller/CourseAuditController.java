@@ -27,10 +27,20 @@ public class CourseAuditController {
         }
         return Result.error("204","输入为空");
     }
-    @PostMapping("/update")
+    @PostMapping("/update_audit")
     public Result<?> updateAudit(@RequestBody CourseAuditDTO courseAudit)
     {
-        String msg = courseAuditService.update(courseAudit);
+        String msg = courseAuditService.updateAudit(courseAudit);
+        if(msg.equals("")){return Result.success();}
+        else {
+            return Result.error("500", msg);
+        }
+    }
+
+    @PostMapping("/update_eva")
+    public Result<?> updateEva(@RequestBody CourseAuditDTO courseAudit)
+    {
+        String msg = courseAuditService.UpdateEvaDescription(courseAudit);
         if(msg.equals("")){return Result.success();}
         else {
             return Result.error("500", msg);

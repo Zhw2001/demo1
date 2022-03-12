@@ -29,7 +29,7 @@ public class AdminRoleController {
 
     @PostMapping("/update")
     public Result<?> updateRoleAuth(@RequestBody RelationUpdateDTO relationUpdate){
-        if(relationUpdate.getSubject_id() != null){
+        if(relationUpdate.getSubject_id() != null && !relationUpdate.getSubject_id().equals("")){
             String msg = adminRoleService.updateRoleAuth(relationUpdate);
             if(msg.equals("")){return Result.success();}
             else{
@@ -38,5 +38,7 @@ public class AdminRoleController {
         }
         return Result.error("204","输入为空");
     }
+
+
 
 }
