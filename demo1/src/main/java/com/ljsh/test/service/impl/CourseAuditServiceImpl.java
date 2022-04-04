@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -148,7 +147,7 @@ public class CourseAuditServiceImpl implements CourseAuditService {
             String semester = basic_info.getSemester();//获取审核学期
             AuditInfo auditInfo = courseAuditMapper.get_AuditInfo(semester, cid);    //找到已有的审核记录
             if (auditInfo == null) {  //如果没有审核记录就新建一条
-                courseAuditMapper.addAuditInfo(new AuditInfo(null, semester, cid,basic_info.getClasses(), basic_info.getAudit_date(), null, null, null, null, null, null, null, null, SetExamType(cAudit.getBasicInfo().getExam_type()), null, null, basic_info.getAudit_person(), null, basic_info.getSet_paper_person()));
+                courseAuditMapper.addAuditInfo(new AuditInfo(null, semester, cid,basic_info.getClasses(), basic_info.getAudit_date(), null, null, null, null, null, null, null, null, SetExamType(cAudit.getBasicInfo().getExam_type()), null, null, basic_info.getAudit_person(), null, basic_info.getSet_paper_person(), basic_info.getPass_ratio()));
                 auditInfo = courseAuditMapper.get_AuditInfo(semester, cid);
             } else {
                 auditInfo.setClasses(basic_info.getClasses());
@@ -157,6 +156,7 @@ public class CourseAuditServiceImpl implements CourseAuditService {
                 auditInfo.setAudit_person(basic_info.getAudit_person());
                 auditInfo.setSet_paper_person(basic_info.getSet_paper_person());
                 auditInfo.setExam_type(SetExamType(cAudit.getBasicInfo().getExam_type()));
+                auditInfo.setPass_ratio(basic_info.getPass_ratio());
                 courseAuditMapper.updateAuditInfo(auditInfo);
             }
             Long audit_id = auditInfo.getId();  //获取审核ID
@@ -198,23 +198,26 @@ public class CourseAuditServiceImpl implements CourseAuditService {
             //存储MOD信息
             for(int i = 0; i < mods.size(); i++){   //遍历modDTOList中的mod，获取mod数据
                 ModDTO modDTO = mods.get(i);
-                //此处的module_id可能为空
+                //此处的module_id可能为空,新增的时候主键会自增
                 currMods.add(new MyMod(modDTO.getId(),modDTO.getName(),audit_id,i));
             }
-            for(MyMod m : getRemoveList(oldMods,currMods)){ //删除mod脏数据的同时,由于数据库中外键约束，级联删除part和item中的脏数据
+            for(MyMod m : oldMods){ //删除原有的mod数据的同时,由于数据库中外键约束，级联删除part和item
                 courseAuditMapper.delMod(m);
             }
-            for(MyMod m : getAddList(oldMods,currMods)){
+            for(MyMod m : currMods){
                 courseAuditMapper.addMod(m);
             }
-            currMods = courseAuditMapper.get_ModList(audit_id); //改变当前cuurMods的指向,从指向由前台数据构建的mods变更为指向数据库中存储的mods
+            currMods = courseAuditMapper.get_ModList(audit_id); //改变当前currMods的指向,从指向由前台数据构建的mods变更为指向数据库中存储的mods
             //存储part信息
             for(ModDTO m : mods){   //遍历modDTOList中的mod，获取mod名字和index
                 for( int j = 0; j < m.getPartNames().length; j++){ //获取MyPart并录入
                     String partName = m.getPartNames()[j];
                     PartDTO part_dto = findTByName(partName,parts);
+                    MyMod currMod = findTByName(m.getName(),currMods);
+                    if(part_dto == null){return "error found in part of mod";}
+                    if(currMod == null){return "error found in modDTO";}
                     //此处的part_id可能为空
-                    currParts.add(new MyPart(part_dto.getId(),partName,part_dto.getRatio(),j,findTByName(m.getName(),currMods).getModule_id()));
+                    currParts.add(new MyPart(part_dto.getId(),partName,part_dto.getRatio(),j,currMod.getModule_id()));
                 }
             }
             for(MyPart p : currParts){
@@ -230,6 +233,7 @@ public class CourseAuditServiceImpl implements CourseAuditService {
                     if( contentMap.getCourse_goal_id().equals(course_goal.getCourse_goal_id()) && contentMap.getAudit_id().equals(course_goal.getAudit_id())){
                         for (String x : fatherOfItem) { //存储当前课程所有part的item信息
                             MyPart part = findTByName(x,currParts);
+                            if(part == null){return "error found in fatherOfItem";}
                             for(int i = 0; i < items.size(); i++){
                                 ItemDTO itemDTO = items.get(i);
                                 if(StringInArray(itemDTO.getName(),contentMap.getContent())) {
@@ -245,6 +249,7 @@ public class CourseAuditServiceImpl implements CourseAuditService {
                                 }
                             }
                             MyPart part = findTByName(p, currParts);
+                            if(part == null){return "error found in contentMap";}
                             currItems.add(new MyItem(null, p, "100", -1, part.getPart_id(), course_goal.getGoal_id()));
                         }
                         continue outter; //下一个课程目标
@@ -260,7 +265,7 @@ public class CourseAuditServiceImpl implements CourseAuditService {
         return "";
     }
 
-    public CourseAuditDTO getInfo(String semester, String cid) {
+    public CourseAuditDTO getInfo(String semester, String cid, String page) {
         String[] empty = new String[0];
         // 获取审核信息和课程信息
         AuditInfo auditInfo = courseAuditMapper.get_AuditInfo(semester, cid);
@@ -269,7 +274,7 @@ public class CourseAuditServiceImpl implements CourseAuditService {
         Date dNow = new Date();
         SimpleDateFormat ft = new SimpleDateFormat("yyyy.MM.dd");
         // 构建一部分基础信息，即使没有审核信息也能展示的部分
-        BasicInfoDTO basicInfo = new BasicInfoDTO(cInfo.getCname(), cInfo.getCid(), semester, ft.format(dNow), ft.format(dNow), null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        BasicInfoDTO basicInfo = new BasicInfoDTO(cInfo.getCname(), cInfo.getCid(), semester, ft.format(dNow), ft.format(dNow), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
         // 流程标准只和课程类型有关，四种课程对应四种固定的流程标准
         List<QStandard> QStandardList = courseAuditMapper.get_Standard(cInfo.getCourse_type());
         String[] question_standard = new String[QStandardList.size()];
@@ -277,8 +282,15 @@ public class CourseAuditServiceImpl implements CourseAuditService {
             question_standard[x] = QStandardList.get(x).getStandard();
         }
         // 如果没有找到审核相关信息返回空，让用户自己新建
-        if (auditInfo == null) {
-            return new CourseAuditDTO(basicInfo, null, null, null, null, null, question_standard, null, null, null);
+        switch(page){
+            case "audit":
+                if (auditInfo == null) {
+                    return new CourseAuditDTO(basicInfo, null, null, null, null, null, question_standard, null, null, null);
+                }
+            case "eva":
+                if(TestEntity.objCheckHasNull(auditInfo)){
+                    return null;
+                }
         }
         Long audit_id = auditInfo.getId();
         // DTO构建素材准备
@@ -296,6 +308,7 @@ public class CourseAuditServiceImpl implements CourseAuditService {
         basicInfo.setEva_person(auditInfo.getEva_person());
         basicInfo.setSet_paper_person(auditInfo.getSet_paper_person());
         basicInfo.setGoals_degree_describe(auditInfo.getGoals_degree_describe());
+        basicInfo.setPass_ratio(auditInfo.getPass_ratio());
 
         List<MyMod> myModList = courseAuditMapper.get_ModList(audit_id);
         List<MyPart> partList = new ArrayList<>();
@@ -317,7 +330,9 @@ public class CourseAuditServiceImpl implements CourseAuditService {
         // MOD,PART,ITEM
         for (int k = 0; k < itemList.size(); k++) {
             if(itemList.get(k).getIndex().equals(-1)){continue;}    // 如果是没有item的part,跳过
-            String father = FindMyPart(itemList.get(k).getPart_id(),partList).getName();
+            MyPart currPart = FindMyPart(itemList.get(k).getPart_id(),partList);
+            if(currPart == null){return null;}
+            String father = currPart.getName();
             if (k == 0) {
                 fatherOfItem.add(father);
             } else if (!fatherOfItem.contains(father)) {
@@ -358,80 +373,82 @@ public class CourseAuditServiceImpl implements CourseAuditService {
             );
             mods.add(mod);//在最后面进行插入，不需要进行位移
         }
-        //获取学生成绩
-        List<Float> expectationList = new ArrayList<>();
-        for (Course_Goal i : CG) {
-            goal_id_list.add(i.getGoal_id());
-            expectationList.add(i.getExpectation());
-        }
-        List<Goal_Detail> goal_details = courseAuditMapper.get_goalDetail(goal_id_list);
         List<GoalDetailDTO> goalDetailDTOS = new ArrayList<>();
-        for(Long gid : goal_id_list ){
-            List<Float> value = new ArrayList<>();
-            for(Goal_Detail gd : goal_details){
-                if(gid.equals(gd.getGoal_id())){
-                    value.add(gd.getValue());
+        EvaFormDTO evaForm = null;
+        if(page.equals("eva")) {
+            //获取学生成绩
+            List<Float> expectationList = new ArrayList<>();
+            for (Course_Goal i : CG) {
+                goal_id_list.add(i.getGoal_id());
+                expectationList.add(i.getExpectation());
+            }
+            List<Goal_Detail> goal_details = courseAuditMapper.get_goalDetail(goal_id_list);
+            for (Long gid : goal_id_list) {
+                List<Float> value = new ArrayList<>();
+                for (Goal_Detail gd : goal_details) {
+                    if (gid.equals(gd.getGoal_id())) {
+                        value.add(gd.getValue());
+                    }
+                }
+                GoalDetailDTO temp = new GoalDetailDTO(gid, value);
+                goalDetailDTOS.add(temp);
+            }
+            //统计学生成绩情况
+            int need_exam = goalDetailDTOS.get(0).getValue().size();    //  这门课有多少学生
+            int miss_exam = 0;
+            int poor_num = 0;
+            int pass_num = 0;
+            int normal_num = 0;
+            int good_num = 0;
+            int excellent_num = 0;
+            float pass_ratio;
+            float excellent_ratio;
+            for (int i = 0; i < goalDetailDTOS.get(0).getValue().size(); i++) {
+                float total = 0f;
+                for (int j = 0; j < goal_id_list.size(); j++) {
+                    total += goalDetailDTOS.get(j).getValue().get(i);
+                }
+                if (total >= 90) {
+                    excellent_num++;
+                } else if (total >= 80) {
+                    good_num++;
+                } else if (total >= 70) {
+                    normal_num++;
+                } else if (total >= 60) {
+                    pass_num++;
+                } else if (total == 0f) {
+                    miss_exam++;
+                } else {
+                    poor_num++;
                 }
             }
-            GoalDetailDTO temp = new GoalDetailDTO(gid,value);
-            goalDetailDTOS.add(temp);
+            pass_ratio = ((float) (need_exam - poor_num - miss_exam) / need_exam) * 100;
+            excellent_ratio = ((float) excellent_num / need_exam) * 100;
+            java.text.DecimalFormat dec_f = new java.text.DecimalFormat("#.00");
+            pass_ratio = Float.parseFloat(dec_f.format(pass_ratio));
+            excellent_ratio = Float.parseFloat(dec_f.format(excellent_ratio));
+            evaForm = new EvaFormDTO(need_exam, miss_exam, poor_num, pass_num, normal_num, good_num, excellent_num, pass_ratio, excellent_ratio);
+            //统计课程目标达成度情况
+            List<Integer> notReachList = new ArrayList<>();
+            List<Float> achieve = new ArrayList<>();
+            for (int i = 0; i < goalDetailDTOS.size(); i++) {
+                int not_reach = 0;
+                for (Float v : goalDetailDTOS.get(i).getValue()) {
+                    if (v < expectationList.get(i)) {
+                        not_reach++;
+                    }
+                }
+                notReachList.add(not_reach);
+                achieve.add((float) (need_exam - not_reach) / need_exam);
+            }
+            //CourseGoal课程目标统计信息的插入
+            List<Course_Goal> CGUpdateList = new ArrayList<>();
+            for (int i = 0; i < CG.size(); i++) {
+                Course_Goal temp = new Course_Goal(CG.get(i).getGoal_id(), CG.get(i).getCourse_goal_id(), CG.get(i).getAudit_id(), null, null, null, null, null, null, null, null, null, null, notReachList.get(i), achieve.get(i), null, null);
+                CGUpdateList.add(temp);
+            }
+            courseAuditMapper.update_CG(CGUpdateList);
         }
-        //统计学生成绩情况
-        int need_exam = goalDetailDTOS.get(0).getValue().size();    //  这门课有多少学生
-        int miss_exam = 0;
-        int poor_num = 0;
-        int pass_num = 0;
-        int normal_num = 0;
-        int good_num = 0;
-        int excellent_num = 0;
-        float pass_ratio = 0f;
-        float excellent_ratio = 0f;
-        for(int i =0; i < goalDetailDTOS.get(0).getValue().size(); i++){
-            float total = 0f;
-            for( int j=0; j < goal_id_list.size(); j++ ){
-                total += goalDetailDTOS.get(j).getValue().get(i);
-            }
-            if (total >= 90) {
-                excellent_num++;
-            }
-            else if ( total >= 80) {
-                good_num++;
-            }
-            else if ( total >= 70) {
-                normal_num++;
-            }
-            else if ( total >= 60) {
-                pass_num++;
-            } else if( total == 0f){
-                miss_exam++;
-            } else {
-                poor_num++;
-            }
-        }
-        pass_ratio = ((float)(need_exam - poor_num - miss_exam) / need_exam) * 100;
-        excellent_ratio = ((float) excellent_num / need_exam) *100;
-        java.text.DecimalFormat dec_f =new java.text.DecimalFormat("#.00");
-        pass_ratio = Float.parseFloat(dec_f.format(pass_ratio));
-        excellent_ratio = Float.parseFloat(dec_f.format(excellent_ratio));
-        EvaFormDTO evaForm = new EvaFormDTO(need_exam, miss_exam, poor_num, pass_num, normal_num, good_num, excellent_num, pass_ratio, excellent_ratio);
-        //统计课程目标达成度情况
-        List<Integer> notReachList = new ArrayList<>();
-        List<Float> achieve = new ArrayList<>();
-        for (int i=0; i < goalDetailDTOS.size(); i++){
-            int not_reach = 0;
-            for( Float v : goalDetailDTOS.get(i).getValue()){
-                if(v < expectationList.get(i)){ not_reach++; }
-            }
-            notReachList.add(not_reach);
-            achieve.add((float)(need_exam-not_reach) / need_exam);
-        }
-        //CourseGoal课程目标统计信息的插入
-        List<Course_Goal> CGUpdateList = new ArrayList<>();
-        for ( int i=0; i < CG.size(); i++){
-            Course_Goal temp = new Course_Goal(CG.get(i).getGoal_id(),CG.get(i).getCourse_goal_id(), CG.get(i).getAudit_id(), null, null, null, null, null, null, null, null, null, null, notReachList.get(i), achieve.get(i), null, null);
-            CGUpdateList.add(temp);
-        }
-        courseAuditMapper.update_CG(CGUpdateList);
         // courseTargetDTO,CourseStandardDTO
         StringBuilder excel = new StringBuilder();
         StringBuilder good = new StringBuilder();

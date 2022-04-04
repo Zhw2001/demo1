@@ -13,6 +13,7 @@ public interface AdminUserService {
     List<AdminUser> selectPage(int pageNum, int pageSize, String search);
     String del_user(String account);
     AdminUser get_Info(String account);
+    List<AdminUser> get_AuditPs();
     //用户分配课程
     String updateCourseOfUser(RelationUpdateDTO relationUpdate);
     List<CInfo> getCourseList(Long ur_id);

@@ -77,6 +77,12 @@ public class AdminController {
         return Result.success(adminUserService.get_Info(account));
     }
 
+    //获取所有审核人(课程组长)信息
+    @GetMapping("get_audit_person")
+    public Result<?> getAuditPInfo(){
+        return Result.success(adminUserService.get_AuditPs());
+    }
+
     //分配课程相关
     @GetMapping("get_ur_id")
     public Result<?> getURIDByUserRole(@RequestParam(value = "uid", required = true) Long uid, @RequestParam(value = "role_id", required = true) Long role_id){

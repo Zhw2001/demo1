@@ -23,11 +23,12 @@ public class AuditInfo {
     private String audit_person;
     private String eva_person;
     private String set_paper_person;
+    private Float pass_ratio;
 
     public AuditInfo() {
     }
 
-    public AuditInfo(Long id, String semester, String cid, String classes, String audit_date, String eva_date, String course_property, String exam_date, Float course_point, Float week_hour, Float course_hour, Float lesson_hour, Float practice_hour, Integer exam_type, String textbook, String goals_degree_describe, String audit_person, String eva_person, String set_paper_person) {
+    public AuditInfo(Long id, String semester, String cid, String classes, String audit_date, String eva_date, String course_property, String exam_date, Float course_point, Float week_hour, Float course_hour, Float lesson_hour, Float practice_hour, Integer exam_type, String textbook, String goals_degree_describe, String audit_person, String eva_person, String set_paper_person, Float pass_ratio) {
         this.id = id;
         this.semester = semester;
         this.cid = cid;
@@ -47,5 +48,6 @@ public class AuditInfo {
         this.audit_person = audit_person;
         this.eva_person = eva_person;
         this.set_paper_person = set_paper_person;
+        this.pass_ratio = pass_ratio;
     }
 }

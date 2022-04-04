@@ -2,73 +2,33 @@
  <div class="home-container">
     <div class="card">
       <div class="card-body">
-        <div class="card-card">
           <div class="top">
-            <router-link to="/eaInput">
-                <div class="top-daohan">
-                  <img src="@/assets/img/1.png"/>
-                  <span>考试/考核信息</span>
-                </div>
-            </router-link>
-            <router-link to="/cgdInput">
-            <div class="top-daohan">
-              <img src="@/assets/img/2.png"/>
-              <span>课程成绩录入</span>
-            </div>
-            </router-link>
-            <router-link to="/cdInput">
-            <div class="top-daohan">
-              <img src="@/assets/img/3.png"/>
-              <span>达成度评价信息</span>
-            </div >
-            </router-link>
-            <router-link to="/cInfo">
-            <div class="top-daohan">
-              <img src="@/assets/img/4.png"/>
-              <span>历史课程信息</span>
-            </div>
-            </router-link>
-            <router-link to="/cAD">
-            <div class="top-daohan">
-              <img src="@/assets/img/1.png"/>
-              <span>历史课程目标明细</span>
-            </div>
+            <template v-for="(aside, i) in asideList1" >
+              <router-link :to='"/" + aside.path' :key="i">
+                  <div class="top-daohan">
+                    <img :src='require(`@/assets/img/${aside.pic}`)'>
+                    <span>{{aside.title}}</span>
+                  </div>
+              </router-link>
+            </template>
+            <router-link to='/myCourseList'>
+              <div class="top-daohan">
+                <img src='@/assets/img/WDKC.png'>
+                <span>我的课程</span>
+              </div>
             </router-link>
           </div>
-          <!-- 底部 -->
-          <div class="buttom">
-            <router-link to="/userInfo">
-            <div class="buttom-daohan">
-              <img src="@/assets/img/1.png"/>
-              <span>用户信息</span>
-            </div>
-            </router-link>
-            <router-link to="/userRole" >
-            <div class="buttom-daohan">
-              <img src="@/assets/img/2.png"/>
-              <span>用户角色</span>
-            </div>
-            </router-link>
-            <router-link to="/userRoleMenu">
-            <div class="buttom-daohan">
-              <img src="@/assets/img/3.png"/>
-              <span>用户权限</span>
-            </div >
-            </router-link>
-            <router-link to="/userCourse">
-            <div class="buttom-daohan">
-              <img src="@/assets/img/4.png"/>
-              <span>分配课程</span>
-            </div>  
-            </router-link>
-            <router-link to="/myCourseList">
-            <div class="buttom-daohan">
-              <img src="@/assets/img/4.png"/>
-              <span>我的课程</span>
-            </div>  
-            </router-link>
+          <div v-if="asideList2.length > 0" style="height: 2vw;margin: 2vw 0vw 2vw 0vw;"></div>
+          <div v-if="asideList2.length > 0" class="top">
+            <template v-for="(aside, i) in asideList2" >
+              <router-link :to='"/" + aside.path' :key="i">
+                  <div class="top-daohan">
+                    <img :src='require(`@/assets/img/${aside.pic}`)'>
+                    <span>{{aside.title}}</span>
+                  </div>
+              </router-link>
+            </template>
           </div>
-        </div>
       </div>
     </div>
  </div>
@@ -81,8 +41,36 @@ export default {
   name: "Blank",
   data() {
     return {
+      asideList: [],
+      asideList1: [],
+      asideList2: []
     }
   },
+  created(){
+    let temp_array = []
+    let temp = JSON.parse(localStorage.getItem("aside"));
+    for( let i of temp){
+      if(i.children){
+        for( let j of i.children){
+          temp_array.push(j)
+        }
+      }
+    }
+    this.asideList = temp_array
+    for(let i = 0; i < 3; i++){
+      if(!temp_array[i]){
+        break;
+      }
+      this.asideList1.push(temp_array[i])
+    }
+    for(let i = 3; i < temp_array.length; i++){
+      if(!temp_array[i]){
+        break;
+      }
+      this.asideList2.push(temp_array[i])
+    }
+    console.log(this.asideList1,this.asideList2)
+  }
 }
 </script>
 
@@ -93,57 +81,40 @@ a {
 .router-link-active {
   text-decoration: none;
 }
-.card-card{
-  height: 530px;
-  width: 100%;
+.myicon{
+  flex-direction: column;
+  display: flex;
+  justify-content:flex-start;
 }
 .top{
-  height: 200px;
+  height: 8vw;
   width: 100%;
+  flex: 0 1 auto;
   display: flex;
   justify-content: space-around;
+  margin: 2vw 0vw 2vw 0vw;
   /* border: 1px solid black; */
 }
 .top-daohan{
   height: 100%;
-  width: 200px;
+  width: 8vw;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
   /* border: 1px solid black; */
 }
 .top-daohan img{
-  height: 160px;
-  width: 200px;
+  flex: 1 1 auto;
+  height: 8vw;
+  width: 100%;
   /* border: 1px solid black; */
 }
 .top-daohan span{
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 40px;
+  flex: 1 1 auto;
+  text-align: center;
+  margin-top: 0.5vw;
+  font-size: 1vw;
   /* border: 1px solid black; */
 }
 
-.buttom{
-  height: 200px;
-  width: 100%;
-  margin-top: 120px;
-  display: flex;
-  justify-content: space-around;
-  /* border: 1px solid black; */
-}
-.buttom-daohan{
-  height: 100%;
-  width: 200px;
-  /* border: 1px solid black; */
-}
-.buttom-daohan img{
-  height: 160px;
-  width: 200px;
-  /* border: 1px solid black; */
-}
-.buttom-daohan span{
-  padding:12px 0px;
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 40px;
-  /* border: 1px solid black; */
-}
 </style>

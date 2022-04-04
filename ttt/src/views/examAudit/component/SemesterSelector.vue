@@ -1,16 +1,21 @@
 <template>
   <div
-    style="display:flex;justify-content:flex-start ;flex-direction:row;"
+    style="display:flex;justify-content:flex-start ;flex-direction:row;margin:0px 10px;"
   >
     <span
       style="font-size:0.8vw;flex:0 1 auto;line-height:1.8vw;margin:0px 10px;"
       >学年学期:</span
     >
     <el-select
+      @input="validateSemester()"
       style="flex:0 1 auto;"
       size="small"
+      filterable
+      allow-create
+      default-first-option
       v-model="mySem"
-      placeholder="请选择学期"
+      placeholder="请选择或输入学期"
+      @change="handleSemesterChange()"
     >
       <el-option
         v-for="(semester, i) in semesterList"
@@ -20,12 +25,6 @@
       >
       </el-option>
     </el-select>
-    <el-button
-      size="small"
-      style="flex:0 1 auto;margin:0px 10px;"
-      @click="handleSemesterChange()"
-      >切换学期</el-button
-    >
   </div>
 </template>
 
@@ -44,6 +43,18 @@ export default {
     }
   },
   methods: {
+    validateSemester(){
+      let patt = /[0-9]{4}-[0-9]{4}-[0-9]/;
+      if (patt.test(this.mySem)) {
+        return
+      } else {
+        this.mySem = ""
+        this.$message({
+          type: "warning",
+          message: "输入格式为2019-2020-1"
+        });
+      }
+    },
     handleSemesterChange(){
       this.$emit("semesterChange", this.mySem);
     }

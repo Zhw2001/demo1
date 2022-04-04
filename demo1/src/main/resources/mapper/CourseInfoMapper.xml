@@ -11,10 +11,14 @@
         <id property="cid" column="info_cId" javaType="String" jdbcType="VARCHAR"/>
         <result property="cname" column="cName" javaType="String" jdbcType="VARCHAR"/>
         <result property="course_type" column="course_type" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="course_type_name" column="course_type_name" javaType="String" jdbcType="VARCHAR"/>
+        <result property="course_category" column="course_category" javaType="String" jdbcType="VARCHAR"/>
+        <result property="faculty" column="faculty" javaType="String" jdbcType="VARCHAR"/>
+        <result property="teacher" column="teacher" javaType="String" jdbcType="LONGVARCHAR"/>
     </resultMap>
 
     <select id="get_CInfoList" parameterType="String" resultMap="CInfo_Map">
-        SELECT info_cId,cname,course_type FROM <include refid="course_info"/>
+        SELECT * FROM <include refid="course_info"/>
         <where>
             <foreach item="item" index="index" collection="list"  open="info_cId in (" separator="," close=")">
                 #{item}

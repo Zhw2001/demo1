@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-      <div class = "btnRow" ><el-button type="danger">批量删除角色</el-button></div>
+      <!--<div class = "btnRow" ><el-button type="danger">批量删除角色</el-button></div>-->
       <div class="card">
         <div class="card-body">
           <div class="myELTable">
@@ -11,11 +11,6 @@
             :cell-style = "mytableCell"
             :data="roleList"
             :default-sort = "{prop: 'role_id', order: 'ascending'}">
-
-            <el-table-column
-              type="selection"
-            >
-            </el-table-column>
 
             <el-table-column
             label="序号"
@@ -39,7 +34,7 @@
               <span>
                 <el-button size='mini' type='primary' icon="el-icon-edit" @click = "show(scope.row)" ></el-button>
               </span>
-              <span>
+              <span style="display:none">
                 <el-button size='mini' type='danger' icon="el-icon-delete"></el-button>
               </span>
             </template>

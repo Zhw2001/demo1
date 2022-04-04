@@ -21,9 +21,14 @@ public class CourseAuditController {
     }
 
     @GetMapping("/load_info")
-    public Result<?> getInfo(@RequestParam(value = "semester",required = true) String semester, @RequestParam(value = "cid",required = true) String cid ){
+    public Result<?> getInfo(@RequestParam(value = "semester",required = true) String semester, @RequestParam(value = "cid",required = true) String cid, @RequestParam(value = "page",required = true) String page  ){
         if(cid != null && !cid.equals("") && !cid.equals( "undefined")){
-            return Result.success(courseAuditService.getInfo(semester, cid));
+            CourseAuditDTO courseAuditDTO = courseAuditService.getInfo(semester, cid, page);
+            if(courseAuditDTO != null){
+                return Result.success(courseAuditDTO);
+            } else {
+                return Result.error("500", "信息不完整");
+            }
         }
         return Result.error("204","输入为空");
     }

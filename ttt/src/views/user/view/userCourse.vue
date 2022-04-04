@@ -13,7 +13,7 @@
           @select="Select"
           @select-all="SelectAll"
         >
-          <el-table-column type="selection"> </el-table-column>
+          <!--<el-table-column type="selection"> </el-table-column> -->
 
           <el-table-column label="ID" prop="uid" sortable> </el-table-column>
 
@@ -51,7 +51,7 @@
               style="flex:0 1 auto;"
               v-model="role_id"
               placeholder="请选择角色"
-              @change="roleChange()"
+              @change="handleRoleChange()"
             >
               <el-option
                 v-for="(role, i) in roleList"
@@ -61,15 +61,6 @@
               >
               </el-option>
             </el-select>
-            <div style="flex 1 0 auto;margin-left:1vw;">
-              <el-button
-              size="medium"
-              type="primary"
-              style="flex:0 1 auto;"
-              @click="handleRoleChange()"
-              >切换角色</el-button
-            >
-            </div>
             <div v-if="role_id !== 1" style="flex 1 1 auto;margin-left:1vw;">
               <label style="margin:5px;">课程:</label>
               <el-select
@@ -153,9 +144,6 @@ export default {
     this.load();
   },
   methods: {
-    roleChange(){
-      this.course_list = []
-    },
     AddConfirm() {
       if(this.role_id === ""){
         this.$message({
@@ -173,6 +161,7 @@ export default {
           this.addCourse();
         })
         .catch(() => {
+          console.log("111111111")
           this.$message({
             type: "info",
             message: "已取消"
@@ -219,11 +208,8 @@ export default {
         insert: this.selected_course
       };
       this.$request.post("/api_S/admin/set_course", result).then(res => {
-        this.$message({
-          type: "info",
-          message: res.msg
-        });
-        this.close()
+        console.log('set_course',res.msg)
+        this.handleRoleChange()
       });
     },
 
@@ -237,6 +223,7 @@ export default {
     },
 
     handleRoleChange(){
+      this.course_list = []
       if( this.role_id !== 1 ){
         this.$request.get( '/api_S/admin/get_ur_id?uid='+ this.selected_uid + '&role_id=' + this.role_id ).then( res => {
           this.UR_ID = res.data

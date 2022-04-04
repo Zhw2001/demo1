@@ -1,8 +1,17 @@
 <template>
   <div class="home-container">
+    <div
+      v-if="divVis"
+      style="display:flex;flex-direction:row;flex-wrap: nowrap;justify-content:flex-start; margin:1vw 0vw;"
+    >
+      <semester-selector  style="flex: 1 1 auto;"  @semesterChange = "handleSemesterChange($event)" :semesterList = semesterList :semester = semester></semester-selector>
+      <course-selected 
+        :course="selected_course"
+        style="flex: 1 1 auto;"
+      ></course-selected>
+    </div>
     <div class="card">
       <div class="card-body">
-        <semester-selector v-if="divVis" @semesterChange = "handleSemesterChange($event)" :semesterList = semesterList :semester = semester></semester-selector>
         <div v-if="divVis" class="mydiv">
           <div style="margin-bottom: 1.5vw;">
             <span>下载课程模板表格，填写数据</span>
@@ -55,15 +64,19 @@
 
 <script>
 import axios from 'axios'
+import CourseSelected from "@/components/CourseSelected.vue"
 import SemesterSelector from "../component/SemesterSelector.vue"
 
 export default {
   name: "generate",
   components: {
     'semester-selector': SemesterSelector,
+    "course-selected": CourseSelected
   },
   data() {
     return {
+      selected_course:'',
+      last_semester: '',
       semesterList: [],
       semester: '',
       cid: '',
@@ -76,10 +89,13 @@ export default {
     if (!localStorage.getItem("selected_course")) {
       this.$message({
         type: "warning",
-        message: "未选择课程"
+        message: "请先选择课程"
       });
-      this.$router.push("/");
+      this.$router.push("/myCourseList");
     } else {
+      this.selected_course = JSON.parse(
+        localStorage.getItem("selected_course")
+      ).cname;
       this.cid = JSON.parse(
         localStorage.getItem("selected_course")
       ).cid;
@@ -94,8 +110,10 @@ export default {
       fd.append("semester", this.semester);
       fd.append("course_id", this.cid);
       this.dSSend(fd).then(res => {
-        let blob = new Blob([res], { type: "application/vnd.ms-excel" }); // 获取服务端返回的文件流excel文件
-        let fileName = `成绩明细${new Date().getTime()}.xls`; // 保存的文件名
+        console.log('下载课程目标明细')
+        let data = res.data
+        let blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }); // 获取服务端返回的文件流excel文件
+        let fileName = res.headers['content-disposition'].split('filename=')[1]// 保存的文件名
         this.downLoadFile(blob, fileName);
       });
     },
@@ -103,7 +121,8 @@ export default {
       const config = {
         headers: {
           "Content-Type": "multipart/form-data"
-        }
+        },
+        responseType: "blob",
       };
       return axios
         .post("/api_P/download_score", params, config)
@@ -120,8 +139,10 @@ export default {
       fd.append("semester", this.semester);
       fd.append("course_id", this.cid);
       this.dTSend(fd).then(res => {
-        let blob = new Blob([res], { type: "application/vnd.ms-excel" }); // 获取服务端返回的文件流excel文件
-        let fileName = `成绩模板${new Date().getTime()}.xls`; // 保存的文件名
+        console.log('下载课程模板')
+        let data = res.data
+        let blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }); // 获取服务端返回的文件流excel文件
+        let fileName = this.selected_course + this.semester + '.xlsx'// 保存的文件名
         this.downLoadFile(blob, fileName);
       });
     },
@@ -129,7 +150,8 @@ export default {
       const config = {
         headers: {
           "Content-Type": "multipart/form-data"
-        }
+        },
+        responseType: "blob",
       };
       return axios
         .post("/api_P/detail_template", params, config)
@@ -143,16 +165,21 @@ export default {
 
     //处理返回的二进制流
     downLoadFile(blob, fileName) {
-      if (window.navigator.msSaveOrOpenBlob) {
-        // IE10
-        navigator.msSaveBlob(blob, fileName);
-      } else {
-        let link = document.createElement("a");
-        link.style.display = "none";
-        link.href = URL.createObjectURL(blob); //创建一个指向该参数对象的URL
-        link.download = fileName;
-        link.click(); // 触发下载
-        URL.revokeObjectURL(link.href); // 释放通过 URL.createObjectURL() 创建的 URL
+      // for IE
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(blob, fileName);
+      }
+      // for Non-IE (chrome, firefox etc.)
+      else {
+        var a = document.createElement('a');
+        document.body.appendChild(a);
+        a.style = 'display: none';
+        var url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
       }
     },
 
@@ -185,6 +212,7 @@ export default {
         return
       }
       this.semester = v
+      this.last_semester = v
       this.downloadTemplate()
     },
 
@@ -196,7 +224,7 @@ export default {
     httpRequest(param) {
       let fileObj = param.file; // 相当于input里取得的files
       let fd = new FormData(); // FormData 对象
-      fd.append("excelFile", fileObj); // 文件对象
+      fd.append("file", fileObj); // 文件对象
       fd.append("semester", this.semester);
       fd.append("course_id", this.cid);
       this.uploadScore(fd).then(res => {

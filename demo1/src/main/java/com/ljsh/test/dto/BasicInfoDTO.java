@@ -25,10 +25,11 @@ public class BasicInfoDTO {
     private String eva_person;
     private String set_paper_person;
     private String goals_degree_describe;
+    private Float pass_ratio;
 
     public BasicInfoDTO(){}
 
-    public BasicInfoDTO(String course_name, String course_number, String semester, String audit_date, String eva_date, String classes, String exam_type, String course_property, String exam_date, Float course_point, Float week_hour, Float course_hour, Float lesson_hour, Float practice_hour, String text_book, String audit_person, String eva_person, String set_paper_person, String goals_degree_describe) {
+    public BasicInfoDTO(String course_name, String course_number, String semester, String audit_date, String eva_date, String classes, String exam_type, String course_property, String exam_date, Float course_point, Float week_hour, Float course_hour, Float lesson_hour, Float practice_hour, String text_book, String audit_person, String eva_person, String set_paper_person, String goals_degree_describe, Float pass_ratio) {
         this.course_name = course_name;
         this.course_number = course_number;
         this.semester = semester;
@@ -48,5 +49,6 @@ public class BasicInfoDTO {
         this.eva_person = eva_person;
         this.set_paper_person = set_paper_person;
         this.goals_degree_describe = goals_degree_describe;
+        this.pass_ratio = pass_ratio;
     }
 }

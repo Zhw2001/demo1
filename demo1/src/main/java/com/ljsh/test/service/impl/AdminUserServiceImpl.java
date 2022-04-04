@@ -141,4 +141,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         return adminUserMapper.getURIDByUserRole(uid, role_id);
     }
 
+    public List<AdminUser> get_AuditPs(){
+        return adminUserMapper.getAuditPs();
+    }
+
 }

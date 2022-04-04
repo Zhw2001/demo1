@@ -22,7 +22,7 @@ public class TestEntity {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-            if (fieldValue == null) { // 只要有一个属性值为null 就返回false 表示对象为null
+            if (fieldValue == null) { // 只要有一个属性值为null 就返回true 表示对象有null值属性
                 flag = true;
                 break;
             }

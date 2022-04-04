@@ -11,10 +11,6 @@ import java.util.List;
 public class CDesign extends CInfo {
     public CDesign(){}
 
-    public CDesign(String myCid, String myCName, int my_course_type, List<CdesignData> cdesignData) {
-        super(myCid, myCName, my_course_type);
-        this.cdesignData = cdesignData;
-    }
 
     private List<CdesignData> cdesignData;
 

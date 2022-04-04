@@ -20,12 +20,14 @@
       >
       </el-option>
     </el-select>
-    <el-button
-      size="small"
-      style="flex:0 1 auto;margin:0px 10px;"
-      @click="handleSemesterChange()"
-      >下载</el-button
-    >
+    <div class = "btnRow" style="flex:0 1 auto;margin:0px 10px;">
+      <el-button
+        type="primary"
+        size="small"
+        @click="handleSemesterChange()"
+        >下载</el-button
+      >
+    </div>
   </div>
 </template>
 

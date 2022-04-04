@@ -1,6 +1,6 @@
 <template>
   <div
-    style="display:flex;justify-content:flex-start ;flex-direction:row;"
+    style="display:flex;justify-content:flex-start ;flex-direction:row;margin:0px 10px;"
   >
     <span
       style="font-size:0.8vw;flex:0 1 auto;line-height:1.8vw;margin:0px 10px;"
@@ -11,6 +11,7 @@
       size="small"
       v-model="mySem"
       placeholder="请选择学期"
+      @change="handleSemesterChange()"
     >
       <el-option
         v-for="(semester, i) in semesterList"
@@ -20,12 +21,6 @@
       >
       </el-option>
     </el-select>
-    <el-button
-      size="small"
-      style="flex:0 1 auto;margin:0px 10px;"
-      @click="handleSemesterChange()"
-      >切换学期</el-button
-    >
   </div>
 </template>
 

@@ -15,6 +15,7 @@ public interface AdminUserMapper {
     String getPasswordByAccount(String account);
     Integer getUidByAccount(String account);
     List<AdminUser> getAll();
+    List<AdminUser> getAuditPs();
     List<AdminUser> selectPage(@Param("pageNum")int pageNum, @Param("pageSize")int pageSize, @Param("search")String search);
     void del_user(String account);
     AdminUser get_Info_By_Account(String account);

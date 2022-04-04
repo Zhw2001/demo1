@@ -38,6 +38,21 @@ export default {
     };
   },
   created() {
+    let nowPath = this.$route.path
+    if (nowPath === "/blank") {
+        this.currName = "";
+        return;
+      }
+      if (nowPath === "/myCourseList") {
+      this.currName = "我的课程";
+      return;
+      }
+      for (let i of breadcrumbPaths) {
+        if (i.path === nowPath) {
+          this.currName = i.name;
+          return;
+        }
+      }
   },
   components: {
     Header,
@@ -57,7 +72,7 @@ export default {
       if (this.$route.path === "/myCourseList") {
       this.currName = "我的课程";
       return;
-    }
+      }
       for (let i of breadcrumbPaths) {
         if (i.path === to.path) {
           this.currName = i.name;

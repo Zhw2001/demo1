@@ -9,7 +9,7 @@
     <div class="right">
       <el-dropdown @command="RoleCommand">
         <span class="el-dropdown-link"
-          ><label>{{ role.role_name }}&nbsp;:&nbsp;</label></span
+          ><label>角色&nbsp;:&nbsp;{{ role.role_name }}<i class="el-icon-arrow-down el-icon--right"></i>&nbsp;</label></span
         >
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="change">切换角色</el-dropdown-item>
@@ -18,7 +18,7 @@
       </el-dropdown>
       <el-dropdown @command="NameCommand">
         <span class="el-dropdown-link"
-          ><label>{{ name }}</label></span
+          ><label>&nbsp;姓名&nbsp;:&nbsp;{{ name }}<i class="el-icon-arrow-down el-icon--right"></i></label></span
         >
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人信息</el-dropdown-item>

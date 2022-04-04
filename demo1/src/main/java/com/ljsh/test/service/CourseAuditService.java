@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CourseAuditService {
     String updateAudit(CourseAuditDTO examAudit);
-    CourseAuditDTO getInfo(String semester, String cid);
+    CourseAuditDTO getInfo(String semester, String cid, String page);
     List<String> getSemester(String cid);
     String UpdateEvaDescription(CourseAuditDTO courseAudit);
 }

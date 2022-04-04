@@ -38,6 +38,7 @@
         <result property="audit_person" column="audit_person" javaType="String" jdbcType="VARCHAR"/>
         <result property="eva_person" column="eva_person" javaType="String" jdbcType="VARCHAR"/>
         <result property="set_paper_person" column="set_paper_person" javaType="String" jdbcType="VARCHAR"/>
+        <result property="pass_ratio" column="pass_ratio" javaType="Float" jdbcType="FLOAT"/>
     </resultMap>
 
 
@@ -165,15 +166,18 @@
             <if test="set_paper_person != null">
                 set_paper_person = #{set_paper_person},
             </if>
+            <if test="pass_ratio != null">
+                pass_ratio = #{pass_ratio},
+            </if>
         </set>
         WHERE id = #{id}
     </update>
 
     <insert id="addAuditInfo" parameterType="com.ljsh.test.domain.model.AuditInfo">
         INSERT INTO <include refid="audit_info"/>
-        (semester,cid,classes,exam_type,course_property,exam_date,course_point,week_hour,course_hour,lesson_hour,practice_hour,textbook,goals_degree_describe,audit_date,eva_date,audit_person,eva_person,set_paper_person)
+        (semester,cid,classes,exam_type,course_property,exam_date,course_point,week_hour,course_hour,lesson_hour,practice_hour,textbook,goals_degree_describe,audit_date,eva_date,audit_person,eva_person,set_paper_person,pass_ratio)
         VALUES
-        (#{semester},#{cid},#{classes},#{exam_type},#{course_property},#{exam_date},#{course_point},#{week_hour},#{course_hour},#{lesson_hour},#{practice_hour},#{textbook}, #{goals_degree_describe},#{audit_date},#{eva_date},#{audit_person},#{eva_person},#{set_paper_person})
+        (#{semester},#{cid},#{classes},#{exam_type},#{course_property},#{exam_date},#{course_point},#{week_hour},#{course_hour},#{lesson_hour},#{practice_hour},#{textbook}, #{goals_degree_describe},#{audit_date},#{eva_date},#{audit_person},#{eva_person},#{set_paper_person},#{pass_ratio})
     </insert>
 
     <!--CourseGoal的CRUD-->
@@ -223,7 +227,7 @@
                         when goal_id=#{item.goal_id} then #{item.normal}
                     </if>
                     <if test="item.normal == null">
-                        when goal_id=#{item.normal} then <include refid="course_goal"/>.normal
+                        when goal_id=#{item.goal_id} then <include refid="course_goal"/>.normal
                     </if>
                 </foreach>
             </trim>
@@ -334,16 +338,16 @@
         </foreach>
     </update>
 
-    <insert id="add_CG" parameterType="com.ljsh.test.domain.model.Course_Goal">
+    <insert id="add_CG" parameterType="java.util.List">
         INSERT INTO <include refid="course_goal"/>
         (goal_id,course_goal_id,audit_id,course_goal_text,excellent,good,normal,pass,poor,graduate_require,eva_point,total_score,expectation,not_reach,achieve_degree,score_description,score_analysis)
         VALUES
         <foreach item="item" index="index" collection="list" separator=",">
-            (#{goal_id},#{item.course_goal_id},#{item.audit_id},#{item.course_goal_text},#{item.excellent},#{item.good},#{item.normal},#{item.pass},#{item.poor},#{item.graduate_require},#{item.eva_point},#{item.total_score},#{item.expectation},#{item.not_reach},#{item.achieve_degree},#{item.score_description},#{item.score_analysis})
+            (#{item.goal_id},#{item.course_goal_id},#{item.audit_id},#{item.course_goal_text},#{item.excellent},#{item.good},#{item.normal},#{item.pass},#{item.poor},#{item.graduate_require},#{item.eva_point},#{item.total_score},#{item.expectation},#{item.not_reach},#{item.achieve_degree},#{item.score_description},#{item.score_analysis})
         </foreach>
     </insert>
 
-    <delete id="del_CG" parameterType="com.ljsh.test.domain.model.Course_Goal">
+    <delete id="del_CG" parameterType="java.util.List">
         DELETE FROM <include refid="course_goal"/>
         <where>
             goal_id in
