@@ -10,7 +10,7 @@
         :semesterList="semesterList"
         :semester="basicInfo.semester"
       ></semester-selector>
-      <div  class = "btnRow" style="flex: 1 1 auto;" ><el-button v-if="downloadPermission" size="small" type='primary' @click="downloadConfirm()">下载该表</el-button></div>
+      <div  class = "btnRow" style="flex: 1 1 auto;" ><el-button v-if="downloadPermission && nextVis && !submitVis" size="small" type='primary' @click="downloadConfirm()">下载该表</el-button></div>
       <course-selected
         :course="selected_course"
         style="flex: 1 1 auto;"
@@ -37,6 +37,7 @@
                 <th>评价时间</th>
                 <td colspan="2">
                   <el-input
+                    @blur="validateDate(basicInfo.eva_date, 'eva')"
                     v-model="basicInfo.eva_date"
                     placeholder="评价时间"
                     clearable
@@ -45,32 +46,79 @@
               </tr>
               <tr>
                 <th>课程名称</th>
-                <td colspan="2">{{ basicInfo.course_name }}</td>
+                <td colspan="2">
+                  {{ basicInfo.course_name }}</td>
                 <th>课程性质</th>
-                <td colspan="2">{{ basicInfo.course_property }}</td>
+                <td colspan="2">
+                  <span v-if="!editNow">{{ basicInfo.course_property }}</span>
+                  <el-input v-else
+                    v-model="basicInfo.course_property"
+                    placeholder="课程性质"
+                    clearable
+                  ></el-input></td>
               </tr>
               <tr>
                 <th>考核班级</th>
                 <td colspan="2">{{ basicInfo.classes }}</td>
                 <th>考试时间</th>
-                <td colspan="2">{{ basicInfo.exam_date }}</td>
+                <td colspan="2">
+                  <span v-if="!editNow">{{ basicInfo.exam_date }}</span>
+                  <el-input v-else
+                  @blur="validateDate(basicInfo.exam_date, 'exam')"
+                    v-model="basicInfo.exam_date"
+                    placeholder="考试时间"
+                    clearable
+                  ></el-input>
+                </td>
               </tr>
               <tr>
                 <th>课程学分</th>
-                <td>{{ basicInfo.course_point }}</td>
+                <td>
+                  <span v-if="!editNow">{{ basicInfo.course_point }}</span>
+                  <el-input v-else
+                    v-model="basicInfo.course_point"
+                    placeholder="课程学分"
+                    clearable
+                  ></el-input></td>
                 <th>周学时</th>
-                <td>{{ basicInfo.week_hour }}</td>
+                <td>
+                  <span v-if="!editNow">{{ basicInfo.week_hour }}</span>
+                  <el-input v-else
+                    v-model="basicInfo.week_hour"
+                    placeholder="周学时"
+                    clearable
+                  ></el-input>
+                </td>
                 <th>总学时</th>
-                <td>{{ basicInfo.course_hour }}</td>
+                <td>
+                  <span v-if="!editNow">{{ basicInfo.course_hour }}</span>
+                  <el-input v-else
+                    v-model="basicInfo.course_hour"
+                    placeholder="总学时"
+                    clearable
+                  ></el-input>
+                </td>
               </tr>
               <tr>
                 <td colspan="6">学时分配</td>
               </tr>
               <tr>
                 <th>课堂讲授</th>
-                <td colspan="2">{{ basicInfo.lesson_hour }}</td>
+                <td colspan="2">
+                  <span v-if="!editNow">{{ basicInfo.lesson_hour }}</span>
+                  <el-input v-else
+                    v-model="basicInfo.lesson_hour"
+                    placeholder="课堂讲授"
+                    clearable
+                  ></el-input></td>
                 <th>课程实践</th>
-                <td colspan="2">{{ basicInfo.practice_hour }}</td>
+                <td colspan="2">
+                  <span v-if="!editNow">{{ basicInfo.practice_hour }}</span>
+                  <el-input v-else
+                    v-model="basicInfo.practice_hour"
+                    placeholder="课程实践"
+                    clearable
+                  ></el-input></td>
               </tr>
               <tr>
                 <th>考核方式</th>
@@ -78,9 +126,16 @@
               </tr>
               <tr>
                 <th>教材信息</th>
-                <td colspan="5">{{ basicInfo.text_book }}</td>
+                <td colspan="5">
+                  <span v-if="!editNow">{{ basicInfo.text_book }}</span>
+                  <el-input v-else
+                    v-model="basicInfo.text_book"
+                    placeholder="教材信息"
+                    clearable
+                  ></el-input></td>
               </tr>
             </table>
+            <div><el-button v-if="editNow && submitVis"  style="margin:1vw;" type="primary" @click="evaReload()">提交</el-button></div>
           </div>
           <div v-if="docVis === 1">
             <h1 class="myTitle">2.评分标准</h1>
@@ -232,7 +287,7 @@
         <div style="margin-top:20px;text-align:center;">
           <el-button v-if="docVis !== 0 " @click="back()">上一页</el-button>
           <el-button v-if="docVis === 3 " @click="sendDBConfirm()">提交</el-button>
-          <el-button v-if="docVis !== 3 " @click="next()">下一页</el-button>
+          <el-button v-if="docVis !== 3 && !submitVis && nextVis " @click="next()">下一页</el-button>
         </div>
       </div>
     </div>
@@ -250,6 +305,9 @@ export default {
   },
   data() {
     return {
+      submitVis: false,
+      nextVis: true,
+      editNow: false,
       downloadPermission: false,
       selected_course: "",
       display_class: { display: "none" },
@@ -268,6 +326,30 @@ export default {
     };
   },
   methods: {
+    validateDate(time, name){
+      let patt = /[0-9]{4}.[0-9]{2}.[0-9]{2}/;
+      if (patt.test(time)) {
+        return
+      } else {
+        switch(name){
+          case 'eva':
+            this.basicInfo.eva_date = ''
+            break;
+          case 'exam':
+            this.basicInfo.exam_date = ''
+        }
+        this.$message({
+          type: "warning",
+          message: "输入格式为2019.02.01"
+        });
+      }
+    },
+    evaReload(){
+      this.sendDataBase()
+    },
+    editBasic(){
+      this.editNow = true;
+    },
     back() {
       if (this.docVis-- === 0) {
         this.docVis = 0;
@@ -418,7 +500,6 @@ export default {
       return data;
     },
     handleSemesterChange(v) {
-      console.log("111");
       if (!v) {
         this.$message({
           type: "warning",
@@ -433,6 +514,9 @@ export default {
       this.basicInfo.course_number = JSON.parse(
         localStorage.getItem("selected_course")
       ).cid;
+      this.nextVis = true;
+      this.editNow = false;
+      this.submitVis = false;
       this.load();
       this.docVis = 0;
     },
@@ -471,11 +555,27 @@ export default {
             this.goals_detail = [];
             this.goals_chart = "";
             this.course_goal_charts = "";
+            this.nextVis = false;
             return;
           }
-          this.downloadPermission = true;
           let data = res.data;
           this.basicInfo = data.basicInfo;
+          if(!data.mods){
+            this.editNow = true; //如果没有填写eva信息则进入编辑状态
+            this.submitVis = true; //而且可以编辑
+            return;
+          }
+          if(!data.evaForm){
+            this.$message({
+              type: "warning",
+              message: "没有课程目标成绩信息"
+            });
+            this.nextVis = false; //不能下一页
+            return;
+          }
+          this.editNow = true;
+          this.nextVis = true;
+          this.downloadPermission = true;
           this.cTARForm.ctargets = data.ctargets !== null ? data.ctargets : [];
           this.courseStandard = data.courseStandard;
           this.evaForm = data.evaForm;
@@ -688,6 +788,11 @@ export default {
   width: 10%;
   font-size: 1vw;
   padding: 10px;
+}
+
+.basicInfoTable tr td span{
+  border-width: 0.5pt;
+  font-size: 1vw;
 }
 
 .evaForm {

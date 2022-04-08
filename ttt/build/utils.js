@@ -47,7 +47,8 @@ exports.cssLoaders = function (options) {
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
-        fallback: 'vue-style-loader'
+        fallback: 'vue-style-loader',
+        publicPath:'../../' //解决打包之后背景图无法解析路径
       })
     } else {
       return ['vue-style-loader'].concat(loaders)

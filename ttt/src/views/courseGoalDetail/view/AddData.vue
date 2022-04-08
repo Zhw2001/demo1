@@ -144,6 +144,12 @@ export default {
         let blob = new Blob([data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }); // 获取服务端返回的文件流excel文件
         let fileName = this.selected_course + this.semester + '.xlsx'// 保存的文件名
         this.downLoadFile(blob, fileName);
+      })
+      .catch(error => {
+        this.$message({
+            type: "warning",
+            message: error
+        });
       });
     },
     dTSend(params) {

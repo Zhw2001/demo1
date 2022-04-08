@@ -8,7 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import java.util.Date;
 
 public class JwtUtil {
-    private static final long EXPIRE_TIME = 15 * 60 * 1000;
+    private static final long EXPIRE_TIME = 3600000;
     private static final String TOKEN_SECRET = UUIDGenerator.getPart(6).getMyuuid();  //密钥盐(随机生成的字符串:)
 
     public static String sign(String account) {

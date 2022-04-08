@@ -37,15 +37,12 @@
                   审核学期
                 </td>
 
-                <td>
-                  {{ basicInfo.semester }}
+                <td>{{ basicInfo.semester }}
                 </td>
                 <td>
                   审核时间
                 </td>
-                <td>
-                  {{ basicInfo.audit_date }}
-                </td>
+                <td>{{basicInfo.audit_date}}</td>
               </tr>
               <tr>
                 <td>
@@ -390,7 +387,20 @@
           <el-input v-model="basicInfo.classes"></el-input>
         </el-form-item>
         <el-form-item label="考试/考查" prop="exam_type">
-          <el-input v-model="basicInfo.exam_type"></el-input>
+          <el-select
+            size="mini"
+            default-first-option
+            v-model="basicInfo.exam_type"
+            placeholder="考试"
+          >
+            <el-option
+              v-for="(v, i) in ['考试','考查'] "
+              :key="i"
+              :label="v"
+              :value="v"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -908,6 +918,14 @@ export default {
         callback(new Error("输入格式为2019-2020-1"));
       }
     };
+    var validateDate = (rule, value, callback) => {
+      let patt = /[0-9]{4}.[0-9]{2}.[0-9]{2}/;
+      if (patt.test(value)) {
+        callback();
+      } else {
+        callback(new Error("输入格式为2019.02.01"));
+      }
+    };
     var validateModName = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入模块"));
@@ -961,9 +979,9 @@ export default {
       },
       basicInfo: {},
       basicInfoRules: {
-        semester: [{ validator: validateSemester, trigger: "change" }],
+        semester: [{ validator: validateSemester, required: true, trigger: "change" }],
         audit_date: [
-          { required: true, message: "请输入日期", trigger: "blur" }
+          { validator: validateDate, required: true, trigger: "blur" }
         ],
         course_name: [
           { required: true, message: "请输入课程名", trigger: "blur" }
@@ -1037,6 +1055,10 @@ export default {
     },
 
     load() {
+      this.$request.get("/api_S/admin/get_audit_person").then(res => {
+        this.auditPList = res.data
+        localStorage.setItem("auditP_List",JSON.stringify(res.data))
+      });
       this.$request
         .get(
           "/api_S/exam_audit/load_info?semester=" +
@@ -1074,10 +1096,6 @@ export default {
           this.calModTotal();
           this.setCRatio();
           this.calCTargetTotal();
-          this.$request.get("/api_S/admin/get_audit_person").then(res => {
-            this.auditPList = res.data
-            localStorage.setItem("auditP_List",JSON.stringify(res.data))
-          });
         });
       
     },
@@ -2213,5 +2231,4 @@ export default {
   flex: 0 1 auto;
   font-size: 1.0vw;
 }
-
 </style>

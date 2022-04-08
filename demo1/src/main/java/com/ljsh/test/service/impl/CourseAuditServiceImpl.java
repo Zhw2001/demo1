@@ -281,16 +281,31 @@ public class CourseAuditServiceImpl implements CourseAuditService {
         for (int x = 0; x < QStandardList.size(); x++) {
             question_standard[x] = QStandardList.get(x).getStandard();
         }
-        // 如果没有找到审核相关信息返回空，让用户自己新建
+        // 如果没有找到审核相关信息返回空
         switch(page){
             case "audit":
                 if (auditInfo == null) {
                     return new CourseAuditDTO(basicInfo, null, null, null, null, null, question_standard, null, null, null);
                 }
+                break;
             case "eva":
-                if(TestEntity.objCheckHasNull(auditInfo)){
+                if (auditInfo == null){
                     return null;
                 }
+                if (auditInfo.getCourse_point() == null) {
+                    if (auditInfo.getClasses() != null) {
+                        basicInfo.setClasses(auditInfo.getClasses());
+                    } else {
+                        return null;
+                    }
+                    if (auditInfo.getExam_type() != null) {
+                        basicInfo.setExam_type(getExamType(auditInfo.getExam_type()));
+                    } else {
+                        return null;
+                    }
+                    return new CourseAuditDTO(basicInfo, null, null, null, null, null, question_standard, null, null, null);
+                }
+                break;
         }
         Long audit_id = auditInfo.getId();
         // DTO构建素材准备
@@ -383,6 +398,9 @@ public class CourseAuditServiceImpl implements CourseAuditService {
                 expectationList.add(i.getExpectation());
             }
             List<Goal_Detail> goal_details = courseAuditMapper.get_goalDetail(goal_id_list);
+            if(goal_details.size() < 1){
+                return new CourseAuditDTO(basicInfo, ctargets, mods, parts, items, fatherOfItem, question_standard, null, evaForm, goalDetailDTOS);
+            }
             for (Long gid : goal_id_list) {
                 List<Float> value = new ArrayList<>();
                 for (Goal_Detail gd : goal_details) {
@@ -504,17 +522,32 @@ public class CourseAuditServiceImpl implements CourseAuditService {
         AuditInfo auditInfo = courseAuditMapper.get_AuditInfo(courseAudit.getBasicInfo().getSemester(), courseAudit.getBasicInfo().getCourse_number());
         if(auditInfo == null) { return "没有此审核信息，请新建";}
         auditInfo.setEva_person(courseAudit.getBasicInfo().getEva_person());
+        auditInfo.setCourse_hour(courseAudit.getBasicInfo().getCourse_hour());
+        auditInfo.setCourse_point(courseAudit.getBasicInfo().getCourse_point());
+        auditInfo.setCourse_property(courseAudit.getBasicInfo().getCourse_property());
+        auditInfo.setEva_date(courseAudit.getBasicInfo().getEva_date());
+        auditInfo.setEva_person(courseAudit.getBasicInfo().getEva_person());
+        auditInfo.setExam_date(courseAudit.getBasicInfo().getExam_date());
+        auditInfo.setLesson_hour(courseAudit.getBasicInfo().getLesson_hour());
+        auditInfo.setPractice_hour(courseAudit.getBasicInfo().getPractice_hour());
+        auditInfo.setTextbook(courseAudit.getBasicInfo().getText_book());
+        auditInfo.setWeek_hour(courseAudit.getBasicInfo().getWeek_hour());
+
         List<Course_Goal> updateList = new ArrayList<>();
         List<Course_Goal> oldCGs = courseAuditMapper.get_CGList(auditInfo.getId());
-        for( int i = 0; i < courseAudit.getCtargets().size(); i++) {
-            CTargetDTO cTargetDTO = courseAudit.getCtargets().get(i);
-            Course_Goal oldCG = oldCGs.get(i);
-            if(cTargetDTO.getValue().equals(oldCG.getCourse_goal_text())) {
-                updateList.add(new Course_Goal(oldCG.getGoal_id(), oldCG.getCourse_goal_id(), oldCG.getAudit_id(), null, null, null, null, null, null, null, null, null, null, null, null, cTargetDTO.getScore_description(), cTargetDTO.getScore_analysis()));
+        if(courseAudit.getCtargets() != null) {
+            for (int i = 0; i < courseAudit.getCtargets().size(); i++) {
+                CTargetDTO cTargetDTO = courseAudit.getCtargets().get(i);
+                Course_Goal oldCG = oldCGs.get(i);
+                if (cTargetDTO.getValue().equals(oldCG.getCourse_goal_text())) {
+                    updateList.add(new Course_Goal(oldCG.getGoal_id(), oldCG.getCourse_goal_id(), oldCG.getAudit_id(), null, null, null, null, null, null, null, null, null, null, null, null, cTargetDTO.getScore_description(), cTargetDTO.getScore_analysis()));
+                }
             }
         }
         try {
+            if(updateList.size()>0){
             courseAuditMapper.update_CG(updateList);
+            }
             courseAuditMapper.updateAuditInfo(auditInfo);
         } catch (Exception e) {
             return e.toString();
