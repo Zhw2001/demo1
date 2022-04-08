@@ -465,7 +465,13 @@ public class CourseAuditServiceImpl implements CourseAuditService {
                 Course_Goal temp = new Course_Goal(CG.get(i).getGoal_id(), CG.get(i).getCourse_goal_id(), CG.get(i).getAudit_id(), null, null, null, null, null, null, null, null, null, null, notReachList.get(i), achieve.get(i), null, null);
                 CGUpdateList.add(temp);
             }
-            courseAuditMapper.update_CG(CGUpdateList);
+            /*try {
+                if(CGUpdateList.size()>0) {
+                    courseAuditMapper.update_CG(CGUpdateList);
+                }
+            } catch (Exception e) {
+                return null;
+            }*/
         }
         // courseTargetDTO,CourseStandardDTO
         StringBuilder excel = new StringBuilder();

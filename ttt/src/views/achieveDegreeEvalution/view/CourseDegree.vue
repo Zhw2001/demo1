@@ -443,6 +443,12 @@ export default {
           let blob = new Blob([res], { type: "application/msword" }); // 服务端返回的文件流excel文件
           let fileName = this.selected_course + '课程目标达成度评价' + '-' + this.basicInfo.semester +'.doc'; // 保存的文件名
           this.downLoadFile(blob, fileName);
+        })
+        .catch(error => {
+          this.$message({
+              type: "warning",
+              message: error
+          });
         });
     },
     downLoadFile(blob, fileName) {
